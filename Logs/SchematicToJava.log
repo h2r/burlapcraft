@@ -1,0 +1,15 @@
+2015-02-20 07-44-15 [SEVERE]: Resource not found: /Users/Chaitu/Documents/minecraft/Images/UnknownBlock.png
+2015-02-20 07-44-15 [SEVERE]: Resource not found: /Users/Chaitu/Documents/minecraft/Images/IgnoredBlock.png
+2015-02-20 07-44-15 [SEVERE]: Texture mappings file not found, or is not readable!
+2015-02-20 07-48-45 [FINE]: Ignore Air Blocks is TRUE - removing air blocks found in the schematic from the export list.
+2015-02-20 07-48-45 [INFO]: Added /Users/Chaitu/Library/Application Support/pymclevel/Schematics/BurlapDungeon.schematic to the list of files to convert.
+2015-02-20 07-49-51 [INFO]: Beginning conversion of /Users/Chaitu/Library/Application Support/pymclevel/Schematics/BurlapDungeon.schematic (output class: BurlapDungeon)
+2015-02-20 07-49-51 [FINE]: Output file did not exist:  Creating...
+2015-02-20 07-49-51 [FINE]: Opening file output stream
+2015-02-20 07-49-51 [INFO]: Writing file header
+2015-02-20 07-49-51 [INFO]: Conditional Spawning is FALSE
+2015-02-20 07-49-51 [INFO]: Writing Blocks to file
+2015-02-20 07-49-52 [INFO]: Writing deferred blocks
+2015-02-20 07-49-52 [INFO]: Writing file footer
+2015-02-20 07-49-52 [FINE]: Closing file output stream
+2015-02-20 07-49-52 [INFO]: Conversion of /Users/Chaitu/Library/Application Support/pymclevel/Schematics/BurlapDungeon.schematic completed successfully.

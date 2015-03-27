@@ -1,0 +1,101 @@
+---- Minecraft Crash Report ----
+// I just don't know what went wrong :(
+
+Time: 2/20/15 8:54 AM
+Description: Exception getting block type in world
+
+java.lang.NullPointerException: Exception getting block type in world
+	at com.kcaluru.burlapbot.BurlapEventHandler.generateSurface(BurlapEventHandler.java:53)
+	at com.kcaluru.burlapbot.BurlapEventHandler.generate(BurlapEventHandler.java:29)
+	at cpw.mods.fml.common.registry.GameRegistry.generateWorld(GameRegistry.java:106)
+	at net.minecraft.world.gen.ChunkProviderServer.populate(ChunkProviderServer.java:314)
+	at net.minecraft.world.chunk.Chunk.populateChunk(Chunk.java:1152)
+	at net.minecraft.world.gen.ChunkProviderServer.originalLoadChunk(ChunkProviderServer.java:208)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:149)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:119)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:221)
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:482)
+	at net.minecraft.world.World.getBlock(World.java:387)
+	at net.minecraft.world.World.isAirBlock(World.java:410)
+	at net.minecraft.world.World.getTopBlock(World.java:371)
+	at net.minecraft.world.WorldProvider.canCoordinateBeSpawn(WorldProvider.java:93)
+	at net.minecraft.world.WorldServer.createSpawnPosition(WorldServer.java:794)
+	at net.minecraft.world.WorldServer.initialize(WorldServer.java:757)
+	at net.minecraft.world.World.<init>(World.java:296)
+	at net.minecraft.world.WorldServer.<init>(WorldServer.java:102)
+	at net.minecraft.server.integrated.IntegratedServer.loadAllWorlds(IntegratedServer.java:63)
+	at net.minecraft.server.integrated.IntegratedServer.startServer(IntegratedServer.java:96)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:445)
+	at net.minecraft.server.MinecraftServer$2.run(MinecraftServer.java:752)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at com.kcaluru.burlapbot.BurlapEventHandler.generateSurface(BurlapEventHandler.java:53)
+	at com.kcaluru.burlapbot.BurlapEventHandler.generate(BurlapEventHandler.java:29)
+	at cpw.mods.fml.common.registry.GameRegistry.generateWorld(GameRegistry.java:106)
+	at net.minecraft.world.gen.ChunkProviderServer.populate(ChunkProviderServer.java:314)
+	at net.minecraft.world.chunk.Chunk.populateChunk(Chunk.java:1152)
+	at net.minecraft.world.gen.ChunkProviderServer.originalLoadChunk(ChunkProviderServer.java:208)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:149)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:119)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:221)
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:482)
+
+-- Requested block coordinates --
+Details:
+	Found chunk: true
+	Location: World: (59,64,20), Chunk: (at 11,4,4 in 3,1; contains blocks 48,0,16 to 63,255,31), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+Stacktrace:
+	at net.minecraft.world.World.getBlock(World.java:387)
+	at net.minecraft.world.World.isAirBlock(World.java:410)
+	at net.minecraft.world.World.getTopBlock(World.java:371)
+	at net.minecraft.world.WorldProvider.canCoordinateBeSpawn(WorldProvider.java:93)
+	at net.minecraft.world.WorldServer.createSpawnPosition(WorldServer.java:794)
+	at net.minecraft.world.WorldServer.initialize(WorldServer.java:757)
+
+-- Affected level --
+Details:
+	Level name: New World
+	All players: 0 total; []
+	Chunk stats: ServerChunkCache: 14 Drop: 0
+	Level seed: 1990047740099634217
+	Level generator: ID 01 - flat, ver 0. Features enabled: true
+	Level generator options: 
+	Level spawn location: World: (0,0,0), Chunk: (at 0,0,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 0 game time, 0 day time
+	Level dimension: 0
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+Stacktrace:
+	at net.minecraft.world.World.<init>(World.java:296)
+	at net.minecraft.world.WorldServer.<init>(WorldServer.java:102)
+	at net.minecraft.server.integrated.IntegratedServer.loadAllWorlds(IntegratedServer.java:63)
+	at net.minecraft.server.integrated.IntegratedServer.startServer(IntegratedServer.java:96)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:445)
+	at net.minecraft.server.MinecraftServer$2.run(MinecraftServer.java:752)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Mac OS X (x86_64) version 10.10.2
+	Java Version: 1.8.0_25, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 921558840 bytes (878 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP v9.05 FML v7.10.85.1291 Minecraft Forge 10.13.2.1291 5 mods loaded, 5 mods active
+	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	FML{7.10.85.1291} [Forge Mod Loader] (forgeSrc-1.7.10-10.13.2.1291.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	Forge{10.13.2.1291} [Minecraft Forge] (forgeSrc-1.7.10-10.13.2.1291.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	examplemod{1.0} [Example Mod] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	burlapmod{1.0} [burlapmod] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	Profiler Position: N/A (disabled)
+	Player Count: 0 / 8; []
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fml,forge'

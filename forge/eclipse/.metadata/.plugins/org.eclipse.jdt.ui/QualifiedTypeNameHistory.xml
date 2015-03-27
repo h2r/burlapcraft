@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="net.minecraft.init.Items"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.registry.GameRegistry"/>
+<fullyQualifiedTypeName name="net.minecraft.item.Item"/>
+<fullyQualifiedTypeName name="net.minecraft.block.material.Material"/>
+<fullyQualifiedTypeName name="net.minecraft.creativetab.CreativeTabs"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.relauncher.Side"/>
+<fullyQualifiedTypeName name="net.minecraft.network.Packet"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.IWorldGenerator"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapMod"/>
+<fullyQualifiedTypeName name="net.minecraft.client.settings.KeyBinding"/>
+<fullyQualifiedTypeName name="net.minecraft.world.World"/>
+<fullyQualifiedTypeName name="net.minecraft.block.Block"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.registry.GameData"/>
+<fullyQualifiedTypeName name="net.minecraft.util.RegistryNamespaced"/>
+<fullyQualifiedTypeName name="burlap.oomdp.auxiliary.DomainGenerator"/>
+<fullyQualifiedTypeName name="burlap.oomdp.core.Domain"/>
+<fullyQualifiedTypeName name="burlap.oomdp.singleagent.SADomain"/>
+<fullyQualifiedTypeName name="burlap.oomdp.core.ObjectClass"/>
+<fullyQualifiedTypeName name="burlap.oomdp.core.Attribute"/>
+<fullyQualifiedTypeName name="burlap.oomdp.core.State"/>
+<fullyQualifiedTypeName name="burlap.oomdp.core.ObjectInstance"/>
+<fullyQualifiedTypeName name="burlap.oomdp.core.Attribute.AttributeType"/>
+<fullyQualifiedTypeName name="net.famzangl.minecraft.minebot.ai.task.AITask"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.items.ItemFilter"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.WalkTowardsTask"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.Pos"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.gameevent.TickEvent"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.eventhandler.SubscribeEvent"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapEventHandler"/>
+<fullyQualifiedTypeName name="burlap.oomdp.singleagent.Action"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.MovementTask"/>
+<fullyQualifiedTypeName name="net.minecraft.entity.player.EntityPlayer"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="net.minecraft.init.Blocks"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.NameSpace"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="net.minecraft.client.Minecraft"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.BurlapAIHelper"/>
+<fullyQualifiedTypeName name="java.util.Timer"/>
+<fullyQualifiedTypeName name="java.util.TimerTask"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.items.ItemBurlapWand"/>
+</qualifiedTypeNameHistroy>

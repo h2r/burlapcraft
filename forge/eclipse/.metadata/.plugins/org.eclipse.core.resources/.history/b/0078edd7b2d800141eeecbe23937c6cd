@@ -1,0 +1,14 @@
+package com.kcaluru.burlapbot;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
+public class BurlapEventHandler {
+	
+	@SubscribeEvent
+	public void EntityJoinWorldEvent(EntityEvent event) {
+		System.out.println(event.entity.PosX);
+	}
+}

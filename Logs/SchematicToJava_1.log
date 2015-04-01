@@ -1,0 +1,5 @@
+2015-04-01 07-01-38 [SEVERE]: Resource not found: /Users/Chaitu/Documents/minecraft/Images/UnknownBlock.png
+2015-04-01 07-01-38 [SEVERE]: Resource not found: /Users/Chaitu/Documents/minecraft/Images/IgnoredBlock.png
+2015-04-01 07-01-38 [SEVERE]: Texture mappings file not found, or is not readable!
+2015-04-01 07-02-00 [FINE]: Ignore Air Blocks is TRUE - removing air blocks found in the schematic from the export list.
+2015-04-01 07-02-00 [INFO]: Added /Users/Chaitu/Library/Application Support/pymclevel/Schematics/BurlapDungeon.schematic to the list of files to convert.

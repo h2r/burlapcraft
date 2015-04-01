@@ -1,0 +1,80 @@
+Running on map: PlaneGoldSmeltWorld0.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 1
+Running on map: PlaneGoldSmeltWorld1.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 2
+Running on map: PlaneGoldSmeltWorld2.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 3
+Running on map: PlaneGoldSmeltWorld3.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 4
+Running on map: PlaneGoldSmeltWorld4.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 5
+Running on map: PlaneGoldSmeltWorld5.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 6
+Running on map: PlaneGoldSmeltWorld6.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 7
+Running on map: PlaneGoldSmeltWorld7.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 8
+Running on map: PlaneGoldSmeltWorld8.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 9
+Running on map: PlaneGoldSmeltWorld9.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 10
+Running on map: PlaneWorld0.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 1
+Running on map: PlaneWorld1.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 2
+Running on map: PlaneWorld2.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 3
+Running on map: PlaneWorld3.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 4
+Running on map: PlaneWorld4.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 5
+Running on map: PlaneWorld5.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 6
+Running on map: PlaneWorld6.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 7
+Running on map: PlaneWorld7.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 8
+Running on map: PlaneWorld8.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 9
+Running on map: PlaneWorld9.map
+	...boundedRTDP Finished
+	...Learned Soft RTDP Finished
+mapCounter: 10

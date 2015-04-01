@@ -1,0 +1,3 @@
+map: DeepTrenchWorldstateSpace=0.0
+	RTDP 7112.(NaN) , -33.00.(0.00) , 1.00.(NaN) , 3.42s.(Infinity)
+	ERTDP 1917.(NaN) , -53.00.(0.00) , 1.00.(NaN) , 1.10s.(Infinity)

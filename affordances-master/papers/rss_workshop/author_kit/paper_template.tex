@@ -1,0 +1,214 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{times}
+
+% numbers option provides compact numerical references in the text. 
+\usepackage[numbers]{natbib}
+\usepackage{multicol}
+\usepackage[bookmarks=true]{hyperref}
+
+\pdfinfo{
+   /Author (David Abel  & Gabriel Barth-Maron, James MacGlashan, Stefanie Tellex)
+   /Title  (Affordace-Aware Planning)
+   /CreationDate (D:20101201120000)
+   /Subject (Planning, Affordances, Sequential Decision Making)
+   /Keywords (Planning, Affordance, MDP, Learning)
+}
+
+\begin{document}
+
+% paper title
+\title{Affordance-Aware Planning}
+
+% You will get a Paper-ID when submitting a pdf file to the conference system
+\author{Paper-ID [add your ID here]}
+
+%\author{\authorblockN{Michael Shell}
+%\authorblockA{School of Electrical and\\Computer Engineering\\
+%Georgia Institute of Technology\\
+%Atlanta, Georgia 30332--0250\\
+%Email: mshell@ece.gatech.edu}
+%\and
+%\authorblockN{Homer Simpson}
+%\authorblockA{Twentieth Century Fox\\
+%Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\and
+%\authorblockN{James Kirk\\ and Montgomery Scott}
+%\authorblockA{Starfleet Academy\\
+%San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212\\
+%Fax: (888) 555--1212}}
+
+
+% avoiding spaces at the end of the author lines is not a problem with
+% conference papers because we don't use \thanks or \IEEEmembership
+
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+%\author{\authorblockN{Michael Shell\authorrefmark{1},
+%Homer Simpson\authorrefmark{2},
+%James Kirk\authorrefmark{3}, 
+%Montgomery Scott\authorrefmark{3} and
+%Eldon Tyrell\authorrefmark{4}}
+%\authorblockA{\authorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: mshell@ece.gatech.edu}
+%\authorblockA{\authorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\authorblockA{\authorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\authorblockA{\authorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+\maketitle
+
+\begin{abstract}
+The abstract goes here.
+\end{abstract}
+
+\IEEEpeerreviewmaketitle
+
+% ====== Section: Introduction ======
+\section{Introduction}
+This demo file is intended to serve as a ``starter file" for the
+Robotics: Science and Systems conference papers produced under \LaTeX\
+using IEEEtran.cls version 1.7a and later.  
+
+% ====== Section: Background ======
+\section{Background}
+
+Section text here. 
+
+\subsection{OO-MDPs}
+Subsection text here.
+
+\subsection{Minecraft}
+Subsubsection text here.
+
+
+% ====== Section: Hard-Affordances ======
+\section{Hard-Affordances}
+
+\subsection{Formalism}
+
+\subsection{Experiments}
+
+\subsection{Results}
+
+% ====== Section: Learning-Affordances ======
+\section{Learning-Affordances}
+
+\subsection{Extended Formalism}
+
+\subsection{Learning Process}
+
+\subsection{Experiments}
+
+\subsection{Results}
+
+
+% ====== Section: Conclusion ======
+\section{Conclusion}
+
+\section{RSS citations}
+
+Please make sure to include \verb!natbib.sty! and to use the
+\verb!plainnat.bst! bibliography style. \verb!natbib! provides additional
+citation commands, most usefully \verb!\citet!. For example, rather than the
+awkward construction 
+
+{\small
+\begin{verbatim}
+\cite{kalman1960new} demonstrated...
+\end{verbatim}
+}
+
+\noindent
+rendered as ``\cite{kalman1960new} demonstrated...,''
+or the
+inconvenient 
+
+{\small
+\begin{verbatim}
+Kalman \cite{kalman1960new} 
+demonstrated...
+\end{verbatim}
+}
+
+\noindent
+rendered as 
+``Kalman \cite{kalman1960new} demonstrated...'', 
+one can
+write 
+
+{\small
+\begin{verbatim}
+\citet{kalman1960new} demonstrated... 
+\end{verbatim}
+}
+\noindent
+which renders as ``\citet{kalman1960new} demonstrated...'' and is 
+both easy to write and much easier to read.
+  
+\subsection{RSS Hyperlinks}
+
+This year, we would like to use the ability of PDF viewers to interpret
+hyperlinks, specifically to allow each reference in the bibliography to be a
+link to an online version of the reference. 
+As an example, if you were to cite ``Passive Dynamic Walking''
+\cite{McGeer01041990}, the entry in the bibtex would read:
+
+{\small
+\begin{verbatim}
+@article{McGeer01041990,
+  author = {McGeer, Tad}, 
+  title = {\href{http://ijr.sagepub.com/content/9/2/62.abstract}{Passive Dynamic Walking}}, 
+  volume = {9}, 
+  number = {2}, 
+  pages = {62-82}, 
+  year = {1990}, 
+  doi = {10.1177/027836499000900206}, 
+  URL = {http://ijr.sagepub.com/content/9/2/62.abstract}, 
+  eprint = {http://ijr.sagepub.com/content/9/2/62.full.pdf+html}, 
+  journal = {The International Journal of Robotics Research}
+}
+\end{verbatim}
+}
+\noindent
+and the entry in the compiled PDF would look like:
+
+\def\tmplabel#1{[#1]}
+
+\begin{enumerate}
+\item[\tmplabel{1}] Tad McGeer. \href{http://ijr.sagepub.com/content/9/2/62.abstract}{Passive Dynamic
+Walking}. {\em The International Journal of Robotics Research}, 9(2):62--82,
+1990.
+\end{enumerate}
+%
+where the title of the article is a link that takes you to the article on IJRR's website. 
+
+
+Linking cited articles will not always be possible, especially for
+older articles. There are also often several versions of papers
+online: authors are free to decide what to use as the link destination
+yet we strongly encourage to link to archival or publisher sites
+(such as IEEE Xplore or Sage Journals).  We encourage all authors to use this feature to
+the extent possible.
+
+\section{Conclusion} 
+\label{sec:conclusion}
+
+The conclusion goes here.
+
+\section*{Acknowledgments}
+
+%% Use plainnat to work nicely with natbib. 
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
+
+

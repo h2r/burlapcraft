@@ -1,0 +1,206 @@
+
+First I’d suggest authors move the related work after the experiments,
+as they refer to tables and results when one don’t know already
+anything and can’t distinguish between their work and other
+contributions.
+
+-- Done. 
+
+It would help the reader as well to give a formal definition of the
+OO-MDP or, since you mainly use 1 domain, an example over minecraft
+domain to figure out how the state-space, transition function, etc, is
+derived. 
+
+-- TODO: Added Figure 2 and asked Dave and Ellis to fill it in.
+
+It would be also useful to understand the results if you say
+how the cost function is defined, whether there’s a single goal by
+task, etc.
+
+-- Added Figure 2b as well as Figure 1 and 3 with concrete examples.
+ 
+You claim that since predicates operate on collections of objects,
+they generalize beyond specific state spaces within the domain, and
+show that this is the case on minecraft, but further experimentation
+would help understanding when this technique works, and when it
+doesn’t.
+
+-- Added Figure 3 which shows examples of different problems. 
+
+You could discuss the notion of relevance, specially on the related
+work-deterministic approach, where many pruning techniques exist that
+don’t rely on knowledge engineering, ex. helpful actions that could
+also benefit from affordances.
+
+-- Added citation to LAMA
+
+On the experimental and theoretical side, It’s not clear whether the
+incorporation of affordances prunes optimal solutions until you
+explain the experimental section.
+
+-- TODO:  once results come in.
+
+Do you incorporate the affordances incrementally in the training set?
+-- TODO:  once results come in.
+
+Moreover, consider you have just 1 problem, What happens if you run
+RTDP, you add the affordances you learned over this problem, run again
+on the same problem, and try to learn new affordances. Will it
+converge to a point where it won’t learn anything new unless you
+change problem? 
+-- TODO:  once results come in.
+
+Is there any convergence guarantee given the threshold
+you choose? any bound on the number of affordances you can learn?
+-- TODO:  once results come in.
+
+It would be interesting to mention that if you learn all the
+affordances where each cond is a full state, <cond-full-state,g>,
+you’ll end up adding as many affordances as states in the policy. This
+leads me to another question, how many affordances do you learn so you
+don’t over fit with affordance “features”? 
+-- Added how many affordances we learn to results
+
+Is there a maximum size on the specifically on the conditions,
+i.e. condition can be a set of predicates of bounded size?
+
+-- Added a sentence about this to the knowledge base section (we
+   define predicates to be arbirtray, but our experiments use unary.)X
+
+Since you are testing a single domain, you can add a table containing
+data specifically about the affordances and how it changes the
+branching factor to relate the effect of using them. As you mention,
+in some cases it can prune all applicable actions if the test suit
+have high variance or the threshold is not properly adjusted.
+
+-- TODO  asked Dave to make a table. 
+
+Just as a side note, There’s a very known algorithm called already
+LRTDP, this lead me to some confusion at first sight.
+
+-- Changed to LA-RTDP
+
+----------------------- REVIEW 2 ---------------------
+PAPER: 1180
+TITLE: Affordance-Aware Planning
+AUTHORS: David Abel, Gabriel Barth-Maron, D. Ellis Hershkowitz, Stephen Brawner, Kevin O'Farrell, James MacGlashan and Stefanie Tellex
+
+Significance of the Contribution: 6 (+ (slightly positive))
+Soundness and Positioning with Respect to Related Work: 5 (- (slightly negative))
+Depth of Theoretical and/or Experimental Analysis (as appropriate): 5 (- (slightly negative))
+Quality of Presentation: 6 (+ (slightly positive))
+SUMMARY RATING: 1 (+ (slightly positive))
+
+----------- COMMENTS FOR THE AUTHORS -----------
+
+The paper addresses the problem of planning in OO-MDP domain. It
+proposes a method to extend well-known RTDP method to represent
+affordances which are state-goal-action tuples which defines which
+action is more likely in which state and goal. These state-goal-action
+tuples restricts the available action and speeds up the convergence of
+the algorithm. It also proposes a method to learn these
+state-goal-action tuples by modeling optimal actions at certain states
+for a given goal. The results are provided in minecraft game domain
+and robotic cooking domain where robot helps a man in kitchen. Results
+shows that affordances are not helpful in overall, but its performance
+might be poor for some tasks. The paper also compares RTDP with macro
+actions and options, shows that affordance-aware RTDP is better.
+
+The paper easy to follow and read, but it would be better not to
+reference results in related work section or related work might
+presented after results section. Also, It might be better to provide a
+reference for the minecraft game.
+
+The paper proposes a method to integrate planning knowledge to the
+planner. However, the method either learns or is informed about the
+likely actions in certain states. This planning knowledge can be
+transferred to same domains with little variations. In other words,
+world should have exactly the same predicate, goal and state for
+learned knowledge to be useful. The knowledge gathered is helpful only
+in the given domain and training set.
+
+In overall LRTDP is better than other methods but for single tasks
+there are some variations. For example, for mining task RTDP takes the
+less time than other methods and gets the highest reward. It seems
+that action pruning threshold be handled in a more principled way.
+The paper compares the method with macro-actions and options
+variations, but it is not stated which macro-actions and options are
+used. Since design of macro-actions and options determines the
+solution quality, we cannot deduce the success of the
+algorithm. Cooking domain experiment seems an easy problem. When you
+abstract the problem of cooking in terms ingredients and tools, it is
+very easy to learn these plans. The paper should present the
+complexity of cooking problem.
+
+The proposed method seems promising since it provides a easy way to
+add expert knowledge, but this is highly depended on the granularity
+of the real world problem. Also, there is a need for justification
+about training problems. Which problems are helpful, do we need to run
+lots of training examples. I am curious about transferring this method
+to MDP domain such that the algorithm learns likely actions at certain
+states and the goal. Another suggestion is using an online method in
+training. While the algorithm is learning affordances, it may also act
+on the currently learned ones.
+
+
+----------------------- REVIEW 3 ---------------------
+PAPER: 1180
+TITLE: Affordance-Aware Planning
+AUTHORS: David Abel, Gabriel Barth-Maron, D. Ellis Hershkowitz, Stephen Brawner, Kevin O'Farrell, James MacGlashan and Stefanie Tellex
+
+Significance of the Contribution: 8 (+++)
+Soundness and Positioning with Respect to Related Work: 8 (+++)
+Depth of Theoretical and/or Experimental Analysis (as appropriate): 7 (++)
+Quality of Presentation: 7 (++)
+SUMMARY RATING: 3 (+++)
+
+----------- COMMENTS FOR THE AUTHORS -----------
+In general, the article is very well structured, providing a clear and organized presentation of previous works as well as the methods presented. 
+
+More importantly, the numerical results and videos provided support
+the claim that the proposed method constitutes an improvement over
+other planning strategies based on Markov Decision Processes. I
+particularly like the approach that the authors take on affordances in
+the context of reinforcement learning in order to steer the agent
+towards planning only with those actions which have been found to have
+more chances of succeeding.
+
+Yet, there are a few things that remain unclear. On the one hand,
+whereas in the Introduction section it is stated that “We rigorously
+formalize the notion of an affordance as knowledge added to an OOMDP
+that prunes irrelevant actions on a state ­by ­state basis based on
+the agent’s current goal.”, on the Methods section no formal
+definition of the concept of affordances can be found. In fact, all
+related and necessary concepts (Optimal actions, Knowledge base,
+indicator function, features, etc.) are precisely stated, but not what
+the authors formally mean by “affordances”. I suggest that authors
+clarify this point.
+
+On the other hand, it is shown that after the learning, the knowledge
+about the agent’s affordances leads to more accurate and faster
+planning than with other MDP­based planners. However, the time
+required for learning has not been taken in account when comparing
+this method against the other MDP­based planners. I suspect that this
+time is actually considerable for a rich state-­space like the ones on
+the tested scenarios, and that is why autonomous affordance learning
+has been left out of the real­ robot scenario. For sake of
+completeness, authors should also include how long the learning
+process required, and accordingly comment on its feasibility on real­
+robot scenarios.
+
+Overall, I would suggest the acceptance of the reviewed paper.
+
+
+-------------------------  METAREVIEW  ------------------------
+PAPER: 1180
+TITLE: Affordance-Aware Planning
+
+Although all reviewers found the presented work promising, they also
+identify some serious problems with the paper, most notably with the
+clarify of the presentation and the depth and comprehensiveness of the
+experimental analysis. If the paper is accepted, the authors are
+expected to address the questions raised in the reviews - for example,
+the precise definition of affordances, the selection of training data
+and time spent on training, the true complexity of the problems used
+for evaluation, and performance of the method in an on-line learning
+setting - for the final version.

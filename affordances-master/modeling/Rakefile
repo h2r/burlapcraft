@@ -1,0 +1,9 @@
+task :default do
+  sh "pdflatex soft_affordance_math.tex"
+  sh "pdflatex soft_affordance_math.tex"
+  sh "bibtex soft_affordance_math"
+  sh "pdflatex soft_affordance_math.tex"
+end
+task :clean do
+  sh "rm -rf *.aux *.bbl *.blg *.log"
+end

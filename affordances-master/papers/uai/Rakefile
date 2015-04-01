@@ -1,0 +1,9 @@
+task :default do
+  sh "pdflatex uai.tex"
+  sh "pdflatex uai.tex"
+  sh "bibtex uai"
+  sh "pdflatex uai.tex"
+end
+task :clean do
+  sh "rm -rf *.aux *.bbl *.blg *.log"
+end

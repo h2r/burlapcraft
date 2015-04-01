@@ -1,0 +1,7 @@
+package com.kcaluru.burlapbot.blocks;
+
+import net.minecraft.block.Block;
+
+public class BlockBurlapStone extends Block {
+
+}

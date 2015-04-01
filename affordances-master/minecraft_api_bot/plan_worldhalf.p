@@ -1,0 +1,1 @@
+left,forward,forward,forward,left,left,left,forward,forward,forward,forward,right,forward,right,right,door,right,right,back,back,right,right,right,right,forward,forward

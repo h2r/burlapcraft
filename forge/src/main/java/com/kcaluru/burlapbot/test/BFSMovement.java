@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
-import com.kcaluru.burlapbot.items.ItemBurlapWand;
+import com.kcaluru.burlapbot.items.ItemFinderWand;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -162,7 +162,7 @@ public class BFSMovement {
 					  index += 1;
 				  }
 				  else {
-					  BurlapAIHelper.faceBlock(ItemBurlapWand.actualDestX, curY - 1, ItemBurlapWand.actualDestZ);
+					  BurlapAIHelper.faceBlock(ItemFinderWand.actualDestX, curY - 1, ItemFinderWand.actualDestZ);
 					  timer.cancel();
 				  }
 			  }

@@ -1,0 +1,31 @@
+Done with vanilla/expert on map: [van,exp, numStates] PlaneWorld0.map [0.0,0.0, numStates: -1]
+Done with vanilla/expert on map: [van,exp, numStates] PlaneWorld1.map [0.0,0.0, numStates: -1]
+Done with vanilla/expert on map: [van,exp, numStates] PlaneWorld2.map [0.0,0.0, numStates: -1]
+Done with vanilla/expert on map: [van,exp, numStates] PlaneWorld3.map [0.0,0.0, numStates: -1]
+Done with vanilla/expert on map: [van,exp, numStates] PlaneWorld4.map [0.0,0.0, numStates: -1]
+(MinecraftTestPipeline) USING KB: lr_0.000.kbDone with learned on map: PlaneWorld0.map, with kb: lr_0.000.kb
+Done with learned on map: PlaneWorld1.map, with kb: lr_0.000.kb
+Done with learned on map: PlaneWorld2.map, with kb: lr_0.000.kb
+Done with learned on map: PlaneWorld3.map, with kb: lr_0.000.kb
+Done with learned on map: PlaneWorld4.map, with kb: lr_0.000.kb
+(MinecraftTestPipeline) USING KB: lr_0.200.kbDone with learned on map: PlaneWorld0.map, with kb: lr_0.200.kb
+Done with learned on map: PlaneWorld1.map, with kb: lr_0.200.kb
+Done with learned on map: PlaneWorld2.map, with kb: lr_0.200.kb
+Done with learned on map: PlaneWorld3.map, with kb: lr_0.200.kb
+Done with learned on map: PlaneWorld4.map, with kb: lr_0.200.kb
+(MinecraftTestPipeline) USING KB: lr_0.400.kbDone with learned on map: PlaneWorld0.map, with kb: lr_0.400.kb
+Done with learned on map: PlaneWorld1.map, with kb: lr_0.400.kb
+Done with learned on map: PlaneWorld2.map, with kb: lr_0.400.kb
+Done with learned on map: PlaneWorld3.map, with kb: lr_0.400.kb
+Done with learned on map: PlaneWorld4.map, with kb: lr_0.400.kb
+(MinecraftTestPipeline) USING KB: lr_0.600.kbDone with learned on map: PlaneWorld0.map, with kb: lr_0.600.kb
+Done with learned on map: PlaneWorld1.map, with kb: lr_0.600.kb
+Done with learned on map: PlaneWorld2.map, with kb: lr_0.600.kb
+Done with learned on map: PlaneWorld3.map, with kb: lr_0.600.kb
+Done with learned on map: PlaneWorld4.map, with kb: lr_0.600.kb
+(MinecraftTestPipeline) USING KB: lr_0.800.kbDone with learned on map: PlaneWorld0.map, with kb: lr_0.800.kb
+Done with learned on map: PlaneWorld1.map, with kb: lr_0.800.kb
+Done with learned on map: PlaneWorld2.map, with kb: lr_0.800.kb
+Done with learned on map: PlaneWorld3.map, with kb: lr_0.800.kb
+Done with learned on map: PlaneWorld4.map, with kb: lr_0.800.kb
+(MinecraftTestPipeline) USING KB: lr_1.000.kbDone with learned on map: PlaneWorld0.map, with kb: lr_1.000.kb

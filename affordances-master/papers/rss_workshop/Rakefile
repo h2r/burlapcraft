@@ -1,0 +1,9 @@
+task :default do
+  sh "pdflatex rss_workshop.tex"
+  sh "pdflatex rss_workshop.tex"
+  sh "bibtex rss_workshop"
+  sh "pdflatex rss_workshop.tex"
+end
+task :clean do
+  sh "rm -rf *.aux *.bbl *.blg *.log"
+end

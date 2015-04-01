@@ -1,0 +1,21 @@
+package com.kcaluru.burlapbot;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
+public class BurlapEventHandler {
+	
+	// get minecraft
+	private static Minecraft mc = Minecraft.getMinecraft();
+	
+	@SubscribeEvent
+	public void EntityJoinWorldEvent(EntityEvent event) {
+		
+		mc.thePlayer.inventoryContainer.inventorySlots.add(BurlapMod.finderWand);
+		mc.thePlayer.inventoryContainer.inventorySlots.add(BurlapMod.bridgeWand);
+		
+	}
+}

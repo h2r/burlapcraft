@@ -1,0 +1,93 @@
+\documentclass[]{article} 
+
+\usepackage{subfigure}
+\usepackage[numbers,sort]{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{ifthen,version}
+\usepackage{enumerate}
+\newboolean{include-notes}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{bm}
+%\usepackage{adjustbox}
+\usepackage[usenames,dvipsnames]{color}
+\newcommand{\stnote}[1]{\textcolor{Blue}{\textbf{ST: #1}}}
+\newcommand{\jmnote}[1]{\textcolor{Green}{\textbf{JM: #1}}}
+\newcommand{\dnote}[1]{\textcolor{Orange}{\textbf{D: #1}}}
+\newcommand{\gnote}[1]{\textcolor{Red}{\textbf{G: #1}}}
+
+
+
+\title{Affordance Learning Math}
+
+
+
+\begin{document}
+\date{}
+\maketitle
+
+
+\section*{Soft Affordances}
+
+Our aim is to develop an algorithm for learning a distribution over
+actions given a current state and lifted goal description:
+\begin{align}
+P(a | s, LGD)\label{eq:soft_affordances}
+\end{align}
+
+
+\section*{Process Overview}
+
+To learn Equation~\ref{eq:soft_affordances}, we assume the
+distribution takes the following form:
+
+\begin{align}
+P(a | s, LGD) = dirichelte \label{eq:soft_affordances}
+\end{align}
+
+
+\begin{enumerate}[1)]
+\item {\bf World Generation:} Generate $M$ random worlds, each annotated with a Lifted Goal Description ($LGD$)
+\item {\bf Solve Policies:} Form a policy $\pi_i$ for each of the $M$
+  worlds using RTDP and null affordances.  Some worlds will be too
+  hard to solve without affordances; ignore worlds that cannot be solved.
+\item {\bf Compute distribution over actions, $\alpha$:} Use each policy $\pi_i$, with the corresponding $LGD$s and predicates that ``light up'' (hand crafted) to get counts, $\alpha$. Use $\alpha$ as the parameter for the Multinomial-Dirichlet distribution
+\item {\bf Compute action set size parameter, $\beta$:} Sample trajectories from each policy $\pi_i$, use the size of the set of actions used in each trajectory to get counts $\beta$. Use $\beta$ as the parameters to a Dirichlet distribution.
+\item Each time we use an affordance, sample its action set size (so we choose the number of actions to select, $k$), then sample $k$ actions from that affordances distribution to get the pruned action set. Use as normal.
+\end{enumerate}
+\section*{Math}
+\begin{align}
+	Pr(\lambda \mid \alpha, \beta) = Pr(\lambda = \{a_1, \ldots, a_k\} \mid n = k, \alpha) \cdot Pr(k \mid \beta)
+\end{align}
+
+\noindent Where the number of actions to select $k$ is distributed as follows:
+\begin{align}
+	k \sim Dir(\beta)
+\end{align}
+
+\noindent And the probability of select any $k$ actions is given by the dirichlet-multinomial distribution:
+\begin{align}
+	Pr(\lambda = \{a_1, \ldots, a_k\} \mid n = k, \alpha) = \frac{\Gamma(A)}{\Gamma(k + A)} \prod_{i = 1}^{|actions|} \frac{\Gamma(\delta(a_i \in \lambda) + \alpha_i)}{\Gamma(a_i)} 
+\end{align}
+
+% NEW:
+
+
+%\mathcal{S} &= \\
+%\Delta &= \\
+%\alpha &= \\
+%\beta &= \\
+%\lambda &= \\
+%n &=\\
+%\mathcal{A}' &= \\
+
+
+%Pr(\mathcal{A} \mid n, \lambda) = Pr(\lambda \mid \alpha) \cdot Pr(n \mid \beta)
+
+%\text{Pr}(\lambda \mid \alpha) = Dir(\alpha) \\
+%\text{Pr}(n \mid \beta) = DirMult(\beta) \\
+%\text{Pr}(\mathcal{A} \mid n, \lambda) = \text{Pr}(\lambda \mid \alpha) \cdot\text{Pr}(n \mid \beta)
+
+\end{document}

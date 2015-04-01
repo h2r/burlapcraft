@@ -1,0 +1,12 @@
+package com.kcaluru.burlapbot;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
+public class BurlapEventHandler {
+	@SubscribeEvent
+	public void EntityJoinWorldEvent(Entity entity, World world) {
+		System.out.println("Reached here");
+	}
+}

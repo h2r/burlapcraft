@@ -1,0 +1,10 @@
+package com.kcaluru.burlapbot.blocks;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+
+public class BlockBurlapStone extends Block {
+
+	super(Material.rock);
+
+}

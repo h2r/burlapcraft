@@ -1,0 +1,152 @@
+%% preamble.tex
+%% this should be included with a command like
+%% \input{p}
+
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{latexsym}
+\usepackage{amsmath}
+%\usepackage{newalg}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{graphicx}
+%\usepackage{wasysym}
+\usepackage[]{algorithm2e}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage[makeroom]{cancel}
+\usepackage{enumerate}
+\usepackage{framed}
+
+
+\newcommand{\sk}{s}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lesson}{Lesson}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{fact}{Fact}
+\newtheorem*{claim}{Claim}
+%\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem*{remark}{Remark}
+
+%==============================================================================
+% Macros.
+%==============================================================================
+\newcommand{\new}[1]{{\em #1\/}}		% New term (set in italics).
+\newcommand{\set}[1]{\{#1\}}			% Set (as in \set{1,2,3})
+\newcommand{\setof}[2]{\{\,{#1}|~{#2}\,\}}	% Set (as in \setof{x}{x > 0})
+\newcommand{\C}{\mathbb{C}}	                % Complex numbers.
+\newcommand{\Q}{\mathbb{Q}}                     % Rationals.
+\newcommand{\compl}[1]{\overline{#1}}		% Complement of ...     
+\newcommand{\subproblem}[1]{\vspace{4 mm}\noindent {\bf (#1)} \\} % Subproblem (a), (b), etc...
+\newcommand{\elem}[1]{\noindent{\bf #1}}	    % Proof element (Claim:, Proof:, etc.)
+\newcommand{\spacerule}{\vspace{4mm}\hrule\vspace{4mm}} % Add an hrule with some space
+\newcommand{\dmod}[2]{\left[ #1\ \text{mod}\ #2\right]} % My mod rule
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+\DeclareMathSymbol{\F}{\mathalpha}{AMSb}{"46}
+\DeclareMathSymbol{\N}{\mathalpha}{AMSb}{"4E}
+\DeclareMathSymbol{\R}{\mathalpha}{AMSb}{"52}
+\DeclareMathSymbol{\X}{\mathalpha}{AMSb}{"58}
+\DeclareMathSymbol{\Zz}{\mathalpha}{AMSb}{"5A}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\Z}[1]{{\ensuremath{\Zz_{#1}} }}
+\newcommand{\Zs}[1]{\ensuremath{\Zz^{\ast}_{#1}}}
+\newcommand{\Zn}{\Z{n}}
+\newcommand{\Zns}{\Zs{n}}
+\newcommand{\Zstar}[1]{\Zs{#1}}
+\newcommand{\Zp}{{\Z{p}}}
+\newcommand{\Zps}{\Zs{p}}
+\newcommand{\Zqs}{\Zs{q}}
+\newcommand{\Zq}{{\Z{q}}}
+%\newcommand{\QR}{\mathop{\mathrm{QR}}\nolimits}
+\newcommand{\ord}[1]{\mathop{\mathrm{ord}}({#1})}
+\newcommand{\QR}[1]{\ensuremath{\textit{QR}_{#1}}}
+\newcommand{\becomes}{:=}
+\newcommand{\rem}[1]{\ensuremath{\ \operatorname{rem} #1}}  
+\newcommand{\U}{{\mathcal{U}}}
+\newcommand{\floor}[1]{\ensuremath{\lfloor{#1}\rfloor}}
+\newcommand{\de}[1]{\ensuremath{\Delta{#1}}}
+\newcommand{\js}[2]{\left( \frac{#1}{#2} \right)}
+\newcommand{\E}[1]{{\bf E} \left[ #1 \right]}
+\newcommand{\PR}[1]{\text{Pr} \left[ #1 \right]}
+
+\renewcommand{\QR}{{\mbox{QR}}}
+\newcommand{\QNR}{{\mbox{QNR}}}
+\newcommand{\crt}{{\mbox{CRT}}}
+\newcommand{\rsa}{{\mbox{RSA}}}
+\newcommand{\rsamod}{{\mbox{RSA-modulus}}}
+
+
+\newcommand{\greq}[1]{\stackrel{#1}{=}}
+\newcommand{\hash}{\ensuremath{\mathcal{H}}}
+\newcommand{\negl}{{\tt neg}}
+\newcommand{\cindist}{\stackrel{c}{\approx}}
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\B}{{\mathcal{B}}}
+
+\newcommand{\gen}{\mathit{Gen}}
+\newcommand{\keygen}{\mathit{KeyGen}}
+\newcommand{\RSA}{\mathit{RSA}}
+\newcommand{\pk}{\mathit{pk}}
+\newcommand{\PK}{\mathit{PK}}
+\newcommand{\SK}{\mathit{SK}}
+\newcommand{\sign}{\mathit{Sign}}
+\newcommand{\verify}{\mathit{Verify}}
+
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{#1-\arabic{page}}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { {\bf CS151: Intro to Cryptography and Computer Security} \hfill #2 }
+       \vspace{4mm}
+       \hbox to 5.78in { {\Large \hfill #5  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { {\it #3 \hfill #4} }
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+
+\newcommand{\ho}[4]{\handout{#1}{#2}{Instructor:
+#3}{}{Handout #1: #4}}
+
+\newcommand{\lnotes}[3]{\handout{#1}{#2}{Instructor:
+#3}{}{Lecture #1}}
+
+\newcommand{\solution}[1]{#1}
+%\homework{number}{out}{due}{instructor}
+\newcommand{\homework}[4]{\handout{HW #1}{#2}{Instructor: #4}{Due: #3}{Homework #1}}
+
+%================================================
+% problemset macros
+%================================================
+% count problems
+\newcounter{solutioncount}
+\setcounter{solutioncount}{0}
+\newcommand{\problem}[1]{%
+\addtocounter{solutioncount}{1}%
+\section*{Problem \arabic{solutioncount}: #1}}
+
+% lets you make alphabetical lists (at first-level of enumeration)
+\newenvironment
+  {alphabetize}{\renewcommand{\theenumi}{\alph{enumi}}\begin{enumerate}}
+  {\end{enumerate}\renewcommand{\theenumi}{\arabic{enumi}}}

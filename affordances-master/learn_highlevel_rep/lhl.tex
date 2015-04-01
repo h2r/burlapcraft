@@ -1,0 +1,109 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+
+\title{Learning High-level Representations}
+\author{James MacGlashan}
+\date{}
+
+
+\begin{document}
+\maketitle
+\section{Introduction}
+The purpose of this document is to propose some general approaches for learning high-level representations of a planning problem that can then be exploited by planning algorithms. We will assume that the state is fully observable and we will also assume that in addition to the state, some additional perception-based features will be provided (e.g., vision, a map, etc.). The agent will be provided
+a training period in $n$ different planning problems in which planning without high-level information
+is tractable. The outputs of the training that we'd like are (1) a set of high-level features that are determined from the perception in each state; (2) a set of subgoals, similarly defined in learned high-level features; and (3) a set of affordances associated with each subgoal. For simplicity, we will break the core ideas into related but simpler problems that we can test independently.
+
+\section{Learning Problem-level Affordances}
+Let us start by considering a simpler problem of learning which classes of planning problems exist in a set of training problems, which policy action distributions the agent should use in each to bias planning, and how to identify the problem class from perception. We will define a planning problem as a pair ($M$, $s_0$), where $M$ is an MDP definition and $s_0$ is an initial state. A problem class defines a set of problems for which there is a common policy action distribution that would be used in planning. For instance, the flat world class in Minecraft would only require using the movement actions, whereas a trench world class would require the use of movement and placing blocks. Finally, we will define $P : S \rightarrow \mathbb{R}^m$ to be a function that produces the perception features available to the agent.
+
+The most trivial form of this problem is to imagine that the agent will only ever need to plan for the same planning problem. This problem is trivial because we do not need to identify which problem class the agent is ever in, only what policy action distribution would be used if the agent ever had to replan. We can imagine this simplified problem as if the agent will have to forget the policy it planned during training, but can remember the policy's action distribution so that it can trivially replan the problem again in the future. Another way to think of the result is finding a lossy compression of the policy. 
+
+We can produce the corresponding policy action distribution for a single problem using Algorithm \ref{alg:pad}, which finds a policy for the problem, computes the frequency of each action in the set of
+states that are reachable from the initial state, and returns a probability
+for each action by normalizing.
+\begin{algorithm}
+\begin{algorithmic}
+\Require{MDP $M = ({\cal S}, {\cal A}, {\cal T}, {\cal R}, \gamma)$, initial state $s_0$}
+\State $\pi \gets$ Plan($M, s_0$)
+\State $\hat{\cal S} \gets$ Reachable($s_0, \pi$) \Comment{All reachable states from $s_0$ when following $\pi$}
+\State $c(a) \gets |\{ s \in \hat{\cal S} : \pi(s) = a \}|$  $\forall a \in {\cal A}$ \Comment{count action frequency}
+\State $\Pr(a) \gets \frac{c(a)}{\sum_{a' \in {\cal A}} c(a')}$
+\State \Return{$\Pr(a), \pi$}
+\end{algorithmic}
+\caption{LearnActionDistribution($M, s_0$)}
+\label{alg:pad}
+\end{algorithm}
+
+A slightly more relaxed version of this problem is if we had a set of problems that were known to be from the same class. In this case, we generate an action distribution for the class by averaging the the result of Algorithm \ref{alg:pad} applied to each of them. (Alternatively, if the set of reachable states in each problem under its policy can vary significantly in size between problems, the sum of the action frequencies for each problem in the class can be added together and then normalized.)
+
+If a set of training problems from different labeled problem classes was available, but the agent could not expect to the know the problem class outside of training, then a supervised learning algorithm can be used to learn a mapping from perception to the problem class, after which the agent can use the associated action distribution that was learned for each problem class to bias planning. Specifically, Algorithm \ref{alg:suppc} shows how to setup the supervised learning task, where each training problem contributes a supervised
+learning training data instance for each state that is reachable from following
+the solved policy from the problem's initial state. The supervised training
+instance for each state is the perceptual features for the state with the problem class as the supervised label. After the supervised training dataset is constructed, any suitable off-the-shelf supervised learning algorithm can be used to train a classifier, which is then returned.
+
+\begin{algorithm}
+\begin{algorithmic}
+\Require{$n$ problems ${\cal P}$, solved policies $\Pi$, and associated problem classes ${\cal C}$}
+%\State Let $k$ be the number of unique problem classes in ${\cal C}$
+%\State Let ${\cal P}_i$ be the problems belonging to class $i$
+\State $D \gets \{\}$
+\For{$i = 1$ to $n$}
+\State $\hat{\cal S} \gets$ Reachable(${\cal P}_i.s_0, \Pi_i$)
+\ForAll{$s \in \hat{\cal S}$}
+\State $D \gets D \cup \{ (P(s), {\cal C}_i) \}$
+\EndFor
+\EndFor
+\State $c \gets$ LearnClassifier($D$)
+\State \Return{c} 
+\end{algorithmic}
+\caption{LearnPerceptionToProblemClass($n, {\cal P}, \Pi, {\cal C}$)}
+\label{alg:suppc}
+\end{algorithm}
+
+We now return to the question of when the problem class is not provided to the agent in training problems and instead must be identified by the agent in an unsupervised manner. Recall that we are defining a problem class as a set of problems that we would expect to require the same kinds of action distributions to solve. Therefore, identifying problem classes from unsupervised training problems is accomplished by generating the action distributions for each problem (using Algorithm \ref{alg:pad}) and then clustering the problems in their action distribution space, using a metric such as the Kullback-Leibler divergence or the Fisher information metric. The clustering algorithm should ideally pick
+the number of clusters from the data. 
+
+After clustering is performed, the cluster to which each problem is assigned is used as the problem class label, after which Algorithm \ref{alg:suppc} is used to identify the problem class from perceptual features. Algorithm \ref{alg:identpc} shows the final algorithm that identifies problem classes from training data, generates action distributions for each, and learns how to identify them from perceptual features to bias planning in novel target problems.
+
+\begin{algorithm}
+\begin{algorithmic}
+\Require{$n$ and the training problems ${\cal P}$}
+\For{$i = 1$ to $n$}
+\State $A_i \Pi_i \gets$ LearnActionDistribution(${\cal P}_i.M, {\cal P}_i.s_0$)
+\EndFor
+\State $K,k \gets$ Cluster($A$) \Comment{cluster assignment function ($K$) and \# of clusters $k$}
+\For{$i = 1$ to $k$}
+\State ${\cal A}_i \gets$ Average($\{a \in A | K(a) = i \}$) \Comment{Average  for each cluster}
+\EndFor
+\For{$i = 1$ to $n$}
+\State ${\cal C}_i \gets K(A_i)$
+\EndFor
+\State $C \gets$ LearnPerceptionToProblemClass($n, {\cal P}, \Pi, {\cal C})$
+\State \Return{$C, A$}
+\end{algorithmic}
+\caption{IdentifyAndLearnProblemClasses($n, {\cal P}$)}
+\label{alg:identpc}
+\end{algorithm}
+
+\section{Features, Subgoals, and High-level MDPs}
+Although Algorithm \ref{alg:identpc} should be useful in scaled up versions
+of the training tasks, it may be less useful when the agent has to plan in complex
+worlds that require many different subgoals. However, using similar approaches, we may be able to also learn subgoals, high-level features to represent them, and then create high-level subgoal achieving ``actions'' for them, all from which a high-level MDP can be generated and used to accelerate planning in complex tasks.
+\\ 
+\\
+{\bf Ideas to be filled in later:}
+\begin{itemize}
+\item cluster by time in a single problem; score clusters by action distribution changes.
+\item supervised learning produces features that predict the existence of different sub-problem action distribution changes and used as subgoal features.
+\end{itemize}
+
+\section{Research Plan}
+I believe that Algorithm \ref{alg:pad} is effectively already implemented in the current affordance work, or at least something very similar to it. Therefore, I suggest that the next task is to implement the clustering part of Algorithm \ref{alg:identpc} and we should examine which clusters it finds and how it assigns problems to them. We should consider it a success if we see problems like flat worlds in one cluster and problems like bridge world in another. If so, then we should consider the supervised learning problem and see if we can provide perception information (e.g., a 2D map image) from which supervised learning can effectively learn to identify the correct cluster.
+
+\end{document}

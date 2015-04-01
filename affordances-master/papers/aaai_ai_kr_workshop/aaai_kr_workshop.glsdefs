@@ -1,0 +1,90 @@
+\ifglsentryexists{rtdp}{}%
+{%
+\gls@defglossaryentry{rtdp}%
+{%
+name={RTDP},%
+sort={RTDP},%
+type={acronym},%
+first={Real-Time Dynamic Programming (RTDP)},%
+firstplural={Real-Time Dynamic Programming\acrpluralsuffix  (RTDP\acrpluralsuffix )},%
+text={RTDP},%
+plural={RTDP\acrpluralsuffix },%
+description={Real-Time Dynamic Programming},%
+descriptionplural={Real-Time Dynamic Programming\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Real-Time Dynamic Programming},%
+longplural={Real-Time Dynamic Programmings},%
+short={RTDP},%
+shortplural={RTDPs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{mdp}{}%
+{%
+\gls@defglossaryentry{mdp}%
+{%
+name={MDP},%
+sort={MDP},%
+type={acronym},%
+first={Markov Decision Process (MDP)},%
+firstplural={Markov Decision Process\acrpluralsuffix  (MDP\acrpluralsuffix )},%
+text={MDP},%
+plural={MDP\acrpluralsuffix },%
+description={Markov Decision Process},%
+descriptionplural={Markov Decision Process\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Markov Decision Process},%
+longplural={Markov Decision Processs},%
+short={MDP},%
+shortplural={MDPs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{vi}{}%
+{%
+\gls@defglossaryentry{vi}%
+{%
+name={VI},%
+sort={VI},%
+type={acronym},%
+first={Value Iteration (VI)},%
+firstplural={Value Iteration\acrpluralsuffix  (VI\acrpluralsuffix )},%
+text={VI},%
+plural={VI\acrpluralsuffix },%
+description={Value Iteration},%
+descriptionplural={Value Iteration\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Value Iteration},%
+longplural={Value Iterations},%
+short={VI},%
+shortplural={VIs},%
+counter={page},%
+parent={},%
+%
+}%
+}%

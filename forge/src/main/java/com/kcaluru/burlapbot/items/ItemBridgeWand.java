@@ -1,6 +1,7 @@
 package com.kcaluru.burlapbot.items;
 
 import com.kcaluru.burlapbot.BurlapMod;
+import com.kcaluru.burlapbot.BurlapWorldGenHandler;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,14 @@ public class ItemBridgeWand extends Item {
 //	public static int actualDestZ;
 	
 	
+	// indicate whether agent is in dungeon or not
+	public static boolean bridgeInside;
+	
 	public ItemBridgeWand() {
+		
+		// set brideInside to false
+		bridgeInside = false;
+		
 		// give the item a name
 		setUnlocalizedName(BurlapMod.MODID + "_" + name);
 		
@@ -29,23 +37,19 @@ public class ItemBridgeWand extends Item {
 	}
 	
 	@Override
-	public boolean onItemUseFirst(ItemStack itemstack, EntityPlayer player, World world, 
-			 int x, int y, int z, int side, float px, float py, float pz) {
+	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
+    {
 		
-		int posX = (int) player.posX;
-		int posY = (int) player.posY;
-		int posZ = (int) player.posZ;
-		
-		Chunk curChunk = world.getChunkFromBlockCoords(posX, posZ);
-		
-		System.out.println(curChunk.xPosition);
-		System.out.println(curChunk.zPosition);
-		
-		System.out.println(player.chunkCoordX);
-		System.out.println(player.chunkCoordY);
-		System.out.println(player.chunkCoordZ);
-		
-		return true;
-	}
-	
+		if (bridgeInside) {
+
+		}
+		else {
+			if (!world.isRemote) {
+				ItemFinderWand.finderInside = false;
+				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 48, (double) BurlapWorldGenHandler.posY + 103, (double) BurlapWorldGenHandler.posZ + 4);
+				bridgeInside = true;
+			}
+		}
+        return itemStack;
+    }
 }

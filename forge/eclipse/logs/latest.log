@@ -1,11 +1,37 @@
-[18:45:29] [main/INFO]: Setting user: Player960
-[18:45:30] [Client thread/INFO]: LWJGL Version: 2.9.1
-[18:45:34] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Example Mod, FMLFileResourcePack:burlapmod
-[18:45:35] [Sound Library Loader/INFO]: Sound engine started
-[18:45:36] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[18:45:36] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[18:45:36] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Example Mod, FMLFileResourcePack:burlapmod
-[18:45:36] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[18:45:36] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[18:45:37] [Sound Library Loader/INFO]: Sound engine started
-[18:45:40] [Client thread/INFO]: Stopping!
+[13:35:44] [main/INFO]: Setting user: Player413
+[13:35:45] [Client thread/INFO]: LWJGL Version: 2.9.1
+[13:35:50] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[13:35:50] [Sound Library Loader/INFO]: Sound engine started
+[13:35:51] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[13:35:51] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[13:35:51] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[13:35:52] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[13:35:52] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[13:35:52] [Sound Library Loader/INFO]: Sound engine started
+[13:36:06] [Client thread/INFO]: Deleting level New World
+[13:36:06] [Client thread/INFO]: Attempt 1...
+[13:36:27] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[13:36:27] [Server thread/INFO]: Generating keypair
+[13:36:27] [Server thread/INFO]: Converting map!
+[13:36:27] [Server thread/INFO]: Scanning folders...
+[13:36:27] [Server thread/INFO]: Total conversion count is 0
+[13:36:28] [Server thread/INFO]: Preparing start region for level 0
+[13:36:28] [Server thread/INFO]: Changing view distance to 12, from 10
+[13:36:29] [Server thread/INFO]: Player413[local:E:991c8784] logged in with entity id 6 at (-417.5, 4.0, 93.5)
+[13:36:29] [Server thread/INFO]: Player413 joined the game
+[13:36:34] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 4226ms behind, skipping 84 tick(s)
+[13:37:23] [Server thread/INFO]: Player413 fell from a high place
+[13:37:23] [Client thread/INFO]: [CHAT] Player413 fell from a high place
+[13:37:53] [Server thread/INFO]: Player413 was slain by Slime
+[13:37:53] [Client thread/INFO]: [CHAT] Player413 was slain by Slime
+[13:49:08] [Server thread/INFO]: Saving and pausing game...
+[13:49:08] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[13:49:08] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[13:49:08] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[13:49:29] [Client thread/INFO]: Stopping!
+[13:49:29] [Server thread/INFO]: Stopping server
+[13:49:29] [Server thread/INFO]: Saving players
+[13:49:29] [Server thread/INFO]: Saving worlds
+[13:49:29] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[13:49:29] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[13:49:29] [Server thread/INFO]: Saving chunks for level 'New World'/The End

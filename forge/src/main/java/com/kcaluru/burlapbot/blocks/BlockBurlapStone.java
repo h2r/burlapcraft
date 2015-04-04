@@ -14,7 +14,6 @@ public class BlockBurlapStone extends Block {
 	
 	// name of block
 	private String name = "burlapstone";
-	private Item drop;
 
 	public BlockBurlapStone() {
 		
@@ -26,6 +25,8 @@ public class BlockBurlapStone extends Block {
 		this.setHardness(0.5f);
 		
 		setStepSound(soundTypeStone);
+		
+		this.setHarvestLevel("pickaxe", 1);
 		
 	}
 	

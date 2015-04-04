@@ -2,6 +2,7 @@ package com.kcaluru.burlapbot;
 
 import com.kcaluru.burlapbot.blocks.BlockBurlapStone;
 import com.kcaluru.burlapbot.items.ItemBridgeWand;
+import com.kcaluru.burlapbot.items.ItemEscapeWand;
 import com.kcaluru.burlapbot.items.ItemFinderWand;
 
 import net.minecraft.block.Block;
@@ -35,6 +36,7 @@ public class BurlapMod {
     // items
     public static Item finderWand;
     public static Item bridgeWand;
+    public static Item escapeWand;
     
     // blocks
     public static Block burlapStone;
@@ -48,12 +50,14 @@ public class BurlapMod {
     	
     	finderWand = new ItemFinderWand();
     	bridgeWand = new ItemBridgeWand();
+    	escapeWand = new ItemEscapeWand();
     	burlapStone = new BlockBurlapStone();
     	
     	// make sure minecraft knows
     	GameRegistry.registerItem(finderWand, "finderwand");
     	GameRegistry.registerItem(bridgeWand, "bridgewand");
-    	GameRegistry.registerBlock(burlapStone, "BurlapStone");
+    	GameRegistry.registerItem(escapeWand, "escapewand");
+    	GameRegistry.registerBlock(burlapStone, "burlapstone");
     	GameRegistry.registerWorldGenerator(genHandler, 0);
     	MinecraftForge.EVENT_BUS.register(eventHandler);
     	

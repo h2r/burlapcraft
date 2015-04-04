@@ -4,7 +4,8 @@ import java.util.Random;
 
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.items.ItemFinderWand;
-import com.kcaluru.burlapbot.worldgen.WorldGenBurlapDungeon;
+import com.kcaluru.burlapbot.worldgen.WorldGenDungeonOne;
+import com.kcaluru.burlapbot.worldgen.WorldGenDungeonTwo;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -22,7 +23,10 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.settings.KeyBinding;
 
 public class BurlapWorldGenHandler implements IWorldGenerator {
-
+	
+	public static int posX;
+	public static int posY;
+	public static int posZ;
 	private static Minecraft mc = Minecraft.getMinecraft();
 
 	@Override
@@ -60,11 +64,12 @@ public class BurlapWorldGenHandler implements IWorldGenerator {
 		
 		if(!BurlapMod.structCreated && mc.thePlayer != null) {
 			
-			int posX = (int) mc.thePlayer.posX;
-			int posY = (int) mc.thePlayer.posY;
-			int posZ = (int) mc.thePlayer.posZ;
+			posX = (int) mc.thePlayer.posX;
+			posY = (int) mc.thePlayer.posY;
+			posZ = (int) mc.thePlayer.posZ;
 			
-			new WorldGenBurlapDungeon().generate(world, random, posX, posY + 10, posZ);
+			new WorldGenDungeonOne().generate(world, random, posX, posY + 100, posZ);
+			new WorldGenDungeonTwo().generate(world, random, posX + 40, posY + 100, posZ);
 
 			BurlapMod.structCreated = true;
 		}

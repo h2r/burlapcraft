@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="net.minecraft.init.Items"/>
 <fullyQualifiedTypeName name="cpw.mods.fml.common.registry.GameRegistry"/>
 <fullyQualifiedTypeName name="net.minecraft.block.material.Material"/>
-<fullyQualifiedTypeName name="net.minecraft.creativetab.CreativeTabs"/>
 <fullyQualifiedTypeName name="cpw.mods.fml.relauncher.Side"/>
 <fullyQualifiedTypeName name="net.minecraft.network.Packet"/>
 <fullyQualifiedTypeName name="cpw.mods.fml.common.IWorldGenerator"/>
-<fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapMod"/>
-<fullyQualifiedTypeName name="net.minecraft.client.settings.KeyBinding"/>
-<fullyQualifiedTypeName name="net.minecraft.world.World"/>
 <fullyQualifiedTypeName name="net.minecraft.block.Block"/>
 <fullyQualifiedTypeName name="cpw.mods.fml.common.registry.GameData"/>
 <fullyQualifiedTypeName name="net.minecraft.util.RegistryNamespaced"/>
@@ -27,14 +22,11 @@
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.Pos"/>
 <fullyQualifiedTypeName name="cpw.mods.fml.common.gameevent.TickEvent"/>
 <fullyQualifiedTypeName name="cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent"/>
-<fullyQualifiedTypeName name="cpw.mods.fml.common.eventhandler.SubscribeEvent"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapEventHandler"/>
 <fullyQualifiedTypeName name="burlap.oomdp.singleagent.Action"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.MovementTask"/>
-<fullyQualifiedTypeName name="net.minecraft.entity.player.EntityPlayer"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="net.minecraft.init.Blocks"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.NameSpace"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -43,7 +35,29 @@
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="java.util.TimerTask"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.items.ItemBurlapWand"/>
-<fullyQualifiedTypeName name="net.minecraft.item.Item"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.items.ItemBridgeWand"/>
 <fullyQualifiedTypeName name="net.minecraft.world.chunk.Chunk"/>
+<fullyQualifiedTypeName name="net.minecraft.creativetab.CreativeTabs"/>
+<fullyQualifiedTypeName name="net.minecraft.init.Blocks"/>
+<fullyQualifiedTypeName name="net.minecraft.item.Item"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.event.FMLPostInitializationEvent"/>
+<fullyQualifiedTypeName name="net.minecraftforge.event.entity.player.PlayerInteractEvent"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.gameevent.InputEvent"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent"/>
+<fullyQualifiedTypeName name="net.minecraft.client.settings.KeyBinding"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.FMLCommonHandler"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.eventhandler.SubscribeEvent"/>
+<fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
+<fullyQualifiedTypeName name="net.minecraft.world.World"/>
+<fullyQualifiedTypeName name="net.minecraftforge.common.MinecraftForge"/>
+<fullyQualifiedTypeName name="net.minecraftforge.event.entity.EntityEvent"/>
+<fullyQualifiedTypeName name="net.minecraft.item.ItemStack"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.common.network.NetworkRegistry"/>
+<fullyQualifiedTypeName name="net.minecraft.entity.player.EntityPlayer"/>
+<fullyQualifiedTypeName name="net.minecraft.init.Items"/>
+<fullyQualifiedTypeName name="net.minecraftforge.event.entity.living.LivingEvent"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.worldgen.WorldGenDungeonTwo"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapMod"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapWorldGenHandler"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.items.ItemEscapeWand"/>
 </qualifiedTypeNameHistroy>

@@ -1,5 +1,7 @@
 package com.kcaluru.burlapbot.items;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
@@ -47,20 +49,18 @@ public class ItemFinderWand extends Item {
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		
 		if (finderInside) {
-//			System.out.println(x);
-//			System.out.println(z);
 			
 			int posX = (int) player.posX;
 			int posY = (int) player.posY;
 			int posZ = (int) player.posZ;
 			
-//			System.out.println(posX);
-//			System.out.println(posZ);
-			
-//			BurlapAIHelper.walkWest(false, posX - 1, posY - 2, posZ - 1);
-			
 			int startX = 8;
 			int startZ = 8;
+			
+			int destX = 0;
+			int destZ = 0;
+			
+			ArrayList<Block> blockList = new ArrayList<Block>(); 
 			
 			int [][] map = new int[][]{
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -81,21 +81,17 @@ public class ItemFinderWand extends Item {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			};
 			
-			
-			int destX = 0;
-			int destZ = 0;
-			
 			for (int a = posX - 8; a < posX + 8; a++) {
 				for (int b = posZ - 8; b < posZ + 8; b++) {
 					Block block = world.getBlock(a, posY - 1, b);
 					int type = NameSpace.getBlock(block);
-					if (type == -1) {
+					if (type == 41) {
 						destX = a - (posX - 8);
 						actualDestX = a;
 						destZ = (posZ + 8) - b;
 						actualDestZ = b;
-						map[a - (posX - 8)][(posZ + 8) - b - 1] = 0;
-					} 
+//						map[a - (posX - 8)][(posZ + 8) - b - 1] = 0;
+					}
 					else {
 						map[a - (posX - 8)][(posZ + 8) - b - 1] = type;
 					}

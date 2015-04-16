@@ -68,8 +68,8 @@ public class BurlapWorldGenHandler implements IWorldGenerator {
 			posY = (int) mc.thePlayer.posY;
 			posZ = (int) mc.thePlayer.posZ;
 			
-			new WorldGenDungeonOne().generate(world, random, posX, posY + 100, posZ);
-			new WorldGenDungeonTwo().generate(world, random, posX + 40, posY + 100, posZ);
+			new WorldGenDungeonOne().generate(world, random, posX, posY + 40, posZ);
+			new WorldGenDungeonTwo().generate(world, random, posX + 40, posY + 40, posZ);
 
 			BurlapMod.structCreated = true;
 		}

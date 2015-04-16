@@ -28,3 +28,48 @@
 [00:02:08] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
 [00:02:08] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
 [00:02:08] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[00:03:23] [Client thread/INFO]: Warning: Clientside chunk ticking took 102 ms
+[00:03:51] [Client thread/INFO]: [CHAT] Unknown command. Try /help for a list of commands
+[00:03:55] [Client thread/INFO]: [CHAT] Unknown command. Try /help for a list of commands
+[00:03:58] [Client thread/INFO]: [CHAT] --- Showing help page 1 of 5 (/help <page>) ---
+[00:03:58] [Client thread/INFO]: [CHAT] /achievement give <stat_name> [player]
+[00:03:58] [Client thread/INFO]: [CHAT] /clear <player> [item] [data]
+[00:03:58] [Client thread/INFO]: [CHAT] /debug <start|stop>
+[00:03:58] [Client thread/INFO]: [CHAT] /defaultgamemode <mode>
+[00:03:58] [Client thread/INFO]: [CHAT] /difficulty <new difficulty>
+[00:03:58] [Client thread/INFO]: [CHAT] /effect <player> <effect> [seconds] [amplifier]
+[00:03:58] [Client thread/INFO]: [CHAT] /enchant <player> <enchantment ID> [level]
+[00:03:58] [Client thread/INFO]: [CHAT] Tip: Use the <tab> key while typing a command to auto-complete the command or its arguments
+[00:04:12] [Client thread/INFO]: [CHAT] --- Showing help page 1 of 5 (/help <page>) ---
+[00:04:12] [Client thread/INFO]: [CHAT] /achievement give <stat_name> [player]
+[00:04:12] [Client thread/INFO]: [CHAT] /clear <player> [item] [data]
+[00:04:12] [Client thread/INFO]: [CHAT] /debug <start|stop>
+[00:04:12] [Client thread/INFO]: [CHAT] /defaultgamemode <mode>
+[00:04:12] [Client thread/INFO]: [CHAT] /difficulty <new difficulty>
+[00:04:12] [Client thread/INFO]: [CHAT] /effect <player> <effect> [seconds] [amplifier]
+[00:04:12] [Client thread/INFO]: [CHAT] /enchant <player> <enchantment ID> [level]
+[00:04:12] [Client thread/INFO]: [CHAT] Tip: Use the <tab> key while typing a command to auto-complete the command or its arguments
+[00:04:27] [Client thread/INFO]: [CHAT] --- Showing help page 2 of 5 (/help <page>) ---
+[00:04:27] [Client thread/INFO]: [CHAT] Use /forge <subcommand>. Subcommands are tps, track
+[00:04:27] [Client thread/INFO]: [CHAT] /gamemode <mode> [player]
+[00:04:27] [Client thread/INFO]: [CHAT] /gamerule <rule name> <value> OR /gamerule <rule name>
+[00:04:27] [Client thread/INFO]: [CHAT] /give <player> <item> [amount] [data] [dataTag]
+[00:04:27] [Client thread/INFO]: [CHAT] /help [page|command name]
+[00:04:27] [Client thread/INFO]: [CHAT] /kill
+[00:04:27] [Client thread/INFO]: [CHAT] /me <action ...>
+[00:04:31] [Client thread/INFO]: [CHAT] Unknown command. Try /help for a list of commands
+[00:04:36] [Server thread/INFO]: [Player167: Set own game mode to Survival Mode]
+[00:04:36] [Client thread/INFO]: [CHAT] Your game mode has been updated
+[00:04:46] [Server thread/INFO]: Player167 tried to swim in lava
+[00:04:46] [Client thread/INFO]: [CHAT] Player167 tried to swim in lava
+[00:05:30] [Server thread/INFO]: Saving and pausing game...
+[00:05:30] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[00:05:30] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[00:05:30] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[00:05:33] [Client thread/INFO]: Stopping!
+[00:05:33] [Server thread/INFO]: Stopping server
+[00:05:33] [Server thread/INFO]: Saving players
+[00:05:33] [Server thread/INFO]: Saving worlds
+[00:05:33] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[00:05:33] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[00:05:33] [Server thread/INFO]: Saving chunks for level 'New World'/The End

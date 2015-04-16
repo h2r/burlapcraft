@@ -1,5 +1,0 @@
-package com.kcaluru.burlapbot.items;
-
-public class ItemBridgeWand extends Item {
-
-}

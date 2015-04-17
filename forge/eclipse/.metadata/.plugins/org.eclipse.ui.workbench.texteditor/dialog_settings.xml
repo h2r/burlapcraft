@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="setHarvestLevel" key="selection"/>
+		<item value="50" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="50"/>
 			<item value="setHarvestLevel"/>
 			<item value="harvest"/>
 			<item value="onItemUse"/>
@@ -15,7 +16,6 @@
 			<item value="onItemUseF"/>
 			<item value="onItemUseFirst"/>
 			<item value="onItem"/>
-			<item value="RightClick"/>
 		</list>
 		<list key="replacehistory">
 		</list>

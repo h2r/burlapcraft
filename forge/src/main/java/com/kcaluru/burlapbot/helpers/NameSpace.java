@@ -26,6 +26,7 @@ public class NameSpace {
 	public static final String							ATX = "x";
 	public static final String							ATY = "y";
 	public static final String							ATZ = "z";
+	public static final String							ISBROKEN = "isBroken";
 	public static final String							ATCOLLIDES = "collides";
 	public static final String 							ATROTDIR = "rotationalDirection";
 	public static final String							ATDEST = "destroyable";

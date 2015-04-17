@@ -1,75 +1,27 @@
-[00:01:20] [main/INFO]: Setting user: Player167
-[00:01:21] [Client thread/INFO]: LWJGL Version: 2.9.1
-[00:01:26] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[00:01:27] [Sound Library Loader/INFO]: Sound engine started
-[00:01:28] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[00:01:28] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[00:01:28] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[00:01:28] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[00:01:28] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[00:01:29] [Sound Library Loader/INFO]: Sound engine started
-[00:01:33] [Client thread/INFO]: Deleting level New World
-[00:01:33] [Client thread/INFO]: Attempt 1...
-[00:01:37] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
-[00:01:37] [Server thread/INFO]: Generating keypair
-[00:01:37] [Server thread/INFO]: Converting map!
-[00:01:37] [Server thread/INFO]: Scanning folders...
-[00:01:37] [Server thread/INFO]: Total conversion count is 0
-[00:01:38] [Server thread/INFO]: Preparing start region for level 0
-[00:01:39] [Server thread/INFO]: Changing view distance to 12, from 10
-[00:01:39] [Server thread/INFO]: Player167[local:E:c2463007] logged in with entity id 23 at (1058.5, 4.0, -343.5)
-[00:01:39] [Server thread/INFO]: Player167 joined the game
-[00:01:43] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 3179ms behind, skipping 63 tick(s)
-[00:01:57] [Server thread/INFO]: Saving and pausing game...
-[00:01:57] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[00:01:57] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[00:01:57] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[00:02:08] [Server thread/INFO]: Saving and pausing game...
-[00:02:08] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[00:02:08] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[00:02:08] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[00:03:23] [Client thread/INFO]: Warning: Clientside chunk ticking took 102 ms
-[00:03:51] [Client thread/INFO]: [CHAT] Unknown command. Try /help for a list of commands
-[00:03:55] [Client thread/INFO]: [CHAT] Unknown command. Try /help for a list of commands
-[00:03:58] [Client thread/INFO]: [CHAT] --- Showing help page 1 of 5 (/help <page>) ---
-[00:03:58] [Client thread/INFO]: [CHAT] /achievement give <stat_name> [player]
-[00:03:58] [Client thread/INFO]: [CHAT] /clear <player> [item] [data]
-[00:03:58] [Client thread/INFO]: [CHAT] /debug <start|stop>
-[00:03:58] [Client thread/INFO]: [CHAT] /defaultgamemode <mode>
-[00:03:58] [Client thread/INFO]: [CHAT] /difficulty <new difficulty>
-[00:03:58] [Client thread/INFO]: [CHAT] /effect <player> <effect> [seconds] [amplifier]
-[00:03:58] [Client thread/INFO]: [CHAT] /enchant <player> <enchantment ID> [level]
-[00:03:58] [Client thread/INFO]: [CHAT] Tip: Use the <tab> key while typing a command to auto-complete the command or its arguments
-[00:04:12] [Client thread/INFO]: [CHAT] --- Showing help page 1 of 5 (/help <page>) ---
-[00:04:12] [Client thread/INFO]: [CHAT] /achievement give <stat_name> [player]
-[00:04:12] [Client thread/INFO]: [CHAT] /clear <player> [item] [data]
-[00:04:12] [Client thread/INFO]: [CHAT] /debug <start|stop>
-[00:04:12] [Client thread/INFO]: [CHAT] /defaultgamemode <mode>
-[00:04:12] [Client thread/INFO]: [CHAT] /difficulty <new difficulty>
-[00:04:12] [Client thread/INFO]: [CHAT] /effect <player> <effect> [seconds] [amplifier]
-[00:04:12] [Client thread/INFO]: [CHAT] /enchant <player> <enchantment ID> [level]
-[00:04:12] [Client thread/INFO]: [CHAT] Tip: Use the <tab> key while typing a command to auto-complete the command or its arguments
-[00:04:27] [Client thread/INFO]: [CHAT] --- Showing help page 2 of 5 (/help <page>) ---
-[00:04:27] [Client thread/INFO]: [CHAT] Use /forge <subcommand>. Subcommands are tps, track
-[00:04:27] [Client thread/INFO]: [CHAT] /gamemode <mode> [player]
-[00:04:27] [Client thread/INFO]: [CHAT] /gamerule <rule name> <value> OR /gamerule <rule name>
-[00:04:27] [Client thread/INFO]: [CHAT] /give <player> <item> [amount] [data] [dataTag]
-[00:04:27] [Client thread/INFO]: [CHAT] /help [page|command name]
-[00:04:27] [Client thread/INFO]: [CHAT] /kill
-[00:04:27] [Client thread/INFO]: [CHAT] /me <action ...>
-[00:04:31] [Client thread/INFO]: [CHAT] Unknown command. Try /help for a list of commands
-[00:04:36] [Server thread/INFO]: [Player167: Set own game mode to Survival Mode]
-[00:04:36] [Client thread/INFO]: [CHAT] Your game mode has been updated
-[00:04:46] [Server thread/INFO]: Player167 tried to swim in lava
-[00:04:46] [Client thread/INFO]: [CHAT] Player167 tried to swim in lava
-[00:05:30] [Server thread/INFO]: Saving and pausing game...
-[00:05:30] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[00:05:30] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[00:05:30] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[00:05:33] [Client thread/INFO]: Stopping!
-[00:05:33] [Server thread/INFO]: Stopping server
-[00:05:33] [Server thread/INFO]: Saving players
-[00:05:33] [Server thread/INFO]: Saving worlds
-[00:05:33] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[00:05:33] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[00:05:33] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[22:55:36] [main/INFO]: Setting user: Player245
+[22:55:37] [Client thread/INFO]: LWJGL Version: 2.9.1
+[22:55:42] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[22:55:43] [Sound Library Loader/INFO]: Sound engine started
+[22:55:43] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[22:55:43] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[22:55:43] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[22:55:44] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[22:55:44] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[22:55:44] [Sound Library Loader/INFO]: Sound engine started
+[22:55:52] [Client thread/INFO]: Deleting level New World
+[22:55:52] [Client thread/INFO]: Attempt 1...
+[22:55:57] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[22:55:57] [Server thread/INFO]: Generating keypair
+[22:55:58] [Server thread/INFO]: Converting map!
+[22:55:58] [Server thread/INFO]: Scanning folders...
+[22:55:58] [Server thread/INFO]: Total conversion count is 0
+[22:55:59] [Server thread/INFO]: Preparing start region for level 0
+[22:55:59] [Server thread/INFO]: Changing view distance to 12, from 10
+[22:56:00] [Server thread/INFO]: Player245[local:E:2de5ecd7] logged in with entity id 11 at (41.5, 4.0, 1186.5)
+[22:56:00] [Server thread/INFO]: Player245 joined the game
+[22:56:03] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2635ms behind, skipping 52 tick(s)
+[22:56:08] [Server thread/INFO]: Saving and pausing game...
+[22:56:08] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[22:56:08] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[22:56:08] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[22:56:14] [Client Shutdown Thread/INFO]: Stopping server

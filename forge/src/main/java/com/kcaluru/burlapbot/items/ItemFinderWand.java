@@ -47,6 +47,7 @@ public class ItemFinderWand extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+		System.out.println(world.getBlock((int)player.posX, 3, (int)player.posZ));
 		
 		if (finderInside) {
 			

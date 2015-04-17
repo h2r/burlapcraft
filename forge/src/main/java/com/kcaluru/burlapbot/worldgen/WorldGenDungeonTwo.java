@@ -113,7 +113,7 @@ public class WorldGenDungeonTwo extends WorldGenerator implements IWorldGenerato
 		world.setBlock(x+3, y+3, z+0, Block.getBlockById(7));
 		world.setBlock(x+4, y+3, z+0, Block.getBlockById(7));
 		world.setBlock(x+0, y+3, z+1, Block.getBlockById(7));
-		world.setBlock(x+1, y+3, z+1, Block.getBlockById(0));
+		world.setBlock(x+1, y+3, z+1, Block.getBlockById(41));
 		world.setBlock(x+2, y+3, z+1, Block.getBlockById(0));
 		world.setBlock(x+3, y+3, z+1, Block.getBlockById(0));
 		world.setBlock(x+4, y+3, z+1, Block.getBlockById(7));

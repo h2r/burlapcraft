@@ -40,6 +40,7 @@ public class NameSpace {
 	
 	//-------------BURLAP OBJECTCLASS STRINGS-------------
 	public static final String							CLASSAGENT = "agent";
+	public static final String							CLASSLOCATION = "location";
 	public static final String							CLASSBLOCK = "block";
 	public static final String							CLASSAGENTFEET = "agentsFeet";
 	public static final String							CLASSGOAL = "goal";

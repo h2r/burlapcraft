@@ -162,7 +162,7 @@ public class BFSMovement {
 					  index += 1;
 				  }
 				  else {
-					  BurlapAIHelper.faceBlock(ItemFinderWand.actualDestX, curY - 1, ItemFinderWand.actualDestZ);
+//					  BurlapAIHelper.faceBlock(ItemFinderWand.actualDestX, curY - 1, ItemFinderWand.actualDestZ);
 					  timer.cancel();
 				  }
 			  }

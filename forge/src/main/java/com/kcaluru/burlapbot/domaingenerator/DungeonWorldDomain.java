@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.util.RegistryNamespaced;
 import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Attribute;
+import burlap.oomdp.core.Attribute.AttributeType;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectClass;
 import burlap.oomdp.core.ObjectInstance;
@@ -38,7 +39,24 @@ public class DungeonWorldDomain implements DomainGenerator {
 	protected final int fixedFeetY;
 	
 	protected int [][][] map;
-	protected int [][] movementMap;
+	protected int [][] movementMap = {
+			{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
+			{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
+			{7,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7},
+			{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
+			{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
+			{7,7,0,0,0,0,0,0,7,0,0,7,7,0,0,7},
+			{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
+			{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
+			{7,0,0,0,0,0,0,0,7,0,0,0,41,0,0,7},
+			{7,0,0,7,7,0,0,0,7,0,0,0,0,0,0,7},
+			{7,0,0,0,0,0,0,0,7,7,0,0,0,0,0,7},
+			{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
+			{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
+			{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
+			{7,0,0,7,0,0,0,0,0,0,7,7,0,0,0,7},
+			{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
+		};
 	
 	public DungeonWorldDomain(int [][][] map, int feetY) {
 		this.setMaps(map);
@@ -49,7 +67,6 @@ public class DungeonWorldDomain implements DomainGenerator {
 		this.height = map.length;
 		this.length = map[0].length;
 		this.width = map[0][0].length;
-		this.movementMap = map[1];
 		this.map = map;
 	}
 	
@@ -60,16 +77,16 @@ public class DungeonWorldDomain implements DomainGenerator {
 		
 		// Attributes
 		// x-position attribute
-		Attribute xAtt = new Attribute(domain, NameSpace.ATX, Attribute.AttributeType.DISC);
+		Attribute xAtt = new Attribute(domain, NameSpace.ATX, AttributeType.INT);
 		xAtt.setLims(0, this.length - 1);
 		// y-position attribute
-		Attribute yAtt = new Attribute(domain, NameSpace.ATY, Attribute.AttributeType.DISC);
+		Attribute yAtt = new Attribute(domain, NameSpace.ATY, AttributeType.INT);
 		yAtt.setLims(0, 3);
 		// z-position attribute
-		Attribute zAtt = new Attribute(domain, NameSpace.ATZ, Attribute.AttributeType.DISC);
+		Attribute zAtt = new Attribute(domain, NameSpace.ATZ, AttributeType.INT);
 		zAtt.setLims(0, this.width - 1);
 		// block broken attribute
-		Attribute isBroken = new Attribute(domain, NameSpace.ISBROKEN, Attribute.AttributeType.BOOLEAN);
+		Attribute isBroken = new Attribute(domain, NameSpace.ISBROKEN, AttributeType.BOOLEAN);
 		
 		// Object classes
 		// agent
@@ -104,40 +121,22 @@ public class DungeonWorldDomain implements DomainGenerator {
 		
 	}
 	
-	public static State getExampleState(Domain domain){
+	public static State getInitialState(Domain domain, int startX, int startZ, int destX, int destZ) {
 		State s = new State();
 		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), "agent0");
-		agent.setValue(NameSpace.ATX, 7);
+		agent.setValue(NameSpace.ATX, startX);
 		agent.setValue(NameSpace.ATY, 1);
-		agent.setValue(NameSpace.ATZ, 2);
+		agent.setValue(NameSpace.ATZ, startZ);
 		
 		ObjectInstance location = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSLOCATION), "location0");
-		location.setValue(NameSpace.ATX, 8);
+		location.setValue(NameSpace.ATX, destX);
 		location.setValue(NameSpace.ATY, 1);
-		location.setValue(NameSpace.ATZ, 12);
-		
+		location.setValue(NameSpace.ATZ, destZ);
 		s.addObject(agent);
 		s.addObject(location);
 		
 		return s;
 	}
-
-	
-//	public static void setAgent(State s, int x, int z){
-//		ObjectInstance o = s.getObjectsOfTrueClass(NameSpace.CLASSAGENT).get(0);
-//		
-//		o.setValue(NameSpace.ATX, x);
-//		o.setValue(NameSpace.ATY, 1);
-//		o.setValue(NameSpace.ATZ, z);
-//	}
-//	
-//	public static void setLocation(State s, int x, int z){
-//		ObjectInstance o = s.getObjectsOfTrueClass(NameSpace.CLASSLOCATION).get(0);
-//		
-//		o.setValue(NameSpace.ATX, x);
-//		o.setValue(NameSpace.ATY, 1);
-//		o.setValue(NameSpace.ATZ, z);
-//	}
 	
 	public class MovementAction extends Action {
 
@@ -151,10 +150,10 @@ public class DungeonWorldDomain implements DomainGenerator {
 			super(actionName, domain, "");
 			for(int i = 0; i < 4; i++) {
 				if (i == direction) {
-					directionProbs[i] = 0.8;
+					directionProbs[i] = 1.0;
 				}
 				else {
-					directionProbs[i] = 0.2/3.;
+					directionProbs[i] = 0.0;
 				}
 			}
 		}
@@ -192,13 +191,13 @@ public class DungeonWorldDomain implements DomainGenerator {
 			int xdelta = 0;
 			int zdelta = 0;
 			if(direction == 0){
-				zdelta = -1;
+				zdelta = 1;
 			}
 			else if(direction == 1){
 				xdelta = -1;
 			}
 			else if(direction == 2){
-				zdelta = 1;
+				zdelta = -1;
 			}
 			else{
 				xdelta = 1;
@@ -287,96 +286,17 @@ public class DungeonWorldDomain implements DomainGenerator {
 		}
 			
 	}
-	
-	public static void main(String [] args){
 		
-		final int [][][] finderMap = {
-				{
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
-				},
-				{
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7},
-					{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,7,0,0,0,0,0,0,7,0,0,7,7,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,41,0,0,7},
-					{7,0,0,7,7,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,7,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
-					{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,7,0,0,0,0,0,0,7,7,0,0,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
-				},
-				{
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7},
-					{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,7,0,0,0,0,0,0,7,0,0,7,7,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,7,7,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,7,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
-					{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,7,0,0,0,0,0,0,7,7,0,0,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
-				},
-				{
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-					{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7},
-					{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,7,0,0,0,0,0,0,7,0,0,7,7,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,7,7,0,0,0,7,0,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,7,0,0,0,0,0,7},
-					{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
-					{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
-					{7,0,0,7,0,0,0,0,0,0,7,7,0,0,7,7},
-					{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
-				}
-		};
-		
-		DungeonWorldDomain gen = new DungeonWorldDomain(finderMap, 1);
-		Domain domain = gen.generateDomain();
-		
-		State initialState = DungeonWorldDomain.getExampleState(domain);
-		
-		TerminalExplorer exp = new TerminalExplorer(domain);
-		exp.exploreFromState(initialState);
-		
-		
-	}
-		
-	
+//	public static void main(String [] args) {
+//		
+//		DungeonWorldDomain gen = new DungeonWorldDomain(finderMap, 1);
+//		Domain domain = gen.generateDomain();
+//		
+//		State initialState = DungeonWorldDomain.getInitialState(domain, 7, 2, 8, 12);
+//		
+//		TerminalExplorer exp = new TerminalExplorer(domain);
+//		exp.exploreFromState(initialState);
+//	}
 	
 //	public static class MovementRF implements RewardFunction{
 //

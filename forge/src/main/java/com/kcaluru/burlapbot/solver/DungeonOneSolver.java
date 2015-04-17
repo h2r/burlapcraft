@@ -31,6 +31,8 @@ import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
+import burlap.oomdp.singleagent.Action;
+import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.SinglePFTF;
 import burlap.oomdp.singleagent.common.UniformCostRF;
@@ -57,7 +59,9 @@ public class DungeonOneSolver {
 	private int destZ;
 	
 	public DungeonOneSolver(int [][][] map, int startX, int startZ, int destX, int destZ) {
-	
+		System.out.println(startX);
+		System.out.println(startZ);
+		
 		//create the domain
 		dwdg = new DungeonWorldDomain(map, curY);
 
@@ -69,23 +73,12 @@ public class DungeonOneSolver {
 		//create the state parser
 		sp = new GridWorldStateParser(domain); 
 		
-		//define the task
-//		rf = new DungeonWorldDomain.MovementRF(destX, destZ);
-//		tf = new DungeonWorldDomain.MovementTF(destX, destZ);
-//		goalCondition = new TFGoalCondition(tf);
-		
 		//set up the initial state of the task
 		rf = new UniformCostRF(); 
 		tf = new SinglePFTF(domain.getPropFunction(NameSpace.PFATGOAL)); 
 		goalCondition = new TFGoalCondition(tf);
-		State s = new State();
-		s.addObject(new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), NameSpace.CLASSAGENT + 0));
-		s.addObject(new ObjectInstance(domain.getObjectClass(NameSpace.CLASSLOCATION), NameSpace.CLASSLOCATION + 0));
-//		DungeonWorldDomain.setAgent(initialState, startX, startZ);
 		
-		initialState = s;
-		DungeonWorldDomain.setAgent(initialState, startX, startZ);
-		DungeonWorldDomain.setLocation(initialState, destX, destZ);
+		initialState = DungeonWorldDomain.getInitialState(domain, startX, startZ, this.destX, this.destZ);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();
@@ -93,136 +86,73 @@ public class DungeonOneSolver {
 		domain.getObjectClass(GridWorldDomain.CLASSAGENT).attributeList); 
 	}
 	
-//	public void BFS(EntityPlayer player, State state, boolean first, World world) {
-//		p1 = player;
-//		next = null;
-//		w = world;
-//		
-//		//BFS ignores reward; it just searches for a goal condition satisfying state
-//		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory); 
-//		if (first) {
-//			state = initialState;
-//		}
-//		if (tf.isTerminal(state)) {
-//			Block b = w.getBlock((int) p1.posX, (int) p1.posY - 1, (int) ((int) p1.posZ - 0.5));
-//			b.removedByPlayer(w, p1, (int) p1.posX, (int) p1.posY - 1, (int) ((int) p1.posZ - 0.5), true);
-//			return;
-//		}
-//		planner.planFromState(state);
-//		//capture the computed plan in a partial policy
-//		Policy p = new SDPlannerPolicy(planner);
-//		AbstractGroundedAction action = p.getAction(state);
-//		if (action == null) {
-//			throw new PolicyUndefinedException();
-//		}
-//		next = action.executeIn(state);
-//		int direction = getDirection(action.toString());
-//		move(player, direction);
-//		Timer timer = new Timer();
-//		timer.schedule(new TimerTask() {
-//			  @Override
-//			  public void run() {
-//					BFS(p1, next, false, w);
-//			  }
-//			}, 175);
-//		//record the plan results to a file
-////		p.evaluateBehavior(initialState, rf, tf).writeToFile(outputPath + "planResult", sp);
-//			
-//	}
-	
 	public void BFS() {
 		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
 		planner.planFromState(initialState);
 		
 		Policy p = new SDPlannerPolicy(planner);
+//		
+//		State cur = new State();
+//		State next = new State();
+//		
+//		AbstractGroundedAction aga = p.getAction(initialState);
+//		System.out.println(aga);
+//		next = aga.executeIn(cur);
+		
+//		System.out.println(startX);
+		
+//		State next = new State();		
+//		AbstractGroundedAction action = p.getAction(initialState);
+//		System.out.println(action);
+//		next = action.executeIn(initialState);
+//		System.out.println(next);
+//		
+//		while (next != null) {
+//			action = p.getAction(next);
+//			System.out.println(action);
+//			next = action.executeIn(next);
+//			System.out.println(next);
+//		}	
+		
+//		System.out.println(p.getAction(initialState));
+		
 		
 		System.out.println(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"));
 		
-		executeActions(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"), this.destX, this.destZ);
+//		executeActions(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"), this.destX, this.destZ);
 	}
 	
 	public void executeActions(String actionString, final int destX, final int destZ) {
 		final String[] lines = actionString.split("\\r?\\n");
 		final Timer timer = new Timer();
 		actionSize = lines.length;
-//		for (int i = 0; i < actionSize; i++) {
-//			System.out.println(lines[i]);
-//		}
 		timer.scheduleAtFixedRate(new TimerTask() {
 			  @Override
 			  public void run() {
 				  if (index < actionSize) {
-					  if (lines[index].equals("north")) {
+					  if (lines[index].equals("northAction")) {
 						  BurlapAIHelper.walkNorth(false, curX - 1, curY - 2, curZ - 1);
 						  curZ -= 1;
 					  }
-					  else if (lines[index].equals("south")) {
+					  else if (lines[index].equals("southAction")) {
 						  BurlapAIHelper.walkSouth(false, curX - 1, curY - 2, curZ - 1);
 						  curZ += 1;
 					  }
-					  else if (lines[index].equals("east")) {
+					  else if (lines[index].equals("eastAction")) {
 						  BurlapAIHelper.walkEast(false, curX - 1, curY - 2, curZ - 1);
 						  curX += 1;
 					  }
-					  else if (lines[index].equals("west")) {
+					  else if (lines[index].equals("westAction")) {
 						  BurlapAIHelper.walkWest(false, curX - 1, curY - 2, curZ - 1);
 						  curX -= 1;
 					  }
 					  index += 1;
 				  }
 				  else {
-					  BurlapAIHelper.faceBlock(BurlapWorldGenHandler.posX + 8, curY - 1, BurlapWorldGenHandler.posZ + 12);
+//					  BurlapAIHelper.faceBlock(BurlapWorldGenHandler.posX + 8, curY - 1, BurlapWorldGenHandler.posZ + 12);
 					  timer.cancel();
 				  }
 			  }
-		}, 0, 350);
+		}, 0, 1000);
 	}
 }
-	
-//	AbstractGroundedAction action = p.getAction(state);
-//	if (action == null) {
-//		throw new PolicyUndefinedException();
-//	}
-//	next = action.executeIn(state);
-//	int direction = getDirection(action.toString());
-//	move(player, direction);
-//	Timer timer = new Timer();
-//	timer.schedule(new TimerTask() {
-//		  @Override
-//		  public void run() {
-//				BFS(p1, next, false, w);
-//		  }
-//		}, 175);
-	
-	// 0: north; 1: south; 2: east; 3: west
-//	void move(EntityPlayer player, int direction) {
-//		if (direction == 0) {
-//			player.motionZ = -0.5;
-//		}
-//		else if (direction == 1) {
-//			player.motionZ = 0.5;
-//		}
-//		else if (direction == 2) {
-//			player.motionX = 0.5;
-//		}
-//		else {
-//			player.motionX = -0.5;
-//		}
-//	}
-//	
-//	public int getDirection(String direction) {
-//		System.out.println("in get: " + direction);
-//		if (direction.equals("north")) {
-//			return 0;
-//		}
-//		else if (direction.equals("south")) {
-//			return 1;
-//		}
-//		else if (direction.equals("east")) {
-//			return 2;
-//		}
-//		else {
-//			return 3;
-//		}
-//	}
-//	

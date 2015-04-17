@@ -1,72 +1,54 @@
-[04:07:43] [main/INFO]: Setting user: Player612
-[04:07:44] [Client thread/INFO]: LWJGL Version: 2.9.1
-[04:07:49] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[04:07:50] [Sound Library Loader/INFO]: Sound engine started
-[04:07:50] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[04:07:50] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[04:07:50] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[04:07:51] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[04:07:51] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[04:07:51] [Sound Library Loader/INFO]: Sound engine started
-[04:07:54] [Client thread/INFO]: Deleting level New World
-[04:07:54] [Client thread/INFO]: Attempt 1...
-[04:07:58] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
-[04:07:58] [Server thread/INFO]: Generating keypair
-[04:07:58] [Server thread/INFO]: Converting map!
-[04:07:58] [Server thread/INFO]: Scanning folders...
-[04:07:58] [Server thread/INFO]: Total conversion count is 0
-[04:07:59] [Server thread/INFO]: Preparing start region for level 0
-[04:07:59] [Server thread/INFO]: Changing view distance to 12, from 10
-[04:07:59] [Server thread/INFO]: Player612[local:E:5f903705] logged in with entity id 24 at (460.5, 4.0, 811.5)
-[04:08:00] [Server thread/INFO]: Player612 joined the game
-[04:08:05] [Server thread/ERROR]: Encountered an unexpected exception
-net.minecraft.util.ReportedException: Ticking memory connection
-	at net.minecraft.network.NetworkSystem.networkTick(NetworkSystem.java:198) ~[NetworkSystem.class:?]
-	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:726) ~[MinecraftServer.class:?]
-	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:614) ~[MinecraftServer.class:?]
-	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:118) ~[IntegratedServer.class:?]
-	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:485) [MinecraftServer.class:?]
-	at net.minecraft.server.MinecraftServer$2.run(MinecraftServer.java:752) [MinecraftServer$2.class:?]
-Caused by: burlap.behavior.singleagent.Policy$PolicyUndefinedException: Policy is undefined for provided state
-	at burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy.getAction(SDPlannerPolicy.java:67) ~[SDPlannerPolicy.class:?]
-	at burlap.behavior.singleagent.Policy.followAndRecordPolicy(Policy.java:237) ~[Policy.class:?]
-	at burlap.behavior.singleagent.Policy.evaluateBehavior(Policy.java:172) ~[Policy.class:?]
-	at com.kcaluru.burlapbot.solver.DungeonOneSolver.BFS(DungeonOneSolver.java:139) ~[DungeonOneSolver.class:?]
-	at com.kcaluru.burlapbot.items.ItemFinderWand.onItemRightClick(ItemFinderWand.java:181) ~[ItemFinderWand.class:?]
-	at net.minecraft.item.ItemStack.useItemRightClick(ItemStack.java:164) ~[ItemStack.class:?]
-	at net.minecraft.server.management.ItemInWorldManager.tryUseItem(ItemInWorldManager.java:345) ~[ItemInWorldManager.class:?]
-	at net.minecraft.network.NetHandlerPlayServer.processPlayerBlockPlacement(NetHandlerPlayServer.java:576) ~[NetHandlerPlayServer.class:?]
-	at net.minecraft.network.play.client.C08PacketPlayerBlockPlacement.processPacket(C08PacketPlayerBlockPlacement.java:74) ~[C08PacketPlayerBlockPlacement.class:?]
-	at net.minecraft.network.play.client.C08PacketPlayerBlockPlacement.processPacket(C08PacketPlayerBlockPlacement.java:122) ~[C08PacketPlayerBlockPlacement.class:?]
-	at net.minecraft.network.NetworkManager.processReceivedPackets(NetworkManager.java:241) ~[NetworkManager.class:?]
-	at net.minecraft.network.NetworkSystem.networkTick(NetworkSystem.java:182) ~[NetworkSystem.class:?]
-	... 5 more
-[04:08:05] [Server thread/ERROR]: This crash report has been saved to: /Users/Chaitu/Documents/minecraft/forge/eclipse/./crash-reports/crash-2015-04-17_04.08.05-server.txt
-[04:08:05] [Server thread/INFO]: Stopping server
-[04:08:05] [Server thread/INFO]: Saving players
-[04:08:06] [Server thread/INFO]: Saving worlds
-[04:08:06] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[04:08:06] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[04:08:06] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[04:08:07] [Client thread/FATAL]: Unreported exception thrown!
-burlap.behavior.singleagent.Policy$PolicyUndefinedException: Policy is undefined for provided state
-	at burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy.getAction(SDPlannerPolicy.java:67) ~[SDPlannerPolicy.class:?]
-	at burlap.behavior.singleagent.Policy.followAndRecordPolicy(Policy.java:237) ~[Policy.class:?]
-	at burlap.behavior.singleagent.Policy.evaluateBehavior(Policy.java:172) ~[Policy.class:?]
-	at com.kcaluru.burlapbot.solver.DungeonOneSolver.BFS(DungeonOneSolver.java:139) ~[DungeonOneSolver.class:?]
-	at com.kcaluru.burlapbot.items.ItemFinderWand.onItemRightClick(ItemFinderWand.java:181) ~[ItemFinderWand.class:?]
-	at net.minecraft.item.ItemStack.useItemRightClick(ItemStack.java:164) ~[ItemStack.class:?]
-	at net.minecraft.client.multiplayer.PlayerControllerMP.sendUseItem(PlayerControllerMP.java:430) ~[PlayerControllerMP.class:?]
-	at net.minecraft.client.Minecraft.func_147121_ag(Minecraft.java:1546) ~[Minecraft.class:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:2033) ~[Minecraft.class:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1028) ~[Minecraft.class:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:951) [Minecraft.class:?]
-	at net.minecraft.client.main.Main.main(Main.java:164) [Main.class:?]
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_25]
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_25]
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_25]
-	at java.lang.reflect.Method.invoke(Method.java:483) ~[?:1.8.0_25]
-	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135) [launchwrapper-1.11.jar:?]
-	at net.minecraft.launchwrapper.Launch.main(Launch.java:28) [launchwrapper-1.11.jar:?]
-	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:78) [start/:?]
-	at GradleStart.main(GradleStart.java:45) [start/:?]
+[08:12:59] [main/INFO]: Setting user: Player326
+[08:13:00] [Client thread/INFO]: LWJGL Version: 2.9.1
+[08:13:05] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[08:13:05] [Sound Library Loader/INFO]: Sound engine started
+[08:13:06] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[08:13:06] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[08:13:06] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[08:13:07] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[08:13:07] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[08:13:07] [Sound Library Loader/INFO]: Sound engine started
+[08:13:11] [Client thread/INFO]: Deleting level New World
+[08:13:11] [Client thread/INFO]: Attempt 1...
+[08:13:13] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[08:13:13] [Server thread/INFO]: Generating keypair
+[08:13:13] [Server thread/INFO]: Converting map!
+[08:13:13] [Server thread/INFO]: Scanning folders...
+[08:13:13] [Server thread/INFO]: Total conversion count is 0
+[08:13:14] [Server thread/INFO]: Preparing start region for level 0
+[08:13:15] [Server thread/INFO]: Preparing spawn area: 9%
+[08:13:16] [Server thread/INFO]: Preparing spawn area: 23%
+[08:13:17] [Server thread/INFO]: Preparing spawn area: 36%
+[08:13:18] [Server thread/INFO]: Preparing spawn area: 52%
+[08:13:19] [Server thread/INFO]: Preparing spawn area: 65%
+[08:13:20] [Server thread/INFO]: Preparing spawn area: 84%
+[08:13:21] [Server thread/INFO]: Changing view distance to 12, from 10
+[08:13:21] [Server thread/INFO]: Player326[local:E:0783007e] logged in with entity id 111 at (190.5, 64.0, 246.5)
+[08:13:21] [Server thread/INFO]: Player326 joined the game
+[08:13:26] [Client thread/INFO]: Warning: Clientside chunk ticking took 114 ms
+[08:13:26] [Client thread/INFO]: Warning: Clientside chunk ticking took 153 ms
+[08:13:26] [Client thread/INFO]: Warning: Clientside chunk ticking took 183 ms
+[08:13:27] [Client thread/INFO]: Warning: Clientside chunk ticking took 111 ms
+[08:13:27] [Client thread/INFO]: Warning: Clientside chunk ticking took 123 ms
+[08:13:28] [Client thread/INFO]: Warning: Clientside chunk ticking took 122 ms
+[08:13:28] [Client thread/INFO]: Warning: Clientside chunk ticking took 109 ms
+[08:13:43] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 4647ms behind, skipping 92 tick(s)
+[08:13:46] [Client thread/INFO]: Warning: Clientside chunk ticking took 124 ms
+[08:13:47] [Client thread/INFO]: Warning: Clientside chunk ticking took 168 ms
+[08:13:48] [Client thread/INFO]: Warning: Clientside chunk ticking took 153 ms
+[08:13:49] [Client thread/INFO]: Warning: Clientside chunk ticking took 144 ms
+[08:14:02] [Server thread/INFO]: Saving and pausing game...
+[08:14:02] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[08:14:02] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[08:14:02] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[08:14:16] [Server thread/INFO]: Saving and pausing game...
+[08:14:16] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[08:14:16] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[08:14:16] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[08:14:17] [Server thread/INFO]: Stopping server
+[08:14:17] [Server thread/INFO]: Saving players
+[08:14:17] [Server thread/INFO]: Saving worlds
+[08:14:17] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[08:14:17] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[08:14:17] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[08:14:18] [Client thread/INFO]: Stopping!

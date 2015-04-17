@@ -1,0 +1,103 @@
+---- Minecraft Crash Report ----
+// I bet Cylons wouldn't have this problem.
+
+Time: 4/17/15 5:25 AM
+Description: Unexpected error
+
+burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner$PlanningFailedException: Planning failed to find the goal state
+	at burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner.encodePlanIntoPolicy(DeterministicPlanner.java:120)
+	at burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS.planFromState(BFS.java:120)
+	at com.kcaluru.burlapbot.solver.DungeonOneSolver.BFS(DungeonOneSolver.java:129)
+	at com.kcaluru.burlapbot.items.ItemFinderWand.onItemRightClick(ItemFinderWand.java:181)
+	at net.minecraft.item.ItemStack.useItemRightClick(ItemStack.java:164)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.sendUseItem(PlayerControllerMP.java:430)
+	at net.minecraft.client.Minecraft.func_147121_ag(Minecraft.java:1546)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:2033)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1028)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:951)
+	at net.minecraft.client.main.Main.main(Main.java:164)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:78)
+	at GradleStart.main(GradleStart.java:45)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner.encodePlanIntoPolicy(DeterministicPlanner.java:120)
+	at burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS.planFromState(BFS.java:120)
+	at com.kcaluru.burlapbot.solver.DungeonOneSolver.BFS(DungeonOneSolver.java:129)
+	at com.kcaluru.burlapbot.items.ItemFinderWand.onItemRightClick(ItemFinderWand.java:181)
+	at net.minecraft.item.ItemStack.useItemRightClick(ItemStack.java:164)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.sendUseItem(PlayerControllerMP.java:430)
+	at net.minecraft.client.Minecraft.func_147121_ag(Minecraft.java:1546)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityClientPlayerMP['Player556'/8, l='MpServer', x=-2736.00, y=47.62, z=-539.00]]
+	Chunk stats: MultiplayerChunkCache: 595, 595
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (-2742,4,-547), Chunk: (at 10,0,13 in -172,-35; contains blocks -2752,0,-560 to -2737,255,-545), Region: (-6,-2; contains chunks -192,-64 to -161,-33, blocks -3072,0,-1024 to -2561,255,-513)
+	Level time: 131 game time, 131 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 16 total; [EntityClientPlayerMP['Player556'/8, l='MpServer', x=-2736.00, y=47.62, z=-539.00], EntityItem['item.tile.torch'/4780, l='MpServer', x=-2735.03, y=46.13, z=-526.22], EntityItem['item.tile.torch'/4782, l='MpServer', x=-2732.84, y=46.13, z=-535.75], EntitySlime['Slime'/36846, l='MpServer', x=-2691.80, y=4.00, z=-497.80], EntityItem['item.tile.torch'/4783, l='MpServer', x=-2734.63, y=46.13, z=-533.75], EntityItem['item.tile.torch'/4784, l='MpServer', x=-2728.38, y=46.13, z=-532.22], EntityItem['item.tile.torch'/4785, l='MpServer', x=-2728.41, y=46.13, z=-531.37], EntitySlime['Slime'/26867, l='MpServer', x=-2691.88, y=4.00, z=-506.38], EntitySlime['Slime'/26869, l='MpServer', x=-2694.90, y=4.00, z=-504.24], EntityItem['item.tile.torch'/4790, l='MpServer', x=-2729.28, y=46.13, z=-526.69], EntityItem['item.tile.torch'/4791, l='MpServer', x=-2741.16, y=46.13, z=-527.03], EntitySlime['Slime'/31319, l='MpServer', x=-2810.50, y=4.18, z=-551.15], EntityItem['item.tile.torch'/4796, l='MpServer', x=-2728.19, y=46.13, z=-528.81], EntityItem['item.tile.torch'/4797, l='MpServer', x=-2736.13, y=46.13, z=-527.50], EntityItem['item.tile.torch'/4798, l='MpServer', x=-2733.63, y=46.13, z=-527.78], EntitySlime['Slime'/39295, l='MpServer', x=-2683.50, y=4.00, z=-585.50]]
+	Retry entities: 0 total; []
+	Server brand: fml,forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:415)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2555)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:980)
+	at net.minecraft.client.main.Main.main(Main.java:164)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:78)
+	at GradleStart.main(GradleStart.java:45)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Mac OS X (x86_64) version 10.10.3
+	Java Version: 1.8.0_25, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 854156400 bytes (814 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP v9.05 FML v7.10.85.1291 Minecraft Forge 10.13.2.1291 4 mods loaded, 4 mods active
+	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	FML{7.10.85.1291} [Forge Mod Loader] (forgeSrc-1.7.10-10.13.2.1291.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Forge{10.13.2.1291} [Minecraft Forge] (forgeSrc-1.7.10-10.13.2.1291.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	burlapmod{1.0} [burlapmod] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Launched Version: 1.7.10
+	LWJGL: 2.9.1
+	OpenGL: Intel Iris OpenGL Engine GL version 2.1 INTEL-10.6.20, Intel Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using framebuffer objects because ARB_framebuffer_object is supported and separate blending is supported.
+Anisotropic filtering is supported and maximum anisotropy is 16.
+Shaders are available because OpenGL 2.1 is supported.
+
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: []
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	Vec3 Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	Anisotropic Filtering: Off (1)

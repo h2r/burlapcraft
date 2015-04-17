@@ -60,7 +60,7 @@ public class ItemFinderWand extends Item {
 				{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
 				{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
 				{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
-				{7,0,0,7,0,0,0,0,0,0,7,7,0,0,7,7},
+				{7,0,0,7,0,0,0,0,0,0,7,7,0,0,0,7},
 				{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
 			},
 			{
@@ -78,7 +78,7 @@ public class ItemFinderWand extends Item {
 				{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
 				{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
 				{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
-				{7,0,0,7,0,0,0,0,0,0,7,7,0,0,7,7},
+				{7,0,0,7,0,0,0,0,0,0,7,7,0,0,0,7},
 				{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
 			},
 			{
@@ -96,7 +96,7 @@ public class ItemFinderWand extends Item {
 				{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
 				{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
 				{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
-				{7,0,0,7,0,0,0,0,0,0,7,7,0,0,7,7},
+				{7,0,0,7,0,0,0,0,0,0,7,7,0,0,0,7},
 				{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
 			}
 	};
@@ -121,70 +121,21 @@ public class ItemFinderWand extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		
-		if (finderInside) {
-			
-			int posX = (int) player.posX;
-			int posZ = (int) player.posZ;
-			
-			ArrayList<Block> blockList = new ArrayList<Block>(); 
-			
-//			int [][] map = new int[][]{
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-//			};
-//			
-//			for (int a = posX - 8; a < posX + 8; a++) {
-//				for (int b = posZ - 8; b < posZ + 8; b++) {
-//					Block block = world.getBlock(a, posY - 1, b);
-//					int type = NameSpace.getBlock(block);
-//					if (type == 41) {
-//						destX = a - (posX - 8);
-//						actualDestX = a;
-//						destZ = (posZ + 8) - b;
-//						actualDestZ = b;
-////						map[a - (posX - 8)][(posZ + 8) - b - 1] = 0;
-//					}
-//					else {
-//						map[a - (posX - 8)][(posZ + 8) - b - 1] = type;
-//					}
-//				}
-//			}
-//			
-////			for (int i = 0; i < 16; i++) {
-////				System.out.println();
-////				for (int j = 0; j < 16; j++) {
-////					System.out.println(map[i][j]);
-////				}
-////			}
-//			
-////			System.out.println(startX);
-////			System.out.println(startZ);
-////			System.out.println(destX);
-////			System.out.println(destZ);
-			
-			DungeonOneSolver solver = new DungeonOneSolver(finderMap, Math.abs(posX - BurlapWorldGenHandler.posX), Math.abs(posZ - BurlapWorldGenHandler.posZ), 8, 12);
-			solver.BFS();
-
-		}
-		else {
-			if(!world.isRemote) {
+		if(!world.isRemote) {
+			if (finderInside) {
+				
+				int posX = (int) player.posX;
+				int posZ = (int) player.posZ;
+				
+				ArrayList<Block> blockList = new ArrayList<Block>(); 
+				
+				DungeonOneSolver solver = new DungeonOneSolver(finderMap, Math.abs(posX - BurlapWorldGenHandler.posX), Math.abs(posZ - BurlapWorldGenHandler.posZ), 8, 13);
+				solver.BFS();
+	
+			}
+			else {
 				ItemBridgeWand.bridgeInside = false;
-				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 7, (double) BurlapWorldGenHandler.posY + 43, (double) BurlapWorldGenHandler.posZ + 2);
+				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 8.5, (double) BurlapWorldGenHandler.posY + 41, (double) BurlapWorldGenHandler.posZ + 2.5);
 				finderInside = true;
 			}
 		}

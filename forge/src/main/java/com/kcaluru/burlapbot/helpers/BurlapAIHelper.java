@@ -631,7 +631,7 @@ public class BurlapAIHelper {
   public static boolean walkEast(boolean jump, final int curX, final int curY, final int curZ) {
 	  mc.thePlayer.rotationYaw = -90;
 	  MovementInput movement = new MovementInput();
-	  movement.moveForward = (float) 1.0D;
+	  movement.moveForward = (float) 0.5D;
 	  movement.jump = jump;
 	  
 	  overrideMovement(movement);
@@ -640,7 +640,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX + 1, curY + 1, curZ) || isStandingOn(curX + 1, curY + 1, curZ - 1) || isStandingOn(curX + 1, curY + 1, curZ + 1)) {
+			  if (isStandingOn(curX + 1, curY + 1, curZ)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }
@@ -652,7 +652,7 @@ public class BurlapAIHelper {
   public static boolean walkWest(boolean jump, final int curX, final int curY, final int curZ) {
 	  mc.thePlayer.rotationYaw = 90;
 	  MovementInput movement = new MovementInput();
-	  movement.moveForward = (float) 1.0D;
+	  movement.moveForward = (float) 0.5D;
 	  movement.jump = jump;
 	  
 	  overrideMovement(movement);
@@ -661,7 +661,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX - 1, curY + 1, curZ) || isStandingOn(curX - 1, curY + 1, curZ + 1) || isStandingOn(curX - 1, curY + 1, curZ - 1)) {
+			  if (isStandingOn(curX - 1, curY + 1, curZ)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }
@@ -673,7 +673,7 @@ public class BurlapAIHelper {
   public static boolean walkNorth(boolean jump, final int curX, final int curY, final int curZ) {
 	  mc.thePlayer.rotationYaw = -180;
 	  MovementInput movement = new MovementInput();
-	  movement.moveForward = (float) 1.0D;
+	  movement.moveForward = (float) 0.5D;
 	  movement.jump = jump;
 	  
 	  overrideMovement(movement);
@@ -682,7 +682,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX, curY + 1, curZ - 1) || isStandingOn(curX + 1, curY + 1, curZ - 1) || isStandingOn(curX - 1, curY + 1, curZ - 1)) {
+			  if (isStandingOn(curX, curY + 1, curZ - 1)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }
@@ -694,7 +694,7 @@ public class BurlapAIHelper {
   public static boolean walkSouth(boolean jump, final int curX, final int curY, final int curZ) {
 	  mc.thePlayer.rotationYaw = 0;
 	  MovementInput movement = new MovementInput();
-	  movement.moveForward = (float) 1.0D;
+	  movement.moveForward = (float) 0.5D;
 	  movement.jump = jump;
 	  
 	  overrideMovement(movement);
@@ -703,7 +703,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX, curY + 1, curZ + 1) || isStandingOn(curX + 1, curY + 1, curZ + 1) || isStandingOn(curX - 1, curY + 1, curZ + 1)) {
+			  if (isStandingOn(curX, curY + 1, curZ + 1)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }

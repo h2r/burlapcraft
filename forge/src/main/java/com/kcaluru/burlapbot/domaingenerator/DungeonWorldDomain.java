@@ -39,24 +39,7 @@ public class DungeonWorldDomain implements DomainGenerator {
 	protected final int fixedFeetY;
 	
 	protected int [][][] map;
-	protected int [][] movementMap = {
-			{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
-			{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-			{7,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7},
-			{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-			{7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-			{7,7,0,0,0,0,0,0,7,0,0,7,7,0,0,7},
-			{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-			{7,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-			{7,0,0,0,0,0,0,0,7,0,0,0,41,0,0,7},
-			{7,0,0,7,7,0,0,0,7,0,0,0,0,0,0,7},
-			{7,0,0,0,0,0,0,0,7,7,0,0,0,0,0,7},
-			{7,0,0,0,0,0,0,0,7,7,7,7,7,0,0,7},
-			{7,0,0,7,7,7,0,0,0,0,0,0,0,0,0,7},
-			{7,0,0,7,0,0,0,0,0,0,0,0,0,0,0,7},
-			{7,0,0,7,0,0,0,0,0,0,7,7,0,0,0,7},
-			{7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7}
-		};
+	protected int [][] movementMap;
 	
 	public DungeonWorldDomain(int [][][] map, int feetY) {
 		this.setMaps(map);
@@ -68,6 +51,7 @@ public class DungeonWorldDomain implements DomainGenerator {
 		this.length = map[0].length;
 		this.width = map[0][0].length;
 		this.map = map;
+		this.movementMap = map[1];
 	}
 	
 	@Override
@@ -150,10 +134,10 @@ public class DungeonWorldDomain implements DomainGenerator {
 			super(actionName, domain, "");
 			for(int i = 0; i < 4; i++) {
 				if (i == direction) {
-					directionProbs[i] = 0.9;
+					directionProbs[i] = 1.0;
 				}
 				else {
-					directionProbs[i] = 0.1/3.;
+					directionProbs[i] = 0;
 				}
 			}
 		}

@@ -107,9 +107,9 @@ public class ItemFinderWand extends Item {
 				int posX = (int) player.posX;
 				int posZ = (int) player.posZ;
 				
-				ArrayList<Block> blockList = new ArrayList<Block>(); 
+				ArrayList<Block> blockList = new ArrayList<Block>();
 				
-				DungeonOneSolver solver = new DungeonOneSolver(finderMap, Math.abs(posX - BurlapWorldGenHandler.posX), Math.abs(posZ - BurlapWorldGenHandler.posZ), 2, 2);
+				DungeonOneSolver solver = new DungeonOneSolver(finderMap, Math.abs(posX - BurlapWorldGenHandler.posX), Math.abs(posZ - BurlapWorldGenHandler.posZ), 2, 1);
 				solver.BFS();
 	
 			}

@@ -640,7 +640,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX + 1, curY + 1, curZ)) {
+			  if (isStandingOn(curX + 1, curY + 1, curZ) || isStandingOn(curX - 1, curY + 1, curZ + 1) || isStandingOn(curX - 1, curY + 1, curZ - 1)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }
@@ -661,7 +661,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX - 1, curY + 1, curZ)) {
+			  if (isStandingOn(curX - 1, curY + 1, curZ) || isStandingOn(curX - 1, curY + 1, curZ + 1) || isStandingOn(curX - 1, curY + 1, curZ - 1)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }
@@ -682,7 +682,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX, curY + 1, curZ - 1)) {
+			  if (isStandingOn(curX, curY + 1, curZ - 1) || isStandingOn(curX - 1, curY + 1, curZ) || isStandingOn(curX + 1, curY + 1, curZ)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }
@@ -703,7 +703,7 @@ public class BurlapAIHelper {
 	  timer.scheduleAtFixedRate(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX, curY + 1, curZ + 1)) {
+			  if (isStandingOn(curX, curY + 1, curZ + 1) || isStandingOn(curX - 1, curY + 1, curZ) || isStandingOn(curX + 1, curY + 1, curZ)) {
 				  resetAllInputs();
 				  timer.cancel();
 			  }

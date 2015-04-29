@@ -59,8 +59,11 @@ public class DungeonOneSolver {
 	private int destZ;
 	
 	public DungeonOneSolver(int [][][] map, int startX, int startZ, int destX, int destZ) {
+		
 		System.out.println(startX);
 		System.out.println(startZ);
+		System.out.println(destX);
+		System.out.println(destZ);
 		
 		//create the domain
 		dwdg = new DungeonWorldDomain(map, curY);
@@ -113,13 +116,13 @@ public class DungeonOneSolver {
 //			next = action.executeIn(next);
 //			System.out.println(next);
 //		}	
-		
+//		
 //		System.out.println(p.getAction(initialState));
 		
 		
 		System.out.println(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"));
 		
-//		executeActions(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"), this.destX, this.destZ);
+		executeActions(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"), this.destX, this.destZ);
 	}
 	
 	public void executeActions(String actionString, final int destX, final int destZ) {

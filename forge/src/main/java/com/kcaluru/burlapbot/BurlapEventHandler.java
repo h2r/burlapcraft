@@ -26,8 +26,8 @@ public class BurlapEventHandler {
 			if (!player.inventory.hasItem(BurlapMod.escapeWand)) {
 				player.inventory.addItemStackToInventory(new ItemStack(BurlapMod.escapeWand));
 			}
-			if (!player.inventory.hasItem(Items.stone_pickaxe)) {
-				player.inventory.addItemStackToInventory(new ItemStack(Items.stone_pickaxe));
+			if (!player.inventory.hasItem(Items.golden_pickaxe)) {
+				player.inventory.addItemStackToInventory(new ItemStack(Items.golden_pickaxe));
 			}
 		}
 		

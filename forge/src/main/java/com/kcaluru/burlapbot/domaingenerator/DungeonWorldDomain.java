@@ -282,65 +282,6 @@ public class DungeonWorldDomain implements DomainGenerator {
 //		exp.exploreFromState(initialState);
 //	}
 	
-//	public static class MovementRF implements RewardFunction{
-//
-//		int goalX;
-//		int goalZ;
-//		
-//		public MovementRF(int goalX, int goalZ) {
-//			this.goalX = goalX;
-//			this.goalZ = goalZ;
-//		}
-//		
-//		@Override
-//		public double reward(State s, GroundedAction a, State sprime) {
-//			
-//			//get location of agent in next state
-//			ObjectInstance agent = sprime.getFirstObjectOfClass(NameSpace.CLASSAGENT);
-//			int ax = agent.getDiscValForAttribute(NameSpace.ATX);
-//			int az = agent.getDiscValForAttribute(NameSpace.ATZ);
-//			
-//			//are they at goal location?
-//			if(ax == (this.goalX - 1) && az == (this.goalZ - 1) || ax == (this.goalX + 1) && az == (this.goalZ + 1) || ax == (this.goalX + 1) && az == (this.goalZ - 1)
-//					|| ax == (this.goalX - 1) && az == (this.goalZ + 1) || ax == (this.goalX) && az == (this.goalZ - 1)
-//					|| ax == (this.goalX) && az == (this.goalZ + 1) || ax == (this.goalX - 1) && az == (this.goalZ) || ax == (this.goalX + 1) && az == (this.goalZ)) {
-//				return 100.;
-//			}
-//			
-//			return -1;
-//		}
-//		
-//		
-//	}
-//	
-//	public static class MovementTF implements TerminalFunction{
-//
-//		int goalX;
-//		int goalZ;
-//		
-//		public MovementTF(int goalX, int goalZ) {
-//			this.goalX = goalX;
-//			this.goalZ = goalZ;
-//		}
-//		
-//		@Override
-//		public boolean isTerminal(State s) {
-//			
-//			//get location of agent in next state
-//			ObjectInstance agent = s.getFirstObjectOfClass(NameSpace.CLASSAGENT);
-//			int ax = agent.getDiscValForAttribute(NameSpace.ATX);
-//			int az = agent.getDiscValForAttribute(NameSpace.ATZ);
-//			
-//			//are they at goal location?
-//			if(ax == (this.goalX - 1) && az == (this.goalZ - 1) || ax == (this.goalX + 1) && az == (this.goalZ + 1) || ax == (this.goalX + 1) && az == (this.goalZ - 1)
-//					|| ax == (this.goalX - 1) && az == (this.goalZ + 1) || ax == (this.goalX) && az == (this.goalZ - 1)
-//					|| ax == (this.goalX) && az == (this.goalZ + 1) || ax == (this.goalX - 1) && az == (this.goalZ) || ax == (this.goalX + 1) && az == (this.goalZ)) {
-//				return true;
-//			}
-//			
-//			return false;
-//		}
-//		
-//	}
+
 
 }

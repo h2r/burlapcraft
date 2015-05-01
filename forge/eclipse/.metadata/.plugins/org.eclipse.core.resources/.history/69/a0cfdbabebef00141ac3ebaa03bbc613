@@ -90,13 +90,13 @@ public class ItemBridgeWand extends Item {
 			if (bridgeInside) {
 				double posX = player.posX;
 				double posZ = player.posZ;
-				// hashmap block to coords arraylist of coords. if block not in walkable, add all coords to reward function -1. 
+				
 				ArrayList<Block> blockList = new ArrayList<Block>();
 				
 				int convertedX = (int) Math.ceil((8 + posX - this.startX));
 				int convertedZ = (int) Math.ceil((2 + posZ - this.startZ));
 				
-				BridgeDungeonSolver solver = new BridgeDungeonSolver(bridgeMap, convertedX, convertedZ, 1, 1);
+				BridgeDungeonSolver solver = new BridgeDungeonSolver(bridgeMap, convertedX, convertedZ, 2, 1);
 				solver.BFS();
 				
 			}

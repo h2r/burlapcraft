@@ -52,9 +52,9 @@ public class BridgeDungeonSolver {
 	
 	private int index = 0;
 	private int actionSize = 0;
-	private int curX = (int) Minecraft.getMinecraft().thePlayer.posX;
-	private final int curY = (int) Minecraft.getMinecraft().thePlayer.posY;
-	private int curZ = (int) Minecraft.getMinecraft().thePlayer.posZ;
+	private int curX = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posX);
+	private final int curY = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posY);
+	private int curZ = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posZ);
 	private int destX;
 	private int destZ;
 	

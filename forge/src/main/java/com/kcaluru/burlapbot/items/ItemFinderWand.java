@@ -25,12 +25,16 @@ public class ItemFinderWand extends Item {
 	// name of item
 	private String name = "finderwand";
 	
-	// start x, y and z of agent
-	private double startX; 
-	private double startY;
-	private double startZ;
+	// start x, y and z of player within dungeon.
+	private int dungeonX = 8; 
+	private int dungeonY = 1;
+	private int dungeonZ = 2;
 	
-	// finder dungeon map
+	// gold x, y and z within the dungeon
+	private int goldX = 2;
+	private int goldZ = 1;
+	
+	// hardcoded finder dungeon map
 	final int [][][] finderMap = {
 			{
 				{7,7,7,7,7,7,7,7,7,7,7},
@@ -106,41 +110,34 @@ public class ItemFinderWand extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if(!world.isRemote) {
-			if (finderInside) {
-				
-				double posX = player.posX;
-				double posZ = player.posZ;
-				
-				ArrayList<Block> blockList = new ArrayList<Block>();
-				
-				int convertedX = (int) Math.ceil((8 + posX - this.startX));
-				int convertedZ = (int) Math.ceil((2 + posZ - this.startZ));
-				
-				FinderDungeonSolver solver = new FinderDungeonSolver(finderMap, convertedX, convertedZ, 2, 1);
-				solver.BFS();
-				
-//				for(int i = 0; i < numIterations; i++) {
-//					posX = player.posX;
-//					posZ = player.posZ;
-//					
-//					convertedX = (int) (8 + posX - this.startX);
-//					convertedZ = (int) (2 + posZ - this.startZ);
-//					
-//					solver = new DungeonOneSolver(finderMap, convertedX, convertedZ, 2, 1);
-//					solver.BFS();
-//				}
-	
-			}
-			else {
-				ItemBridgeWand.bridgeInside = false;
-				this.startX = BurlapWorldGenHandler.posX + 8.5;
-				this.startY = BurlapWorldGenHandler.posY + 41;
-				this.startZ = BurlapWorldGenHandler.posZ + 2.5; 
-				player.setPositionAndUpdate(this.startX, this.startY, this.startZ);
-				finderInside = true;
-			}
-		}
+		
+		BurlapAIHelper.moveForward(false, (int) player.posX, (int) player.posY - 2, (int) player.posZ);
+//		BurlapAIHelper.walkEast(false, (int) player.posX, (int) Math.ceil(player.posY) - 2, (int) player.posZ);
+		
+//		if(!world.isRemote) {
+//			if (finderInside) {
+//				
+//				// player's current coordinates within the dungeon
+//				int playerX = (int) Math.ceil(player.posX - BurlapWorldGenHandler.posX);
+//				int playerZ = (int) Math.ceil(player.posZ - BurlapWorldGenHandler.posZ);
+//				
+//				// create the solver
+//				FinderDungeonSolver solver = new FinderDungeonSolver(finderMap, playerX, playerZ, this.goldX, this.goldZ);
+//				
+//				
+//				// run BFS
+//				solver.BFS();
+//	
+//			}
+//			else {
+//				ItemBridgeWand.bridgeInside = false;
+//				
+//				
+//				player.setPositionAndUpdate(BurlapWorldGenHandler.posX + this.dungeonX, BurlapWorldGenHandler.posY + 40 + this.dungeonY, BurlapWorldGenHandler.posZ + this.dungeonZ);
+//				
+//				finderInside = true;
+//			}
+//		}
 		
 		return itemStack;
 	}

@@ -86,11 +86,7 @@ public class NameSpace {
 	public static String 							rowSeparator = "\n";	
 	
 	//-------------ACTIONS STRINGS-------------
-	public static final String						ACTIONNORTH = "northAction";
-	public static final String						ACTIONSOUTH = "southAction";
-	public static final String						ACTIONEAST = "eastAction";
-	public static final String						ACTIONWEST = "westAction";
-	public static final String						ACTIONFACE = "faceAction";
+	public static final String						ACTIONMOVE = "moveAction";
 	public static final String						ACTIONROTATEC = "rotateClockwise";
 	public static final String 						ACTIONROTATECC = "rotateCounterClockwise";
 	public static final String 						ACTIONDESTBLOCK = "destroyBlock";
@@ -205,7 +201,7 @@ public class NameSpace {
 
 	//-------------ENUMS-------------
 	public enum RotDirection {
-		NORTH(2), EAST(0), SOUTH(3), WEST(1);
+		NORTH(2), EAST(3), SOUTH(0), WEST(1);
 		public static final int size = RotDirection.values().length;
 		private final int intVal;
 		
@@ -222,9 +218,9 @@ public class NameSpace {
 			case 2:
 				return NORTH;
 			case 0:
-				return EAST;
-			case 3:
 				return SOUTH;
+			case 3:
+				return EAST;
 			case 1:
 				return WEST;
 			

@@ -46,7 +46,7 @@ public class ItemBridgeWand extends Item {
 		else {
 			if (!world.isRemote) {
 				ItemFinderWand.finderInside = false;
-				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 42, (double) BurlapWorldGenHandler.posY + 43, (double) BurlapWorldGenHandler.posZ + 4);
+				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 42, (double) BurlapWorldGenHandler.posY + 42, (double) BurlapWorldGenHandler.posZ + 4);
 				bridgeInside = true;
 			}
 		}

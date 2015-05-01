@@ -4,8 +4,8 @@ import java.util.Random;
 
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.items.ItemFinderWand;
-import com.kcaluru.burlapbot.worldgen.WorldGenDungeonOne;
-import com.kcaluru.burlapbot.worldgen.WorldGenDungeonTwo;
+import com.kcaluru.burlapbot.worldgen.WorldGenFinderDungeon;
+import com.kcaluru.burlapbot.worldgen.WorldGenBridgeDungeon;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -68,8 +68,8 @@ public class BurlapWorldGenHandler implements IWorldGenerator {
 			posY = (int) mc.thePlayer.posY;
 			posZ = (int) mc.thePlayer.posZ;
 			
-			new WorldGenDungeonOne().generate(world, random, posX, posY + 40, posZ);
-			new WorldGenDungeonTwo().generate(world, random, posX + 40, posY + 40, posZ);
+			new WorldGenFinderDungeon().generate(world, random, posX, posY + 40, posZ);
+			new WorldGenBridgeDungeon().generate(world, random, posX + 40, posY + 40, posZ);
 
 			BurlapMod.structCreated = true;
 		}

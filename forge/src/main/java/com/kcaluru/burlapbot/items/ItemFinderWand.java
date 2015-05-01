@@ -15,7 +15,7 @@ import com.kcaluru.burlapbot.BurlapMod;
 import com.kcaluru.burlapbot.BurlapWorldGenHandler;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
-import com.kcaluru.burlapbot.solver.DungeonOneSolver;
+import com.kcaluru.burlapbot.solver.FinderDungeonSolver;
 import com.kcaluru.burlapbot.test.BFSMovement;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -117,7 +117,7 @@ public class ItemFinderWand extends Item {
 				int convertedX = (int) Math.ceil((8 + posX - this.startX));
 				int convertedZ = (int) Math.ceil((2 + posZ - this.startZ));
 				
-				DungeonOneSolver solver = new DungeonOneSolver(finderMap, convertedX, convertedZ, 2, 1);
+				FinderDungeonSolver solver = new FinderDungeonSolver(finderMap, convertedX, convertedZ, 2, 1);
 				solver.BFS();
 				
 //				for(int i = 0; i < numIterations; i++) {

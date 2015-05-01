@@ -1,0 +1,13 @@
+package com.kcaluru.burlapbot.actions;
+
+import burlap.oomdp.core.State;
+
+public class MovementAction extends AgentAction {
+
+	@Override
+	void doAction(State state) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

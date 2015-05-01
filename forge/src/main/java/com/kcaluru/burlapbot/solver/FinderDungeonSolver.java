@@ -52,9 +52,9 @@ public class FinderDungeonSolver {
 	
 	private int index = 0;
 	private int actionSize = 0;
-	private int curX = (int) Minecraft.getMinecraft().thePlayer.posX;
-	private final int curY = (int) Minecraft.getMinecraft().thePlayer.posY;
-	private int curZ = (int) Minecraft.getMinecraft().thePlayer.posZ;
+	private int curX = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posX);
+	private final int curY = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posY);
+	private int curZ = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posZ);
 	private int destX;
 	private int destZ;
 	
@@ -64,6 +64,8 @@ public class FinderDungeonSolver {
 		System.out.println(startZ);
 		System.out.println(destX);
 		System.out.println(destZ);
+		System.out.println(Minecraft.getMinecraft().thePlayer.posY);
+		System.out.println(this.curY);
 		
 		//create the domain
 		dwdg = new DungeonWorldDomain(map, curY);
@@ -124,7 +126,7 @@ public class FinderDungeonSolver {
 		
 		System.out.println(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"));
 		
-		executeActions(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"), this.destX, this.destZ);
+//		executeActions(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"), this.destX, this.destZ);
 	
 	}
 	
@@ -137,19 +139,19 @@ public class FinderDungeonSolver {
 			  public void run() {
 				  if (index < actionSize) {
 					  if (lines[index].equals("northAction")) {
-						  BurlapAIHelper.walkNorth(false, curX - 1, curY - 2, curZ - 1);
+						  BurlapAIHelper.walkNorth(false, curX, curY - 1, curZ);
 						  curZ -= 1;
 					  }
 					  else if (lines[index].equals("southAction")) {
-						  BurlapAIHelper.walkSouth(false, curX - 1, curY - 2, curZ - 1);
+						  BurlapAIHelper.walkSouth(false, curX, curY - 1, curZ);
 						  curZ += 1;
 					  }
 					  else if (lines[index].equals("eastAction")) {
-						  BurlapAIHelper.walkEast(false, curX - 1, curY - 2, curZ - 1);
+						  BurlapAIHelper.walkEast(false, curX, curY - 1, curZ);
 						  curX += 1;
 					  }
 					  else if (lines[index].equals("westAction")) {
-						  BurlapAIHelper.walkWest(false, curX - 1, curY - 2, curZ - 1);
+						  BurlapAIHelper.walkWest(false, curX, curY - 1, curZ);
 						  curX -= 1;
 					  }
 					  index += 1;

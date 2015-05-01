@@ -1,0 +1,20 @@
+package com.kcaluru.burlapbot.actions;
+
+import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.State;
+import burlap.oomdp.singleagent.SADomain;
+
+public class MovementAction extends AgentAction {
+
+	public MovementAction(String name, Domain domain, int[][][] map) {
+		super(name, domain, map);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	void doAction(State state) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

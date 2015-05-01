@@ -26,7 +26,6 @@ public class WorldGenFinderDungeon extends WorldGenerator implements IWorldGener
 		}
 	}
 
-	
 	public boolean generate(World world, Random rand, int x, int y, int z) {
 
 		world.setBlock(x+0, y+0, z+0, Block.getBlockById(7));

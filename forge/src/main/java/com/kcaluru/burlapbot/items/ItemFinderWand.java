@@ -25,6 +25,11 @@ public class ItemFinderWand extends Item {
 	// name of item
 	private String name = "finderwand";
 	
+	// start x, y and z of agent
+	private double startX; 
+	private double startY;
+	private double startZ;
+	
 	// finder dungeon map
 	final int [][][] finderMap = {
 			{
@@ -104,18 +109,35 @@ public class ItemFinderWand extends Item {
 		if(!world.isRemote) {
 			if (finderInside) {
 				
-				int posX = (int) player.posX;
-				int posZ = (int) player.posZ;
+				double posX = player.posX;
+				double posZ = player.posZ;
 				
 				ArrayList<Block> blockList = new ArrayList<Block>();
 				
-				DungeonOneSolver solver = new DungeonOneSolver(finderMap, Math.abs(posX - BurlapWorldGenHandler.posX), Math.abs(posZ - BurlapWorldGenHandler.posZ), 2, 1);
+				int convertedX = (int) Math.ceil((8 + posX - this.startX));
+				int convertedZ = (int) Math.ceil((2 + posZ - this.startZ));
+				
+				DungeonOneSolver solver = new DungeonOneSolver(finderMap, convertedX, convertedZ, 2, 1);
 				solver.BFS();
+				
+//				for(int i = 0; i < numIterations; i++) {
+//					posX = player.posX;
+//					posZ = player.posZ;
+//					
+//					convertedX = (int) (8 + posX - this.startX);
+//					convertedZ = (int) (2 + posZ - this.startZ);
+//					
+//					solver = new DungeonOneSolver(finderMap, convertedX, convertedZ, 2, 1);
+//					solver.BFS();
+//				}
 	
 			}
 			else {
 				ItemBridgeWand.bridgeInside = false;
-				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 8.5, (double) BurlapWorldGenHandler.posY + 41, (double) BurlapWorldGenHandler.posZ + 2.5);
+				this.startX = BurlapWorldGenHandler.posX + 8.5;
+				this.startY = BurlapWorldGenHandler.posY + 41;
+				this.startZ = BurlapWorldGenHandler.posZ + 2.5; 
+				player.setPositionAndUpdate(this.startX, this.startY, this.startZ);
 				finderInside = true;
 			}
 		}

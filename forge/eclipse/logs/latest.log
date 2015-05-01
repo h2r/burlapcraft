@@ -1,14 +1,10 @@
-[20:56:46] [main/INFO]: Setting user: Player257
-[20:56:47] [Client thread/INFO]: LWJGL Version: 2.9.1
-[20:56:51] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[20:56:52] [Sound Library Loader/INFO]: Sound engine started
-[20:56:53] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[20:56:53] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[20:56:53] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[20:56:53] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[20:56:53] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[20:56:54] [Sound Library Loader/INFO]: Sound engine started
-[20:56:56] [Client thread/WARN]: Unable to start LAN server detection: Can't assign requested address
-[20:57:01] [Client thread/INFO]: Deleting level New World
-[20:57:01] [Client thread/INFO]: Attempt 1...
-[21:01:25] [Client thread/INFO]: Stopping!
+[05:09:58] [main/INFO]: Setting user: Player307
+[05:10:01] [Client thread/INFO]: LWJGL Version: 2.9.1
+[05:10:06] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[05:10:07] [Sound Library Loader/INFO]: Sound engine started
+[05:10:08] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[05:10:08] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[05:10:08] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[05:10:08] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[05:10:09] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[05:10:09] [Sound Library Loader/INFO]: Sound engine started

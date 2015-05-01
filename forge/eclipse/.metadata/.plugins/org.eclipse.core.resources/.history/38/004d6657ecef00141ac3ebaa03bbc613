@@ -90,7 +90,7 @@ public class ItemBridgeWand extends Item {
 			if (bridgeInside) {
 				double posX = player.posX;
 				double posZ = player.posZ;
-				// hashmap block to coords arraylist of coords. if block not in walkable, add all coords to reward function -1. 
+				
 				ArrayList<Block> blockList = new ArrayList<Block>();
 				
 				int convertedX = (int) Math.ceil((8 + posX - this.startX));

@@ -23,3 +23,10 @@
 [05:50:49] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
 [05:50:49] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
 [05:50:49] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[06:08:48] [Client thread/INFO]: Stopping!
+[06:08:49] [Server thread/INFO]: Stopping server
+[06:08:49] [Server thread/INFO]: Saving players
+[06:08:49] [Server thread/INFO]: Saving worlds
+[06:08:49] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[06:08:49] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[06:08:49] [Server thread/INFO]: Saving chunks for level 'New World'/The End

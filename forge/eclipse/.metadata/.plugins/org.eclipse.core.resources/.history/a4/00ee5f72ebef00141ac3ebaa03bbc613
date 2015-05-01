@@ -14,8 +14,50 @@ public class ItemBridgeWand extends Item {
 
 	// name of item
 	private String name = "bridgewand";
-//	public static int actualDestX;
-//	public static int actualDestZ;
+	
+	// start x, y and z of agent
+	private double startX; 
+	private double startY;
+	private double startZ;
+	
+	// bridge dungeon map
+	final int [][][] finderMap = {
+			{
+				{7,7,7,7,7},
+				{7,7,7,7,7},
+				{7,7,7,7,7},
+				{7,7,7,7,7},
+				{7,7,7,7,7}
+			},
+			{
+				{7,7,7,7,7},
+				{7,7,11,7,7},
+				{7,7,11,7,7},
+				{7,7,11,7,7},
+				{7,7,7,7,7}
+			},
+			{
+				{7,7,7,7,7},
+				{7,41,0,0,7},
+				{7,0,0,0,7},
+				{7,0,0,7,7},
+				{7,7,7,7,7}
+			},
+			{
+				{7,7,7,7,7},
+				{7,0,0,0,7},
+				{7,0,0,0,7},
+				{7,0,0,0,7},
+				{7,7,7,7,7}
+			},
+			{
+				{7,7,7,7,7},
+				{7,7,7,7,7},
+				{7,7,7,7,7},
+				{7,7,7,7,7},
+				{7,7,7,7,7}
+			}
+	};
 	
 	
 	// indicate whether agent is in dungeon or not
@@ -46,7 +88,7 @@ public class ItemBridgeWand extends Item {
 		else {
 			if (!world.isRemote) {
 				ItemFinderWand.finderInside = false;
-				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 42, (double) BurlapWorldGenHandler.posY + 43, (double) BurlapWorldGenHandler.posZ + 4);
+				player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX + 42, (double) BurlapWorldGenHandler.posY + 42, (double) BurlapWorldGenHandler.posZ + 4);
 				bridgeInside = true;
 			}
 		}

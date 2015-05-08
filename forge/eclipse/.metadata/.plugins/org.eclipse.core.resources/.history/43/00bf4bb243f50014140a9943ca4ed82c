@@ -1,0 +1,14 @@
+package com.kcaluru.burlapbot.actions;
+
+import burlap.oomdp.core.State;
+import burlap.oomdp.singleagent.Action;
+
+public class RotateAction extends Action {
+
+	@Override
+	protected State performActionHelper(State s, String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

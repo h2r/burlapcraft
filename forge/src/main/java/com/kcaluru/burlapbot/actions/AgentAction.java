@@ -1,13 +1,12 @@
 package com.kcaluru.burlapbot.actions;
 
+import com.kcaluru.burlapbot.stategenerator.DungeonStateGenerator;
+
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
 import burlap.oomdp.singleagent.Action;
 
 public abstract class AgentAction extends Action {
-	
-	protected int [][] movementMap;
-	protected final int height;
 	
 	abstract void doAction(State state);
 	
@@ -15,16 +14,9 @@ public abstract class AgentAction extends Action {
 	 * 
 	 * @param name
 	 * @param domain
-	 * @param map
 	 */
-	public AgentAction(String name, Domain domain, int [][][] map) {
+	public AgentAction(String name, Domain domain) {
 		super(name, domain, "");
-		this.height = map.length;
-		this.movementMap = map[1];
-	}
-	
-	protected int[][] getMovementMap() {
-		return this.movementMap;
 	}
 	
 	protected AgentAction getAction() {
@@ -37,7 +29,16 @@ public abstract class AgentAction extends Action {
 		
 		action.doAction(s);
 		
-		return s;
+		try {
+			Thread.sleep(800);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		State newState = DungeonStateGenerator.getCurrentState(domain);
+		
+		return newState;
 	}
 
 }

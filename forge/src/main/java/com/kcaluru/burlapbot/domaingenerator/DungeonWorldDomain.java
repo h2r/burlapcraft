@@ -21,6 +21,8 @@ import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 
 import com.kcaluru.burlapbot.actions.MovementAction;
+import com.kcaluru.burlapbot.actions.RotateAction;
+import com.kcaluru.burlapbot.actions.RotateVertAction;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
 
@@ -37,20 +39,13 @@ public class DungeonWorldDomain implements DomainGenerator {
 	protected int length;
 	protected int width;
 	protected int height;
-	protected final int fixedFeetY;
 	
-	protected int [][][] map;
-	
-	public DungeonWorldDomain(int [][][] map, int feetY) {
-		this.setMaps(map);
-		this.fixedFeetY = feetY;
-	}
-	
-	public void setMaps(int [][][] map) {
-		this.height = map.length;
-		this.length = map[0].length;
-		this.width = map[0][0].length;
-		this.map = map;
+	public DungeonWorldDomain(int length, int width, int height) {
+		
+		this.length = length;
+		this.width = width;
+		this.height = height;
+		
 	}
 	
 	@Override
@@ -94,28 +89,31 @@ public class DungeonWorldDomain implements DomainGenerator {
 		
 		
 		// Actions
-		new MovementAction(NameSpace.ACTIONMOVE, domain, this.map);
-//		new MovementAction(NameSpace.ACTIONWEST, domain, 1, this.map);
-//		new MovementAction(NameSpace.ACTIONNORTH, domain, 2, this.movementMap);
-//		new MovementAction(NameSpace.ACTIONEAST, domain, 3, this.movementMap);
-//		new RotateAction(NameSpace.)
-		// yaw and pitch for agent
+		new MovementAction(NameSpace.ACTIONMOVE, domain);
+		new RotateAction(NameSpace.ACTIONROTATESOUTH, domain, 0);
+		new RotateAction(NameSpace.ACTIONROTATEWEST, domain, 1);
+		new RotateAction(NameSpace.ACTIONROTATENORTH, domain, 2);
+		new RotateAction(NameSpace.ACTIONROTATEEAST, domain, 3);
+		new RotateVertAction(NameSpace.ACTIONAHEAD, domain, 0);
+		new RotateVertAction(NameSpace.ACTIONDOWNONE, domain, 1);
+		new RotateVertAction(NameSpace.ACTIONDOWNTWO, domain, 2);
+		new RotateVertAction(NameSpace.ACTIONDOWNTHREE, domain, 3);
 		
 		return domain;
 		
 	}
 	
-	public static State getInitialState(Domain domain, int startX, int startZ, int destX, int destZ) {
-		State s = new State();
-		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), "agent0");
-		agent.setValue(NameSpace.ATX, startX);
-		agent.setValue(NameSpace.ATY, 1);
-		agent.setValue(NameSpace.ATZ, startZ);
-		
-		s.addObject(agent);
-		
-		return s;
-	}
+//	public static State getInitialState(Domain domain, int startX, int startZ, int destX, int destZ) {
+//		State s = new State();
+//		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), "agent0");
+//		agent.setValue(NameSpace.ATX, startX);
+//		agent.setValue(NameSpace.ATY, 1);
+//		agent.setValue(NameSpace.ATZ, startZ);
+//		
+//		s.addObject(agent);
+//		
+//		return s;
+//	}
 	
 //	public class MovementAction extends Action {
 //

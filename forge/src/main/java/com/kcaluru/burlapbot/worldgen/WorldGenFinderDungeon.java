@@ -11,6 +11,7 @@ import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenFinderDungeon extends WorldGenerator implements IWorldGenerator
 {
+	
 	public WorldGenFinderDungeon() { }
 
 	@Override

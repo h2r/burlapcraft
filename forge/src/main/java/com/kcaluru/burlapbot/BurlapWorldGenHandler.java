@@ -3,6 +3,7 @@ package com.kcaluru.burlapbot;
 import java.util.Random;
 
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
+import com.kcaluru.burlapbot.helpers.Pos;
 import com.kcaluru.burlapbot.items.ItemFinderWand;
 import com.kcaluru.burlapbot.worldgen.WorldGenFinderDungeon;
 import com.kcaluru.burlapbot.worldgen.WorldGenBridgeDungeon;
@@ -24,10 +25,9 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class BurlapWorldGenHandler implements IWorldGenerator {
 	
-	public static int posX;
-	public static int posY;
-	public static int posZ;
-	private static Minecraft mc = Minecraft.getMinecraft();
+	public static Pos finderDungeonPos;
+	public static Pos bridgeDungeonPos;
+	public static Pos playerSpawnPos;
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,
@@ -62,16 +62,23 @@ public class BurlapWorldGenHandler implements IWorldGenerator {
 	private void generateSurface(World world, Random random, int i, int j) {
 		// TODO Auto-generated method stub
 		
-		if(!BurlapMod.structCreated && mc.thePlayer != null) {
+		if(!BurlapMod.structCreated && BurlapAIHelper.getMinecraft().thePlayer != null) {
 			
-			posX = (int) mc.thePlayer.posX;
-			posY = (int) mc.thePlayer.posY;
-			posZ = (int) mc.thePlayer.posZ;
+			playerSpawnPos = BurlapAIHelper.getPlayerPosition();
 			
-			new WorldGenFinderDungeon().generate(world, random, posX, posY + 40, posZ);
-			new WorldGenBridgeDungeon().generate(world, random, posX + 40, posY + 40, posZ);
+			finderDungeonPos.x = playerSpawnPos.x;
+			finderDungeonPos.y = playerSpawnPos.y + 40;
+			finderDungeonPos.z = playerSpawnPos.z;
+			
+			bridgeDungeonPos.x = playerSpawnPos.x + 40;
+			bridgeDungeonPos.y = playerSpawnPos.y + 40;
+			bridgeDungeonPos.z = playerSpawnPos.z;
+			
+			new WorldGenFinderDungeon().generate(world, random, finderDungeonPos.x, finderDungeonPos.y, finderDungeonPos.z);
+			new WorldGenBridgeDungeon().generate(world, random, bridgeDungeonPos.x, bridgeDungeonPos.y, bridgeDungeonPos.z);
 
 			BurlapMod.structCreated = true;
+			
 		}
 		
 	}

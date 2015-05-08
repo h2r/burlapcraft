@@ -87,13 +87,17 @@ public class NameSpace {
 	
 	//-------------ACTIONS STRINGS-------------
 	public static final String						ACTIONMOVE = "moveAction";
-	public static final String						ACTIONROTATEC = "rotateClockwise";
-	public static final String 						ACTIONROTATECC = "rotateCounterClockwise";
+	public static final String						ACTIONROTATEEAST = "rotateEastAction";
+	public static final String 						ACTIONROTATEWEST = "rotateWestAction";
+	public static final String 						ACTIONROTATENORTH = "rotateNorthAction";
+	public static final String 						ACTIONROTATESOUTH = "rotateSouthAction";
 	public static final String 						ACTIONDESTBLOCK = "destroyBlock";
 	public static final String						ACTIONJUMP = "jump";
 	public static final String						ACTIONPLACEBLOCK = "placeBlock";
-	public static final String						ACTIONLOOKUP = "lookup";
-	public static final String						ACTIONLOOKDOWN = "lookdown";
+	public static final String						ACTIONAHEAD = "lookahead";
+	public static final String						ACTIONDOWNONE = "lookdownone";
+	public static final String						ACTIONDOWNTWO = "lookdowntwo";
+	public static final String						ACTIONDOWNTHREE = "lookdownthree";
 	public static final String						ACTIONUSEBLOCK = "useBlock";
 	
 	//-------------MACRO-ACTIONS STRINGS-------------

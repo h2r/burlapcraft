@@ -1,0 +1,23 @@
+package com.kcaluru.burlapbot.stategenerator;
+
+import com.kcaluru.burlapbot.helpers.NameSpace;
+
+import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.ObjectInstance;
+import burlap.oomdp.core.State;
+
+public class DungeonStateGenerator {
+
+	public static State createInitialState(Domain domain) {
+		State s = new State();
+		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), "agent0");
+		agent.setValue(NameSpace.ATX, startX);
+		agent.setValue(NameSpace.ATY, 1);
+		agent.setValue(NameSpace.ATZ, startZ);
+		
+		s.addObject(agent);
+		
+		return s;
+	}
+	
+}

@@ -1,0 +1,32 @@
+package com.kcaluru.burlapbot.stategenerator;
+
+import net.minecraft.client.Minecraft;
+
+import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
+import com.kcaluru.burlapbot.helpers.NameSpace;
+import com.kcaluru.burlapbot.helpers.Pos;
+
+import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.ObjectInstance;
+import burlap.oomdp.core.State;
+
+public class DungeonStateGenerator {
+
+	public static State getCurrentState(Domain domain) {
+		Pos curPos = BurlapAIHelper.getPlayerPosition();
+		int rotateDirection = BurlapAIHelper.getRotateDirection();
+		int rotateVertDirection = BurlapAIHelper.getRotateVertDirection();
+		State s = new State();
+		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), "agent0");
+		agent.setValue(NameSpace.ATX, curPos.x);
+		agent.setValue(NameSpace.ATY, curPos.y);
+		agent.setValue(NameSpace.ATZ, curPos.z);
+		agent.setValue(NameSpace.ATROTDIR, rotateDirection);
+		agent.setValue(NameSpace.ATVERTDIR, rotateVertDirection);
+		
+		s.addObject(agent);
+		
+		return s;
+	}
+	
+}

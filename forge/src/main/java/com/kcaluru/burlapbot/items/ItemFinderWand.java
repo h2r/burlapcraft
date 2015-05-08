@@ -15,6 +15,7 @@ import com.kcaluru.burlapbot.BurlapMod;
 import com.kcaluru.burlapbot.BurlapWorldGenHandler;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
+import com.kcaluru.burlapbot.helpers.Pos;
 import com.kcaluru.burlapbot.solver.FinderDungeonSolver;
 import com.kcaluru.burlapbot.test.BFSMovement;
 
@@ -111,7 +112,9 @@ public class ItemFinderWand extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		
-		BurlapAIHelper.moveForward(false, (int) player.posX, (int) player.posY - 2, (int) player.posZ);
+//		BurlapAIHelper.moveForward(false);
+//		Pos curPos = BurlapAIHelper.getPlayerPosition();
+//		System.out.println(curPos.y);
 //		BurlapAIHelper.walkEast(false, (int) player.posX, (int) Math.ceil(player.posY) - 2, (int) player.posZ);
 		
 //		if(!world.isRemote) {

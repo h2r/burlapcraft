@@ -10,6 +10,7 @@ import com.kcaluru.burlapbot.domaingenerator.DungeonWorldDomain;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
 import com.kcaluru.burlapbot.items.ItemFinderWand;
+import com.kcaluru.burlapbot.stategenerator.DungeonStateGenerator;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -66,7 +67,7 @@ public class BridgeDungeonSolver {
 		System.out.println(destZ);
 		
 		//create the domain
-		dwdg = new DungeonWorldDomain(map, curY);
+		dwdg = new DungeonWorldDomain(10, 15, 15);
 
 		domain = dwdg.generateDomain();
 		
@@ -83,7 +84,7 @@ public class BridgeDungeonSolver {
 		tf = new MovementTF(this.destX, this.destZ);
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = DungeonWorldDomain.getInitialState(domain, startX, startZ, this.destX, this.destZ);
+		initialState = DungeonStateGenerator.getCurrentState(domain);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();
@@ -155,7 +156,7 @@ public class BridgeDungeonSolver {
 					  index += 1;
 				  }
 				  else {
-					  BurlapAIHelper.faceBlock(BurlapWorldGenHandler.posX + 2, curY - 1, BurlapWorldGenHandler.posZ + 1);
+					  BurlapAIHelper.faceBlock(BurlapWorldGenHandler.finderDungeonPos.x + 2, curY - 1, BurlapWorldGenHandler.finderDungeonPos.z + 1);
 					  timer.cancel();
 				  }
 			  }

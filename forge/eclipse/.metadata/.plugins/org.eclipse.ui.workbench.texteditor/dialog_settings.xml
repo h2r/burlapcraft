@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="AtLocationPF" key="selection"/>
+		<item value="faceSideOf" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="AtLocationPF"/>
-			<item value="41"/>
-			<item value="metadata"/>
-			<item value="isStandingOn"/>
-			<item value="isStandinOn"/>
-			<item value="50"/>
-			<item value="setHarvestLevel"/>
-			<item value="harvest"/>
+			<item value="faceSideOf"/>
+			<item value="face"/>
+			<item value="blockAt"/>
+			<item value="getPlayerPosition"/>
+			<item value="resetAllInputs()"/>
+			<item value="resetAllInput()"/>
+			<item value="floor_double"/>
+			<item value="location"/>
 		</list>
 		<list key="replacehistory">
 		</list>
@@ -24,7 +24,7 @@
 		<item value="261" key="DIALOG_WIDTH"/>
 		<item value="1|San Francisco Display|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
-		<item value="901" key="DIALOG_X_ORIGIN"/>
-		<item value="177" key="DIALOG_Y_ORIGIN"/>
+		<item value="709" key="DIALOG_X_ORIGIN"/>
+		<item value="374" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

@@ -712,7 +712,7 @@ public class BurlapAIHelper {
 	  return true;
   }
   
-  public static boolean moveForward(boolean jump, final int curX, final int curY, final int curZ) {
+  public static boolean moveForward(boolean jump) {
 	  MovementInput movement = new MovementInput();
 	  movement.moveForward = (float) 0.5D;
 	  movement.jump = jump;
@@ -720,17 +720,68 @@ public class BurlapAIHelper {
 	  overrideMovement(movement);
 	  
 	  final Timer timer = new Timer();
-	  timer.scheduleAtFixedRate(new TimerTask() {
+	  timer.schedule(new TimerTask() {
 		  @Override
 		  public void run() {
-			  if (isStandingOn(curX, curY + 1, curZ + 1) || isStandingOn(curX + 1, curY + 1, curZ) || isStandingOn(curX - 1, curY + 1, curZ) || isStandingOn(curX, curY + 1, curZ - 1)) {
-				  resetAllInputs();
-				  timer.cancel();
-			  }
+			  resetAllInputs();
+			  timer.cancel();
 		  }
-	  }, 100, 1);
+	  }, 440, 10);
 	  
 	  return true;
+  }
+  
+  public static void faceSouth() {
+	  mc.thePlayer.rotationYaw = 0;
+  }
+  
+  public static void faceWest() {
+	  mc.thePlayer.rotationYaw = 90;
+  }
+  
+  public static void faceNorth() {
+	  mc.thePlayer.rotationYaw = -180;
+  }
+  
+  public static void faceEast() {
+	  mc.thePlayer.rotationYaw = -90;
+  }
+  
+  public static int getRotateDirection()
+  {
+    return (MathHelper.floor_double(getMinecraft().thePlayer.rotationYaw / 360.0F * 4.0F + 0.5D) & 0x3);
+  }
+  
+  public static void faceDownOne() {
+	  mc.thePlayer.rotationPitch = (float) 67.5;
+  }
+  
+  public static void faceDownTwo() {
+	  mc.thePlayer.rotationPitch = (float) 49.5;
+  }
+  
+  public static void faceDownThree() {
+	  mc.thePlayer.rotationPitch = (float) 32.5;
+  }
+  
+  public static void faceAhead() {
+	  mc.thePlayer.rotationPitch = 0;
+  }
+  
+  public static int getRotateVertDirection() {
+	  float rotPitch = mc.thePlayer.rotationPitch;
+	  if (rotPitch <= 0) {
+		  return 0;
+	  }
+	  else if (rotPitch <= 33) {
+		  return 3;
+	  }
+	  else if (rotPitch <= 50) {
+		  return 2;
+	  }
+	  else {
+		  return 1;
+	  }
   }
 
   public static int sideToDir(ForgeDirection blockSide)
@@ -757,20 +808,6 @@ public class BurlapAIHelper {
   public static boolean isJumping()
   {
     return !mc.thePlayer.onGround;
-  }
-
-  public static ForgeDirection getLookDirection()
-  {
-    switch (MathHelper.floor_double(getMinecraft().thePlayer.rotationYaw / 360.0F * 4.0F + 0.5D) & 0x3)
-    {
-    case 1:
-      return ForgeDirection.WEST;
-    case 2:
-      return ForgeDirection.NORTH;
-    case 3:
-      return ForgeDirection.EAST;
-    }
-    return ForgeDirection.SOUTH;
   }
 
   public static boolean hasItemInInvetory(ItemFilter itemFiler)

@@ -1,0 +1,5 @@
+package com.kcaluru.burlapbot.actions;
+
+public class RotateAction {
+
+}

@@ -1,0 +1,18 @@
+package com.kcaluru.burlapbot.actions;
+
+import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.State;
+
+public class RotateAction extends AgentAction {
+
+	public RotateAction(String name, Domain domain) {
+		super(name, domain);
+	}
+
+	@Override
+	void doAction(State state) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

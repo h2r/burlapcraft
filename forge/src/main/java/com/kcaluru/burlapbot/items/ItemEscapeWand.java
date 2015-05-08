@@ -33,7 +33,7 @@ public class ItemEscapeWand extends Item {
 		if (!world.isRemote) {
 			ItemFinderWand.finderInside = false;
 			ItemBridgeWand.bridgeInside = false;
-			player.setPositionAndUpdate((double) BurlapWorldGenHandler.posX, (double) BurlapWorldGenHandler.posY, (double) BurlapWorldGenHandler.posZ);
+			player.setPositionAndUpdate((double) BurlapWorldGenHandler.playerSpawnPos.x, (double) BurlapWorldGenHandler.playerSpawnPos.y, (double) BurlapWorldGenHandler.playerSpawnPos.z);
 		}
         return itemStack;
     }

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="cpw.mods.fml.relauncher.Side"/>
-<fullyQualifiedTypeName name="net.minecraft.network.Packet"/>
-<fullyQualifiedTypeName name="cpw.mods.fml.common.IWorldGenerator"/>
-<fullyQualifiedTypeName name="net.minecraft.block.Block"/>
 <fullyQualifiedTypeName name="cpw.mods.fml.common.registry.GameData"/>
 <fullyQualifiedTypeName name="net.minecraft.util.RegistryNamespaced"/>
 <fullyQualifiedTypeName name="burlap.oomdp.auxiliary.DomainGenerator"/>
@@ -46,7 +42,6 @@
 <fullyQualifiedTypeName name="net.minecraftforge.event.entity.living.LivingEvent"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.worldgen.WorldGenDungeonTwo"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapMod"/>
-<fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapWorldGenHandler"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.items.ItemEscapeWand"/>
 <fullyQualifiedTypeName name="burlap.oomdp.core.Attribute.AttributeType"/>
 <fullyQualifiedTypeName name="burlap.oomdp.singleagent.Action"/>
@@ -54,10 +49,15 @@
 <fullyQualifiedTypeName name="net.minecraft.init.Items"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.solver.BridgeDungeonSolver"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.actions.MovementAction"/>
-<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.BurlapAIHelper"/>
-<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.Pos"/>
 <fullyQualifiedTypeName name="burlap.oomdp.core.State"/>
 <fullyQualifiedTypeName name="burlap.oomdp.core.Domain"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.NameSpace"/>
 <fullyQualifiedTypeName name="burlap.oomdp.core.ObjectInstance"/>
+<fullyQualifiedTypeName name="javafx.geometry.Pos"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.actions.RotateAction"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.BurlapAIHelper"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.actions.RotateVertAction"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.Pos"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.stategenerator.DungeonStateGenerator"/>
+<fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapWorldGenHandler"/>
 </qualifiedTypeNameHistroy>

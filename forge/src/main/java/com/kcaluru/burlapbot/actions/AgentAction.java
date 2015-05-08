@@ -1,6 +1,6 @@
 package com.kcaluru.burlapbot.actions;
 
-import com.kcaluru.burlapbot.stategenerator.DungeonStateGenerator;
+import com.kcaluru.burlapbot.stategenerator.StateGeneratorFinderDungeon;
 
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
@@ -36,7 +36,7 @@ public abstract class AgentAction extends Action {
 			e.printStackTrace();
 		}
 		
-		State newState = DungeonStateGenerator.getCurrentState(domain);
+		State newState = StateGeneratorFinderDungeon.getCurrentState(domain);
 		
 		return newState;
 	}

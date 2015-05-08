@@ -25,8 +25,12 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class BurlapWorldGenHandler implements IWorldGenerator {
 	
-	public static Pos finderDungeonPos;
-	public static Pos bridgeDungeonPos;
+	public static int finderX;
+	public static int finderY;
+	public static int finderZ;
+	public static int bridgeX;
+	public static int bridgeY;
+	public static int bridgeZ;
 	public static Pos playerSpawnPos;
 
 	@Override
@@ -66,16 +70,15 @@ public class BurlapWorldGenHandler implements IWorldGenerator {
 			
 			playerSpawnPos = BurlapAIHelper.getPlayerPosition();
 			
-			finderDungeonPos.x = playerSpawnPos.x;
-			finderDungeonPos.y = playerSpawnPos.y + 40;
-			finderDungeonPos.z = playerSpawnPos.z;
+			finderX = playerSpawnPos.x;
+			finderY = playerSpawnPos.y + 40;
+			finderZ = playerSpawnPos.z;
+			bridgeX = playerSpawnPos.x + 40;
+			bridgeY = playerSpawnPos.y + 40;
+			bridgeZ = playerSpawnPos.z;
 			
-			bridgeDungeonPos.x = playerSpawnPos.x + 40;
-			bridgeDungeonPos.y = playerSpawnPos.y + 40;
-			bridgeDungeonPos.z = playerSpawnPos.z;
-			
-			new WorldGenFinderDungeon().generate(world, random, finderDungeonPos.x, finderDungeonPos.y, finderDungeonPos.z);
-			new WorldGenBridgeDungeon().generate(world, random, bridgeDungeonPos.x, bridgeDungeonPos.y, bridgeDungeonPos.z);
+			new WorldGenFinderDungeon().generate(world, random, finderX, finderY, finderZ);
+			new WorldGenBridgeDungeon().generate(world, random, bridgeX, bridgeY, bridgeZ);
 
 			BurlapMod.structCreated = true;
 			

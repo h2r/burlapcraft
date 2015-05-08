@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.kcaluru.burlapbot.BurlapMod;
 import com.kcaluru.burlapbot.BurlapWorldGenHandler;
-import com.kcaluru.burlapbot.solver.BridgeDungeonSolver;
-import com.kcaluru.burlapbot.solver.FinderDungeonSolver;
+import com.kcaluru.burlapbot.solver.SolverBridgeDungeon;
+import com.kcaluru.burlapbot.solver.SolverFinderDungeon;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -96,14 +96,14 @@ public class ItemBridgeWand extends Item {
 				int convertedX = (int) Math.ceil((8 + posX - this.startX));
 				int convertedZ = (int) Math.ceil((2 + posZ - this.startZ));
 				
-				BridgeDungeonSolver solver = new BridgeDungeonSolver(bridgeMap, convertedX, convertedZ, 1, 1);
+				SolverBridgeDungeon solver = new SolverBridgeDungeon(bridgeMap, convertedX, convertedZ, 1, 1);
 				solver.BFS();
 				
 			}
 			else {
 				if (!world.isRemote) {
 					ItemFinderWand.finderInside = false;
-					player.setPositionAndUpdate((double) BurlapWorldGenHandler.bridgeDungeonPos.x + 2, (double) BurlapWorldGenHandler.bridgeDungeonPos.y + 2, (double) BurlapWorldGenHandler.bridgeDungeonPos.z + 4);
+					player.setPositionAndUpdate((double) BurlapWorldGenHandler.bridgeX + 2, (double) BurlapWorldGenHandler.bridgeY + 2, (double) BurlapWorldGenHandler.bridgeZ + 4);
 					bridgeInside = true;
 				}
 			}

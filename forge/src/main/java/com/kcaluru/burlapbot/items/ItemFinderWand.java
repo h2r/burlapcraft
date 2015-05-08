@@ -16,7 +16,7 @@ import com.kcaluru.burlapbot.BurlapWorldGenHandler;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
 import com.kcaluru.burlapbot.helpers.Pos;
-import com.kcaluru.burlapbot.solver.FinderDungeonSolver;
+import com.kcaluru.burlapbot.solver.SolverFinderDungeon;
 import com.kcaluru.burlapbot.test.BFSMovement;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -30,66 +30,6 @@ public class ItemFinderWand extends Item {
 	private int dungeonX = 8; 
 	private int dungeonY = 1;
 	private int dungeonZ = 2;
-	
-	// gold x, y and z within the dungeon
-	private int goldX = 2;
-	private int goldZ = 1;
-	
-	// hardcoded finder dungeon map
-	final int [][][] finderMap = {
-			{
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7}
-			},
-			{
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,41,0,0,0,7,0,0,0,0,7},
-				{7,0,0,0,0,7,0,0,0,0,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,7,7,7,7,7,7,7,0,0,7},
-				{7,0,0,0,0,7,0,0,0,0,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,0,0,0,0,7,0,0,0,0,7},
-				{7,7,7,7,7,7,7,7,7,7,7}
-			},
-			{
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,7,0,0,0,7,0,0,0,0,7},
-				{7,0,0,0,0,7,0,0,0,0,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,7,7,7,7,7,7,7,0,0,7},
-				{7,0,0,0,0,7,0,0,0,0,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,0,0,0,0,0,0,0,0,0,7},
-				{7,0,0,0,0,7,0,0,0,0,7},
-				{7,7,7,7,7,7,7,7,7,7,7}
-			},
-			{
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7},
-				{7,7,7,7,7,7,7,7,7,7,7}
-			}
-	};
 	
 	// indicate whether agent is in dungeon or not
 	public static boolean finderInside;
@@ -112,35 +52,43 @@ public class ItemFinderWand extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		
-//		BurlapAIHelper.moveForward(false);
-//		Pos curPos = BurlapAIHelper.getPlayerPosition();
-//		System.out.println(curPos.y);
-//		BurlapAIHelper.walkEast(false, (int) player.posX, (int) Math.ceil(player.posY) - 2, (int) player.posZ);
-		
-//		if(!world.isRemote) {
-//			if (finderInside) {
-//				
-//				// player's current coordinates within the dungeon
-//				int playerX = (int) Math.ceil(player.posX - BurlapWorldGenHandler.posX);
-//				int playerZ = (int) Math.ceil(player.posZ - BurlapWorldGenHandler.posZ);
-//				
-//				// create the solver
-//				FinderDungeonSolver solver = new FinderDungeonSolver(finderMap, playerX, playerZ, this.goldX, this.goldZ);
-//				
-//				
-//				// run BFS
-//				solver.BFS();
-//	
-//			}
-//			else {
-//				ItemBridgeWand.bridgeInside = false;
-//				
-//				
-//				player.setPositionAndUpdate(BurlapWorldGenHandler.posX + this.dungeonX, BurlapWorldGenHandler.posY + 40 + this.dungeonY, BurlapWorldGenHandler.posZ + this.dungeonZ);
-//				
-//				finderInside = true;
-//			}
-//		}
+		if(!world.isRemote) {
+			if (finderInside) {
+				
+				// find the goal
+				int goldX = 0;
+				int goldY = 0;
+				int goldZ = 0;
+				
+				for (int i = 0; i < 4; i++) {
+					System.out.println("Next level");
+					for (int j = 0; j < 11; j++) {
+						System.out.println("Next Row");
+						for (int k = 0; k < 11; k++) {
+							if (BurlapAIHelper.getBlockId(BurlapWorldGenHandler.finderX + j, BurlapWorldGenHandler.finderY + i, BurlapWorldGenHandler.finderZ + k) == 41) {
+								goldY = i;
+								goldX = j;
+								goldZ = k;
+							}
+						}
+					}
+				}
+				
+				// create the solver and give it the goal coords
+				SolverFinderDungeon solver = new SolverFinderDungeon(goldX, goldY, goldZ);
+				
+				// run BFS
+				solver.BFS();
+	
+			}
+			else {
+				ItemBridgeWand.bridgeInside = false;
+				
+				player.setPositionAndUpdate(BurlapWorldGenHandler.finderX + this.dungeonX, BurlapWorldGenHandler.finderY + this.dungeonY, BurlapWorldGenHandler.finderZ + this.dungeonZ);
+				
+				finderInside = true;
+			}
+		}
 		
 		return itemStack;
 	}

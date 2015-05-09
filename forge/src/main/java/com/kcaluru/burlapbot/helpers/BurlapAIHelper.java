@@ -749,7 +749,7 @@ public class BurlapAIHelper {
   
   public static int getRotateDirection()
   {
-    return (MathHelper.floor_double(getMinecraft().thePlayer.rotationYaw / 360.0F * 4.0F + 0.5D) & 0x3);
+	  return (MathHelper.floor_double(getMinecraft().thePlayer.rotationYaw / 360.0F * 4.0F + 0.5D) & 0x3);
   }
   
   public static void faceDownOne() {

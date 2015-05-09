@@ -87,10 +87,8 @@ public class NameSpace {
 	
 	//-------------ACTIONS STRINGS-------------
 	public static final String						ACTIONMOVE = "moveAction";
-	public static final String						ACTIONROTATEEAST = "rotateEastAction";
-	public static final String 						ACTIONROTATEWEST = "rotateWestAction";
-	public static final String 						ACTIONROTATENORTH = "rotateNorthAction";
-	public static final String 						ACTIONROTATESOUTH = "rotateSouthAction";
+	public static final String						ACTIONROTATERIGHT = "rotateRightAction";
+	public static final String 						ACTIONROTATELEFT = "rotateLeftAction";
 	public static final String 						ACTIONDESTBLOCK = "destroyBlock";
 	public static final String						ACTIONJUMP = "jump";
 	public static final String						ACTIONPLACEBLOCK = "placeBlock";

@@ -94,9 +94,13 @@ public class SolverFinderDungeon {
 //		TabularModel model = new TabularModel(domain, hashingFactory, nConfident);
 		PotentialShapedRMax planner = new PotentialShapedRMax(domain, rf, tf, 0.95, hashingFactory, maxReward, nConfident, maxVIDelta, maxVIPasses);
 //		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
-		for (int i = 0; i < 30; i++) {
-			EpisodeAnalysis ea = planner.runLearningEpisodeFrom(initialState, 1);
+		
+		for (int i = 0; i < 100; i++) {
+			State s = StateGeneratorFinderDungeon.getCurrentState(domain);
+			EpisodeAnalysis ea = planner.runLearningEpisodeFrom(s, 1);
 		}
+		
+		
 //		planner.planFromState(initialState);
 		
 //		Policy p = new SDPlannerPolicy(planner);

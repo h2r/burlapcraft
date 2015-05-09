@@ -21,9 +21,11 @@ public class RotateVertAction extends AgentAction {
 
 		if (this.vertDirection == 1) {
 			BurlapAIHelper.faceDownOne();
+			System.out.println("Face Down One");
 		}
 		else {
 			BurlapAIHelper.faceAhead();
+			System.out.println("Face Ahead");
 		}
 
 	}

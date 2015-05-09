@@ -65,6 +65,8 @@ public class SolverFinderDungeon {
 	
 	public SolverFinderDungeon(int destX, int destY, int destZ) {
 		
+		System.out.println(destX + destZ);
+		
 		//create the domain
 		dwdg = new DungeonWorldDomain(11, 11, 4);
 
@@ -95,7 +97,8 @@ public class SolverFinderDungeon {
 		PotentialShapedRMax planner = new PotentialShapedRMax(domain, rf, tf, 0.95, hashingFactory, maxReward, nConfident, maxVIDelta, maxVIPasses);
 //		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
 		
-		for (int i = 0; i < 100; i++) {
+		int maxSteps = 100;
+		for (int i = 0; i < maxSteps; i++) {
 			State s = StateGeneratorFinderDungeon.getCurrentState(domain);
 			EpisodeAnalysis ea = planner.runLearningEpisodeFrom(s, 1);
 		}

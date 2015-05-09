@@ -90,10 +90,10 @@ public class DungeonWorldDomain implements DomainGenerator {
 		
 		// Actions
 		new MovementAction(NameSpace.ACTIONMOVE, domain);
-		new RotateAction(NameSpace.ACTIONROTATESOUTH, domain, 0);
-		new RotateAction(NameSpace.ACTIONROTATEWEST, domain, 1);
-		new RotateAction(NameSpace.ACTIONROTATENORTH, domain, 2);
-		new RotateAction(NameSpace.ACTIONROTATEEAST, domain, 3);
+		new RotateAction(NameSpace.ACTIONROTATERIGHT, domain, 1);
+		new RotateAction(NameSpace.ACTIONROTATELEFT, domain, NameSpace.RotDirection.size - 1);
+//		new RotateAction(NameSpace.ACTIONROTATENORTH, domain, 2);
+//		new RotateAction(NameSpace.ACTIONROTATEEAST, domain, 3);
 		new RotateVertAction(NameSpace.ACTIONAHEAD, domain, 0);
 		new RotateVertAction(NameSpace.ACTIONDOWNONE, domain, 1);
 //		new RotateVertAction(NameSpace.ACTIONDOWNTWO, domain, 2);

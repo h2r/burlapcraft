@@ -1,8 +1,10 @@
 package com.kcaluru.burlapbot.actions;
 
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
+import com.kcaluru.burlapbot.helpers.NameSpace;
 
 import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 
 public class RotateAction extends AgentAction {
@@ -19,7 +21,11 @@ public class RotateAction extends AgentAction {
 	@Override
 	void doAction(State state) {
 		
-		switch (this.direction) {
+		ObjectInstance agent = state.getObjectsOfTrueClass(NameSpace.CLASSAGENT).get(0);
+		
+		System.out.println((this.direction + agent.getDiscValForAttribute(NameSpace.ATROTDIR)) % 4);
+		
+		switch ((this.direction + agent.getDiscValForAttribute(NameSpace.ATROTDIR)) % 4) {
 		case 0:
 			BurlapAIHelper.faceSouth();
 			System.out.println("Face South");

@@ -19,9 +19,7 @@ public class StateGeneratorFinderDungeon {
 
 		Pos curPos = BurlapAIHelper.getPlayerPosition();
 		int rotateDirection = BurlapAIHelper.getRotateDirection();
-		System.out.println("Rotate Direction: " + rotateDirection);
 		int rotateVertDirection = BurlapAIHelper.getRotateVertDirection();
-		System.out.println("Rotate Vert Direction: " + rotateVertDirection);
 		
 		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), "agent0");
 		agent.setValue(NameSpace.ATX, curPos.x - BurlapWorldGenHandler.finderX);

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="cpw.mods.fml.common.registry.GameData"/>
-<fullyQualifiedTypeName name="net.minecraft.util.RegistryNamespaced"/>
-<fullyQualifiedTypeName name="burlap.oomdp.auxiliary.DomainGenerator"/>
-<fullyQualifiedTypeName name="burlap.oomdp.singleagent.SADomain"/>
 <fullyQualifiedTypeName name="burlap.oomdp.core.ObjectClass"/>
 <fullyQualifiedTypeName name="burlap.oomdp.core.Attribute"/>
 <fullyQualifiedTypeName name="net.famzangl.minecraft.minebot.ai.task.AITask"/>
@@ -60,4 +56,8 @@
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.helpers.Pos"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.stategenerator.DungeonStateGenerator"/>
 <fullyQualifiedTypeName name="com.kcaluru.burlapbot.BurlapWorldGenHandler"/>
+<fullyQualifiedTypeName name="burlap.behavior.singleagent.planning.OOMDPPlanner"/>
+<fullyQualifiedTypeName name="burlap.behavior.singleagent.learning.modellearning.models.TabularModel"/>
+<fullyQualifiedTypeName name="burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax"/>
+<fullyQualifiedTypeName name="burlap.behavior.singleagent.EpisodeAnalysis"/>
 </qualifiedTypeNameHistroy>

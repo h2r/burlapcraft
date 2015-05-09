@@ -16,8 +16,12 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.Policy.PolicyUndefinedException;
+import burlap.behavior.singleagent.learning.modellearning.models.TabularModel;
+import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
+import burlap.behavior.singleagent.planning.OOMDPPlanner;
 import burlap.behavior.singleagent.planning.StateConditionTest;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
@@ -51,20 +55,15 @@ public class SolverFinderDungeon {
 	State 						initialState;
 	DiscreteStateHashFactory	hashingFactory;
 	
-	private int index = 0;
-	private int actionSize = 0;
-	private int curX = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posX);
-	private final int curY = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posY);
-	private int curZ = (int) Math.ceil(Minecraft.getMinecraft().thePlayer.posZ);
 	private int destX;
 	private int destY;
 	private int destZ;
+	final int nConfident = 1;
+	final double maxVIDelta = 0.1;
+	final int maxVIPasses = 20;
+	final double maxReward = 0;
 	
 	public SolverFinderDungeon(int destX, int destY, int destZ) {
-		
-		System.out.println(destX);
-		System.out.println(destY);
-		System.out.println(destZ);
 		
 		//create the domain
 		dwdg = new DungeonWorldDomain(11, 11, 4);
@@ -91,12 +90,17 @@ public class SolverFinderDungeon {
 		domain.getObjectClass(GridWorldDomain.CLASSAGENT).attributeList); 
 	}
 	
-	public void BFS() {
-		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
-		planner.planFromState(initialState);
+	public void RMAX() {
+//		TabularModel model = new TabularModel(domain, hashingFactory, nConfident);
+		PotentialShapedRMax planner = new PotentialShapedRMax(domain, rf, tf, 0.95, hashingFactory, maxReward, nConfident, maxVIDelta, maxVIPasses);
+//		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
+		for (int i = 0; i < 30; i++) {
+			EpisodeAnalysis ea = planner.runLearningEpisodeFrom(initialState, 1);
+		}
+//		planner.planFromState(initialState);
 		
-		Policy p = new SDPlannerPolicy(planner);
-//		
+//		Policy p = new SDPlannerPolicy(planner);
+		
 //		State cur = new State();
 //		State next = new State();
 //		
@@ -122,45 +126,45 @@ public class SolverFinderDungeon {
 //		System.out.println(p.getAction(initialState));
 		
 		
-		System.out.println(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"));
+//		System.out.println(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"));
 		
 //		executeActions(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"), this.destX, this.destZ);
 	
 	}
 	
-	public void executeActions(String actionString, final int destX, final int destZ) {
-		final String[] lines = actionString.split("\\r?\\n");
-		final Timer timer = new Timer();
-		actionSize = lines.length;
-		timer.scheduleAtFixedRate(new TimerTask() {
-			  @Override
-			  public void run() {
-				  if (index < actionSize) {
-					  if (lines[index].equals("northAction")) {
-						  BurlapAIHelper.walkNorth(false, curX, curY - 1, curZ);
-						  curZ -= 1;
-					  }
-					  else if (lines[index].equals("southAction")) {
-						  BurlapAIHelper.walkSouth(false, curX, curY - 1, curZ);
-						  curZ += 1;
-					  }
-					  else if (lines[index].equals("eastAction")) {
-						  BurlapAIHelper.walkEast(false, curX, curY - 1, curZ);
-						  curX += 1;
-					  }
-					  else if (lines[index].equals("westAction")) {
-						  BurlapAIHelper.walkWest(false, curX, curY - 1, curZ);
-						  curX -= 1;
-					  }
-					  index += 1;
-				  }
-				  else {
-					  BurlapAIHelper.faceBlock(BurlapWorldGenHandler.finderX + destX, curY - 1, BurlapWorldGenHandler.finderZ + destZ);
-					  timer.cancel();
-				  }
-			  }
-		}, 0, 1000);
-	}
+//	public void executeActions(String actionString, final int destX, final int destZ) {
+//		final String[] lines = actionString.split("\\r?\\n");
+//		final Timer timer = new Timer();
+//		actionSize = lines.length;
+//		timer.scheduleAtFixedRate(new TimerTask() {
+//			  @Override
+//			  public void run() {
+//				  if (index < actionSize) {
+//					  if (lines[index].equals("northAction")) {
+//						  BurlapAIHelper.walkNorth(false, curX, curY - 1, curZ);
+//						  curZ -= 1;
+//					  }
+//					  else if (lines[index].equals("southAction")) {
+//						  BurlapAIHelper.walkSouth(false, curX, curY - 1, curZ);
+//						  curZ += 1;
+//					  }
+//					  else if (lines[index].equals("eastAction")) {
+//						  BurlapAIHelper.walkEast(false, curX, curY - 1, curZ);
+//						  curX += 1;
+//					  }
+//					  else if (lines[index].equals("westAction")) {
+//						  BurlapAIHelper.walkWest(false, curX, curY - 1, curZ);
+//						  curX -= 1;
+//					  }
+//					  index += 1;
+//				  }
+//				  else {
+//					  BurlapAIHelper.faceBlock(BurlapWorldGenHandler.finderX + destX, curY - 1, BurlapWorldGenHandler.finderZ + destZ);
+//					  timer.cancel();
+//				  }
+//			  }
+//		}, 0, 1000);
+//	}
 	
 	public static class MovementTF implements TerminalFunction{
 
@@ -180,12 +184,14 @@ public class SolverFinderDungeon {
 			//get location of agent in next state
 			ObjectInstance agent = s.getFirstObjectOfClass(NameSpace.CLASSAGENT);
 			int ax = agent.getDiscValForAttribute(NameSpace.ATX);
+			int ay = agent.getDiscValForAttribute(NameSpace.ATY);
 			int az = agent.getDiscValForAttribute(NameSpace.ATZ);
+			int rotDir = agent.getDiscValForAttribute(NameSpace.ATROTDIR);
+			int vertDir = agent.getDiscValForAttribute(NameSpace.ATVERTDIR);
 			
 			//are they at goal location?
-			if(ax == (this.goalX - 1) && az == (this.goalZ - 1) || ax == (this.goalX + 1) && az == (this.goalZ + 1) || ax == (this.goalX + 1) && az == (this.goalZ - 1)
-					|| ax == (this.goalX - 1) && az == (this.goalZ + 1) || ax == (this.goalX) && az == (this.goalZ - 1)
-					|| ax == (this.goalX) && az == (this.goalZ + 1) || ax == (this.goalX - 1) && az == (this.goalZ) || ax == (this.goalX + 1) && az == (this.goalZ)) {
+			if((ax == (this.goalX) && az == (this.goalZ - 1) && rotDir == 0 && vertDir == 1) || (ax == (this.goalX) && az == (this.goalZ + 1) && rotDir == 2 && vertDir == 1)
+					|| (ax == (this.goalX - 1) && az == (this.goalZ) && rotDir == 3 && vertDir == 1) || (ax == (this.goalX + 1) && az == (this.goalZ) && rotDir == 1 && vertDir == 1)) {
 				return true;
 			}
 			

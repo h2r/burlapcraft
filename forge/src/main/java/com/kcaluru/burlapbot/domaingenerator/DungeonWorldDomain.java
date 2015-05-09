@@ -68,7 +68,7 @@ public class DungeonWorldDomain implements DomainGenerator {
 		rotDirAt.setDiscValuesForRange(0, NameSpace.RotDirection.size - 1, 1);
 		//Agent's vertical direction attribute
 		Attribute vertDirAt = new Attribute(domain, NameSpace.ATVERTDIR, Attribute.AttributeType.DISC);
-		vertDirAt.setDiscValuesForRange(0, NameSpace.VertDirection.size - 1, 1);
+		vertDirAt.setDiscValuesForRange(0, 1, 1);
 		// block broken attribute
 //		Attribute isBroken = new Attribute(domain, NameSpace.ISBROKEN, AttributeType.BOOLEAN);
 		
@@ -96,8 +96,8 @@ public class DungeonWorldDomain implements DomainGenerator {
 		new RotateAction(NameSpace.ACTIONROTATEEAST, domain, 3);
 		new RotateVertAction(NameSpace.ACTIONAHEAD, domain, 0);
 		new RotateVertAction(NameSpace.ACTIONDOWNONE, domain, 1);
-		new RotateVertAction(NameSpace.ACTIONDOWNTWO, domain, 2);
-		new RotateVertAction(NameSpace.ACTIONDOWNTHREE, domain, 3);
+//		new RotateVertAction(NameSpace.ACTIONDOWNTWO, domain, 2);
+//		new RotateVertAction(NameSpace.ACTIONDOWNTHREE, domain, 3);
 		
 		return domain;
 		

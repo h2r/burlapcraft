@@ -61,9 +61,7 @@ public class ItemFinderWand extends Item {
 				int goldZ = 0;
 				
 				for (int i = 0; i < 4; i++) {
-					System.out.println("Next level");
 					for (int j = 0; j < 11; j++) {
-						System.out.println("Next Row");
 						for (int k = 0; k < 11; k++) {
 							if (BurlapAIHelper.getBlockId(BurlapWorldGenHandler.finderX + j, BurlapWorldGenHandler.finderY + i, BurlapWorldGenHandler.finderZ + k) == 41) {
 								goldY = i;
@@ -77,8 +75,9 @@ public class ItemFinderWand extends Item {
 				// create the solver and give it the goal coords
 				SolverFinderDungeon solver = new SolverFinderDungeon(goldX, goldY, goldZ);
 				
-				// run BFS
-				solver.BFS();
+				// run RMax
+				solver.RMAX();
+				
 	
 			}
 			else {

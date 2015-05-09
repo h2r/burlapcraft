@@ -27,6 +27,8 @@ public abstract class AgentAction extends Action {
 	protected State performActionHelper(State s, String[] params) {
 		AgentAction action = this.getAction();
 		
+		System.out.println(action.toString());
+		
 		action.doAction(s);
 		
 		try {
@@ -37,6 +39,8 @@ public abstract class AgentAction extends Action {
 		}
 		
 		State newState = StateGeneratorFinderDungeon.getCurrentState(domain);
+		
+		System.out.println(newState.toString());
 		
 		return newState;
 	}

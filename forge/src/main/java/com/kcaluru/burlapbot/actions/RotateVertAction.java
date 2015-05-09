@@ -9,27 +9,21 @@ public class RotateVertAction extends AgentAction {
 	
 	private int vertDirection;
 
-	public RotateVertAction(String name, Domain domain, int vertDirection) {
+	public RotateVertAction(String name, Domain domain, int rotateVertDirection) {
 		
 		super(name, domain);
-		this.vertDirection = vertDirection;
+		this.vertDirection = rotateVertDirection;
 		
 	}
 
 	@Override
 	void doAction(State state) {
-		
-		switch(this.vertDirection) {
-		case 0:
-			BurlapAIHelper.faceAhead();
-		case 1:
+
+		if (this.vertDirection == 1) {
 			BurlapAIHelper.faceDownOne();
-		case 2:
-			BurlapAIHelper.faceDownTwo();
-		case 3:
-			BurlapAIHelper.faceDownThree();
-		default:
-			break;
+		}
+		else {
+			BurlapAIHelper.faceAhead();
 		}
 
 	}

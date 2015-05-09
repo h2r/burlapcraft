@@ -22,12 +22,16 @@ public class RotateAction extends AgentAction {
 		switch (this.direction) {
 		case 0:
 			BurlapAIHelper.faceSouth();
+			System.out.println("Face South");
 		case 1:
 			BurlapAIHelper.faceWest();
+			System.out.println("Face West");
 		case 2:
 			BurlapAIHelper.faceNorth();
+			System.out.println("Face North");
 		case 3:
 			BurlapAIHelper.faceEast();
+			System.out.println("Face East");
 		default:
 			break;
 		}

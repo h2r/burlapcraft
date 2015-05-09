@@ -773,12 +773,6 @@ public class BurlapAIHelper {
 	  if (rotPitch <= 0) {
 		  return 0;
 	  }
-	  else if (rotPitch <= 33) {
-		  return 3;
-	  }
-	  else if (rotPitch <= 50) {
-		  return 2;
-	  }
 	  else {
 		  return 1;
 	  }

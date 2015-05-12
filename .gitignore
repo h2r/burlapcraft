@@ -77,4 +77,4 @@ local.properties
 .texlipse
 
 # forge/eclipse metadata
-forge/eclipse/*
+/forge/eclipse/*

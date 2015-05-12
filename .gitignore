@@ -37,7 +37,7 @@ ehthumbs.db
 Thumbs.db
 
 *.pydevproject
-.metadata
+*.metadata*
 .gradle
 bin/
 tmp/

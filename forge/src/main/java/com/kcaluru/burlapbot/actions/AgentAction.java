@@ -1,6 +1,9 @@
 package com.kcaluru.burlapbot.actions;
 
-import com.kcaluru.burlapbot.stategenerator.StateGeneratorFinderDungeon;
+import java.util.concurrent.TimeUnit;
+
+import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorReal;
+import com.kcaluru.burlapbot.stategenerator.StateGenerator;
 
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
@@ -32,13 +35,13 @@ public abstract class AgentAction extends Action {
 		action.doAction(s);
 		
 		try {
-			Thread.sleep(800);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		State newState = StateGeneratorFinderDungeon.getCurrentState(domain);
+		State newState = StateGenerator.getCurrentState(domain, DomainGeneratorReal.dungeonID);
 		
 		System.out.println(newState.toString());
 		

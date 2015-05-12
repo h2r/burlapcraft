@@ -1,22 +1,26 @@
-[01:57:44] [main/INFO]: Setting user: Player919
-[01:57:45] [Client thread/INFO]: LWJGL Version: 2.9.1
-[01:57:49] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[01:57:50] [Sound Library Loader/INFO]: Sound engine started
-[01:57:51] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[01:57:51] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[01:57:51] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
-[01:57:51] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[01:57:51] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[01:57:52] [Sound Library Loader/INFO]: Sound engine started
-[01:57:55] [Client thread/INFO]: Deleting level New World
-[01:57:55] [Client thread/INFO]: Attempt 1...
-[01:57:58] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
-[01:57:58] [Server thread/INFO]: Generating keypair
-[01:57:59] [Server thread/INFO]: Converting map!
-[01:57:59] [Server thread/INFO]: Scanning folders...
-[01:57:59] [Server thread/INFO]: Total conversion count is 0
-[01:57:59] [Server thread/INFO]: Preparing start region for level 0
-[01:58:00] [Server thread/INFO]: Changing view distance to 12, from 10
-[01:58:00] [Server thread/INFO]: Player919[local:E:6c754b07] logged in with entity id 10 at (676.5, 4.0, -61.5)
-[01:58:00] [Server thread/INFO]: Player919 joined the game
-[01:58:27] [Client Shutdown Thread/INFO]: Stopping server
+[14:13:42] [main/INFO]: Setting user: Player537
+[14:13:44] [Client thread/INFO]: LWJGL Version: 2.9.1
+[14:13:48] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[14:13:49] [Sound Library Loader/INFO]: Sound engine started
+[14:13:50] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[14:13:50] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[14:13:50] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:burlapmod
+[14:13:50] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[14:13:50] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[14:13:51] [Sound Library Loader/INFO]: Sound engine started
+[14:13:56] [Client thread/INFO]: Deleting level New World
+[14:13:56] [Client thread/INFO]: Attempt 1...
+[14:14:04] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[14:14:04] [Server thread/INFO]: Generating keypair
+[14:14:04] [Server thread/INFO]: Converting map!
+[14:14:04] [Server thread/INFO]: Scanning folders...
+[14:14:04] [Server thread/INFO]: Total conversion count is 0
+[14:14:05] [Server thread/INFO]: Preparing start region for level 0
+[14:14:05] [Server thread/INFO]: Changing view distance to 12, from 10
+[14:14:06] [Server thread/INFO]: Player537[local:E:39afc5ca] logged in with entity id 23 at (757.5, 4.0, 222.5)
+[14:14:06] [Server thread/INFO]: Player537 joined the game
+[14:15:38] [Server thread/INFO]: Saving and pausing game...
+[14:15:38] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[14:15:38] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[14:15:38] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[14:16:52] [Client Shutdown Thread/INFO]: Stopping server

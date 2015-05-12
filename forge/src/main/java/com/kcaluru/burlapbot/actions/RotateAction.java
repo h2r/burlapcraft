@@ -23,23 +23,29 @@ public class RotateAction extends AgentAction {
 		
 		ObjectInstance agent = state.getObjectsOfTrueClass(NameSpace.CLASSAGENT).get(0);
 		
-		int rotDir = (this.direction + agent.getDiscValForAttribute(NameSpace.ATROTDIR) % 4);
+		int rotDir = ((this.direction + agent.getDiscValForAttribute(NameSpace.ATROTDIR)) % 4);
 		
-		if (rotDir == 0) {
-			BurlapAIHelper.faceSouth();
+		System.out.println(rotDir);
+		
+		switch (rotDir) {
+		case 0:
 			System.out.println("Face South");
-		}
-		else if (rotDir == 1) {
-			BurlapAIHelper.faceWest();
+			BurlapAIHelper.faceSouth();
+			break;
+		case 1:
 			System.out.println("Face West");
-		}
-		else if (rotDir == 2) {
-			BurlapAIHelper.faceNorth();
+			BurlapAIHelper.faceWest();
+			break;
+		case 2:
 			System.out.println("Face North");
-		}
-		else {
-			BurlapAIHelper.faceEast();
+			BurlapAIHelper.faceNorth();
+			break;
+		case 3:
 			System.out.println("Face East");
+			BurlapAIHelper.faceEast();
+			break;
+		default:
+			break;
 		}
 		
 	}

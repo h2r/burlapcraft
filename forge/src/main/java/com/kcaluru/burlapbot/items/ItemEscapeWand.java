@@ -31,6 +31,7 @@ public class ItemEscapeWand extends Item {
     {
 
 		if (!world.isRemote) {
+			System.out.println("Used Escape Wand");
 			ItemFinderWand.finderInside = false;
 			ItemBridgeWand.bridgeInside = false;
 			player.setPositionAndUpdate((double) BurlapWorldGenHandler.playerSpawnPos.x, (double) BurlapWorldGenHandler.playerSpawnPos.y, (double) BurlapWorldGenHandler.playerSpawnPos.z);

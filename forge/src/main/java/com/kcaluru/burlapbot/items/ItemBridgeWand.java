@@ -1,68 +1,31 @@
 package com.kcaluru.burlapbot.items;
 
-import java.util.ArrayList;
-
-import com.kcaluru.burlapbot.BurlapMod;
-import com.kcaluru.burlapbot.BurlapWorldGenHandler;
-import com.kcaluru.burlapbot.solver.SolverBridgeDungeon;
-import com.kcaluru.burlapbot.solver.SolverFinderDungeon;
-
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
+import burlap.oomdp.singleagent.explorer.TerminalExplorer;
+
+import com.kcaluru.burlapbot.BurlapMod;
+import com.kcaluru.burlapbot.BurlapWorldGenHandler;
+import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorReal;
+import com.kcaluru.burlapbot.solver.SolverBridge;
 
 public class ItemBridgeWand extends Item {
 
 	// name of item
 	private String name = "bridgewand";
 	
-	// start x, y and z of agent
-	private double startX; 
-	private double startY;
-	private double startZ;
+	// length, width and height of dungeon
+	final int length = 5;
+	final int width = 5;
+	final int height = 5;
 	
-	// bridge dungeon map
-	final int [][][] bridgeMap = {
-			{
-				{7,7,7,7,7},
-				{7,7,7,7,7},
-				{7,7,7,7,7},
-				{7,7,7,7,7},
-				{7,7,7,7,7}
-			},
-			{
-				{7,7,7,7,7},
-				{7,7,11,7,7},
-				{7,7,11,7,7},
-				{7,7,11,7,7},
-				{7,7,7,7,7}
-			},
-			{
-				{7,7,7,7,7},
-				{7,41,0,0,7},
-				{7,0,0,0,7},
-				{7,0,0,7,7},
-				{7,7,7,7,7}
-			},
-			{
-				{7,7,7,7,7},
-				{7,0,0,0,7},
-				{7,0,0,0,7},
-				{7,0,0,0,7},
-				{7,7,7,7,7}
-			},
-			{
-				{7,7,7,7,7},
-				{7,7,7,7,7},
-				{7,7,7,7,7},
-				{7,7,7,7,7},
-				{7,7,7,7,7}
-			}
-	};
+	// start x, y and z of agent within dungeon
+	private double dungeonX = 1.5; 
+	private double dungeonY = 2;
+	private double dungeonZ = 4;
 	
 	
 	// indicate whether agent is in dungeon or not
@@ -88,22 +51,25 @@ public class ItemBridgeWand extends Item {
     {
 		if (!world.isRemote) {
 			if (bridgeInside) {
-				double posX = player.posX;
-				double posZ = player.posZ;
-				// hashmap block to coords arraylist of coords. if block not in walkable, add all coords to reward function -1. 
-				ArrayList<Block> blockList = new ArrayList<Block>();
 				
-				int convertedX = (int) Math.ceil((8 + posX - this.startX));
-				int convertedZ = (int) Math.ceil((2 + posZ - this.startZ));
+				// create the solver and give it the goal coords
+				SolverBridge solver = new SolverBridge(this.length, this.width, this.height);
 				
-				SolverBridgeDungeon solver = new SolverBridgeDungeon(bridgeMap, convertedX, convertedZ, 1, 1);
-				solver.BFS();
+				// set dungeonID to 2
+				DomainGeneratorReal.dungeonID = 2;
 				
+				// run RMax
+				solver.RMAX(); 
+				
+//				TerminalExplorer exp = new TerminalExplorer(solver.domain);
+				
+//				exp.exploreFromState(solver.initialState);
+	
 			}
 			else {
 				if (!world.isRemote) {
 					ItemFinderWand.finderInside = false;
-					player.setPositionAndUpdate((double) BurlapWorldGenHandler.bridgeX + 2, (double) BurlapWorldGenHandler.bridgeY + 2, (double) BurlapWorldGenHandler.bridgeZ + 4);
+					player.setPositionAndUpdate((double) BurlapWorldGenHandler.bridgeX + this.dungeonX, (double) BurlapWorldGenHandler.bridgeY + this.dungeonY, (double) BurlapWorldGenHandler.bridgeZ + this.dungeonZ);
 					bridgeInside = true;
 				}
 			}

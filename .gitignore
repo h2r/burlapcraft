@@ -75,3 +75,6 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+# forge/eclipse metadata
+forge/eclipse/*

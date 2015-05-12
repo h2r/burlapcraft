@@ -6,8 +6,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.kcaluru.burlapbot.BurlapMod;
 import com.kcaluru.burlapbot.helpers.Pos;
 import com.kcaluru.burlapbot.items.ItemFilter;
+
+
 
 
 
@@ -33,6 +36,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -52,6 +56,10 @@ public class BurlapAIHelper {
   private static final double MIN_DISTANCE_ERROR = 0.05D;
   private static Minecraft mc = Minecraft.getMinecraft();
   private final static Random rand = new Random();
+  
+  public static final Block[] mineableBlocks = { BurlapMod.burlapStone, Blocks.gold_block };
+  
+  public static final Block[] dangerBlocks = { Blocks.lava };
   
   public static final Block[] normalBlocks = { Blocks.bedrock, Blocks.bookshelf, Blocks.brick_block, Blocks.brown_mushroom_block, Blocks.cake, Blocks.coal_block, Blocks.coal_ore, Blocks.cobblestone, Blocks.crafting_table, Blocks.diamond_block, Blocks.diamond_ore, Blocks.dirt, Blocks.double_stone_slab, Blocks.double_wooden_slab, Blocks.emerald_block, Blocks.emerald_ore, Blocks.farmland, Blocks.glass, Blocks.glowstone, Blocks.grass, Blocks.gold_block, Blocks.gold_ore, Blocks.hardened_clay, Blocks.iron_block, Blocks.iron_ore, Blocks.lapis_block, Blocks.lapis_ore, Blocks.leaves, Blocks.leaves2, Blocks.log, Blocks.log2, Blocks.melon_block, Blocks.mossy_cobblestone, Blocks.mycelium, Blocks.nether_brick, Blocks.nether_brick_fence, Blocks.netherrack, Blocks.obsidian, Blocks.packed_ice, Blocks.planks, Blocks.pumpkin, Blocks.quartz_block, Blocks.quartz_ore, Blocks.red_mushroom_block, Blocks.redstone_block, Blocks.redstone_lamp, Blocks.redstone_ore, Blocks.sandstone, Blocks.snow, Blocks.soul_sand, Blocks.stained_glass, Blocks.stained_hardened_clay, Blocks.stone, Blocks.stonebrick, Blocks.web, Blocks.wool };
 
@@ -447,7 +455,7 @@ public class BurlapAIHelper {
     if (resetUseItemKey == null) {
       resetUseItemKey = mc.gameSettings.keyBindUseItem;
     }
-    mc.gameSettings.keyBindUseItem = new Interaction(mc.gameSettings.keyBindUseItem.getKeyDescription(), 501, mc.gameSettings.keyBindUseItem.getKeyCategory(), useItemKeyJustPressed);
+    mc.gameSettings.keyBindUseItem = new AutoInteract(mc.gameSettings.keyBindUseItem.getKeyDescription(), 501, mc.gameSettings.keyBindUseItem.getKeyCategory(), useItemKeyJustPressed);
   }
 
   public static void overrideAttack()
@@ -455,7 +463,7 @@ public class BurlapAIHelper {
     if (resetAttackKey == null) {
       resetAttackKey = mc.gameSettings.keyBindAttack;
     }
-    mc.gameSettings.keyBindAttack = new Interaction(mc.gameSettings.keyBindAttack.getKeyDescription(), 502, mc.gameSettings.keyBindAttack.getKeyCategory(), attackKeyJustPressed);
+    mc.gameSettings.keyBindAttack = new AutoInteract(mc.gameSettings.keyBindAttack.getKeyDescription(), 502, mc.gameSettings.keyBindAttack.getKeyCategory(), attackKeyJustPressed);
   }
 
   public static void overrideSneak()
@@ -463,7 +471,7 @@ public class BurlapAIHelper {
     if (resetSneakKey == null) {
       resetSneakKey = mc.gameSettings.keyBindSneak;
     }
-    mc.gameSettings.keyBindSneak = new Interaction(mc.gameSettings.keyBindSneak.getKeyDescription(), 503, mc.gameSettings.keyBindSneak.getKeyCategory(), sneakKeyJustPressed);
+    mc.gameSettings.keyBindSneak = new AutoInteract(mc.gameSettings.keyBindSneak.getKeyDescription(), 503, mc.gameSettings.keyBindSneak.getKeyCategory(), sneakKeyJustPressed);
   }
 
   public static void resetAllInputs()
@@ -714,7 +722,7 @@ public class BurlapAIHelper {
   
   public static boolean moveForward(boolean jump) {
 	  MovementInput movement = new MovementInput();
-	  movement.moveForward = (float) 0.5D;
+	  movement.moveForward = (float) 0.6D;
 	  movement.jump = jump;
 	  
 	  overrideMovement(movement);
@@ -753,7 +761,7 @@ public class BurlapAIHelper {
   }
   
   public static void faceDownOne() {
-	  mc.thePlayer.rotationPitch = (float) 67.5;
+	  mc.thePlayer.rotationPitch = (float) 57;
   }
   
   public static void faceDownTwo() {
@@ -775,6 +783,48 @@ public class BurlapAIHelper {
 	  }
 	  else {
 		  return 1;
+	  }
+  }
+  
+  public static void placeBlock() {
+	  int count = 9;
+	  for (int i = 0; i < count; i++) {
+		  if (mc.thePlayer.inventory.getCurrentItem() != null) {
+			  if (mc.thePlayer.getCurrentEquippedItem().getUnlocalizedName().equals("tile.burlapmod_burlapstone")) {
+				  overrideUseItem();
+				  final Timer timer = new Timer();
+				  timer.schedule(new TimerTask() {
+					  @Override
+					  public void run() {
+						  resetAllInputs();
+						  timer.cancel();
+					  }
+				  }, 200, 10);
+				  break;
+			  }
+		  }
+		  mc.thePlayer.inventory.changeCurrentItem(-1);
+	  }
+  }
+  
+  public static void destroyBlock() {
+	  int count = 9;
+	  for (int i = 0; i < count; i++) {
+		  if (mc.thePlayer.inventory.getCurrentItem() != null) {
+			  if (mc.thePlayer.getCurrentEquippedItem().getUnlocalizedName().equals("item.pickaxeDiamond")) {
+				  overrideAttack();
+				  final Timer timer = new Timer();
+				  timer.schedule(new TimerTask() {
+					  @Override
+					  public void run() {
+						  resetAllInputs();
+						  timer.cancel();
+					  }
+				  }, 200, 10);
+				  break;
+			  }
+		  }
+		  mc.thePlayer.inventory.changeCurrentItem(-1);
 	  }
   }
 

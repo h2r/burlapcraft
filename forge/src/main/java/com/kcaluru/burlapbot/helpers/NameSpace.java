@@ -15,6 +15,7 @@ public class NameSpace {
 	//-------------------BLOCKS-------------------------
 	// block registry
 	public static final RegistryNamespaced blockRegistry = GameData.getBlockRegistry();
+	public static final Block[] goalBlocks = {Blocks.gold_block};
     public static final Block[] normalBlocks = { Blocks.bedrock, Blocks.bookshelf, Blocks.brick_block, Blocks.brown_mushroom_block, Blocks.cake, Blocks.coal_block, Blocks.coal_ore, Blocks.cobblestone, Blocks.crafting_table, Blocks.diamond_block, Blocks.diamond_ore, Blocks.dirt, Blocks.double_stone_slab, Blocks.double_wooden_slab, Blocks.emerald_block, Blocks.emerald_ore, Blocks.farmland, Blocks.glass, Blocks.glowstone, Blocks.grass, Blocks.gold_block, Blocks.gold_ore, Blocks.hardened_clay, Blocks.iron_block, Blocks.iron_ore, Blocks.lapis_block, Blocks.lapis_ore, Blocks.leaves, Blocks.leaves2, Blocks.log, Blocks.log2, Blocks.melon_block, Blocks.mossy_cobblestone, Blocks.mycelium, Blocks.nether_brick, Blocks.nether_brick_fence, Blocks.netherrack, Blocks.obsidian, Blocks.packed_ice, Blocks.planks, Blocks.pumpkin, Blocks.quartz_block, Blocks.quartz_ore, Blocks.red_mushroom_block, Blocks.redstone_block, Blocks.redstone_lamp, Blocks.redstone_ore, Blocks.sandstone, Blocks.snow, Blocks.soul_sand, Blocks.stained_glass, Blocks.stained_hardened_clay, Blocks.stone, Blocks.stonebrick, Blocks.web, Blocks.wool };
     public static final Block[] fallingBlocks = { Blocks.gravel, Blocks.sand };
     public static final Block[] stairBlocks = { Blocks.acacia_stairs, Blocks.birch_stairs, Blocks.brick_stairs, Blocks.dark_oak_stairs, Blocks.jungle_stairs, Blocks.nether_brick_stairs, Blocks.oak_stairs, Blocks.sandstone_stairs, Blocks.spruce_stairs, Blocks.stone_brick_stairs, Blocks.stone_stairs, Blocks.stone_slab, Blocks.wooden_slab, Blocks.quartz_stairs };
@@ -26,6 +27,7 @@ public class NameSpace {
 	public static final String							ATX = "x";
 	public static final String							ATY = "y";
 	public static final String							ATZ = "z";
+	public static final String							ATBTYPE = "blockType";
 	public static final String							ISBROKEN = "isBroken";
 	public static final String							ATCOLLIDES = "collides";
 	public static final String 							ATROTDIR = "rotationalDirection";

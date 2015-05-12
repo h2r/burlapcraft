@@ -20,6 +20,7 @@ public class MovementAction extends AgentAction {
 	@Override
 	void doAction(State state) {
 		
+		System.out.println("Move Forward");
 		BurlapAIHelper.moveForward(false);
 		
 	}

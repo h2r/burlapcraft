@@ -1,6 +1,8 @@
 package com.kcaluru.burlapbot.items;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -10,13 +12,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.world.World;
+import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 
 import com.kcaluru.burlapbot.BurlapMod;
 import com.kcaluru.burlapbot.BurlapWorldGenHandler;
+import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorReal;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
 import com.kcaluru.burlapbot.helpers.Pos;
-import com.kcaluru.burlapbot.solver.SolverFinderDungeon;
+import com.kcaluru.burlapbot.solver.SolverFinder;
 import com.kcaluru.burlapbot.test.BFSMovement;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -26,10 +30,15 @@ public class ItemFinderWand extends Item {
 	// name of item
 	private String name = "finderwand";
 	
-	// start x, y and z of player within dungeon.
-	private int dungeonX = 8; 
-	private int dungeonY = 1;
-	private int dungeonZ = 2;
+	// length, width and height of dungeon
+	final int length = 5;
+	final int width = 5;
+	final int height = 4;
+	
+	// start x, y and z of player within dungeon
+	private double dungeonX = 1.5; 
+	private double dungeonY = 1;
+	private double dungeonZ = 3;
 	
 	// indicate whether agent is in dungeon or not
 	public static boolean finderInside;
@@ -55,29 +64,14 @@ public class ItemFinderWand extends Item {
 		if(!world.isRemote) {
 			if (finderInside) {
 				
-				// find the goal
-				int goldX = 0;
-				int goldY = 0;
-				int goldZ = 0;
-				
-				for (int i = 0; i < 4; i++) {
-					for (int j = 0; j < 11; j++) {
-						for (int k = 0; k < 11; k++) {
-							if (BurlapAIHelper.getBlockId(BurlapWorldGenHandler.finderX + j, BurlapWorldGenHandler.finderY + i, BurlapWorldGenHandler.finderZ + k) == 41) {
-								goldY = i;
-								goldX = j;
-								goldZ = k;
-							}
-						}
-					}
-				}
-				
 				// create the solver and give it the goal coords
-				SolverFinderDungeon solver = new SolverFinderDungeon(goldX, goldY, goldZ);
+				SolverFinder solver = new SolverFinder(this.length, this.width, this.height);
+				
+				// set dungeonID to 1
+				DomainGeneratorReal.dungeonID = 1;
 				
 				// run RMax
 				solver.RMAX();
-				
 	
 			}
 			else {

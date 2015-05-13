@@ -12,15 +12,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.world.World;
+import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 
 import com.kcaluru.burlapbot.BurlapMod;
 import com.kcaluru.burlapbot.BurlapWorldGenHandler;
 import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorReal;
+import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorSimulated;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
 import com.kcaluru.burlapbot.helpers.Pos;
-import com.kcaluru.burlapbot.solver.SolverFinder;
+import com.kcaluru.burlapbot.solver.SolverLearningFinder;
+import com.kcaluru.burlapbot.solver.SolverPlanningFinder;
+import com.kcaluru.burlapbot.stategenerator.StateGenerator;
 import com.kcaluru.burlapbot.test.BFSMovement;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -64,14 +68,31 @@ public class ItemFinderWand extends Item {
 		if(!world.isRemote) {
 			if (finderInside) {
 				
-				// create the solver and give it the goal coords
-				SolverFinder solver = new SolverFinder(this.length, this.width, this.height);
+				// ---------- LEARNING ---------- //
+//				
+//				// set dungeonID to 1
+//				DomainGeneratorReal.dungeonID = 1;
+//				
+//				// create the solver and give it the goal coords
+//				SolverLearningFinder solver = new SolverLearningFinder(this.length, this.width, this.height);
+//				
+//				// run RMax
+//				solver.RMAX();
+//				
+				// ------------------------------ //
+				
+				// ---------- PLANNING ---------- //
 				
 				// set dungeonID to 1
-				DomainGeneratorReal.dungeonID = 1;
+				DomainGeneratorSimulated.dungeonID = 1;
 				
-				// run RMax
-				solver.RMAX();
+				// create the solver and give it the map
+				SolverPlanningFinder solver = new SolverPlanningFinder(StateGenerator.getMap(DomainGeneratorSimulated.dungeonID));
+				
+				// run BFS
+				solver.BFS();
+				
+				// ------------------------------ //
 	
 			}
 			else {

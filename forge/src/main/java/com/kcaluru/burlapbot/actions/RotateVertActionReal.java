@@ -5,11 +5,11 @@ import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
 
-public class RotateVertAction extends AgentAction {
+public class RotateVertActionReal extends AgentActionReal {
 	
 	private int vertDirection;
 
-	public RotateVertAction(String name, Domain domain, int rotateVertDirection) {
+	public RotateVertActionReal(String name, Domain domain, int rotateVertDirection) {
 		
 		super(name, domain);
 		this.vertDirection = rotateVertDirection;

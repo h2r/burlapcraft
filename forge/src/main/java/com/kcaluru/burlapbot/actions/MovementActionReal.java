@@ -9,9 +9,9 @@ import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.singleagent.SADomain;
 
-public class MovementAction extends AgentAction {
+public class MovementActionReal extends AgentActionReal {
 
-	public MovementAction(String name, Domain domain) {
+	public MovementActionReal(String name, Domain domain) {
 		
 		super(name, domain);
 		

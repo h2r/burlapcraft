@@ -42,10 +42,8 @@ import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.SinglePFTF;
 import burlap.oomdp.singleagent.common.UniformCostRF;
 
-public class SolverFinder {
+public class SolverLearningFinder {
 
-	
-	
 	DomainGeneratorReal 			dwdg;
 	public Domain						domain;
 	StateParser 				sp;
@@ -63,7 +61,7 @@ public class SolverFinder {
 	final int maxVIPasses = 20;
 	final double maxReward = 0;
 	
-	public SolverFinder(int length, int width, int height) {
+	public SolverLearningFinder(int length, int width, int height) {
 		
 		// set the length, width and height of the dungeon
 		this.length = length;

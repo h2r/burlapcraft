@@ -7,11 +7,11 @@ import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 
-public class RotateAction extends AgentAction {
+public class RotateActionReal extends AgentActionReal {
 
 	private int direction;
 	
-	public RotateAction(String name, Domain domain, int direction) {
+	public RotateActionReal(String name, Domain domain, int direction) {
 		
 		super(name, domain);
 		this.direction = direction;

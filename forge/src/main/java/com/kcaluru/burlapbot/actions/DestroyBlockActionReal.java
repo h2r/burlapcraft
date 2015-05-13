@@ -5,9 +5,9 @@ import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
 
-public class DestroyBlockAction extends AgentAction {
+public class DestroyBlockActionReal extends AgentActionReal {
 
-	public DestroyBlockAction(String name, Domain domain) {
+	public DestroyBlockActionReal(String name, Domain domain) {
 		super(name, domain);
 	}
 

@@ -10,7 +10,7 @@ import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 import com.kcaluru.burlapbot.BurlapMod;
 import com.kcaluru.burlapbot.BurlapWorldGenHandler;
 import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorReal;
-import com.kcaluru.burlapbot.solver.SolverBridge;
+import com.kcaluru.burlapbot.solver.SolverLearningBridge;
 
 public class ItemBridgeWand extends Item {
 
@@ -53,7 +53,7 @@ public class ItemBridgeWand extends Item {
 			if (bridgeInside) {
 				
 				// create the solver and give it the goal coords
-				SolverBridge solver = new SolverBridge(this.length, this.width, this.height);
+				SolverLearningBridge solver = new SolverLearningBridge(this.length, this.width, this.height);
 				
 				// set dungeonID to 2
 				DomainGeneratorReal.dungeonID = 2;

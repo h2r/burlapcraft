@@ -9,7 +9,7 @@ import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
 import burlap.oomdp.singleagent.Action;
 
-public abstract class AgentAction extends Action {
+public abstract class AgentActionReal extends Action {
 	
 	abstract void doAction(State state);
 	
@@ -18,17 +18,17 @@ public abstract class AgentAction extends Action {
 	 * @param name
 	 * @param domain
 	 */
-	public AgentAction(String name, Domain domain) {
+	public AgentActionReal(String name, Domain domain) {
 		super(name, domain, "");
 	}
 	
-	protected AgentAction getAction() {
+	protected AgentActionReal getAction() {
 		return this;
 	}
 
 	@Override
 	protected State performActionHelper(State s, String[] params) {
-		AgentAction action = this.getAction();
+		AgentActionReal action = this.getAction();
 		
 		System.out.println(action.toString());
 		

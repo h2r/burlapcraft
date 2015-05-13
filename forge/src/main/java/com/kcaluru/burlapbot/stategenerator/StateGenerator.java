@@ -17,25 +17,36 @@ import burlap.oomdp.core.State;
 
 public class StateGenerator {
 	
-	private static int length = 5;
-	private static int width = 5;
-	private static int height = 4;
+	private static int finderLength = 5;
+	private static int finderWidth = 5;
+	private static int finderHeight = 3;
+	private static int bridgeLength = 4;
+	private static int bridgeWidth = 5;
+	private static int bridgeHeight = 4;
+	private static int dungeonX;
+	private static int dungeonY;
+	private static int dungeonZ;
+	private static int length;
+	private static int width;
+	private static int height;
 
 	public static State getCurrentState(Domain domain, int dungeon) {
-		
-		int dungeonX = 0;
-		int dungeonY = 0;
-		int dungeonZ = 0;
 		
 		if (dungeon == 1) {
 			dungeonX = BurlapWorldGenHandler.finderX;
 			dungeonY = BurlapWorldGenHandler.finderY;
 			dungeonZ = BurlapWorldGenHandler.finderZ;
+			length = finderLength;
+			width = finderWidth;
+			height = finderHeight;
 		}
 		else if (dungeon == 2) {
 			dungeonX = BurlapWorldGenHandler.bridgeX;
 			dungeonY = BurlapWorldGenHandler.bridgeY;
 			dungeonZ = BurlapWorldGenHandler.bridgeZ;
+			length = bridgeLength;
+			width = bridgeWidth;
+			height = bridgeHeight;
 		}
 		
 		State s = new State();
@@ -74,6 +85,42 @@ public class StateGenerator {
 		s.addObject(agent);
 		
 		return s;
+	}
+	
+	public static int[][][] getMap(int dungeon) {
+		
+		if (dungeon == 1) {
+			dungeonX = BurlapWorldGenHandler.finderX;
+			dungeonY = BurlapWorldGenHandler.finderY;
+			dungeonZ = BurlapWorldGenHandler.finderZ;
+			length = finderLength;
+			width = finderWidth;
+			height = finderHeight;
+		}
+		else if (dungeon == 2) {
+			dungeonX = BurlapWorldGenHandler.bridgeX;
+			dungeonY = BurlapWorldGenHandler.bridgeY;
+			dungeonZ = BurlapWorldGenHandler.bridgeZ;
+			length = bridgeLength;
+			width = bridgeWidth;
+			height = bridgeHeight;
+		}
+		
+		int[][][] map = new int[height][length][width];
+		
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < length; j++) {
+				for (int k = 0; k < width; k++) {
+					Block block = BurlapAIHelper.getBlock(dungeonX + j, dungeonY + i, dungeonZ + k);
+					if (!(BurlapAIHelper.blockIsOneOf(block, BurlapAIHelper.mineableBlocks) || BurlapAIHelper.blockIsOneOf(block, BurlapAIHelper.dangerBlocks))) {
+						int blockID = BurlapAIHelper.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
+						map[i][j][k] = blockID;
+					}
+				}
+			}
+		}
+		
+		return map;
 	}
 	
 }

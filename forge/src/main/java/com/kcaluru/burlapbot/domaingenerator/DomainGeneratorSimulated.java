@@ -21,12 +21,18 @@ import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 
 import com.kcaluru.burlapbot.actions.DestroyBlockActionReal;
+import com.kcaluru.burlapbot.actions.DestroyBlockActionSimulated;
 import com.kcaluru.burlapbot.actions.MovementActionReal;
+import com.kcaluru.burlapbot.actions.MovementActionSimulated;
 import com.kcaluru.burlapbot.actions.PlaceBlockActionReal;
+import com.kcaluru.burlapbot.actions.PlaceBlockActionSimulated;
 import com.kcaluru.burlapbot.actions.RotateActionReal;
+import com.kcaluru.burlapbot.actions.RotateActionSimulated;
 import com.kcaluru.burlapbot.actions.RotateVertActionReal;
+import com.kcaluru.burlapbot.actions.RotateVertActionSimulated;
 import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
 import com.kcaluru.burlapbot.helpers.NameSpace;
+import com.kcaluru.burlapbot.stategenerator.StateGenerator;
 
 import cpw.mods.fml.common.registry.GameData;
 
@@ -36,19 +42,21 @@ import cpw.mods.fml.common.registry.GameData;
  *
  */
 
-public class DomainGeneratorReal implements DomainGenerator {
+public class DomainGeneratorSimulated implements DomainGenerator {
 		
-	protected int length;
-	protected int width;
-	protected int height;
-	protected int numVertDirs = 2;
+	private int[][][] map;
+	private int length;
+	private int width;
+	private int height;
+	private int numVertDirs = 2;
 	public static int dungeonID;
 	
-	public DomainGeneratorReal(int length, int width, int height) {
+	public DomainGeneratorSimulated(int[][][] map) {
 		
-		this.length = length;
-		this.width = width;
-		this.height = height;
+		this.map = map;
+		this.length = map[0].length;
+		this.width = map[0][0].length;
+		this.height = map.length;
 		
 	}
 	
@@ -92,15 +100,14 @@ public class DomainGeneratorReal implements DomainGenerator {
 		blockClass.addAttribute(zAtt);
 		blockClass.addAttribute(bType);
 		
-		
 		// Actions
-		new MovementActionReal(NameSpace.ACTIONMOVE, domain);
-		new RotateActionReal(NameSpace.ACTIONROTATERIGHT, domain, 1);
-		new RotateActionReal(NameSpace.ACTIONROTATELEFT, domain, NameSpace.RotDirection.size - 1);
-		new RotateVertActionReal(NameSpace.ACTIONAHEAD, domain, 0);
-		new RotateVertActionReal(NameSpace.ACTIONDOWNONE, domain, this.numVertDirs - 1);
-		new PlaceBlockActionReal(NameSpace.ACTIONPLACEBLOCK, domain);
-		new DestroyBlockActionReal(NameSpace.ACTIONDESTBLOCK, domain);
+		new MovementActionSimulated(NameSpace.ACTIONMOVE, domain, this.map);
+		new RotateActionSimulated(NameSpace.ACTIONROTATERIGHT, domain, 1);
+		new RotateActionSimulated(NameSpace.ACTIONROTATELEFT, domain, NameSpace.RotDirection.size - 1);
+		new RotateVertActionSimulated(NameSpace.ACTIONAHEAD, domain, 0);
+		new RotateVertActionSimulated(NameSpace.ACTIONDOWNONE, domain, this.numVertDirs - 1);
+		new PlaceBlockActionSimulated(NameSpace.ACTIONPLACEBLOCK, domain, this.map);
+		new DestroyBlockActionSimulated(NameSpace.ACTIONDESTBLOCK, domain);
 		
 		return domain;
 		

@@ -106,3 +106,10 @@ Caused by: java.security.cert.CertificateException: No subject alternative DNS n
 [20:22:31] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
 [20:22:31] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
 [20:22:31] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[20:34:45] [Client thread/INFO]: Stopping!
+[20:34:45] [Server thread/INFO]: Stopping server
+[20:34:45] [Server thread/INFO]: Saving players
+[20:34:45] [Server thread/INFO]: Saving worlds
+[20:34:45] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[20:34:45] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[20:34:45] [Server thread/INFO]: Saving chunks for level 'New World'/The End

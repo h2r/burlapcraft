@@ -22,8 +22,8 @@ import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 
 import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorReal;
 import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorSimulated;
-import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
-import com.kcaluru.burlapbot.helpers.NameSpace;
+import com.kcaluru.burlapbot.helper.HelperActions;
+import com.kcaluru.burlapbot.helper.HelperNameSpace;
 import com.kcaluru.burlapbot.solver.SolverLearningFinder.MovementTF;
 import com.kcaluru.burlapbot.stategenerator.StateGenerator;
 
@@ -77,7 +77,12 @@ public class SolverPlanningFinder {
 		
 		Policy p = new SDPlannerPolicy(planner);
 		
-		System.out.println(p.evaluateBehavior(initialState, rf, tf).getActionSequenceString("\n"));
+		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
+		
+		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
+			System.out.println(ea.getState(i).toString());
+			System.out.println(ea.getAction(i).toString());
+		}
 	}
 	
 	public static class MovementTF implements TerminalFunction{
@@ -90,19 +95,19 @@ public class SolverPlanningFinder {
 		public boolean isTerminal(State s) {
 			
 			//get location of agent in next state
-			ObjectInstance agent = s.getFirstObjectOfClass(NameSpace.CLASSAGENT);
-			int ax = agent.getDiscValForAttribute(NameSpace.ATX);
-			int ay = agent.getDiscValForAttribute(NameSpace.ATY);
-			int az = agent.getDiscValForAttribute(NameSpace.ATZ);
-			int rotDir = agent.getDiscValForAttribute(NameSpace.ATROTDIR);
-			int vertDir = agent.getDiscValForAttribute(NameSpace.ATVERTDIR);
+			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
+			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
 			
-			List<ObjectInstance> blocks = s.getObjectsOfTrueClass(NameSpace.CLASSBLOCK);
+			List<ObjectInstance> blocks = s.getObjectsOfTrueClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
-				if (block.getDiscValForAttribute(NameSpace.ATBTYPE) == 41) {
-					goalX = block.getDiscValForAttribute(NameSpace.ATX);
-					goalY = block.getDiscValForAttribute(NameSpace.ATY);
-					goalZ = block.getDiscValForAttribute(NameSpace.ATZ);
+				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
+					goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
 				} 
 			}
 			

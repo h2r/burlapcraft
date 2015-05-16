@@ -1,1 +1,0 @@
-left,left,left,left,left,left,back,door,left,back,back,forward,forward,forward,placeF,forward,forward,forward,left,left,left,bake

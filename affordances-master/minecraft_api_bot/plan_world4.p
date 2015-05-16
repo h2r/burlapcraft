@@ -1,1 +1,0 @@
-left,left,left,left,forward,forward,left,left,left,back,back,back,forward,forward,left,placeF,forward,jumpF,forward,forward,

@@ -5,6 +5,7 @@
 		<item value="400" key="height"/>
 	</section>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="false" key="renameSubpackages"/>
 		<item value="false" key="updateQualifiedNames"/>
 		<item value="*" key="patterns"/>
 		<item value="false" key="updateSimilarElements"/>
@@ -18,8 +19,8 @@
 			<item value="600" key="DIALOG_WIDTH"/>
 			<item value="1|San Francisco Display|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 			<item value="500" key="DIALOG_HEIGHT"/>
-			<item value="-37" key="DIALOG_X_ORIGIN"/>
-			<item value="0" key="DIALOG_Y_ORIGIN"/>
+			<item value="-33" key="DIALOG_X_ORIGIN"/>
+			<item value="181" key="DIALOG_Y_ORIGIN"/>
 		</section>
 	</section>
 	<section name="NewClassWizardPage">

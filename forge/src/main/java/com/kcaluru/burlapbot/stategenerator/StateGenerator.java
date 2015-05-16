@@ -6,16 +6,18 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 
-import com.kcaluru.burlapbot.BurlapWorldGenHandler;
-import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
-import com.kcaluru.burlapbot.helpers.NameSpace;
-import com.kcaluru.burlapbot.helpers.Pos;
+import com.kcaluru.burlapbot.handler.HandlerDungeonGeneration;
+import com.kcaluru.burlapbot.helper.HelperActions;
+import com.kcaluru.burlapbot.helper.HelperNameSpace;
+import com.kcaluru.burlapbot.helper.HelperPos;
 
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 
 public class StateGenerator {
+	
+	public static int blockCount = 0;
 	
 	private static int finderLength = 5;
 	private static int finderWidth = 5;
@@ -33,37 +35,37 @@ public class StateGenerator {
 	public static State getCurrentState(Domain domain, int dungeon) {
 		
 		if (dungeon == 1) {
-			dungeonX = BurlapWorldGenHandler.finderX;
-			dungeonY = BurlapWorldGenHandler.finderY;
-			dungeonZ = BurlapWorldGenHandler.finderZ;
+			dungeonX = HandlerDungeonGeneration.finderX;
+			dungeonY = HandlerDungeonGeneration.finderY;
+			dungeonZ = HandlerDungeonGeneration.finderZ;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
 		}
 		else if (dungeon == 2) {
-			dungeonX = BurlapWorldGenHandler.bridgeX;
-			dungeonY = BurlapWorldGenHandler.bridgeY;
-			dungeonZ = BurlapWorldGenHandler.bridgeZ;
+			dungeonX = HandlerDungeonGeneration.bridgeX;
+			dungeonY = HandlerDungeonGeneration.bridgeY;
+			dungeonZ = HandlerDungeonGeneration.bridgeZ;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
 		}
 		
 		State s = new State();
-		int blockCount = 0;
 		
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < length; j++) {
 				for (int k = 0; k < width; k++) {
-					Block block = BurlapAIHelper.getBlock(dungeonX + j, dungeonY + i, dungeonZ + k);
-					if (BurlapAIHelper.blockIsOneOf(block, BurlapAIHelper.mineableBlocks) || BurlapAIHelper.blockIsOneOf(block, BurlapAIHelper.dangerBlocks)) {
-						int blockID = BurlapAIHelper.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
+					Block block = HelperActions.getBlock(dungeonX + j, dungeonY + i, dungeonZ + k);
+					if (HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks)) {
+						int blockID = HelperActions.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
 						blockCount += 1;
-						ObjectInstance blockInstance = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSBLOCK), "block" + blockCount);
-						blockInstance.setValue(NameSpace.ATX, j);
-						blockInstance.setValue(NameSpace.ATY, i);
-						blockInstance.setValue(NameSpace.ATZ, k);
-						blockInstance.setValue(NameSpace.ATBTYPE, blockID);
+						// Note: name block after its x y and z coordinates
+						ObjectInstance blockInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), "block" + blockCount);
+						blockInstance.setValue(HelperNameSpace.ATX, j);
+						blockInstance.setValue(HelperNameSpace.ATY, i);
+						blockInstance.setValue(HelperNameSpace.ATZ, k);
+						blockInstance.setValue(HelperNameSpace.ATBTYPE, blockID);
 						
 						s.addObject(blockInstance);
 					}
@@ -71,16 +73,16 @@ public class StateGenerator {
 			}
 		}
 
-		Pos curPos = BurlapAIHelper.getPlayerPosition();
-		int rotateDirection = BurlapAIHelper.getRotateDirection();
-		int rotateVertDirection = BurlapAIHelper.getRotateVertDirection();
+		HelperPos curPos = HelperActions.getPlayerPosition();
+		int rotateDirection = HelperActions.getYawDirection();
+		int rotateVertDirection = HelperActions.getPitchDirection();
 		
-		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(NameSpace.CLASSAGENT), "agent0");
-		agent.setValue(NameSpace.ATX, curPos.x - dungeonX);
-		agent.setValue(NameSpace.ATY, curPos.y - dungeonY);
-		agent.setValue(NameSpace.ATZ, curPos.z - dungeonZ);
-		agent.setValue(NameSpace.ATROTDIR, rotateDirection);
-		agent.setValue(NameSpace.ATVERTDIR, rotateVertDirection);
+		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSAGENT), "agent0");
+		agent.setValue(HelperNameSpace.ATX, curPos.x - dungeonX);
+		agent.setValue(HelperNameSpace.ATY, curPos.y - dungeonY);
+		agent.setValue(HelperNameSpace.ATZ, curPos.z - dungeonZ);
+		agent.setValue(HelperNameSpace.ATROTDIR, rotateDirection);
+		agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
 		
 		s.addObject(agent);
 		
@@ -90,17 +92,17 @@ public class StateGenerator {
 	public static int[][][] getMap(int dungeon) {
 		
 		if (dungeon == 1) {
-			dungeonX = BurlapWorldGenHandler.finderX;
-			dungeonY = BurlapWorldGenHandler.finderY;
-			dungeonZ = BurlapWorldGenHandler.finderZ;
+			dungeonX = HandlerDungeonGeneration.finderX;
+			dungeonY = HandlerDungeonGeneration.finderY;
+			dungeonZ = HandlerDungeonGeneration.finderZ;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
 		}
 		else if (dungeon == 2) {
-			dungeonX = BurlapWorldGenHandler.bridgeX;
-			dungeonY = BurlapWorldGenHandler.bridgeY;
-			dungeonZ = BurlapWorldGenHandler.bridgeZ;
+			dungeonX = HandlerDungeonGeneration.bridgeX;
+			dungeonY = HandlerDungeonGeneration.bridgeY;
+			dungeonZ = HandlerDungeonGeneration.bridgeZ;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
@@ -111,9 +113,9 @@ public class StateGenerator {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < length; j++) {
 				for (int k = 0; k < width; k++) {
-					Block block = BurlapAIHelper.getBlock(dungeonX + j, dungeonY + i, dungeonZ + k);
-					if (!(BurlapAIHelper.blockIsOneOf(block, BurlapAIHelper.mineableBlocks) || BurlapAIHelper.blockIsOneOf(block, BurlapAIHelper.dangerBlocks))) {
-						int blockID = BurlapAIHelper.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
+					Block block = HelperActions.getBlock(dungeonX + j, dungeonY + i, dungeonZ + k);
+					if (!(HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks))) {
+						int blockID = HelperActions.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
 						map[i][j][k] = blockID;
 					}
 				}

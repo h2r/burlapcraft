@@ -20,18 +20,18 @@ import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 
-import com.kcaluru.burlapbot.actions.DestroyBlockActionReal;
-import com.kcaluru.burlapbot.actions.DestroyBlockActionSimulated;
-import com.kcaluru.burlapbot.actions.MovementActionReal;
-import com.kcaluru.burlapbot.actions.MovementActionSimulated;
-import com.kcaluru.burlapbot.actions.PlaceBlockActionReal;
-import com.kcaluru.burlapbot.actions.PlaceBlockActionSimulated;
-import com.kcaluru.burlapbot.actions.RotateActionReal;
-import com.kcaluru.burlapbot.actions.RotateActionSimulated;
-import com.kcaluru.burlapbot.actions.RotateVertActionReal;
-import com.kcaluru.burlapbot.actions.RotateVertActionSimulated;
-import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
-import com.kcaluru.burlapbot.helpers.NameSpace;
+import com.kcaluru.burlapbot.action.ActionChangePitchReal;
+import com.kcaluru.burlapbot.action.ActionChangePitchSimulated;
+import com.kcaluru.burlapbot.action.ActionChangeYawReal;
+import com.kcaluru.burlapbot.action.ActionChangeYawSimulated;
+import com.kcaluru.burlapbot.action.ActionDestroyBlockReal;
+import com.kcaluru.burlapbot.action.ActionDestroyBlockSimulated;
+import com.kcaluru.burlapbot.action.ActionMoveForwardReal;
+import com.kcaluru.burlapbot.action.ActionMoveForwardSimulated;
+import com.kcaluru.burlapbot.action.ActionPlaceBlockReal;
+import com.kcaluru.burlapbot.action.ActionPlaceBlockSimulated;
+import com.kcaluru.burlapbot.helper.HelperActions;
+import com.kcaluru.burlapbot.helper.HelperNameSpace;
 import com.kcaluru.burlapbot.stategenerator.StateGenerator;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -67,47 +67,53 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		
 		// Attributes
 		// x-position attribute
-		Attribute xAtt = new Attribute(domain, NameSpace.ATX, AttributeType.INT);
+		Attribute xAtt = new Attribute(domain, HelperNameSpace.ATX, AttributeType.INT);
 		xAtt.setLims(0, this.length - 1);
 		// y-position attribute
-		Attribute yAtt = new Attribute(domain, NameSpace.ATY, AttributeType.INT);
+		Attribute yAtt = new Attribute(domain, HelperNameSpace.ATY, AttributeType.INT);
 		yAtt.setLims(0, this.height - 1);
 		// z-position attribute
-		Attribute zAtt = new Attribute(domain, NameSpace.ATZ, AttributeType.INT);
+		Attribute zAtt = new Attribute(domain, HelperNameSpace.ATZ, AttributeType.INT);
 		zAtt.setLims(0, this.width - 1);
 		// Rotational direction for agent
-		Attribute rotDirAt = new Attribute(domain, NameSpace.ATROTDIR, Attribute.AttributeType.DISC);
-		rotDirAt.setDiscValuesForRange(0, NameSpace.RotDirection.size - 1, 1);
+		Attribute rotDirAt = new Attribute(domain, HelperNameSpace.ATROTDIR, Attribute.AttributeType.DISC);
+		rotDirAt.setDiscValuesForRange(0, HelperNameSpace.RotDirection.size - 1, 1);
 		// Agent's vertical direction attribute
-		Attribute vertDirAt = new Attribute(domain, NameSpace.ATVERTDIR, Attribute.AttributeType.DISC);
+		Attribute vertDirAt = new Attribute(domain, HelperNameSpace.ATVERTDIR, Attribute.AttributeType.DISC);
 		vertDirAt.setDiscValuesForRange(0, this.numVertDirs - 1, 1);
 		// Block type
-		Attribute bType = new Attribute(domain, NameSpace.ATBTYPE, Attribute.AttributeType.INT);
+		Attribute bType = new Attribute(domain, HelperNameSpace.ATBTYPE, Attribute.AttributeType.INT);
+		// Inventory Block quantity
+		Attribute ibQuantity = new Attribute(domain, HelperNameSpace.ATIBQUANT, Attribute.AttributeType.INT);
 		
 		
 		// Object classes
 		// agent
-		ObjectClass agentClass = new ObjectClass(domain, NameSpace.CLASSAGENT);
+		ObjectClass agentClass = new ObjectClass(domain, HelperNameSpace.CLASSAGENT);
 		agentClass.addAttribute(xAtt);
 		agentClass.addAttribute(yAtt);
 		agentClass.addAttribute(zAtt);
 		agentClass.addAttribute(rotDirAt);
 		agentClass.addAttribute(vertDirAt);
 		// blocks
-		ObjectClass blockClass = new ObjectClass(domain, NameSpace.CLASSBLOCK);
+		ObjectClass blockClass = new ObjectClass(domain, HelperNameSpace.CLASSBLOCK);
 		blockClass.addAttribute(xAtt);
 		blockClass.addAttribute(yAtt);
 		blockClass.addAttribute(zAtt);
 		blockClass.addAttribute(bType);
+		// inventory blocks
+		ObjectClass inventoryBlockClass = new ObjectClass(domain, HelperNameSpace.CLASSINVENTORYBLOCK);
+		inventoryBlockClass.addAttribute(bType);
+		inventoryBlockClass.addAttribute(ibQuantity);
 		
 		// Actions
-		new MovementActionSimulated(NameSpace.ACTIONMOVE, domain, this.map);
-		new RotateActionSimulated(NameSpace.ACTIONROTATERIGHT, domain, 1);
-		new RotateActionSimulated(NameSpace.ACTIONROTATELEFT, domain, NameSpace.RotDirection.size - 1);
-		new RotateVertActionSimulated(NameSpace.ACTIONAHEAD, domain, 0);
-		new RotateVertActionSimulated(NameSpace.ACTIONDOWNONE, domain, this.numVertDirs - 1);
-		new PlaceBlockActionSimulated(NameSpace.ACTIONPLACEBLOCK, domain, this.map);
-		new DestroyBlockActionSimulated(NameSpace.ACTIONDESTBLOCK, domain);
+		new ActionMoveForwardSimulated(HelperNameSpace.ACTIONMOVE, domain, this.map);
+		new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
+		new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
+		new ActionChangePitchSimulated(HelperNameSpace.ACTIONAHEAD, domain, 0);
+		new ActionChangePitchSimulated(HelperNameSpace.ACTIONDOWNONE, domain, this.numVertDirs - 1);
+		new ActionPlaceBlockSimulated(HelperNameSpace.ACTIONPLACEBLOCK, domain, this.map);
+		new ActionDestroyBlockSimulated(HelperNameSpace.ACTIONDESTBLOCK, domain);
 		
 		return domain;
 		

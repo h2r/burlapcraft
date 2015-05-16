@@ -19,9 +19,9 @@ import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
 
 import com.kcaluru.burlapbot.domaingenerator.DomainGeneratorReal;
-import com.kcaluru.burlapbot.helpers.BurlapAIHelper;
-import com.kcaluru.burlapbot.helpers.NameSpace;
-import com.kcaluru.burlapbot.helpers.Pos;
+import com.kcaluru.burlapbot.helper.HelperActions;
+import com.kcaluru.burlapbot.helper.HelperNameSpace;
+import com.kcaluru.burlapbot.helper.HelperPos;
 import com.kcaluru.burlapbot.solver.SolverLearningFinder.MovementTF;
 import com.kcaluru.burlapbot.stategenerator.StateGenerator;
 
@@ -88,25 +88,25 @@ public class SolverLearningBridge {
 		public double reward(State s, GroundedAction a, State sprime) {
 			
 			//get location of agent in next state
-			ObjectInstance agent = s.getFirstObjectOfClass(NameSpace.CLASSAGENT);
-			int ax = agent.getDiscValForAttribute(NameSpace.ATX);
-			int ay = agent.getDiscValForAttribute(NameSpace.ATY);
-			int az = agent.getDiscValForAttribute(NameSpace.ATZ);
-			int rotDir = agent.getDiscValForAttribute(NameSpace.ATROTDIR);
-			int vertDir = agent.getDiscValForAttribute(NameSpace.ATVERTDIR);
+			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
+			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
 			
-			List<ObjectInstance> blocks = s.getObjectsOfTrueClass(NameSpace.CLASSBLOCK);
-			List<Pos> dangerCoords = new ArrayList<Pos>();
+			List<ObjectInstance> blocks = s.getObjectsOfTrueClass(HelperNameSpace.CLASSBLOCK);
+			List<HelperPos> dangerCoords = new ArrayList<HelperPos>();
 			for (ObjectInstance block : blocks) {
-				if (block.getDiscValForAttribute(NameSpace.ATBTYPE) == 11) {
-					int dangerX = block.getDiscValForAttribute(NameSpace.ATX);
-					int dangerY = block.getDiscValForAttribute(NameSpace.ATY);
-					int dangerZ = block.getDiscValForAttribute(NameSpace.ATZ);
-					dangerCoords.add(new Pos(dangerX, dangerY, dangerZ));
+				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 11) {
+					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+					dangerCoords.add(new HelperPos(dangerX, dangerY, dangerZ));
 				} 
 			}
 			
-			for (Pos lavaPos : dangerCoords) {
+			for (HelperPos lavaPos : dangerCoords) {
 				if ((ax == lavaPos.x) && (ay - 1 == lavaPos.y) && (az == lavaPos.z)) {
 					return -10.0;
 				}
@@ -126,26 +126,26 @@ public class SolverLearningBridge {
 		public boolean isTerminal(State s) {
 			
 			//get location of agent in next state
-			ObjectInstance agent = s.getFirstObjectOfClass(NameSpace.CLASSAGENT);
-			int ax = agent.getDiscValForAttribute(NameSpace.ATX);
-			int ay = agent.getDiscValForAttribute(NameSpace.ATY);
-			int az = agent.getDiscValForAttribute(NameSpace.ATZ);
-			int rotDir = agent.getDiscValForAttribute(NameSpace.ATROTDIR);
-			int vertDir = agent.getDiscValForAttribute(NameSpace.ATVERTDIR);
+			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
+			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
 			
-			List<ObjectInstance> blocks = s.getObjectsOfTrueClass(NameSpace.CLASSBLOCK);
+			List<ObjectInstance> blocks = s.getObjectsOfTrueClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
-				if (block.getDiscValForAttribute(NameSpace.ATBTYPE) == 41) {
-					goalX = block.getDiscValForAttribute(NameSpace.ATX);
-					goalY = block.getDiscValForAttribute(NameSpace.ATY);
-					goalZ = block.getDiscValForAttribute(NameSpace.ATZ);
+				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
+					goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
 				} 
 			}
 			
 			//are they at goal location or dead?
 			if(((ax == (this.goalX) && az == (this.goalZ - 1) && rotDir == 0 && vertDir == 1) || (ax == (this.goalX) && az == (this.goalZ + 1) && rotDir == 2 && vertDir == 1)
 					|| (ax == (this.goalX - 1) && az == (this.goalZ) && rotDir == 3 && vertDir == 1) || (ax == (this.goalX + 1) && az == (this.goalZ) && rotDir == 1 && vertDir == 1)) 
-					|| (BurlapAIHelper.getMinecraft().thePlayer.getHealth() == 0)  || (BurlapAIHelper.getMinecraft().thePlayer.isBurning())) {
+					|| (HelperActions.getMinecraft().thePlayer.getHealth() == 0)  || (HelperActions.getMinecraft().thePlayer.isBurning())) {
 				return true;
 			}
 			

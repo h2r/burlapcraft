@@ -1,11 +1,11 @@
 content_assist_disabled_computers=org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.Enum"><rhs name\="burlap.oomdp.core.Attribute$AttributeType"/></lhs><lhs name\="net.minecraft.item.Item"><rhs name\="net.minecraft.item.Item"/></lhs></history>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.Enum"><rhs name\="burlap.oomdp.core.Attribute$AttributeType"/></lhs><lhs name\="net.minecraft.item.Item"><rhs name\="net.minecraft.item.Item"/></lhs><lhs name\="burlap.behavior.singleagent.planning.OOMDPPlanner"><rhs name\="burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar"/></lhs><lhs name\="burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner"><rhs name\="burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar"/></lhs></history>
 content_assist_number_of_computers=21
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
 eclipse.preferences.version=1
 fontPropagated=true
-org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.internal.ui.navigator.layout=1
 org.eclipse.jdt.ui.editor.tab.width=
 org.eclipse.jdt.ui.formatterprofiles.version=12
 org.eclipse.jdt.ui.javadoclocations.migrated=true

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="burlap">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/forge/burlap/burlap.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

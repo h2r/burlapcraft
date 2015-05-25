@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="schematic_converter">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/schematic_converter.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

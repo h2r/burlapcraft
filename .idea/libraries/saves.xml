@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="saves">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/forge/eclipse/saves/New World-20150331-153704.zip!/" />
+      <root url="jar://$PROJECT_DIR$/forge/eclipse/saves/Test World-20150220-064238.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

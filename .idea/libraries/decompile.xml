@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="decompile">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/forge/build/tmp/decompile/forge-1.7.10-10.13.2.1291-srg.jar!/" />
+      <root url="jar://$PROJECT_DIR$/forge/build/tmp/decompile/forge-1.7.10-10.13.2.1291-srg.jar.fixed.jar!/" />
+      <root url="jar://$PROJECT_DIR$/forge/build/tmp/decompile/forge-1.7.10-10.13.2.1291-srg.jar.patched.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

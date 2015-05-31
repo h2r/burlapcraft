@@ -41,7 +41,6 @@ public class DomainGeneratorReal implements DomainGenerator {
 	protected int length;
 	protected int width;
 	protected int height;
-	protected int numVertDirs = 2;
 	public static int dungeonID;
 	
 	public DomainGeneratorReal(int length, int width, int height) {
@@ -72,7 +71,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 		rotDirAt.setDiscValuesForRange(0, HelperNameSpace.RotDirection.size - 1, 1);
 		// Agent's vertical direction attribute
 		Attribute vertDirAt = new Attribute(domain, HelperNameSpace.ATVERTDIR, Attribute.AttributeType.DISC);
-		vertDirAt.setDiscValuesForRange(0, this.numVertDirs - 1, 1);
+		vertDirAt.setDiscValuesForRange(0, HelperNameSpace.VertDirection.size - 1, 1);
 		// Block type
 		Attribute bType = new Attribute(domain, HelperNameSpace.ATBTYPE, Attribute.AttributeType.INT);
 		
@@ -98,7 +97,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 		new ActionChangeYawReal(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
 		new ActionChangeYawReal(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
 		new ActionChangePitchReal(HelperNameSpace.ACTIONAHEAD, domain, 0);
-		new ActionChangePitchReal(HelperNameSpace.ACTIONDOWNONE, domain, this.numVertDirs - 1);
+		new ActionChangePitchReal(HelperNameSpace.ACTIONDOWNONE, domain, HelperNameSpace.VertDirection.size - 1);
 		new ActionPlaceBlockReal(HelperNameSpace.ACTIONPLACEBLOCK, domain);
 		new ActionDestroyBlockReal(HelperNameSpace.ACTIONDESTBLOCK, domain);
 		

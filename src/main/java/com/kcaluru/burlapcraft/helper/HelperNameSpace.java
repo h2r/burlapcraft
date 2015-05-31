@@ -34,7 +34,10 @@ public class HelperNameSpace {
 	public static final String 						ACTIONDESTBLOCK = "destroyBlockAction";
 	public static final String						ACTIONPLACEBLOCK = "placeBlockAction";
 	public static final String						ACTIONAHEAD = "lookAheadAction";
-	public static final String						ACTIONDOWNONE = "lookDownOneAction";
+	public static final String						ACTIONDOWNONE = "lookDownAction";
+	
+	//-------------DUNGEON NAMES---------------
+	public static final String[] dungeonNameList = {"|", "finder", "bridge"};
 	
 	//-------------ENUMS-------------
 	public enum RotDirection {
@@ -68,7 +71,7 @@ public class HelperNameSpace {
 	}
 	
 	public enum VertDirection {
-		AHEAD(0), DOWNONE(1);
+		AHEAD(0), DOWN(1);
 		public static final int size = VertDirection.values().length;
 		private final int intVal;
 		
@@ -83,7 +86,7 @@ public class HelperNameSpace {
 		public static VertDirection fromInt(int i) {
 			switch (i) {
 			case 1:
-				return DOWNONE;
+				return DOWN;
 			case 0:
 				return AHEAD;
 			
@@ -91,6 +94,5 @@ public class HelperNameSpace {
 			return null;
 		}
 	}
-	
 	
 }

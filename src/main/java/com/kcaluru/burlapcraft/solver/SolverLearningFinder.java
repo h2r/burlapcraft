@@ -61,12 +61,12 @@ public class SolverLearningFinder {
 	final int maxVIPasses = 20;
 	final double maxReward = 0;
 	
-	public SolverLearningFinder(int length, int width, int height) {
+	public SolverLearningFinder(int[][][] map) {
 		
 		// set the length, width and height of the dungeon
-		this.length = length;
-		this.width = width;
-		this.height = height;
+		this.length = map[0].length;
+		this.width = map[0][0].length;
+		this.height = map.length;
 		
 		//create the domain
 		dwdg = new DomainGeneratorReal(length, width, height);

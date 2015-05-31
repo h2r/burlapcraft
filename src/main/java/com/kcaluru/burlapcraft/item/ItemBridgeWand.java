@@ -21,11 +21,6 @@ public class ItemBridgeWand extends Item {
 	// name of item
 	private String name = "bridgewand";
 	
-	// length, width and height of dungeon
-	final int length = 5;
-	final int width = 5;
-	final int height = 5;
-	
 	// start x, y and z of agent within dungeon
 	private double dungeonX = 1.5; 
 	private double dungeonY = 2;
@@ -71,11 +66,8 @@ public class ItemBridgeWand extends Item {
 				
 				// ---------- PLANNING ---------- //
 				
-				// set dungeonID to 2
-				DomainGeneratorSimulated.dungeonID = 2;
-				
 				// create the solver and give it the map
-				SolverPlanningBridge solver = new SolverPlanningBridge(StateGenerator.getMap(DomainGeneratorSimulated.dungeonID));
+				SolverPlanningBridge solver = new SolverPlanningBridge(StateGenerator.getMap(2));
 				
 				// run BFS
 				solver.ASTAR();

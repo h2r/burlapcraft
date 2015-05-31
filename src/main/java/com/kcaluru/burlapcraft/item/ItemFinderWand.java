@@ -33,11 +33,6 @@ public class ItemFinderWand extends Item {
 	// name of item
 	private String name = "finderwand";
 	
-	// length, width and height of dungeon
-	final int length = 5;
-	final int width = 5;
-	final int height = 4;
-	
 	// start x, y and z of player within dungeon
 	private double dungeonX = 1.5; 
 	private double dungeonY = 1;
@@ -82,11 +77,8 @@ public class ItemFinderWand extends Item {
 				
 				// ---------- PLANNING ---------- //
 				
-				// set dungeonID to 1
-				DomainGeneratorSimulated.dungeonID = 1;
-				
 				// create the solver and give it the map
-				SolverPlanningFinder solver = new SolverPlanningFinder(StateGenerator.getMap(DomainGeneratorSimulated.dungeonID));
+				SolverPlanningFinder solver = new SolverPlanningFinder(StateGenerator.getMap(1));
 				
 				// run BFS
 				solver.BFS();

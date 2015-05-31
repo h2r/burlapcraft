@@ -48,8 +48,6 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 	private int length;
 	private int width;
 	private int height;
-	private int numVertDirs = 2;
-	public static int dungeonID;
 	
 	public DomainGeneratorSimulated(int[][][] map) {
 		
@@ -80,7 +78,7 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		rotDirAt.setDiscValuesForRange(0, HelperNameSpace.RotDirection.size - 1, 1);
 		// Agent's vertical direction attribute
 		Attribute vertDirAt = new Attribute(domain, HelperNameSpace.ATVERTDIR, Attribute.AttributeType.DISC);
-		vertDirAt.setDiscValuesForRange(0, this.numVertDirs - 1, 1);
+		vertDirAt.setDiscValuesForRange(0, HelperNameSpace.VertDirection.size - 1, 1);
 		// Block type
 		Attribute bType = new Attribute(domain, HelperNameSpace.ATBTYPE, Attribute.AttributeType.INT);
 		// Inventory Block quantity
@@ -111,7 +109,7 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
 		new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
 		new ActionChangePitchSimulated(HelperNameSpace.ACTIONAHEAD, domain, 0);
-		new ActionChangePitchSimulated(HelperNameSpace.ACTIONDOWNONE, domain, this.numVertDirs - 1);
+		new ActionChangePitchSimulated(HelperNameSpace.ACTIONDOWNONE, domain, HelperNameSpace.VertDirection.size - 1);
 		new ActionPlaceBlockSimulated(HelperNameSpace.ACTIONPLACEBLOCK, domain, this.map);
 		new ActionDestroyBlockSimulated(HelperNameSpace.ACTIONDESTBLOCK, domain);
 		

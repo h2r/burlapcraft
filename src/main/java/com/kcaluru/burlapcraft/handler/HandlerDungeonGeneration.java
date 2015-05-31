@@ -12,6 +12,7 @@ import com.kcaluru.burlapcraft.item.ItemFinderWand;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -33,6 +34,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	public static int bridgeY;
 	public static int bridgeZ;
 	public static HelperPos playerSpawnPos;
+	private static Minecraft mc = Minecraft.getMinecraft();
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,
@@ -67,9 +69,9 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	private void generateSurface(World world, Random random, int i, int j) {
 		// TODO Auto-generated method stub
 		
-		if(!BurlapCraft.structCreated && HelperActions.getMinecraft().thePlayer != null) {
+		if(mc.thePlayer != null) {
 			
-			playerSpawnPos = HelperActions.getPlayerPosition();
+			playerSpawnPos = getPlayerPosition();
 			
 			finderX = playerSpawnPos.x;
 			finderY = playerSpawnPos.y + 40;
@@ -80,11 +82,19 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 			
 			new DungeonGeneratorFinder().generate(world, random, finderX, finderY, finderZ);
 			new DungeonGeneratorBridge().generate(world, random, bridgeX, bridgeY, bridgeZ);
-
-			BurlapCraft.structCreated = true;
 			
 		}
 		
+	}
+	
+	private HelperPos getPlayerPosition() {
+	  
+		int x = MathHelper.floor_double(mc.thePlayer.posX);
+		int y = MathHelper.floor_double(mc.thePlayer.boundingBox.minY + 0.05D);
+		int z = MathHelper.floor_double(mc.thePlayer.posZ);
+		
+		return new HelperPos(x, y, z);
+    
 	}
 
 }

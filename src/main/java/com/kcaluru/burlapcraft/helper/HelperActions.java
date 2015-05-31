@@ -106,10 +106,6 @@ public class HelperActions {
     return getBlock(pos.x, pos.y, pos.z);
   }
 
-//  public abstract void addTask(AITask paramAITask);
-
-//  public abstract void desync();
-
   public static HelperPos getPos1()
   {
     return pos1;
@@ -119,19 +115,6 @@ public class HelperActions {
   {
     return pos2;
   }
-//
-//  public void setPosition(Pos pos, boolean isPos2)
-//  {
-//    int posIndex;
-//    if (isPos2) {
-//      this.pos2 = pos;
-//      posIndex = 2;
-//    } else {
-//      this.pos1 = pos;
-//      posIndex = 1;
-//    }
-////    AIChatController.addChatLine("Set position" + posIndex + " to " + pos);
-//  }
 
   public static void face(double x, double y, double z)
   {

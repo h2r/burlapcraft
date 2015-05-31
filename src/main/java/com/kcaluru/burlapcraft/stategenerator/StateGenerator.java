@@ -19,12 +19,15 @@ public class StateGenerator {
 	
 	public static int blockCount = 0;
 	
+	// finder dungeon dimensions
 	private static int finderLength = 5;
 	private static int finderWidth = 5;
 	private static int finderHeight = 3;
+	// bridge dungeon dimensions
 	private static int bridgeLength = 4;
 	private static int bridgeWidth = 5;
 	private static int bridgeHeight = 4;
+	
 	private static int dungeonX;
 	private static int dungeonY;
 	private static int dungeonZ;
@@ -32,9 +35,9 @@ public class StateGenerator {
 	private static int width;
 	private static int height;
 
-	public static State getCurrentState(Domain domain, int dungeon) {
+	public static State getCurrentState(Domain domain, int dungeonID) {
 		
-		if (dungeon == 1) {
+		if (dungeonID == 1) {
 			dungeonX = HandlerDungeonGeneration.finderX;
 			dungeonY = HandlerDungeonGeneration.finderY;
 			dungeonZ = HandlerDungeonGeneration.finderZ;
@@ -42,7 +45,7 @@ public class StateGenerator {
 			width = finderWidth;
 			height = finderHeight;
 		}
-		else if (dungeon == 2) {
+		else if (dungeonID == 2) {
 			dungeonX = HandlerDungeonGeneration.bridgeX;
 			dungeonY = HandlerDungeonGeneration.bridgeY;
 			dungeonZ = HandlerDungeonGeneration.bridgeZ;

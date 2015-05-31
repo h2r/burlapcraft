@@ -18,6 +18,8 @@ import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
+import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
+import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 
 import com.kcaluru.burlapcraft.domaingenerator.DomainGeneratorReal;
@@ -52,6 +54,10 @@ public class SolverPlanningFinder {
 		this.width = map[0][0].length;
 		this.height = map.length;
 		
+		System.out.println(this.length);
+		System.out.println(this.width);
+		System.out.println(this.height);
+		
 		//create the domain
 		dwdg = new DomainGeneratorSimulated(map);
 
@@ -69,6 +75,22 @@ public class SolverPlanningFinder {
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();
+	}
+	
+	public void ASTAR() {
+		
+		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
+		planner.planFromState(initialState);
+		
+		Policy p = new SDPlannerPolicy(planner);
+		
+		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
+		
+		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
+			System.out.println(ea.getState(i).toString());
+			System.out.println(ea.getAction(i).toString());
+		}
+		
 	}
 	
 	public void BFS() {

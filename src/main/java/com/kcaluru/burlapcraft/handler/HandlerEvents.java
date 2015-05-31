@@ -14,6 +14,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class HandlerEvents {
 	
+	public static EntityPlayer player;
+	
 	@SubscribeEvent
 	public void LivingUpdateEvent(LivingEvent event) {
 		
@@ -32,6 +34,12 @@ public class HandlerEvents {
 				player.inventory.addItemStackToInventory(new ItemStack(Items.diamond_pickaxe));
 			}
 		}
-		
+	}
+	
+	@SubscribeEvent
+	public void EntityJoinWorldEvent(EntityEvent event) {
+		if (event.entity instanceof EntityPlayer) {
+			player = (EntityPlayer) event.entity;
+		}
 	}
 }

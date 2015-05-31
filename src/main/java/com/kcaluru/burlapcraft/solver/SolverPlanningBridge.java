@@ -91,12 +91,20 @@ public class SolverPlanningBridge {
 			System.out.println(ea.getAction(i).toString());
 		}
 		
+	}
+	
+	public void BFS() {
+		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
+		planner.planFromState(initialState);
 		
-//		TerminalExplorer exp = new TerminalExplorer(domain);
-//		exp.setRewardFunction(rf);
-//		exp.setTerminalFunctionf(tf);
-//		exp.exploreFromState(initialState);
+		Policy p = new SDPlannerPolicy(planner);
 		
+		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
+		
+		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
+			System.out.println(ea.getState(i).toString());
+			System.out.println(ea.getAction(i).toString());
+		}
 	}
 	
 	public static class BridgeRF implements RewardFunction {

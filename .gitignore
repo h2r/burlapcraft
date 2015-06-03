@@ -1,1 +1,16 @@
 .DS_Store
+.gradle
+CREDITS-fml.txt
+LICENSE-fml.txt
+MinecraftForge-Credits.txt
+MinecraftForge-License.txt
+README.txt
+build.gradle
+eclipse/
+forge-1.7.10-10.13.3.1424-1.7.10-changelog.txt
+gradle/
+gradlew
+gradlew.bat
+src/main/java/com/example/
+
+

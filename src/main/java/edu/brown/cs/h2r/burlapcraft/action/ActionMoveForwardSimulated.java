@@ -20,7 +20,6 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 	public ActionMoveForwardSimulated(String name, Domain domain, int[][][] map) {
 		super(name, domain);
 		this.map = map;
-		System.out.println(map.length);
 	}
 
 	@Override
@@ -30,8 +29,6 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int curX = agent.getIntValForAttribute(HelperNameSpace.ATX);
 		int curY = agent.getIntValForAttribute(HelperNameSpace.ATY);
-//		System.out.println(this.map.length);
-//		System.out.println(curY);
 		int curZ = agent.getIntValForAttribute(HelperNameSpace.ATZ);
 		int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
 		

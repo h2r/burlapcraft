@@ -50,12 +50,10 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 	private int height;
 	
 	public DomainGeneratorSimulated(int[][][] map) {
-		
 		this.map = map;
 		this.length = map[0].length;
 		this.width = map[0][0].length;
 		this.height = map.length;
-		
 	}
 	
 	@Override

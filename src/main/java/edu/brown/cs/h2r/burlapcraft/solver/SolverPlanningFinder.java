@@ -32,8 +32,8 @@ import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 public class SolverPlanningFinder {
 
 
-	DomainGeneratorSimulated 			dwdg;
-	public Domain						domain;
+	DomainGeneratorSimulated 	dwdg;
+	Domain						domain;
 	StateParser 				sp;
 	RewardFunction 				rf;
 	TerminalFunction			tf;
@@ -53,10 +53,6 @@ public class SolverPlanningFinder {
 		this.length = map[0].length;
 		this.width = map[0][0].length;
 		this.height = map.length;
-		
-		System.out.println(this.length);
-		System.out.println(this.width);
-		System.out.println(this.height);
 		
 		//create the domain
 		dwdg = new DomainGeneratorSimulated(map);

@@ -17,3 +17,4 @@ src/main/java/com/example/
 .settings/
 bin/
 libs/
+.metadata

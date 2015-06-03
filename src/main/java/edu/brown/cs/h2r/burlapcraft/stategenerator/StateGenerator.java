@@ -17,6 +17,7 @@ import burlap.oomdp.core.State;
 
 public class StateGenerator {
 	
+	// tracking number of blocks to set blockIDs
 	public static int blockCount = 0;
 	
 	// finder dungeon dimensions

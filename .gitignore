@@ -12,5 +12,8 @@ gradle/
 gradlew
 gradlew.bat
 src/main/java/com/example/
-
-
+.classpath
+.project
+.settings/
+bin/
+libs/

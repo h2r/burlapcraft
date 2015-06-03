@@ -238,7 +238,7 @@ public class HelperActions {
     selectCurrentItem(new ItemFilter()
     {
       public boolean matches(ItemStack itemStack) {
-        return (itemStack != null) && (itemStack.getItem() != null) && (itemStack.getItem().func_150893_a(itemStack, HelperActions.this.getBlock(x, y, z)) > 1.0F);
+        return (itemStack != null) && (itemStack.getItem() != null) && (itemStack.getItem().func_150893_a(itemStack, HelperActions.getBlock(x, y, z)) > 1.0F);
       }
     });
   }

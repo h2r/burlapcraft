@@ -70,7 +70,6 @@ public class CommandAStar implements ICommand {
 				break;
 			
 			case 2:
-				System.out.println(dungeonID);
 				// create the solver and give it the map
 				SolverPlanningBridge bridgeSolver = new SolverPlanningBridge(StateGenerator.getMap(dungeonID));
 				

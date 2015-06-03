@@ -27,13 +27,13 @@ import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class SolverLearningBridge {
 
-	DomainGeneratorReal 			dwdg;
-	public Domain						domain;
+	DomainGeneratorReal 		dwdg;
+	public Domain				domain;
 	StateParser 				sp;
 	RewardFunction 				rf;
 	TerminalFunction			tf;
 	StateConditionTest			goalCondition;
-	public State 						initialState;
+	public State 				initialState;
 	DiscreteStateHashFactory	hashingFactory;
 	
 	private int length;

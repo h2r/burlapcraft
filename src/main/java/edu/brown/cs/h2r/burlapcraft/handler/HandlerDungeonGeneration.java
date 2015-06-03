@@ -35,6 +35,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	public static int bridgeZ;
 	public static HelperPos playerSpawnPos;
 	private static Minecraft mc = Minecraft.getMinecraft();
+	private boolean dungeonsCreated = false;
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,
@@ -69,7 +70,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	private void generateSurface(World world, Random random, int i, int j) {
 		// TODO Auto-generated method stub
 		
-		if(mc.thePlayer != null) {
+		if(mc.thePlayer != null && !dungeonsCreated) {
 			
 			playerSpawnPos = getPlayerPosition();
 			
@@ -82,6 +83,8 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 			
 			new DungeonGeneratorFinder().generate(world, random, finderX, finderY, finderZ);
 			new DungeonGeneratorBridge().generate(world, random, bridgeX, bridgeY, bridgeZ);
+			
+			dungeonsCreated = true;
 			
 		}
 		

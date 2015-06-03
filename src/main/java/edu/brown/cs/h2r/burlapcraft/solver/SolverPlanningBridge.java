@@ -36,13 +36,13 @@ import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class SolverPlanningBridge {
 
-	DomainGeneratorSimulated 			dwdg;
-	public Domain						domain;
+	DomainGeneratorSimulated 	dwdg;
+	Domain						domain;
 	StateParser 				sp;
 	RewardFunction 				rf;
 	TerminalFunction			tf;
 	StateConditionTest			goalCondition;
-	public State 						initialState;
+	State 						initialState;
 	DiscreteStateHashFactory	hashingFactory;
 	
 	private int[][][] map;

@@ -63,7 +63,7 @@ public class StateGenerator {
 					if (HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks)) {
 						int blockID = HelperActions.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
 						blockCount += 1;
-						// Note: name block after its x y and z coordinates
+						// Note: name block after its x, y, and z coordinates
 						ObjectInstance blockInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), "block" + blockCount);
 						blockInstance.setValue(HelperNameSpace.ATX, j);
 						blockInstance.setValue(HelperNameSpace.ATY, i);

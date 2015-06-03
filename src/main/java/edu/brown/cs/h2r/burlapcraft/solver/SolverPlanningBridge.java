@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
@@ -25,7 +26,6 @@ import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
-
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
@@ -90,7 +90,7 @@ public class SolverPlanningBridge {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		
+		executeActions(ea.getActionSequenceString());
 	}
 	
 	public void BFS() {
@@ -104,6 +104,40 @@ public class SolverPlanningBridge {
 		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
+		}
+		executeActions(ea.getActionSequenceString());
+	}
+	
+	private void executeActions(String actionSequence) {
+		String[] actions = actionSequence.split("; ");
+		for (String action : actions) {
+			if (action.equals(HelperNameSpace.ACTIONMOVE)) {
+				HelperActions.moveForward(false);
+			}
+			else if (action.equals(HelperNameSpace.ACTIONDOWNONE)) {
+				HelperActions.faceDownOne();
+			}
+			else if (action.equals(HelperNameSpace.ACTIONAHEAD)) {
+				HelperActions.faceAhead();
+			}
+			else if (action.equals(HelperNameSpace.ACTIONDESTBLOCK)) {
+				HelperActions.destroyBlock();
+			}
+			else if (action.equals(HelperNameSpace.ACTIONPLACEBLOCK)) {
+				HelperActions.placeBlock();
+			}
+			else if (action.equals(HelperNameSpace.ACTIONROTATELEFT)) {
+				Minecraft.getMinecraft().thePlayer.rotationYaw -= 90;
+			}
+			else if (action.equals(HelperNameSpace.ACTIONROTATERIGHT)) {
+				Minecraft.getMinecraft().thePlayer.rotationYaw += 90;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

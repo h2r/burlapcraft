@@ -49,15 +49,15 @@ public class BurlapCraft {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
     	
-    	finderWand = new ItemFinderWand();
-    	bridgeWand = new ItemBridgeWand();
-    	escapeWand = new ItemEscapeWand();
+    	//finderWand = new ItemFinderWand();
+    	//bridgeWand = new ItemBridgeWand();
+    	//escapeWand = new ItemEscapeWand();
     	burlapStone = new BlockBurlapStone();
     	
     	// make sure minecraft knows
-    	GameRegistry.registerItem(finderWand, "finderwand");
-    	GameRegistry.registerItem(bridgeWand, "bridgewand");
-    	GameRegistry.registerItem(escapeWand, "escapewand");
+    	//GameRegistry.registerItem(finderWand, "finderwand");
+    	//GameRegistry.registerItem(bridgeWand, "bridgewand");
+    	//GameRegistry.registerItem(escapeWand, "escapewand");
     	GameRegistry.registerBlock(burlapStone, "burlapstone");
     	GameRegistry.registerWorldGenerator(genHandler, 0);
     	

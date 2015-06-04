@@ -73,6 +73,8 @@ public class HelperActions {
   }
   
   public static void setPlayerPosition(EntityPlayer player, Pose position) {
+	  
+	  player.getEntityWorld().markBlockForUpdate((int) position.x, (int) position.y, (int) position.z);
 	  player.setPositionAndUpdate(position.x, position.y, position.z);
   }
 

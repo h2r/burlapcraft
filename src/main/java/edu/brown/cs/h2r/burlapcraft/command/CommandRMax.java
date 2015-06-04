@@ -5,16 +5,13 @@ import java.util.List;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
-import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningFinder;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningGrid;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandRMax implements ICommand {
@@ -55,33 +52,34 @@ public class CommandRMax implements ICommand {
 				return;
 			}
 			
-			int dungeonID = BurlapCraft.dungeonLocID;
+			Dungeon dungeonID = BurlapCraft.dungeonID;
 			
-			if (dungeonID == 0) {
+			if (dungeonID == null) {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
 			
-			switch (dungeonID) {
-			
-			case 1:
+			if (dungeonID == Dungeon.FINDER) {
 				// create the solver and give it the map
 				SolverLearningFinder finderSolver = new SolverLearningFinder(StateGenerator.getMap(dungeonID));
 				
 				// run RMax
 				finderSolver.RMAX();
 				
-				break;
-			
-			case 2:
+			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
 				// create the solver and give it the map
 				SolverLearningBridge bridgeSolver = new SolverLearningBridge(StateGenerator.getMap(dungeonID));
 				
 				// run RMax
 				bridgeSolver.RMAX();
 				
-				break;
-			default:
+			} else if (dungeonID == Dungeon.GRID) {
+				// create the solver and give it the map
+				SolverLearningGrid gridSolver = new SolverLearningGrid(StateGenerator.getMap(dungeonID));
+				
+				// run RMax
+				gridSolver.RMAX();
+			} else {	
 				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 			}
 

@@ -7,6 +7,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import net.minecraft.block.Block;
 
@@ -34,19 +35,19 @@ public class StateGenerator {
 	private static int width;
 	private static int height;
 
-	public static State getCurrentState(Domain domain, int dungeonID) {
+	public static State getCurrentState(Domain domain, Dungeon dungeonID) {
 		System.out.println("Dungeon ID: " + dungeonID);
-		if (dungeonID == 1) {
+		if (dungeonID == Dungeon.FINDER) {
 			dungeonPose = HandlerDungeonGeneration.finderPose;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
-		} else if (dungeonID == 2) {
+		} else if (dungeonID == Dungeon.TINY_BRIDGE) {
 			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
-		} else if (dungeonID == 3) {
+		} else if (dungeonID == Dungeon.GRID) {
 			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;
 			width = gridWidth;
@@ -114,20 +115,20 @@ public class StateGenerator {
 		
 	}
 	
-	public static int[][][] getMap(int dungeon) {
+	public static int[][][] getMap(Dungeon dungeon) {
 		
-		if (dungeon == 1) {
+		if (dungeon == Dungeon.FINDER) {
 			dungeonPose = HandlerDungeonGeneration.finderPose;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
 		}
-		else if (dungeon == 2) {
+		else if (dungeon == Dungeon.TINY_BRIDGE) {
 			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
-		} else if (dungeon == 3) {
+		} else if (dungeon == Dungeon.GRID) {
 			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;
 			width = gridWidth;

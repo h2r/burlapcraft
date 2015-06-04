@@ -32,6 +32,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge.BridgeTF;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
@@ -72,7 +73,7 @@ public class SolverPlanningBridge {
 		tf = new BridgeTF();
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = StateGenerator.getCurrentState(domain, 2);
+		initialState = StateGenerator.getCurrentState(domain, Dungeon.TINY_BRIDGE);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();

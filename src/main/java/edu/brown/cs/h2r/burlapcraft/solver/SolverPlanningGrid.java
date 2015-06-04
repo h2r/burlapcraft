@@ -24,6 +24,7 @@ import burlap.oomdp.singleagent.common.UniformCostRF;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
@@ -65,7 +66,7 @@ public class SolverPlanningGrid {
 		tf = new MovementTF();
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = StateGenerator.getCurrentState(domain, 3);
+		initialState = StateGenerator.getCurrentState(domain, Dungeon.GRID);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();

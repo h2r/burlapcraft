@@ -75,7 +75,7 @@ public class CommandTeleport implements ICommand {
 				return;
 			}
 			Dungeon dungeonID = Dungeon.fromString(dungeonName);			
-			
+			BurlapCraft.dungeonID = dungeonID;
 			
 			if (dungeonID == Dungeon.FINDER) {
 				// start x, y and z of player within dungeon
@@ -83,28 +83,17 @@ public class CommandTeleport implements ICommand {
 				Pose playerPose = HandlerDungeonGeneration.finderPose.add(offset);
 				// teleport the player to finder dungeon
 				HelperActions.setPlayerPosition(player, playerPose);
-						
-				// update the dugeonLocID
-				BurlapCraft.dungeonLocID = 1;
 			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
 				// start x, y and z of agent within dungeon
 				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
 				Pose offset = Pose.fromXyz(1, 5, 3);
-				System.out.println("Pose: " + offset);
-				System.out.println("Bridge: " + HandlerDungeonGeneration.tinyBridgePose);
-				
-					
 				// teleport the player to bridge dungeon
 				Pose playerPose = HandlerDungeonGeneration.tinyBridgePose.add(offset);
-				System.out.println("player pose: " + playerPose);
 				HelperActions.setPlayerPosition(player, playerPose);
-				// update the dungeonLocID
-				BurlapCraft.dungeonLocID = 2;
 			} else if (dungeonID == Dungeon.GRID) {
 				Pose offset = Pose.fromXyz(1.5, 5, 3);
 				Pose playerPose = HandlerDungeonGeneration.gridPose.add(offset);
 				HelperActions.setPlayerPosition(player, playerPose);
-				BurlapCraft.dungeonLocID = 3;
 			} else {
 				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 			}

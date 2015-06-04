@@ -1,34 +1,18 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.util.RegistryNamespaced;
 import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Attribute;
 import burlap.oomdp.core.Attribute.AttributeType;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectClass;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.PropositionalFunction;
-import burlap.oomdp.core.State;
-import burlap.oomdp.core.TerminalFunction;
-import burlap.oomdp.core.TransitionProbability;
-import burlap.oomdp.singleagent.Action;
-import burlap.oomdp.singleagent.GroundedAction;
-import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.SADomain;
-import burlap.oomdp.singleagent.explorer.TerminalExplorer;
-
-
-import cpw.mods.fml.common.registry.GameData;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangeYawReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionDestroyBlockReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 
 /**
  * Class to generate burlap domain for minecraft
@@ -41,7 +25,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 	protected int length;
 	protected int width;
 	protected int height;
-	public static int dungeonID;
+	public static Dungeon dungeonID;
 	
 	public DomainGeneratorReal(int length, int width, int height) {
 		

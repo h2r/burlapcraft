@@ -8,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
@@ -51,37 +52,29 @@ public class CommandBFS implements ICommand {
 				return;
 			}
 			
-			int dungeonID = BurlapCraft.dungeonLocID;
+			Dungeon dungeonID = BurlapCraft.dungeonID;
 			
-			if (dungeonID == 0) {
+			if (dungeonID == null) {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
 			
-			switch (dungeonID) {
-			
-			case 1:
+			if (dungeonID == Dungeon.FINDER) {
 				// create the solver and give it the map
 				SolverPlanningFinder finderSolver = new SolverPlanningFinder(StateGenerator.getMap(dungeonID));
 				
 				// run BFS
 				finderSolver.BFS();
-				
-				break;
-			
-			case 2:
+			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
 				// create the solver and give it the map
 				SolverPlanningBridge bridgeSolver = new SolverPlanningBridge(StateGenerator.getMap(dungeonID));
 				
 				// run BFS
 				bridgeSolver.BFS();
-				
-				break;
-			case 3:
+			} else if (dungeonID == Dungeon.GRID) {
 				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeonID));
 				gridSolver.BFS();
-				break;
-			default:
+			} else {
 				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 					
 			}

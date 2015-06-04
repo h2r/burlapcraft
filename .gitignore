@@ -19,5 +19,4 @@ src/main/java/com/example/
 bin/
 .metadata
 *.swp
-
-
+*~

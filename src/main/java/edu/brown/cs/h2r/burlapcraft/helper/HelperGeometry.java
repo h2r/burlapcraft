@@ -3,13 +3,23 @@ package edu.brown.cs.h2r.burlapcraft.helper;
 public class HelperGeometry {
 	
 	public static class Pose {
-		double x;
-		double y;
-		double z;
-		double qx;
-		double qy;
-		double qz;
-		double qw;
+		private final double x;
+		private final double y;
+		private final double z;
+		private double qx;
+		private double qy;
+		private double qz;
+		private double qw;
+		
+		public double getX() {
+			return x;
+		}
+		public double getY() {
+			return y;
+		}
+		public double getZ() {
+			return z;
+		}
 		
 		public static Pose fromXyz(double x, double y, double z) {
 			return new Pose(x, y, z, 0, 0, 0, 0);
@@ -23,6 +33,10 @@ public class HelperGeometry {
 			qy = _qy;
 			qz = _qz;
 			qw = _qw;
+		}
+		
+		public Pose add(Pose p2) {
+			return Pose.fromXyz(this.x + p2.x, this.y + p2.y, this.z + p2.z);
 		}
 		
 		public double distance(Pose p2) {

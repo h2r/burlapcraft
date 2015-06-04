@@ -83,10 +83,8 @@ public class CommandTeleport implements ICommand {
 			
 			if (dungeonID == 1) {
 				// start x, y and z of player within dungeon
-				double playerFinderX = 1.5; 
-				double playerFinderY = 1;
-				double playerFinderZ = 3;
-				Pose playerPose = Pose.fromXyz(HandlerDungeonGeneration.finderX + playerFinderX, HandlerDungeonGeneration.finderY + playerFinderY + 5, HandlerDungeonGeneration.finderZ + playerFinderZ);
+				Pose offset = Pose.fromXyz(1.5, 5, 3);
+				Pose playerPose = HandlerDungeonGeneration.finderPose.add(offset);
 				// teleport the player to finder dungeon
 				HelperActions.setPlayerPosition(player, playerPose);
 						
@@ -94,22 +92,21 @@ public class CommandTeleport implements ICommand {
 				BurlapCraft.dungeonLocID = 1;
 			} else if (dungeonID == 2) {
 				// start x, y and z of agent within dungeon
-				double playerBridgeX = 1.5; 
-				double playerBridgeY = 2;
-				double playerBridgeZ = 4;
+				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
+				Pose offset = Pose.fromXyz(1, 5, 3);
+				System.out.println("Pose: " + offset);
+				System.out.println("Bridge: " + HandlerDungeonGeneration.bridgePose);
+				
 					
 				// teleport the player to bridge dungeon
-				Pose playerPose = Pose.fromXyz(HandlerDungeonGeneration.bridgeX + playerBridgeX, HandlerDungeonGeneration.bridgeY + playerBridgeY + 5, HandlerDungeonGeneration.bridgeZ + playerBridgeZ);
+				Pose playerPose = HandlerDungeonGeneration.bridgePose.add(offset);
+				System.out.println("player pose: " + playerPose);
 				HelperActions.setPlayerPosition(player, playerPose);
 				// update the dungeonLocID
 				BurlapCraft.dungeonLocID = 2;
 			} else if (dungeonID == 3) {
-				double playerGridX = 1.5;
-				double playerGridY = 1;
-				double playerGridZ = 3;
-				Pose playerPose = Pose.fromXyz(HandlerDungeonGeneration.gridX + playerGridX, 
-						HandlerDungeonGeneration.gridY + playerGridY + 5,	 
-						HandlerDungeonGeneration.gridZ + playerGridZ);
+				Pose offset = Pose.fromXyz(1.5, 5, 3);
+				Pose playerPose = HandlerDungeonGeneration.gridPose.add(offset);
 				HelperActions.setPlayerPosition(player, playerPose);
 				BurlapCraft.dungeonLocID = 3;
 			} else {

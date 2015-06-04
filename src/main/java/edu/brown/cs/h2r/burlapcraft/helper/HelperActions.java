@@ -57,6 +57,10 @@ public class HelperActions {
   {
     return mc.theWorld.getBlock(x, y, z);
   }
+  public static Block getBlock(double x, double y, double z)
+  {
+    return getBlock((int) x, (int) y, (int) z);
+  }
 
   public static Block getBlock(HelperPos pos)
   {
@@ -74,8 +78,8 @@ public class HelperActions {
   
   public static void setPlayerPosition(EntityPlayer player, Pose position) {
 	  
-	  player.getEntityWorld().markBlockForUpdate((int) position.x, (int) position.y, (int) position.z);
-	  player.setPositionAndUpdate(position.x, position.y, position.z);
+	  player.getEntityWorld().markBlockForUpdate((int) position.getX(), (int) position.getY(), (int) position.getZ());
+	  player.setPositionAndUpdate(position.getX(), position.getY(), position.getZ());
   }
 
   public static void overrideMovement(MovementInput i)
@@ -126,6 +130,11 @@ public class HelperActions {
     }
     return false;
   }
+  
+  public static int getBlockId(double x, double y, double z) {
+	  return getBlockId((int) x, (int) y, (int) z);
+  }
+  
 
   public static int getBlockId(int x, int y, int z)
   {

@@ -1,0 +1,9 @@
+* Create the dungeons at the real spawn point.
+
+* BFS in a bigger (but still tiny) bridge problem
+
+* planning with forward search, so it resets after a bad action
+
+* RMAX after model learnign, planning
+
+* orient smoothly 

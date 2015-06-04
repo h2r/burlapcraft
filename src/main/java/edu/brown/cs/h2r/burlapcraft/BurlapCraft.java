@@ -29,9 +29,6 @@ public class BurlapCraft {
     public static final String VERSION = "1.0";
     
     // items
-    public static Item finderWand;
-    public static Item bridgeWand;
-    public static Item escapeWand;
     
     // blocks
     public static Block burlapStone;
@@ -47,15 +44,10 @@ public class BurlapCraft {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
     	
-    	//finderWand = new ItemFinderWand();
-    	//bridgeWand = new ItemBridgeWand();
-    	//escapeWand = new ItemEscapeWand();
+
     	burlapStone = new BlockBurlapStone();
     	
     	// make sure minecraft knows
-    	//GameRegistry.registerItem(finderWand, "finderwand");
-    	//GameRegistry.registerItem(bridgeWand, "bridgewand");
-    	//GameRegistry.registerItem(escapeWand, "escapewand");
     	GameRegistry.registerBlock(burlapStone, "burlapstone");
     	GameRegistry.registerWorldGenerator(genHandler, 0);
     	

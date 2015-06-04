@@ -3,8 +3,7 @@ package edu.brown.cs.h2r.burlapcraft;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-
-
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -19,6 +18,7 @@ import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
 import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
+import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.item.ItemBridgeWand;
 import edu.brown.cs.h2r.burlapcraft.item.ItemEscapeWand;
 import edu.brown.cs.h2r.burlapcraft.item.ItemFinderWand;
@@ -41,6 +41,7 @@ public class BurlapCraft {
     // event handlers
     HandlerDungeonGeneration genHandler = new HandlerDungeonGeneration();   
     HandlerEvents eventHandler = new HandlerEvents();
+    HandlerFMLEvents fmlHandler = new HandlerFMLEvents();
     
     // player dungeon location | 0: None, 1: Finder, 2: Bridge
     public static int dungeonLocID = 0;
@@ -59,7 +60,9 @@ public class BurlapCraft {
     	GameRegistry.registerItem(escapeWand, "escapewand");
     	GameRegistry.registerBlock(burlapStone, "burlapstone");
     	GameRegistry.registerWorldGenerator(genHandler, 0);
+    	
     	MinecraftForge.EVENT_BUS.register(eventHandler);
+    	FMLCommonHandler.instance().bus().register(fmlHandler);
     	
     }
     

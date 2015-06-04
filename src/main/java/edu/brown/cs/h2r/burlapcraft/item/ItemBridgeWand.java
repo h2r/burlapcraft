@@ -6,11 +6,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
-
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
@@ -49,40 +49,9 @@ public class ItemBridgeWand extends Item {
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
     {
 		if (!world.isRemote) {
-			if (bridgeInside) {
-				
-				// ---------- LEARNING ---------- //
-//				
-//				// set dungeonID to 2
-//				DomainGeneratorReal.dungeonID = 1;
-//				
-//				// create the solver and give it the goal coords
-//				SolverLearningBridge solver = new SolverLearningBridge(this.length, this.width, this.height);
-//				
-//				// run RMax
-//				solver.RMAX();
-//				
-				// ------------------------------ //
-				
-				// ---------- PLANNING ---------- //
-				
-				// create the solver and give it the map
-				SolverPlanningBridge solver = new SolverPlanningBridge(StateGenerator.getMap(2));
-				
-				// run BFS
-				solver.ASTAR();
-				
-				// ------------------------------ //
-	
-			}
-			else {
-				if (!world.isRemote) {
-					ItemFinderWand.finderInside = false;
-					player.setPositionAndUpdate((double) HandlerDungeonGeneration.bridgeX + this.dungeonX, (double) HandlerDungeonGeneration.bridgeY + this.dungeonY, (double) HandlerDungeonGeneration.bridgeZ + this.dungeonZ);
-					bridgeInside = true;
-				}
-			}
+			HelperActions.destroyBlock();
 		}
+		
         return itemStack;
     }
 }

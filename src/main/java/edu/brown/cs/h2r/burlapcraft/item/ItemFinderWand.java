@@ -60,39 +60,8 @@ public class ItemFinderWand extends Item {
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		
 		if(!world.isRemote) {
-			if (finderInside) {
-				
-				// ---------- LEARNING ---------- //
-//				
-//				// set dungeonID to 1
-//				DomainGeneratorReal.dungeonID = 1;
-//				
-//				// create the solver and give it the goal coords
-//				SolverLearningFinder solver = new SolverLearningFinder(this.length, this.width, this.height);
-//				
-//				// run RMax
-//				solver.RMAX();
-//				
-				// ------------------------------ //
-				
-				// ---------- PLANNING ---------- //
-				
-				// create the solver and give it the map
-				SolverPlanningFinder solver = new SolverPlanningFinder(StateGenerator.getMap(1));
-				
-				// run BFS
-				solver.BFS();
-				
-				// ------------------------------ //
-	
-			}
-			else {
-				ItemBridgeWand.bridgeInside = false;
-				
-				player.setPositionAndUpdate(HandlerDungeonGeneration.finderX + this.dungeonX, HandlerDungeonGeneration.finderY + this.dungeonY, HandlerDungeonGeneration.finderZ + this.dungeonZ);
-				
-				finderInside = true;
-			}
+			System.out.println("Placing block");
+			HelperActions.placeBlock();
 		}
 		
 		return itemStack;

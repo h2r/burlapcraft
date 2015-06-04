@@ -22,7 +22,7 @@ public class StateGenerator {
 	private static int bridgeLength = 4;
 	private static int bridgeWidth = 5;
 	private static int bridgeHeight = 4;
-	
+	// grid dungeon dimensions
 	private static int gridLength = 10;
 	private static int gridWidth = 10;
 	private static int gridHeight = 4;
@@ -162,8 +162,7 @@ public class StateGenerator {
 					}
 				}
 			}
-		}
-		
+		}	
 		return map;
 	}
 	

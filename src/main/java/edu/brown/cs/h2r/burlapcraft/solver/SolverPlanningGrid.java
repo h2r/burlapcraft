@@ -22,7 +22,8 @@ import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
-import edu.brown.cs.h2r.burlapcraft.helper.Geometry.Pose;
+import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
@@ -84,7 +85,9 @@ public class SolverPlanningGrid {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		executeActions(ea.getActionSequenceString());
+		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
+		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
+		HandlerFMLEvents.evaluateActions = true;
 	}
 	
 	public void BFS() {
@@ -99,40 +102,9 @@ public class SolverPlanningGrid {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		executeActions(ea.getActionSequenceString());
-	}
-	
-	private void executeActions(String actionSequence) {
-		String[] actions = actionSequence.split("; ");
-		for (String action : actions) {
-			if (action.equals(HelperNameSpace.ACTIONMOVE)) {
-				HelperActions.moveForward(false);
-			}
-			else if (action.equals(HelperNameSpace.ACTIONDOWNONE)) {
-				HelperActions.faceDownOne();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONAHEAD)) {
-				HelperActions.faceAhead();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONDESTBLOCK)) {
-				HelperActions.destroyBlock();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONPLACEBLOCK)) {
-				HelperActions.placeBlock();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONROTATELEFT)) {
-				Minecraft.getMinecraft().thePlayer.rotationYaw -= 90;
-			}
-			else if (action.equals(HelperNameSpace.ACTIONROTATERIGHT)) {
-				Minecraft.getMinecraft().thePlayer.rotationYaw += 90;
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
+		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
+		HandlerFMLEvents.evaluateActions = true;
 	}
 	
 	public static class MovementTF implements TerminalFunction{
@@ -142,14 +114,14 @@ public class SolverPlanningGrid {
 		 * @param s the state
 		 * @return the pose of the agent being one unit above the gold block.
 		 */
-		Pose  getGoalPose(State s) {
+		Pose getGoalPose(State s) {
 			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
 				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
 					int goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
 					int goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
 					int goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-					// 
+					
 					return Pose.fromXyz(goalX,  goalY + 1,  goalZ);
 				} 
 			}

@@ -24,6 +24,8 @@ import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
+import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningFinder.MovementTF;
@@ -86,7 +88,9 @@ public class SolverPlanningFinder {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		executeActions(ea.getActionSequenceString());
+		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
+		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
+		HandlerFMLEvents.evaluateActions = true;
 	}
 	
 	public void BFS() {
@@ -101,41 +105,54 @@ public class SolverPlanningFinder {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		executeActions(ea.getActionSequenceString());
+		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
+		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
+		HandlerFMLEvents.evaluateActions = true;
 	}
 	
-	private void executeActions(String actionSequence) {
-		String[] actions = actionSequence.split("; ");
-		for (String action : actions) {
-			if (action.equals(HelperNameSpace.ACTIONMOVE)) {
-				HelperActions.moveForward(false);
-			}
-			else if (action.equals(HelperNameSpace.ACTIONDOWNONE)) {
-				HelperActions.faceDownOne();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONAHEAD)) {
-				HelperActions.faceAhead();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONDESTBLOCK)) {
-				HelperActions.destroyBlock();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONPLACEBLOCK)) {
-				HelperActions.placeBlock();
-			}
-			else if (action.equals(HelperNameSpace.ACTIONROTATELEFT)) {
-				Minecraft.getMinecraft().thePlayer.rotationYaw -= 90;
-			}
-			else if (action.equals(HelperNameSpace.ACTIONROTATERIGHT)) {
-				Minecraft.getMinecraft().thePlayer.rotationYaw += 90;
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+//	private void executeActions(String actionSequence) {
+//		String[] actions = actionSequence.split("; ");
+//		int actionLength = actions.length;
+//		int prevTicks = HandlerFMLEvents.tickCount;
+//		System.out.println(prevTicks);
+//		while (true) {
+//			if (actionLength == 0) {
+//				System.out.println("Breaking");
+//				break;
+//			}
+//			int curTicks = HandlerFMLEvents.tickCount;
+//			int count = 0;
+//			if (curTicks - prevTicks >= 100) {
+//				prevTicks = curTicks;
+//				count++;
+//				System.out.println();
+//				System.out.println(HandlerFMLEvents.tickCount);
+//				String action = actions[actionLength - 1];
+//				if (action.equals(HelperNameSpace.ACTIONMOVE)) {
+//					HelperActions.moveForward(false);
+//				}
+//				else if (action.equals(HelperNameSpace.ACTIONDOWNONE)) {
+//					HelperActions.faceDownOne();
+//				}
+//				else if (action.equals(HelperNameSpace.ACTIONAHEAD)) {
+//					HelperActions.faceAhead();
+//				}
+//				else if (action.equals(HelperNameSpace.ACTIONDESTBLOCK)) {
+//					HelperActions.destroyBlock();
+//				}
+//				else if (action.equals(HelperNameSpace.ACTIONPLACEBLOCK)) {
+//					HelperActions.placeBlock();
+//				}
+//				else if (action.equals(HelperNameSpace.ACTIONROTATELEFT)) {
+//					Minecraft.getMinecraft().thePlayer.rotationYaw -= 90;
+//				}
+//				else if (action.equals(HelperNameSpace.ACTIONROTATERIGHT)) {
+//					Minecraft.getMinecraft().thePlayer.rotationYaw += 90;
+//				}
+//				actionLength--;
+//			}
+//		}
+//	}
 	
 	public static class MovementTF implements TerminalFunction{
 

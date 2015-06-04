@@ -1,6 +1,6 @@
 package edu.brown.cs.h2r.burlapcraft.helper;
 
-public class Geometry {
+public class HelperGeometry {
 	
 	public static class Pose {
 		double x;
@@ -26,7 +26,7 @@ public class Geometry {
 		}
 		
 		public double distance(Pose p2) {
-			return Geometry.distance(x, y, z, p2.x, p2.y, p2.z);
+			return HelperGeometry.distance(x, y, z, p2.x, p2.y, p2.z);
 		}
 		public String toString() {
 			StringBuffer result = new StringBuffer();

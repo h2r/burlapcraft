@@ -2,10 +2,10 @@ package edu.brown.cs.h2r.burlapcraft.solver;
 
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.planning.StateConditionTest;
+import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.TFGoalCondition;
@@ -24,7 +24,6 @@ import burlap.oomdp.singleagent.common.UniformCostRF;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
@@ -91,11 +90,13 @@ public class SolverPlanningGrid {
 	}
 	
 	public void BFS() {
+		
+		
 		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
 		planner.planFromState(initialState);
 		
-		Policy p = new SDPlannerPolicy(planner);
-		
+		//Policy p = new SDPlannerPolicy(planner);
+		Policy p = new DDPlannerPolicy(planner);
 		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
 		
 		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {

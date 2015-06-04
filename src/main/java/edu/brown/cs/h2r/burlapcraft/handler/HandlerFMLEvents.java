@@ -19,11 +19,9 @@ public class HandlerFMLEvents {
 		 tickCount++;
 		 
 		 if (evaluateActions) {
-			 if (tickCount % 40 == 0) {
-				 if (actionsLeft > 0) {
-					 evaluateAction(actions[actions.length - actionsLeft]);
-					 actionsLeft--;
-				 }
+			 if ((tickCount % 40 == 0) && actionsLeft > 0) {
+				 evaluateAction(actions[actions.length - actionsLeft]);
+				 actionsLeft--;
 			 }
 		 }
 	 }

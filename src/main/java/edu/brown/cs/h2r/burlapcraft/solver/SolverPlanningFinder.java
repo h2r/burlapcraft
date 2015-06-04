@@ -106,7 +106,7 @@ public class SolverPlanningFinder {
 			System.out.println(ea.getAction(i).toString());
 		}
 		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
-		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
+		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length; 
 		HandlerFMLEvents.evaluateActions = true;
 	}
 	

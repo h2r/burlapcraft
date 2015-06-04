@@ -1,4 +1,6 @@
-
+* Create the dungeons at the real spawn point.
+  * Inset the golden block in bigger bridge dungeon
+  * Be able to reset bridge dungeon
 
 * BFS in a bigger (but still tiny) bridge problem (Stefanie)
 
@@ -6,11 +8,10 @@
 
 * RMAX after model learning, planning
 
-* orient smoothly  
-
-
 * tech report with cite (Krishna)
 
 * RMAX tick thing (Krishna)
 
-* Create the dungeons at the real spawn point.
+* orient smoothly  (John)
+  * Teleport into dungeons with correct orientation on
+

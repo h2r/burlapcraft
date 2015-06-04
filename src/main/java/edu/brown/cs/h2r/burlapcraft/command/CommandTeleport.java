@@ -48,6 +48,7 @@ public class CommandTeleport implements ICommand {
 		
 		if (!HandlerDungeonGeneration.dungeonsCreated) {
 			sender.addChatMessage(new ChatComponentText("Dungeons aren't yet created."));
+			return;
 		}
 		World world = sender.getEntityWorld();
 		if (!world.isRemote) {

@@ -21,28 +21,28 @@ public class DungeonGeneratorGrid extends WorldGenerator {
 		System.out.println("Making grid dungeon at " + x + "," + y + "," + z);
 		int w = 10;
 		for (int ax = 0; ax < w; ax++) {
-                    for (int az = 0; az < w; az++) {
-                        world.setBlock(x+ax, y+0, z+az, Block.getBlockById(7));
-                    }
+			for (int az = 0; az < w; az++) {
+				world.setBlock(x+ax, y+0, z+az, Block.getBlockById(7));
+			}
 		}
-                for (int ax = 0; ax < 10; ax++) {
-                    world.setBlock(x+ax, y+0, z+0, Block.getBlockById(7));
-                    world.setBlock(x+ax, y+1, z+0, Block.getBlockById(7));
-                    world.setBlock(x+ax, y+2, z+0, Block.getBlockById(7));
-                    world.setBlock(x+ax, y+0, z+w, Block.getBlockById(7));
-                    world.setBlock(x+ax, y+1, z+w, Block.getBlockById(7));
-                    world.setBlock(x+ax, y+2, z+w, Block.getBlockById(7));
-		}
+		for (int ax = 0; ax < 10; ax++) {
+			world.setBlock(x+ax, y+0, z+0, Block.getBlockById(7));
+			world.setBlock(x+ax, y+1, z+0, Block.getBlockById(7));
+			world.setBlock(x+ax, y+2, z+0, Block.getBlockById(7));
+			world.setBlock(x+ax, y+0, z+w, Block.getBlockById(7));
+			world.setBlock(x+ax, y+1, z+w, Block.getBlockById(7));
+			world.setBlock(x+ax, y+2, z+w, Block.getBlockById(7));
+		}	
 
-                for (int az = 0; az < 10; az++) {
-                    world.setBlock(x+0, y+0, z+az, Block.getBlockById(7));
-                    world.setBlock(x+0, y+1, z+az, Block.getBlockById(7));
-                    world.setBlock(x+0, y+2, z+az, Block.getBlockById(7));
-                    world.setBlock(x+w, y+0, z+az, Block.getBlockById(7));
-                    world.setBlock(x+w, y+1, z+az, Block.getBlockById(7));
-                    world.setBlock(x+w, y+2, z+az, Block.getBlockById(7));
+		for (int az = 0; az < 10; az++) {
+			world.setBlock(x+0, y+0, z+az, Block.getBlockById(7));
+			world.setBlock(x+0, y+1, z+az, Block.getBlockById(7));
+			world.setBlock(x+0, y+2, z+az, Block.getBlockById(7));
+			world.setBlock(x+w, y+0, z+az, Block.getBlockById(7));
+			world.setBlock(x+w, y+1, z+az, Block.getBlockById(7));
+			world.setBlock(x+w, y+2, z+az, Block.getBlockById(7));
 		}
-                world.setBlock(x + w - 1, y+0, z+w - 1, Block.getBlockById(41));
+		world.setBlock(x + w - 1, y+0, z+w - 1, Block.getBlockById(41));
 		
 		return true;
 	}

@@ -3,15 +3,13 @@ package edu.brown.cs.h2r.burlapcraft.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
-
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.core.TransitionProbability;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 	
@@ -24,16 +22,16 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 
 	@Override
 	State doAction(State s) {
-		
+		StateGenerator.validate(s);
 		//get agent and current position
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int curX = agent.getIntValForAttribute(HelperNameSpace.ATX);
 		int curY = agent.getIntValForAttribute(HelperNameSpace.ATY);
 		int curZ = agent.getIntValForAttribute(HelperNameSpace.ATZ);
 		int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
-		
+		System.out.println("x, y, z: " + curX + "," + curY + "," + curZ);
 		//get objects and their positions
-		List<ObjectInstance> blocks = s.getObjectsOfTrueClass(HelperNameSpace.CLASSBLOCK);
+		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 		List<HelperPos> coords = new ArrayList<HelperPos>();
 		for (ObjectInstance block : blocks) {
 			int blockX = block.getIntValForAttribute(HelperNameSpace.ATX);
@@ -49,7 +47,7 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 		agent.setValue(HelperNameSpace.ATX, newPos.x);
 		agent.setValue(HelperNameSpace.ATY, newPos.y);
 		agent.setValue(HelperNameSpace.ATZ, newPos.z);
-		
+		StateGenerator.validate(s);
 		//return the state we just modified
 		return s;
 

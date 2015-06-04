@@ -81,7 +81,8 @@ public class CommandRMax implements ICommand {
 				bridgeSolver.RMAX();
 				
 				break;
-			
+			default:
+				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 			}
 
 		}

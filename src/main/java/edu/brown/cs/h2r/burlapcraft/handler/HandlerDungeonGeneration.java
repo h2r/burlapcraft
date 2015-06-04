@@ -2,28 +2,15 @@ package edu.brown.cs.h2r.burlapcraft.handler;
 
 import java.util.Random;
 
-
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorBridge;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorFinder;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorGrid;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
-import edu.brown.cs.h2r.burlapcraft.item.ItemFinderWand;
-import net.minecraft.client.settings.KeyBinding;
 
 public class HandlerDungeonGeneration implements IWorldGenerator {
 	
@@ -33,9 +20,12 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	public static int bridgeX;
 	public static int bridgeY;
 	public static int bridgeZ;
+	public static int gridX;
+	public static int gridY;
+	public static int gridZ;
 	public static HelperPos playerSpawnPos;
 	private static Minecraft mc = Minecraft.getMinecraft();
-	private boolean dungeonsCreated = false;
+	public static boolean dungeonsCreated = false;
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,
@@ -58,31 +48,36 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	}
 
 	private void generateEnd(World world, Random random, int i, int j) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void generateNether(World world, Random random, int i, int j) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void generateSurface(World world, Random random, int i, int j) {
-		// TODO Auto-generated method stub
 		
 		if(mc.thePlayer != null && !dungeonsCreated) {
-			
+			System.out.println("Generating dungeons.");
 			playerSpawnPos = getPlayerPosition();
 			
 			finderX = playerSpawnPos.x;
-			finderY = playerSpawnPos.y + 40;
+			finderY = playerSpawnPos.y + 30;
 			finderZ = playerSpawnPos.z;
-			bridgeX = playerSpawnPos.x + 40;
-			bridgeY = playerSpawnPos.y + 40;
+			
+	 		bridgeX = playerSpawnPos.x + 10;
+			bridgeY = playerSpawnPos.y + 30;
 			bridgeZ = playerSpawnPos.z;
+			
+			gridX = playerSpawnPos.x - 10;
+			gridY = playerSpawnPos.y + 30;
+			gridZ = playerSpawnPos.z;
+			
+			
 			
 			new DungeonGeneratorFinder().generate(world, random, finderX, finderY, finderZ);
 			new DungeonGeneratorBridge().generate(world, random, bridgeX, bridgeY, bridgeZ);
+			new DungeonGeneratorGrid().generate(world, random, gridX, gridY, gridZ);
 			
 			dungeonsCreated = true;
 			

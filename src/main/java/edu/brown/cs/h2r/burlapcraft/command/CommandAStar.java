@@ -3,15 +3,15 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningBridge;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
-
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningBridge;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandAStar implements ICommand {
 	
@@ -77,7 +77,16 @@ public class CommandAStar implements ICommand {
 				bridgeSolver.ASTAR();
 				
 				break;
-			
+			case 3:
+				// create the solver and give it the map
+				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeonID));
+				
+				// run ASTAR
+				gridSolver.ASTAR();
+				
+				break;
+			default:
+				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 			}
 
 		}

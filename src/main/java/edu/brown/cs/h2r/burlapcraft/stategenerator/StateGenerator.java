@@ -1,19 +1,13 @@
 package edu.brown.cs.h2r.burlapcraft.stategenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-
+import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.ObjectInstance;
+import burlap.oomdp.core.State;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
-
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
 
 public class StateGenerator {
 	
@@ -37,7 +31,7 @@ public class StateGenerator {
 	private static int height;
 
 	public static State getCurrentState(Domain domain, int dungeonID) {
-		
+		System.out.println("Dungeon ID: " + dungeonID);
 		if (dungeonID == 1) {
 			dungeonX = HandlerDungeonGeneration.finderX;
 			dungeonY = HandlerDungeonGeneration.finderY;
@@ -53,6 +47,16 @@ public class StateGenerator {
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
+		} else if (dungeonID == 3) {
+			System.out.println("Setting to: " + HandlerDungeonGeneration.gridX + "," + HandlerDungeonGeneration.gridY + "," + HandlerDungeonGeneration.gridZ);
+			dungeonX = HandlerDungeonGeneration.gridX;
+			dungeonY = HandlerDungeonGeneration.gridY;
+			dungeonZ = HandlerDungeonGeneration.gridZ;
+			length = finderLength;
+			width = finderWidth;
+			height = finderHeight;
+		} else {
+			throw new IllegalArgumentException("Bad dungeon ID: " + dungeonID);
 		}
 		
 		State s = new State();
@@ -80,7 +84,8 @@ public class StateGenerator {
 		HelperPos curPos = HelperActions.getPlayerPosition();
 		int rotateDirection = HelperActions.getYawDirection();
 		int rotateVertDirection = HelperActions.getPitchDirection();
-		
+		System.out.println("Player position: " + curPos);
+		System.out.println("Dungeon: " + dungeonX + "," + dungeonY + ","  + dungeonZ);
 		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSAGENT), "agent0");
 		agent.setValue(HelperNameSpace.ATX, curPos.x - dungeonX);
 		agent.setValue(HelperNameSpace.ATY, curPos.y - dungeonY);
@@ -89,8 +94,28 @@ public class StateGenerator {
 		agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
 		
 		s.addObject(agent);
-		
+		validate(s);
 		return s;
+	}
+	
+	public static void validate(State s) {
+		
+		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);		
+		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+		
+		if (ax < 0) {
+			throw new IllegalStateException("Invalid agent x: " + ax);
+		}
+		if (ay < 0) {
+			throw new IllegalStateException("Invalid agent y: " + ay);
+		}
+		if (az < 0) {
+			throw new IllegalStateException("Invalid agent z: " + az);
+		}
+		
+		
 	}
 	
 	public static int[][][] getMap(int dungeon) {
@@ -110,6 +135,15 @@ public class StateGenerator {
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
+		} else if (dungeon == 3) {
+			dungeonX = HandlerDungeonGeneration.gridX;
+			dungeonY = HandlerDungeonGeneration.gridY;
+			dungeonZ = HandlerDungeonGeneration.gridZ;
+			length = finderLength;
+			width = finderWidth;
+			height = finderHeight;
+		} else {
+			throw new IllegalArgumentException("Bad dungeon ID: " + dungeon);
 		}
 		
 		int[][][] map = new int[height][length][width];

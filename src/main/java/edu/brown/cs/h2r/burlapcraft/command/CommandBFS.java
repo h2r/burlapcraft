@@ -7,12 +7,10 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningFinder;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandBFS implements ICommand {
@@ -79,8 +77,16 @@ public class CommandBFS implements ICommand {
 				bridgeSolver.BFS();
 				
 				break;
-			
+			case 3:
+				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeonID));
+				gridSolver.BFS();
+				break;
+			default:
+				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
+					
 			}
+			
+				
 
 		}
 	}

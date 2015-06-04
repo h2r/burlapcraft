@@ -36,8 +36,9 @@ public class HelperNameSpace {
 	public static final String						ACTIONAHEAD = "lookAheadAction";
 	public static final String						ACTIONDOWNONE = "lookDownAction";
 	
+	
 	//-------------DUNGEON NAMES---------------
-	public static final String[] dungeonNameList = {"|", "finder", "bridge"};
+	public static final String[] dungeonNameList = {"|", "finder", "bridge", "grid"};
 	
 	//-------------ENUMS-------------
 	public enum RotDirection {

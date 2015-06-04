@@ -3,20 +3,15 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.item.ItemFinderWand;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.world.World;
 
 public class CommandTeleport implements ICommand {
 	
@@ -50,6 +45,10 @@ public class CommandTeleport implements ICommand {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
+		
+		if (!HandlerDungeonGeneration.dungeonsCreated) {
+			sender.addChatMessage(new ChatComponentText("Dungeons aren't yet created."));
+		}
 		World world = sender.getEntityWorld();
 		if (!world.isRemote) {
 			if (args.length == 0) {
@@ -106,10 +105,19 @@ public class CommandTeleport implements ICommand {
 					BurlapCraft.dungeonLocID = 2;
 					
 					break;
-					
+				case 3:
+					double playerGridX = 1.5;
+					double playerGridY = 1;
+					double playerGridZ = 3;
+					player.setPositionAndUpdate(HandlerDungeonGeneration.gridX + playerGridX, 
+												HandlerDungeonGeneration.gridY + playerGridY,	 
+												HandlerDungeonGeneration.gridZ + playerGridZ);
+					BurlapCraft.dungeonLocID = 3;
+					break;
+				default:
+					throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 				}
-			}
-			else {
+			} else {
 				sender.addChatMessage(new ChatComponentText("Dungeon not found"));
 			}
 		}

@@ -28,6 +28,15 @@ public class Geometry {
 		public double distance(Pose p2) {
 			return Geometry.distance(x, y, z, p2.x, p2.y, p2.z);
 		}
+		public String toString() {
+			StringBuffer result = new StringBuffer();
+			result.append(String.valueOf(x));
+			result.append(",");
+			result.append(String.valueOf(y));
+			result.append(",");
+			result.append(String.valueOf(z));
+			return result.toString();
+		}
 	}
 	
 	

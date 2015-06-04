@@ -172,7 +172,7 @@ public class SolverPlanningGrid {
 			
 			//are they at goal location or dead
 			double distance = goalPose.distance(agentPose);
-			System.out.println("Distance: " + distance);
+			System.out.println("Distance: " + distance + " goal at: " + goalPose);
 			
 			if (goalPose.distance(agentPose) < 0.5) {
 				return true;

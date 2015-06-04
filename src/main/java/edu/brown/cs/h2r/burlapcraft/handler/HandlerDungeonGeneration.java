@@ -71,7 +71,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 			
 			gridX = playerSpawnPos.x - 10;
 			gridY = playerSpawnPos.y + 30;
-			gridZ = playerSpawnPos.z;
+			gridZ = playerSpawnPos.z - 10;
 			
 			
 			

@@ -23,6 +23,11 @@ public class StateGenerator {
 	private static int bridgeWidth = 5;
 	private static int bridgeHeight = 4;
 	
+	private static int gridLength = 10;
+	private static int gridWidth = 10;
+	private static int gridHeight = 4;
+	
+	
 	private static int dungeonX;
 	private static int dungeonY;
 	private static int dungeonZ;
@@ -39,8 +44,7 @@ public class StateGenerator {
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
-		}
-		else if (dungeonID == 2) {
+		} else if (dungeonID == 2) {
 			dungeonX = HandlerDungeonGeneration.bridgeX;
 			dungeonY = HandlerDungeonGeneration.bridgeY;
 			dungeonZ = HandlerDungeonGeneration.bridgeZ;
@@ -52,9 +56,9 @@ public class StateGenerator {
 			dungeonX = HandlerDungeonGeneration.gridX;
 			dungeonY = HandlerDungeonGeneration.gridY;
 			dungeonZ = HandlerDungeonGeneration.gridZ;
-			length = finderLength;
-			width = finderWidth;
-			height = finderHeight;
+			length = gridLength;
+			width = gridWidth;
+			height = gridHeight;
 		} else {
 			throw new IllegalArgumentException("Bad dungeon ID: " + dungeonID);
 		}
@@ -139,9 +143,9 @@ public class StateGenerator {
 			dungeonX = HandlerDungeonGeneration.gridX;
 			dungeonY = HandlerDungeonGeneration.gridY;
 			dungeonZ = HandlerDungeonGeneration.gridZ;
-			length = finderLength;
-			width = finderWidth;
-			height = finderHeight;
+			length = gridLength;
+			width = gridWidth;
+			height = gridHeight;
 		} else {
 			throw new IllegalArgumentException("Bad dungeon ID: " + dungeon);
 		}

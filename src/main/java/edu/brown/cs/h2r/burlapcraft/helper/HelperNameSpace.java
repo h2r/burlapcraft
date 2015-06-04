@@ -38,6 +38,12 @@ public class HelperNameSpace {
 	
 	
 	//-------------DUNGEON NAMES---------------
+	public static enum Dungeon {
+		FINDER, TINY_BRIDGE, GRID;
+		public static Dungeon fromString(String s) {
+			return Dungeon.valueOf(s.toUpperCase());
+		}
+	}
 	public static final String[] dungeonNameList = {"|", "finder", "bridge", "grid"};
 	
 	//-------------ENUMS-------------

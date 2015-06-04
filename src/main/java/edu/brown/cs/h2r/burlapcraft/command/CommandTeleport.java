@@ -14,6 +14,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 
 public class CommandTeleport implements ICommand {
 	
@@ -66,22 +67,17 @@ public class CommandTeleport implements ICommand {
 			
 			EntityPlayer player = HandlerEvents.player;
 			String dungeonName = args[0];
-			int dungeonID = 0;
+
 			
 			if (dungeonName.equals("out")) {
 				Pose spawnPoint = Pose.fromXyz(HandlerDungeonGeneration.playerSpawnPos.x, HandlerDungeonGeneration.playerSpawnPos.y, HandlerDungeonGeneration.playerSpawnPos.z);
 				HelperActions.setPlayerPosition(player, spawnPoint);
 				return;
 			}
-			
-			for (int i = 0; i < HelperNameSpace.dungeonNameList.length; i++) {
-				if (dungeonName.equals(HelperNameSpace.dungeonNameList[i])) {
-					dungeonID = i;
-				}
-			}
+			Dungeon dungeonID = Dungeon.fromString(dungeonName);			
 			
 			
-			if (dungeonID == 1) {
+			if (dungeonID == Dungeon.FINDER) {
 				// start x, y and z of player within dungeon
 				Pose offset = Pose.fromXyz(1.5, 5, 3);
 				Pose playerPose = HandlerDungeonGeneration.finderPose.add(offset);
@@ -90,21 +86,21 @@ public class CommandTeleport implements ICommand {
 						
 				// update the dugeonLocID
 				BurlapCraft.dungeonLocID = 1;
-			} else if (dungeonID == 2) {
+			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
 				// start x, y and z of agent within dungeon
 				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
 				Pose offset = Pose.fromXyz(1, 5, 3);
 				System.out.println("Pose: " + offset);
-				System.out.println("Bridge: " + HandlerDungeonGeneration.bridgePose);
+				System.out.println("Bridge: " + HandlerDungeonGeneration.tinyBridgePose);
 				
 					
 				// teleport the player to bridge dungeon
-				Pose playerPose = HandlerDungeonGeneration.bridgePose.add(offset);
+				Pose playerPose = HandlerDungeonGeneration.tinyBridgePose.add(offset);
 				System.out.println("player pose: " + playerPose);
 				HelperActions.setPlayerPosition(player, playerPose);
 				// update the dungeonLocID
 				BurlapCraft.dungeonLocID = 2;
-			} else if (dungeonID == 3) {
+			} else if (dungeonID == Dungeon.GRID) {
 				Pose offset = Pose.fromXyz(1.5, 5, 3);
 				Pose playerPose = HandlerDungeonGeneration.gridPose.add(offset);
 				HelperActions.setPlayerPosition(player, playerPose);

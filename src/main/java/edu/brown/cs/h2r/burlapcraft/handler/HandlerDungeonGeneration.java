@@ -15,7 +15,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 public class HandlerDungeonGeneration implements IWorldGenerator {
 	public static Pose finderPose;
-	public static Pose bridgePose;
+	public static Pose tinyBridgePose;
 	public static Pose gridPose;
 	public static HelperPos playerSpawnPos;
 	private static Minecraft mc = Minecraft.getMinecraft();
@@ -57,14 +57,14 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 			
 			finderPose = Pose.fromXyz(playerSpawnPos.x, playerSpawnPos.y + 50, playerSpawnPos.z);
 			
-	 		bridgePose = Pose.fromXyz(playerSpawnPos.x + 10, playerSpawnPos.y + 50, playerSpawnPos.z + 10);
+	 		tinyBridgePose = Pose.fromXyz(playerSpawnPos.x + 10, playerSpawnPos.y + 50, playerSpawnPos.z + 10);
 			
 	 		gridPose = Pose.fromXyz(playerSpawnPos.x - 10, playerSpawnPos.y + 50, playerSpawnPos.z - 10);
 			
 			
 			
 			new DungeonGeneratorFinder().generate(world, random, finderPose);
-			new DungeonGeneratorTinyBridge().generate(world, random, bridgePose);
+			new DungeonGeneratorTinyBridge().generate(world, random, tinyBridgePose);
 			new DungeonGeneratorGrid().generate(world, random, gridPose);
 			
 			dungeonsCreated = true;

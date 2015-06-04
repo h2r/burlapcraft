@@ -42,7 +42,7 @@ public class StateGenerator {
 			width = finderWidth;
 			height = finderHeight;
 		} else if (dungeonID == 2) {
-			dungeonPose = HandlerDungeonGeneration.bridgePose;
+			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
@@ -123,7 +123,7 @@ public class StateGenerator {
 			height = finderHeight;
 		}
 		else if (dungeon == 2) {
-			dungeonPose = HandlerDungeonGeneration.bridgePose;
+			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;

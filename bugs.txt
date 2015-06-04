@@ -1,9 +1,12 @@
 * Create the dungeons at the real spawn point.
+  * Inset the golden block in bigger bridge dungeon
+  * Be able to reset bridge dungeon
 
 * BFS in a bigger (but still tiny) bridge problem
 
-* planning with forward search, so it resets after a bad action
+* planning with forward search, so it resets after a bad action (closing the loop)
 
-* RMAX after model learnign, planning
+* RMAX after model learning, planning
 
 * orient smoothly 
+  * Teleport into dungeons with correct orientation on

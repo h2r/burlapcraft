@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 
 public class CommandTeleport implements ICommand {
@@ -77,49 +79,40 @@ public class CommandTeleport implements ICommand {
 				}
 			}
 			
-			if (dungeonID > 0) {
-				switch (dungeonID) {
-				case 1:
-					// start x, y and z of player within dungeon
-					double playerFinderX = 1.5; 
-					double playerFinderY = 1;
-					double playerFinderZ = 3;
+			
+			if (dungeonID == 1) {
+				// start x, y and z of player within dungeon
+				double playerFinderX = 1.5; 
+				double playerFinderY = 1;
+				double playerFinderZ = 3;
+				Pose playerPose = Pose.fromXyz(HandlerDungeonGeneration.finderX + playerFinderX, HandlerDungeonGeneration.finderY + playerFinderY + 5, HandlerDungeonGeneration.finderZ + playerFinderZ);
+				// teleport the player to finder dungeon
+				HelperActions.setPlayerPosition(player, playerPose);
+						
+				// update the dugeonLocID
+				BurlapCraft.dungeonLocID = 1;
+			} else if (dungeonID == 2) {
+				// start x, y and z of agent within dungeon
+				double playerBridgeX = 1.5; 
+				double playerBridgeY = 2;
+				double playerBridgeZ = 4;
 					
-					// teleport the player to finder dungeon
-					player.setPositionAndUpdate(HandlerDungeonGeneration.finderX + playerFinderX, HandlerDungeonGeneration.finderY + playerFinderY, HandlerDungeonGeneration.finderZ + playerFinderZ);
-					
-					// update the dugeonLocID
-					BurlapCraft.dungeonLocID = 1;
-					
-					break;
-					
-				case 2:
-					// start x, y and z of agent within dungeon
-					double playerBridgeX = 1.5; 
-					double playerBridgeY = 2;
-					double playerBridgeZ = 4;
-					
-					// teleport the player to bridge dungeon
-					player.setPositionAndUpdate(HandlerDungeonGeneration.bridgeX + playerBridgeX, HandlerDungeonGeneration.bridgeY + playerBridgeY, HandlerDungeonGeneration.bridgeZ + playerBridgeZ);
-					
-					// update the dungeonLocID
-					BurlapCraft.dungeonLocID = 2;
-					
-					break;
-				case 3:
-					double playerGridX = 1.5;
-					double playerGridY = 1;
-					double playerGridZ = 3;
-					player.setPositionAndUpdate(HandlerDungeonGeneration.gridX + playerGridX, 
-												HandlerDungeonGeneration.gridY + playerGridY,	 
-												HandlerDungeonGeneration.gridZ + playerGridZ);
-					BurlapCraft.dungeonLocID = 3;
-					break;
-				default:
-					throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
-				}
+				// teleport the player to bridge dungeon
+				Pose playerPose = Pose.fromXyz(HandlerDungeonGeneration.bridgeX + playerBridgeX, HandlerDungeonGeneration.bridgeY + playerBridgeY + 5, HandlerDungeonGeneration.bridgeZ + playerBridgeZ);
+				HelperActions.setPlayerPosition(player, playerPose);
+				// update the dungeonLocID
+				BurlapCraft.dungeonLocID = 2;
+			} else if (dungeonID == 3) {
+				double playerGridX = 1.5;
+				double playerGridY = 1;
+				double playerGridZ = 3;
+				Pose playerPose = Pose.fromXyz(HandlerDungeonGeneration.gridX + playerGridX, 
+						HandlerDungeonGeneration.gridY + playerGridY + 5,	 
+						HandlerDungeonGeneration.gridZ + playerGridZ);
+				HelperActions.setPlayerPosition(player, playerPose);
+				BurlapCraft.dungeonLocID = 3;
 			} else {
-				sender.addChatMessage(new ChatComponentText("Dungeon not found"));
+				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 			}
 		}
 		

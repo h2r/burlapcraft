@@ -13,7 +13,6 @@ import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorGrid;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 
 public class HandlerDungeonGeneration implements IWorldGenerator {
-	
 	public static int finderX;
 	public static int finderY;
 	public static int finderZ;

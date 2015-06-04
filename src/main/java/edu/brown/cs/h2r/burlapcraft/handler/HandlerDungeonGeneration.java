@@ -2,26 +2,21 @@ package edu.brown.cs.h2r.burlapcraft.handler;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.IWorldGenerator;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorFinder;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorGrid;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorTinyBridge;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import cpw.mods.fml.common.IWorldGenerator;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorBridge;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorFinder;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorGrid;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 
 public class HandlerDungeonGeneration implements IWorldGenerator {
-	public static int finderX;
-	public static int finderY;
-	public static int finderZ;
-	public static int bridgeX;
-	public static int bridgeY;
-	public static int bridgeZ;
-	public static int gridX;
-	public static int gridY;
-	public static int gridZ;
+	public static Pose finderPose;
+	public static Pose bridgePose;
+	public static Pose gridPose;
 	public static HelperPos playerSpawnPos;
 	private static Minecraft mc = Minecraft.getMinecraft();
 	public static boolean dungeonsCreated = false;
@@ -60,23 +55,17 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 			System.out.println("Generating dungeons.");
 			playerSpawnPos = getPlayerPosition();
 			
-			finderX = playerSpawnPos.x;
-			finderY = playerSpawnPos.y + 30;
-			finderZ = playerSpawnPos.z;
+			finderPose = Pose.fromXyz(playerSpawnPos.x, playerSpawnPos.y + 50, playerSpawnPos.z);
 			
-	 		bridgeX = playerSpawnPos.x + 10;
-			bridgeY = playerSpawnPos.y + 30;
-			bridgeZ = playerSpawnPos.z;
+	 		bridgePose = Pose.fromXyz(playerSpawnPos.x + 10, playerSpawnPos.y + 50, playerSpawnPos.z + 10);
 			
-			gridX = playerSpawnPos.x - 10;
-			gridY = playerSpawnPos.y + 30;
-			gridZ = playerSpawnPos.z - 10;
+	 		gridPose = Pose.fromXyz(playerSpawnPos.x - 10, playerSpawnPos.y + 50, playerSpawnPos.z - 10);
 			
 			
 			
-			new DungeonGeneratorFinder().generate(world, random, finderX, finderY, finderZ);
-			new DungeonGeneratorBridge().generate(world, random, bridgeX, bridgeY, bridgeZ);
-			new DungeonGeneratorGrid().generate(world, random, gridX, gridY, gridZ);
+			new DungeonGeneratorFinder().generate(world, random, finderPose);
+			new DungeonGeneratorTinyBridge().generate(world, random, bridgePose);
+			new DungeonGeneratorGrid().generate(world, random, gridPose);
 			
 			dungeonsCreated = true;
 			

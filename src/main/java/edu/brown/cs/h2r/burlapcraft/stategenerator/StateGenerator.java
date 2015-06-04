@@ -1,13 +1,14 @@
 package edu.brown.cs.h2r.burlapcraft.stategenerator;
 
-import net.minecraft.block.Block;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
+import net.minecraft.block.Block;
 
 public class StateGenerator {
 	
@@ -28,9 +29,7 @@ public class StateGenerator {
 	private static int gridHeight = 4;
 	
 	
-	private static int dungeonX;
-	private static int dungeonY;
-	private static int dungeonZ;
+	private static Pose dungeonPose;
 	private static int length;
 	private static int width;
 	private static int height;
@@ -38,24 +37,17 @@ public class StateGenerator {
 	public static State getCurrentState(Domain domain, int dungeonID) {
 		System.out.println("Dungeon ID: " + dungeonID);
 		if (dungeonID == 1) {
-			dungeonX = HandlerDungeonGeneration.finderX;
-			dungeonY = HandlerDungeonGeneration.finderY;
-			dungeonZ = HandlerDungeonGeneration.finderZ;
+			dungeonPose = HandlerDungeonGeneration.finderPose;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
 		} else if (dungeonID == 2) {
-			dungeonX = HandlerDungeonGeneration.bridgeX;
-			dungeonY = HandlerDungeonGeneration.bridgeY;
-			dungeonZ = HandlerDungeonGeneration.bridgeZ;
+			dungeonPose = HandlerDungeonGeneration.bridgePose;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
 		} else if (dungeonID == 3) {
-			System.out.println("Setting to: " + HandlerDungeonGeneration.gridX + "," + HandlerDungeonGeneration.gridY + "," + HandlerDungeonGeneration.gridZ);
-			dungeonX = HandlerDungeonGeneration.gridX;
-			dungeonY = HandlerDungeonGeneration.gridY;
-			dungeonZ = HandlerDungeonGeneration.gridZ;
+			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;
 			width = gridWidth;
 			height = gridHeight;
@@ -68,9 +60,9 @@ public class StateGenerator {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < length; j++) {
 				for (int k = 0; k < width; k++) {
-					Block block = HelperActions.getBlock(dungeonX + j, dungeonY + i, dungeonZ + k);
+					Block block = HelperActions.getBlock(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
 					if (HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks)) {
-						int blockID = HelperActions.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
+						int blockID = HelperActions.getBlockId(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
 						blockCount += 1;
 						// Note: name block after its x, y, and z coordinates
 						ObjectInstance blockInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), "block" + blockCount);
@@ -89,11 +81,11 @@ public class StateGenerator {
 		int rotateDirection = HelperActions.getYawDirection();
 		int rotateVertDirection = HelperActions.getPitchDirection();
 		System.out.println("Player position: " + curPos);
-		System.out.println("Dungeon: " + dungeonX + "," + dungeonY + ","  + dungeonZ);
+		System.out.println("Dungeon: " + dungeonPose);
 		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSAGENT), "agent0");
-		agent.setValue(HelperNameSpace.ATX, curPos.x - dungeonX);
-		agent.setValue(HelperNameSpace.ATY, curPos.y - dungeonY);
-		agent.setValue(HelperNameSpace.ATZ, curPos.z - dungeonZ);
+		agent.setValue(HelperNameSpace.ATX, curPos.x - dungeonPose.getX());
+		agent.setValue(HelperNameSpace.ATY, curPos.y - dungeonPose.getY());
+		agent.setValue(HelperNameSpace.ATZ, curPos.z - dungeonPose.getZ());
 		agent.setValue(HelperNameSpace.ATROTDIR, rotateDirection);
 		agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
 		
@@ -125,24 +117,18 @@ public class StateGenerator {
 	public static int[][][] getMap(int dungeon) {
 		
 		if (dungeon == 1) {
-			dungeonX = HandlerDungeonGeneration.finderX;
-			dungeonY = HandlerDungeonGeneration.finderY;
-			dungeonZ = HandlerDungeonGeneration.finderZ;
+			dungeonPose = HandlerDungeonGeneration.finderPose;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
 		}
 		else if (dungeon == 2) {
-			dungeonX = HandlerDungeonGeneration.bridgeX;
-			dungeonY = HandlerDungeonGeneration.bridgeY;
-			dungeonZ = HandlerDungeonGeneration.bridgeZ;
+			dungeonPose = HandlerDungeonGeneration.bridgePose;
 			length = bridgeLength;
 			width = bridgeWidth;
 			height = bridgeHeight;
 		} else if (dungeon == 3) {
-			dungeonX = HandlerDungeonGeneration.gridX;
-			dungeonY = HandlerDungeonGeneration.gridY;
-			dungeonZ = HandlerDungeonGeneration.gridZ;
+			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;
 			width = gridWidth;
 			height = gridHeight;
@@ -155,9 +141,9 @@ public class StateGenerator {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < length; j++) {
 				for (int k = 0; k < width; k++) {
-					Block block = HelperActions.getBlock(dungeonX + j, dungeonY + i, dungeonZ + k);
+					Block block = HelperActions.getBlock(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
 					if (!(HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks))) {
-						int blockID = HelperActions.getBlockId(dungeonX + j, dungeonY + i, dungeonZ + k);
+						int blockID = HelperActions.getBlockId(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
 						map[i][j][k] = blockID;
 					}
 				}

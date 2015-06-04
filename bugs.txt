@@ -4,7 +4,9 @@
 
 * BFS in a bigger (but still tiny) bridge problem (Stefanie)
 
-* planning with forward search, so it resets after a bad action 
+* planning with forward search, so it resets after a bad action.
+  (Make it use the actual policy object instead of caching the
+  actions.
 
 * RMAX after model learning, planning
 

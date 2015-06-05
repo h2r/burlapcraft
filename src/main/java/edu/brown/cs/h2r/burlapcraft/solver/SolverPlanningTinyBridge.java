@@ -125,7 +125,7 @@ public class SolverPlanningTinyBridge {
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
 			
-			List<ObjectInstance> blocks = sprime.getObjectsOfTrueClass(HelperNameSpace.CLASSBLOCK);
+			List<ObjectInstance> blocks = sprime.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
 				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
 					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
@@ -157,13 +157,21 @@ public class SolverPlanningTinyBridge {
 			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
 			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
 			
-			List<ObjectInstance> blocks = s.getObjectsOfTrueClass(HelperNameSpace.CLASSBLOCK);
+			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
 				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
 					goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
 					goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
 					goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
 				} 
+				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+						return true;
+					}
+				}
 			}
 			
 			//are they at goal location or dead?

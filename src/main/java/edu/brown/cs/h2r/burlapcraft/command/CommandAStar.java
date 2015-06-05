@@ -9,9 +9,10 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningTinyBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningTinyBridge;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandAStar implements ICommand {
@@ -69,6 +70,12 @@ public class CommandAStar implements ICommand {
 			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
 				// create the solver and give it the map
 				SolverPlanningTinyBridge bridgeSolver = new SolverPlanningTinyBridge(StateGenerator.getMap(dungeonID));
+				
+				// run ASTAR
+				bridgeSolver.ASTAR();
+			} else if (dungeonID == Dungeon.SMALL_BRIDGE) {
+				// create the solver and give it the map
+				SolverPlanningSmallBridge bridgeSolver = new SolverPlanningSmallBridge(StateGenerator.getMap(dungeonID));
 				
 				// run ASTAR
 				bridgeSolver.ASTAR();

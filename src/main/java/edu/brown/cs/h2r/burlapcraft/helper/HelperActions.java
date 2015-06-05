@@ -4,8 +4,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+
 //import net.famzangl.minecraft.minebot.ai.command.AIChatController;
 //import net.famzangl.minecraft.minebot.ai.task.AITask;
 //import net.famzangl.minecraft.minebot.build.BuildManager;
@@ -16,9 +15,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovementInput;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.NibbleArray;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
 public class HelperActions {
   private static Minecraft mc = Minecraft.getMinecraft();
@@ -77,8 +79,17 @@ public class HelperActions {
   }
   
   public static void setPlayerPosition(EntityPlayer player, Pose position) {
+	  Chunk chunk = player.getEntityWorld().getChunkFromBlockCoords((int) position.getX(), (int) position.getZ());
+	  player.getEntityWorld().getChunkProvider().loadChunk((int) position.getX(), (int) position.getZ());
 	  
-	  player.getEntityWorld().markBlockForUpdate((int) position.getX(), (int) position.getY(), (int) position.getZ());
+	  for (int ix = -10; ix < 10; ix ++) {
+		  for (int iy = -10; iy < 10; iy ++) {
+			  for (int iz = -10; iz < 10; iz ++) {
+				  player.getEntityWorld().markBlockForUpdate((int) position.getX() + ix, (int) position.getY() + iy, (int) position.getZ() + iz);
+			  }
+		  }
+		  
+	  }
 	  player.setPositionAndUpdate(position.getX(), position.getY(), position.getZ());
   }
 

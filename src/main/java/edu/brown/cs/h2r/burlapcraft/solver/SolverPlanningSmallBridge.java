@@ -2,6 +2,7 @@ package edu.brown.cs.h2r.burlapcraft.solver;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.planning.StateConditionTest;
@@ -19,13 +20,14 @@ import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
+import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
-import burlap.oomdp.singleagent.common.UniformCostRF;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class SolverPlanningSmallBridge {
@@ -62,7 +64,7 @@ public class SolverPlanningSmallBridge {
 		sp = new GridWorldStateParser(domain); 
 		
 		//set up the initial state of the task
-		rf = new UniformCostRF();
+		rf = new BridgeRF();
 		tf = new MovementTF();
 		goalCondition = new TFGoalCondition(tf);
 		
@@ -109,6 +111,34 @@ public class SolverPlanningSmallBridge {
 		HandlerFMLEvents.evaluateActions = true;
 	}
 	
+		
+
+	public static class BridgeRF implements RewardFunction {
+		
+		@Override
+		public double reward(State s, GroundedAction a, State sprime) {
+			
+			//get location of agent in next state
+			ObjectInstance agent = sprime.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			
+			List<ObjectInstance> blocks = sprime.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+			for (ObjectInstance block : blocks) {
+				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+						return -10.0;
+					}
+				} 
+			}
+			return -1.0;
+		}
+	}
+	
 	public static class MovementTF implements TerminalFunction{
 
 		/**
@@ -132,12 +162,23 @@ public class SolverPlanningSmallBridge {
 		
 		@Override
 		public boolean isTerminal(State s) {
-			
-			//get location of agent in next state
 			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			
+			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+			for (ObjectInstance block : blocks) {
+				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+						return true;
+					}
+				} 
+			}
+					
 			Pose agentPose = Pose.fromXyz(ax, ay, az);
 			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
 			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
@@ -146,7 +187,7 @@ public class SolverPlanningSmallBridge {
 			
 			//are they at goal location or dead
 			double distance = goalPose.distance(agentPose);
-			System.out.println("Distance: " + distance + " goal at: " + goalPose);
+			//System.out.println("Distance: " + distance + " goal at: " + goalPose);
 			
 			if (goalPose.distance(agentPose) < 0.5) {
 				return true;

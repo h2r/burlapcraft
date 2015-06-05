@@ -65,7 +65,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 					boolean anchorsPresent = false;
 					boolean needToReplaceBlock = false;
 					ObjectInstance replaceBlock = null;
-					if ((map[curY - 2][curX][curZ + 1] > 0) && (map[curY - 1][curX][curZ + 2] > 0)) {
+					if (((curY - 2 >= 0) && map[curY - 2][curX][curZ + 1] > 0) && (map[curY - 1][curX][curZ + 2] > 0)) {
 						anchorsPresent = true;
 					}
 					
@@ -111,7 +111,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 					boolean anchorsPresent = false;
 					boolean needToReplaceBlock = false;
 					ObjectInstance replaceBlock = null;
-					if ((map[curY - 2][curX - 1][curZ] > 0) && (map[curY - 1][curX - 2][curZ] > 0)) {
+					if (((curY - 2 >= 0) && map[curY - 2][curX - 1][curZ] > 0) && (map[curY - 1][curX - 2][curZ] > 0)) {
 						anchorsPresent = true;
 					}
 				
@@ -156,7 +156,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 					boolean anchorsPresent = false;
 					boolean needToReplaceBlock = false;
 					ObjectInstance replaceBlock = null;
-					if ((map[curY - 2][curX][curZ - 1] > 0) && (map[curY - 1][curX][curZ - 2] > 0)) {
+					if (((curY - 2) >= 0 && (curZ - 1 >= 0) && map[curY - 2][curX][curZ - 1] > 0) && (map[curY - 1][curX][curZ - 2] > 0)) {
 						anchorsPresent = true;
 					}
 					
@@ -201,7 +201,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 					boolean anchorsPresent = false;
 					boolean needToReplaceBlock = false;
 					ObjectInstance replaceBlock = null;
-					if ((map[curY - 2][curX + 1][curZ] > 0) && (map[curY - 1][curX + 2][curZ] > 0)) {
+					if (((curY - 2 >= 0) && map[curY - 2][curX + 1][curZ] > 0) && (map[curY - 1][curX + 2][curZ] > 0)) {
 						anchorsPresent = true;
 					}
 					

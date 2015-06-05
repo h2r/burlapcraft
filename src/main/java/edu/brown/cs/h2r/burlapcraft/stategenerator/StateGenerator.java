@@ -28,7 +28,7 @@ public class StateGenerator {
 	// small bridge dungeon dimensions
 	private static int smallBridgeLength = 10;
 	private static int smallBridgeWidth = 10;
-	private static int smallBridgeHeight = 4;
+	private static int smallBridgeHeight = 5;
 	// grid dungeon dimensions
 	private static int gridLength = 10;
 	private static int gridWidth = 10;

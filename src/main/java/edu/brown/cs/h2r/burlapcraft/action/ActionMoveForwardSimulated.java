@@ -29,7 +29,6 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 		int curY = agent.getIntValForAttribute(HelperNameSpace.ATY);
 		int curZ = agent.getIntValForAttribute(HelperNameSpace.ATZ);
 		int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
-		System.out.println("x, y, z: " + curX + "," + curY + "," + curZ);
 		//get objects and their positions
 		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 		List<HelperPos> coords = new ArrayList<HelperPos>();

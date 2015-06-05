@@ -29,10 +29,10 @@ public class ActionDestroyBlockSimulated extends ActionAgentSimulated {
 		int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
 		
 		//get block objects and their positions
-		List<ObjectInstance> blocks = s.getObjectsOfTrueClass(HelperNameSpace.CLASSBLOCK);
+		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 		
 		//get inventory block objects
-		List<ObjectInstance> invBlocks = s.getObjectsOfTrueClass(HelperNameSpace.CLASSINVENTORYBLOCK);
+		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASSINVENTORYBLOCK);
 		
 		return destroyResult(curX, curY, curZ, rotDir, vertDir, invBlocks, blocks, s);
 		
@@ -46,7 +46,7 @@ public class ActionDestroyBlockSimulated extends ActionAgentSimulated {
 	}
 	
 	protected State destroyResult(int curX, int curY, int curZ, int rotDir, int vertDir, List<ObjectInstance> invBlocks, List<ObjectInstance> blocks, State s) {
-		
+		//System.out.println("Destroying at: " + curX + "," + curY + "," + curZ);
 		// go through blocks and see if any of them can be mined
 		for (ObjectInstance block : blocks) {
 			int blockX = block.getIntValForAttribute(HelperNameSpace.ATX);
@@ -72,6 +72,7 @@ public class ActionDestroyBlockSimulated extends ActionAgentSimulated {
 					s.addObject(inventoryBlockInstance);
 				}
 				s.removeObject(block);
+				System.out.println("Destroyed: " + blockX + "," + blockY + "," + blockZ);
 			}
 		}
 		

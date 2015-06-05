@@ -17,6 +17,7 @@ public class DungeonGeneratorFinder {
 	}
 	public static boolean generate(World world, int x, int y, int z) {
 		System.out.println("Making finder dungeon at " + x + "," + y + "," + z);
+
 		world.setBlock(x+0, y+0, z+0, Block.getBlockById(7));
 		world.setBlock(x+1, y+0, z+0, Block.getBlockById(7));
 		world.setBlock(x+2, y+0, z+0, Block.getBlockById(7));

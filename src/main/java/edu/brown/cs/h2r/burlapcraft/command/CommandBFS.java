@@ -9,9 +9,10 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningTinyBridge;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandBFS implements ICommand {
@@ -67,10 +68,16 @@ public class CommandBFS implements ICommand {
 				finderSolver.BFS();
 			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
 				// create the solver and give it the map
-				SolverPlanningBridge bridgeSolver = new SolverPlanningBridge(StateGenerator.getMap(dungeonID));
+				SolverPlanningTinyBridge bridgeSolver = new SolverPlanningTinyBridge(StateGenerator.getMap(dungeonID));
 				
 				// run BFS
 				bridgeSolver.BFS();
+			} else if (dungeonID == Dungeon.SMALL_BRIDGE) {
+				// create the solver and give it the map
+				SolverPlanningSmallBridge smallBridgeSolver = new SolverPlanningSmallBridge(StateGenerator.getMap(dungeonID));
+				
+				// run BFS
+				smallBridgeSolver.BFS();
 			} else if (dungeonID == Dungeon.GRID) {
 				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeonID));
 				gridSolver.BFS();

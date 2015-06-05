@@ -93,7 +93,7 @@ public class CommandTeleport implements ICommand {
 			} else if (dungeonID == Dungeon.SMALL_BRIDGE) {
 				// start x, y and z of agent within dungeon
 				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
-				Pose offset = Pose.fromXyz(0, 0, 0);
+				Pose offset = Pose.fromXyz(1.5, 5, 3);
 				// teleport the player to bridge dungeon
 				
 				Pose playerPose = HandlerDungeonGeneration.smallBridgePose.add(offset);

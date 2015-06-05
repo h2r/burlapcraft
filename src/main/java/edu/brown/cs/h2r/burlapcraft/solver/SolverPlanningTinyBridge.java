@@ -36,7 +36,7 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge.BridgeTF;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
-public class SolverPlanningBridge {
+public class SolverPlanningTinyBridge {
 
 	DomainGeneratorSimulated 	dwdg;
 	Domain						domain;
@@ -53,7 +53,7 @@ public class SolverPlanningBridge {
 	private int width;
 	private int height;
 	
-	public SolverPlanningBridge(int[][][] map) {
+	public SolverPlanningTinyBridge(int[][][] map) {
 		
 		// set the length, width and height of the dungeon
 		this.length = map[0].length;

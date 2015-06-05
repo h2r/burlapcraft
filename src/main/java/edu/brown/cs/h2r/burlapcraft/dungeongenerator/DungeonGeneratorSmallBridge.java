@@ -13,7 +13,7 @@ public class DungeonGeneratorSmallBridge {
 	public static boolean generate(World world, Pose dungeonPose) {
 		int x = (int) dungeonPose.getX();
 		int y = (int) dungeonPose.getY();
-		int z = (int) dungeonPose.getX();
+		int z = (int) dungeonPose.getZ();
 		return generate(world, x, y, z);
 	}
 

@@ -2,6 +2,7 @@ package edu.brown.cs.h2r.burlapcraft.action;
 
 import java.util.concurrent.TimeUnit;
 
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
@@ -41,7 +42,7 @@ public abstract class ActionAgentReal extends Action {
 			e.printStackTrace();
 		}
 		
-		State newState = StateGenerator.getCurrentState(domain, DomainGeneratorReal.dungeonID);
+		State newState = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonID);
 		
 		System.out.println(newState.toString());
 		

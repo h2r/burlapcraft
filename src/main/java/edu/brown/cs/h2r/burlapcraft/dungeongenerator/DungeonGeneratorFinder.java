@@ -12,11 +12,12 @@ public class DungeonGeneratorFinder {
 	public static boolean generate(World world, Pose dungeonPose) {
 		int x = (int) dungeonPose.getX();
 		int y = (int) dungeonPose.getY();
-		int z = (int) dungeonPose.getX();
+		int z = (int) dungeonPose.getZ();
 		return generate(world, x, y, z);
 	}
 	public static boolean generate(World world, int x, int y, int z) {
 		System.out.println("Making finder dungeon at " + x + "," + y + "," + z);
+
 		world.setBlock(x+0, y+0, z+0, Block.getBlockById(7));
 		world.setBlock(x+1, y+0, z+0, Block.getBlockById(7));
 		world.setBlock(x+2, y+0, z+0, Block.getBlockById(7));

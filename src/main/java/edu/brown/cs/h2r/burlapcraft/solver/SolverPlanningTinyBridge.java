@@ -1,12 +1,16 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
+import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
-import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
+import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
 import burlap.behavior.singleagent.planning.StateConditionTest;
-import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.TFGoalCondition;
@@ -20,29 +24,32 @@ import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
+import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
+import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge.BridgeTF;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
-public class SolverPlanningGrid {
-
+public class SolverPlanningTinyBridge {
 
 	DomainGeneratorSimulated 	dwdg;
 	Domain						domain;
-	StateParser 				sp;
+	//StateParser 				sp;
 	RewardFunction 				rf;
 	TerminalFunction			tf;
 	StateConditionTest			goalCondition;
 	State 						initialState;
 	DiscreteStateHashFactory	hashingFactory;
 
-	DomainGeneratorReal rdg;
+	DomainGeneratorReal			rdg;
 	Domain						realDomain;
 	
 	private int[][][] map;
@@ -51,7 +58,7 @@ public class SolverPlanningGrid {
 	private int width;
 	private int height;
 	
-	public SolverPlanningGrid(int[][][] map) {
+	public SolverPlanningTinyBridge(int[][][] map) {
 		
 		// set the length, width and height of the dungeon
 		this.length = map[0].length;
@@ -60,21 +67,20 @@ public class SolverPlanningGrid {
 		
 		//create the domain
 		dwdg = new DomainGeneratorSimulated(map);
+		rdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 
 		domain = dwdg.generateDomain();
-
-		rdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 		realDomain = rdg.generateDomain();
 		
 		//create the state parser
-		sp = new GridWorldStateParser(domain); 
+		//sp = new GridWorldStateParser(domain);
 		
 		//set up the initial state of the task
-		rf = new UniformCostRF();
-		tf = new MovementTF();
+		rf = new BridgeRF();
+		tf = new BridgeTF();
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = StateGenerator.getCurrentState(domain, Dungeon.GRID);
+		initialState = StateGenerator.getCurrentState(domain, Dungeon.TINY_BRIDGE);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();
@@ -82,10 +88,11 @@ public class SolverPlanningGrid {
 	
 	public void ASTAR() {
 
-		System.out.println("****Beignning Grid AStar");
+		System.out.println("IN ASTAR WITH DYNAMIC");
 
 		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
 		planner.planFromState(initialState);
+
 
 
 		Policy p = new DDPlannerPolicy(planner);
@@ -109,13 +116,11 @@ public class SolverPlanningGrid {
 	}
 	
 	public void BFS() {
-		
-		
 		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
 		planner.planFromState(initialState);
 		
-		//Policy p = new SDPlannerPolicy(planner);
-		Policy p = new DDPlannerPolicy(planner);
+		Policy p = new SDPlannerPolicy(planner);
+		
 		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
 		
 		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
@@ -127,26 +132,37 @@ public class SolverPlanningGrid {
 		HandlerFMLEvents.evaluateActions = true;
 	}
 	
-	public static class MovementTF implements TerminalFunction{
-
-		/**
-		 * Find the gold block and return its pose. 
-		 * @param s the state
-		 * @return the pose of the agent being one unit above the gold block.
-		 */
-		Pose getGoalPose(State s) {
-			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+	public static class BridgeRF implements RewardFunction {
+		
+		@Override
+		public double reward(State s, GroundedAction a, State sprime) {
+			
+			//get location of agent in next state
+			ObjectInstance agent = sprime.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			
+			List<ObjectInstance> blocks = sprime.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
-				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
-					int goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
-					int goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
-					int goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-					
-					return Pose.fromXyz(goalX,  goalY + 1,  goalZ);
+				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+						return -10.0;
+					}
 				} 
 			}
-			return null;
+			return -1.0;
 		}
+	}
+	
+	public static class BridgeTF implements TerminalFunction{
+
+		int goalX;
+		int goalY;
+		int goalZ;
 		
 		@Override
 		public boolean isTerminal(State s) {
@@ -156,23 +172,37 @@ public class SolverPlanningGrid {
 			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-			Pose agentPose = Pose.fromXyz(ax, ay, az);
 			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
 			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
 			
-			Pose goalPose = getGoalPose(s);
-			
-			//are they at goal location or dead
-			double distance = goalPose.distance(agentPose);
-			System.out.println("Distance: " + distance + " goal at: " + goalPose);
-			
-			if (goalPose.distance(agentPose) < 0.5) {
-				return true;
-			} else {
-				return false;
+			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+			for (ObjectInstance block : blocks) {
+				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
+					goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+				} 
+				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+						return true;
+					}
+				}
 			}
+			
+			//are they at goal location or dead?
+			if(((ax == (this.goalX) && az == (this.goalZ - 1) && rotDir == 0 && vertDir == 1) || (ax == (this.goalX) && az == (this.goalZ + 1) && rotDir == 2 && vertDir == 1)
+					|| (ax == (this.goalX - 1) && az == (this.goalZ) && rotDir == 3 && vertDir == 1) || (ax == (this.goalX + 1) && az == (this.goalZ) && rotDir == 1 && vertDir == 1)) 
+					|| (HelperActions.getMinecraft().thePlayer.getHealth() == 0)  || (HelperActions.getMinecraft().thePlayer.isBurning())) {
+				return true;
+			}
+			
+			return false;
 		}
 		
 	}
+	
 	
 }

@@ -10,9 +10,10 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class DungeonGeneratorGrid {
 
 	public static boolean generate(World world, Pose dungeonPose) {
+		System.out.println("Inside grid dungeon generate: " + dungeonPose);
 		int x = (int) dungeonPose.getX();
 		int y = (int) dungeonPose.getY();
-		int z = (int) dungeonPose.getX();
+		int z = (int) dungeonPose.getZ();
 		return generate(world, x, y, z);
 	}
 

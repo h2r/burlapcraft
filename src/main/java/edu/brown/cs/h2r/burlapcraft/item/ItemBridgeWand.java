@@ -12,7 +12,7 @@ import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningBridge;
+import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningTinyBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 

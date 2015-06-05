@@ -6,10 +6,10 @@ public class HelperGeometry {
 		private final double x;
 		private final double y;
 		private final double z;
-		private double qx;
-		private double qy;
-		private double qz;
-		private double qw;
+		private final double qx;
+		private final double qy;
+		private final double qz;
+		private final double qw;
 		
 		public double getX() {
 			return x;

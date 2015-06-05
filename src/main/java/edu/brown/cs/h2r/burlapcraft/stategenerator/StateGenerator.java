@@ -26,9 +26,9 @@ public class StateGenerator {
 	private static int tinyBridgeHeight = 4;
 	
 	// small bridge dungeon dimensions
-	private static int smallBridgeLength = 8;
-	private static int smallBridgeWidth = 8;
-	private static int smallBridgeHeight = 4;
+	private static int smallBridgeLength = 10;
+	private static int smallBridgeWidth = 10;
+	private static int smallBridgeHeight = 5;
 	// grid dungeon dimensions
 	private static int gridLength = 10;
 	private static int gridWidth = 10;
@@ -52,6 +52,11 @@ public class StateGenerator {
 			length = tinyBridgeLength;
 			width = tinyBridgeWidth;
 			height = tinyBridgeHeight;
+		} else if (dungeonID == Dungeon.SMALL_BRIDGE) {
+			dungeonPose = HandlerDungeonGeneration.smallBridgePose;
+			length = smallBridgeLength;
+			width = smallBridgeWidth;
+			height = smallBridgeHeight;
 		} else if (dungeonID == Dungeon.GRID) {
 			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;
@@ -127,12 +132,16 @@ public class StateGenerator {
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
-		}
-		else if (dungeon == Dungeon.TINY_BRIDGE) {
+		} else if (dungeon == Dungeon.TINY_BRIDGE) {
 			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
 			length = tinyBridgeLength;
 			width = tinyBridgeWidth;
 			height = tinyBridgeHeight;
+		} else if (dungeon == Dungeon.SMALL_BRIDGE) {
+			dungeonPose = HandlerDungeonGeneration.smallBridgePose;
+			length = smallBridgeLength;
+			width = smallBridgeWidth;
+			height = smallBridgeHeight;
 		} else if (dungeon == Dungeon.GRID) {
 			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;

@@ -68,12 +68,13 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		int height = 50;
 		finderPose = Pose.fromXyz(playerSpawnPos.x, playerSpawnPos.y + height, playerSpawnPos.z);
 		
-		tinyBridgePose = Pose.fromXyz(playerSpawnPos.x + 10, playerSpawnPos.y + height, playerSpawnPos.z + 10);
+		tinyBridgePose = Pose.fromXyz(playerSpawnPos.x + 20, playerSpawnPos.y + height, playerSpawnPos.z + 10);
 		
-		smallBridgePose = Pose.fromXyz(playerSpawnPos.x + 20, playerSpawnPos.y + height, playerSpawnPos.z + 10);
+		smallBridgePose = Pose.fromXyz(playerSpawnPos.x + 30, playerSpawnPos.y + height, playerSpawnPos.z + 10);
 		
-		gridPose = Pose.fromXyz(playerSpawnPos.x - 10, playerSpawnPos.y + height, playerSpawnPos.z - 10);
 		
+		gridPose = Pose.fromXyz(playerSpawnPos.x - 20, playerSpawnPos.y + height, playerSpawnPos.z - 10);
+		System.out.println("Setting gridPose: " + gridPose);
 		
 		
 		DungeonGeneratorFinder.generate(world, finderPose);

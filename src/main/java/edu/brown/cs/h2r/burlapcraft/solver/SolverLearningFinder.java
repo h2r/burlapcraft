@@ -9,7 +9,7 @@ import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.item.ItemFinderWand;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.block.Block;
@@ -81,7 +81,7 @@ public class SolverLearningFinder {
 		tf = new MovementTF();
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = StateGenerator.getCurrentState(domain, Dungeon.FINDER);
+		initialState = StateGenerator.getCurrentState(domain, DungeonEnum.FINDER);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();

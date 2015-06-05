@@ -8,7 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
@@ -53,32 +53,32 @@ public class CommandBFS implements ICommand {
 				return;
 			}
 			
-			Dungeon dungeonID = BurlapCraft.dungeonID;
+			DungeonEnum dungeonID = BurlapCraft.dungeonID;
 			
 			if (dungeonID == null) {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
 			
-			if (dungeonID == Dungeon.FINDER) {
+			if (dungeonID == DungeonEnum.FINDER) {
 				// create the solver and give it the map
 				SolverPlanningFinder finderSolver = new SolverPlanningFinder(StateGenerator.getMap(dungeonID));
 				
 				// run BFS
 				finderSolver.BFS();
-			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
+			} else if (dungeonID == DungeonEnum.TINY_BRIDGE) {
 				// create the solver and give it the map
 				SolverPlanningTinyBridge bridgeSolver = new SolverPlanningTinyBridge(StateGenerator.getMap(dungeonID));
 				
 				// run BFS
 				bridgeSolver.BFS();
-			} else if (dungeonID == Dungeon.SMALL_BRIDGE) {
+			} else if (dungeonID == DungeonEnum.SMALL_BRIDGE) {
 				// create the solver and give it the map
 				SolverPlanningSmallBridge smallBridgeSolver = new SolverPlanningSmallBridge(StateGenerator.getMap(dungeonID));
 				
 				// run BFS
 				smallBridgeSolver.BFS();
-			} else if (dungeonID == Dungeon.GRID) {
+			} else if (dungeonID == DungeonEnum.GRID) {
 				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeonID));
 				gridSolver.BFS();
 			} else {

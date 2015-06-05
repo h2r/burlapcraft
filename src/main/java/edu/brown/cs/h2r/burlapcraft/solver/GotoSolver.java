@@ -1,146 +1,118 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
-import java.util.List;
-
-import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
-import net.minecraft.block.Block;
-import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
+import burlap.behavior.singleagent.learning.LearningAgent;
+import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
 import burlap.behavior.singleagent.planning.StateConditionTest;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
-import burlap.behavior.singleagent.planning.deterministic.TFGoalCondition;
 import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
-import burlap.domain.singleagent.gridworld.GridWorldStateParser;
-import burlap.oomdp.auxiliary.StateParser;
+import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
-import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import net.minecraft.block.Block;
 
-public class SolverPlanningSmallBridge {
+import java.util.List;
 
+/**
+ * @author James MacGlashan.
+ */
+public class GotoSolver {
 
-	DomainGeneratorSimulated 	dwdg;
-	Domain						domain;
-	StateParser 				sp;
-	RewardFunction 				rf;
-	TerminalFunction			tf;
-	StateConditionTest			goalCondition;
-	State 						initialState;
-	DiscreteStateHashFactory	hashingFactory;
+	static LearningAgent lastLearningAgent = null;
+	static HelperNameSpace.DungeonEnum lastDungeon;
+	static Domain lastDomain;
 
-	DomainGeneratorReal 		rdg;
-	Domain						realDomain;
-	
-	private int[][][] map;
-	private int[][] movementMap;
-	private int length;
-	private int width;
-	private int height;
-	
-	public SolverPlanningSmallBridge(int[][][] map) {
-		
-		// set the length, width and height of the dungeon
-		this.length = map[0].length;
-		this.width = map[0][0].length;
-		this.height = map.length;
-		
-		//create the domain
-		dwdg = new DomainGeneratorSimulated(map);
-		rdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
-
-		domain = dwdg.generateDomain();
-		realDomain = rdg.generateDomain();
-		
-		//create the state parser
-		sp = new GridWorldStateParser(domain); 
-		
-		//set up the initial state of the task
-		rf = new BridgeRF();
-		tf = new MovementTF();
-		goalCondition = new GoalCondition();
-		
-		
-		initialState = StateGenerator.getCurrentState(domain, DungeonEnum.SMALL_BRIDGE);
-		
-		//set up the state hashing system
-		hashingFactory = new DiscreteStateHashFactory();
-	}
-	
-	public void ASTAR() {
+	static RewardFunction rf = new GotoRF();
+	static TerminalFunction tf = new GotoTF();
+	static StateConditionTest gc = new GotoGoalCondition();
 
 
-		System.out.println("Running dynamic ASTAR for Small bridge");
-		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
-		planner.planFromState(initialState);
+	/**
+	 * Runs planning for the current dungeon. Note that that the player needs to have first teleported to a dungeon
+	 * before this will work.
+	 * @param plannerToUse 0: BFS; 1: A*
+	 * @param closedLoop if true then a closed loop policy will be followed; if false, then open loop.
+	 */
+	public static void plan(int plannerToUse, boolean closedLoop){
+
+		int [][][] map = StateGenerator.getMap(BurlapCraft.dungeonID);
+
+		DomainGeneratorSimulated simdg = new DomainGeneratorSimulated(map);
+		Domain domain = simdg.generateDomain();
+
+		DomainGenerator realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+		Domain realDomain = realdg.generateDomain();
+
+		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonID);
+
+		DeterministicPlanner planner = null;
+		if(plannerToUse == 0){
+			planner = new BFS(domain, gc, new DiscreteStateHashFactory());
+
+		}
+		else if(plannerToUse == 1){
+			planner = new AStar(domain, rf, gc, new DiscreteStateHashFactory(), new NullHeuristic());
+		}
+		else{
+			throw new RuntimeException("Error: planner type is " + planner + "; use 0 for BFS or 1 for A*");
+		}
 		planner.setTf(tf);
 
-		Policy p = new DDPlannerPolicy(planner);
-		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
-		rp.evaluateBehavior(initialState, rf, tf, 100);
 
-		/*
-		Policy p = new SDPlannerPolicy(planner);
-		
-		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
-		
-		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
-			System.out.println(ea.getState(i).toString());
-			System.out.println(ea.getAction(i).toString());
-		}
-		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
-		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
-		HandlerFMLEvents.evaluateActions = true;
-		*/
-	}
-	
-	public void BFS() {
-		
-		
-		DeterministicPlanner planner = new BFS(domain, goalCondition, hashingFactory);
 		planner.planFromState(initialState);
-		
-		//Policy p = new SDPlannerPolicy(planner);
-		Policy p = new DDPlannerPolicy(planner);
-		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
-		
-		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
-			System.out.println(ea.getState(i).toString());
-			System.out.println(ea.getAction(i).toString());
-		}
-		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
-		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
-		HandlerFMLEvents.evaluateActions = true;
-	}
-	
-		
+		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
+		p.evaluateBehavior(initialState, rf, tf);
 
-	public static class BridgeRF implements RewardFunction {
-		
+	}
+
+	public static void learn(){
+
+		if(BurlapCraft.dungeonID != lastDungeon || lastLearningAgent == null){
+			int [][][] map = StateGenerator.getMap(BurlapCraft.dungeonID);
+			DomainGenerator realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+			lastDomain = realdg.generateDomain();
+			lastLearningAgent = new PotentialShapedRMax(lastDomain, rf, tf, 0.99, new DiscreteStateHashFactory(), 0, 1, 0.01, 200);
+
+			lastDungeon = BurlapCraft.dungeonID;
+		}
+
+		State initialState = StateGenerator.getCurrentState(lastDomain, BurlapCraft.dungeonID);
+		lastLearningAgent.runLearningEpisodeFrom(initialState);
+
+
+	}
+
+
+
+
+
+	public static class GotoRF implements RewardFunction {
+
 		@Override
 		public double reward(State s, GroundedAction a, State sprime) {
-			
+
 			//get location of agent in next state
 			ObjectInstance agent = sprime.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-			
+
 			List<ObjectInstance> blocks = sprime.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
 				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
@@ -150,41 +122,41 @@ public class SolverPlanningSmallBridge {
 					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
 						return -10.0;
 					}
-				} 
+				}
 			}
 			return -1.0;
 		}
 	}
-	
+
 
 	/**
-	 * Find the gold block and return its pose. 
+	 * Find the gold block and return its pose.
 	 * @param s the state
 	 * @return the pose of the agent being one unit above the gold block.
 	 */
-	public static Pose getGoalPose(State s) {
+	public static HelperGeometry.Pose getGoalPose(State s) {
 		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 		for (ObjectInstance block : blocks) {
 			if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
 				int goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
 				int goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
 				int goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-				
-				return Pose.fromXyz(goalX,  goalY + 1,  goalZ);
-			} 
+
+				return HelperGeometry.Pose.fromXyz(goalX, goalY + 1, goalZ);
+			}
 		}
 		return null;
 	}
 
-	public static class MovementTF implements TerminalFunction{
-		
+	public static class GotoTF implements TerminalFunction {
+
 		@Override
 		public boolean isTerminal(State s) {
 			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-			
+
 			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
 			for (ObjectInstance block : blocks) {
 				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
@@ -194,29 +166,29 @@ public class SolverPlanningSmallBridge {
 					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
 						return true;
 					}
-				} 
+				}
 			}
-					
-			Pose agentPose = Pose.fromXyz(ax, ay, az);
+
+			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(ax, ay, az);
 			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
 			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
-			
-			Pose goalPose = getGoalPose(s);
-			
+
+			HelperGeometry.Pose goalPose = getGoalPose(s);
+
 			//are they at goal location or dead
 			double distance = goalPose.distance(agentPose);
 			//System.out.println("Distance: " + distance + " goal at: " + goalPose);
-			
+
 			if (goalPose.distance(agentPose) < 0.5) {
 				return true;
 			} else {
 				return false;
 			}
 		}
-		
+
 	}
-	
-	public class GoalCondition implements StateConditionTest {
+
+	public static class GotoGoalCondition implements StateConditionTest {
 
 		@Override
 		public boolean satisfies(State s) {
@@ -224,26 +196,26 @@ public class SolverPlanningSmallBridge {
 			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-			
-					
-			Pose agentPose = Pose.fromXyz(ax, ay, az);
+
+
+			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(ax, ay, az);
 			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
 			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
-			
-			Pose goalPose = getGoalPose(s);
-			
+
+			HelperGeometry.Pose goalPose = getGoalPose(s);
+
 			//are they at goal location or dead
 			double distance = goalPose.distance(agentPose);
 			//System.out.println("Distance: " + distance + " goal at: " + goalPose);
-			
+
 			if (goalPose.distance(agentPose) < 0.5) {
 				return true;
 			} else {
 				return false;
-			}			
-			
+			}
+
 		}
-		
+
 	}
-	
+
 }

@@ -78,7 +78,7 @@ public class CommandTeleport implements ICommand {
 
 			
 			if (dungeonName.equals("out")) {
-				Pose spawnPoint = Pose.fromXyz(HandlerDungeonGeneration.playerSpawnPos.x, HandlerDungeonGeneration.playerSpawnPos.y, HandlerDungeonGeneration.playerSpawnPos.z);
+				Pose spawnPoint = Pose.fromXyz(HandlerDungeonGeneration.playerSpawnPose.getX(), HandlerDungeonGeneration.playerSpawnPose.getY(), HandlerDungeonGeneration.playerSpawnPose.getZ());
 				HelperActions.setPlayerPosition(player, spawnPoint);
 				return;
 			} 

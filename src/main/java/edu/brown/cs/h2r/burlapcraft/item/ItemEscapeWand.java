@@ -34,7 +34,7 @@ public class ItemEscapeWand extends Item {
 			System.out.println("Used Escape Wand");
 			ItemFinderWand.finderInside = false;
 			ItemBridgeWand.bridgeInside = false;
-			player.setPositionAndUpdate((double) HandlerDungeonGeneration.playerSpawnPos.x, (double) HandlerDungeonGeneration.playerSpawnPos.y, (double) HandlerDungeonGeneration.playerSpawnPos.z);
+			player.setPositionAndUpdate((double) HandlerDungeonGeneration.playerSpawnPose.getX(), (double) HandlerDungeonGeneration.playerSpawnPose.getY(), (double) HandlerDungeonGeneration.playerSpawnPose.getZ());
 		}
         return itemStack;
     }

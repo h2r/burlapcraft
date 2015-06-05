@@ -3,6 +3,7 @@ package edu.brown.cs.h2r.burlapcraft.handler;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -19,7 +20,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	public static Pose tinyBridgePose;
 	public static Pose smallBridgePose;
 	public static Pose gridPose;
-	public static HelperPos playerSpawnPos;
+	public static Pose playerSpawnPose;
 	private static Minecraft mc = Minecraft.getMinecraft();
 	public static boolean dungeonsCreated = false;
 	public static boolean currentlyGeneratingDungeons = false;
@@ -64,16 +65,20 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		} else {
 			currentlyGeneratingDungeons = true;
 		}
-		playerSpawnPos = getPlayerPosition();
+		ChunkCoordinates coordinates = world.getSpawnPoint();
+		
+		//playerSpawnPos = getPlayerPosition();
+		playerSpawnPose = Pose.fromXyz(coordinates.posX, 30, coordinates.posZ);
 		int height = 50;
-		finderPose = Pose.fromXyz(playerSpawnPos.x, playerSpawnPos.y + height, playerSpawnPos.z);
+		finderPose = Pose.fromXyz(playerSpawnPose.getX(), playerSpawnPose.getY() + height, playerSpawnPose.getZ());
 		
-		tinyBridgePose = Pose.fromXyz(playerSpawnPos.x + 20, playerSpawnPos.y + height, playerSpawnPos.z + 10);
+		tinyBridgePose = Pose.fromXyz(playerSpawnPose.getX() + 20, playerSpawnPose.getY() + height, playerSpawnPose.getZ() + 10);
 		
-		smallBridgePose = Pose.fromXyz(playerSpawnPos.x + 30, playerSpawnPos.y + height, playerSpawnPos.z + 10);
+		smallBridgePose = Pose.fromXyz(playerSpawnPose.getX() + 30, playerSpawnPose.getY() + height, playerSpawnPose.getZ() + 10);
 		
 		
-		gridPose = Pose.fromXyz(playerSpawnPos.x - 20, playerSpawnPos.y + height, playerSpawnPos.z - 10);
+		gridPose = Pose.fromXyz(playerSpawnPose.getX() - 20, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
+		
 		System.out.println("Setting gridPose: " + gridPose);
 		
 		

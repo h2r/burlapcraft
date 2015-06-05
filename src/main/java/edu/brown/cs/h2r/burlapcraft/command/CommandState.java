@@ -20,14 +20,14 @@ public class CommandState implements ICommand{
 	Domain domain;
 
 	public CommandState(){
-		this.aliass.add("check_state");
+		this.aliass.add("checkState");
 		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
 		domain = rdg.generateDomain();
 	}
 
 	@Override
 	public String getCommandName() {
-		return "check_state";
+		return "checkState";
 	}
 
 	@Override

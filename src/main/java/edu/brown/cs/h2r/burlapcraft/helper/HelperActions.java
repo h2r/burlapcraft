@@ -2,7 +2,6 @@ package edu.brown.cs.h2r.burlapcraft.helper;
 
 import java.util.*;
 
-
 //import net.famzangl.minecraft.minebot.ai.command.AIChatController;
 //import net.famzangl.minecraft.minebot.ai.task.AITask;
 //import net.famzangl.minecraft.minebot.build.BuildManager;
@@ -14,7 +13,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovementInput;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.NibbleArray;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
@@ -81,17 +79,20 @@ public class HelperActions {
   public static void setPlayerPosition(EntityPlayer player, Pose position) {
 	  player.setPositionAndUpdate(position.getX(), position.getY(), position.getZ());
 	  Chunk chunk = player.getEntityWorld().getChunkFromBlockCoords((int) position.getX(), (int) position.getZ());
-	  player.getEntityWorld().getChunkProvider().loadChunk((int) position.getX(), (int) position.getZ());
 	  
-	  for (int ix = -10; ix < 10; ix ++) {
-		  for (int iy = -10; iy < 10; iy ++) {
-			  for (int iz = -10; iz < 10; iz ++) {
-				  player.getEntityWorld().markBlockForUpdate((int) position.getX() + ix, (int) position.getY() + iy, (int) position.getZ() + iz);
-			  }
-		  }
-		  
-	  }
-	  
+//	  System.out.println("Is chunk loaded: " + chunk);
+//	  player.getEntityWorld().getChunkProvider().loadChunk((int) position.getX(), (int) position.getZ());
+//	  player.getEntityWorld().getChunkProvider().loadChunk((int) position.getX(), (int) position.getZ());
+//	  System.out.println("Is chunk loaded: " + chunk);
+//	  for (int ix = -10; ix < 10; ix ++) {
+//		  for (int iy = -10; iy < 10; iy ++) {
+//			  for (int iz = -10; iz < 10; iz ++) {
+//				  player.getEntityWorld().getChunkProvider().loadChunk((int) position.getX() + ix, (int) position.getZ() + iz);
+//				  player.getEntityWorld().markBlockForUpdate((int) position.getX() + ix, (int) position.getY() + iy, (int) position.getZ() + iz);
+//			  }
+//		  }
+//	  }
+//	  System.out.println("Is chunk loaded: " + chunk);
   }
 
   public static void overrideMovement(MovementInput i)

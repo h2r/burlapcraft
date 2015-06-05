@@ -14,7 +14,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 
 public class CommandTeleport implements ICommand {
 	
@@ -82,23 +82,23 @@ public class CommandTeleport implements ICommand {
 				HelperActions.setPlayerPosition(player, spawnPoint);
 				return;
 			} 
-			Dungeon dungeonID = Dungeon.fromString(dungeonName);			
+			DungeonEnum dungeonID = DungeonEnum.fromString(dungeonName);			
 			BurlapCraft.dungeonID = dungeonID;
 			
-			if (dungeonID == Dungeon.FINDER) {
+			if (dungeonID == DungeonEnum.FINDER) {
 				// start x, y and z of player within dungeon
 				Pose offset = Pose.fromXyz(1.5, 5, 3);
 				Pose playerPose = HandlerDungeonGeneration.finderPose.add(offset);
 				// teleport the player to finder dungeon
 				HelperActions.setPlayerPosition(player, playerPose);
-			} else if (dungeonID == Dungeon.TINY_BRIDGE) {
+			} else if (dungeonID == DungeonEnum.TINY_BRIDGE) {
 				// start x, y and z of agent within dungeon
 				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
 				Pose offset = Pose.fromXyz(1, 5, 3);
 				// teleport the player to bridge dungeon
 				Pose playerPose = HandlerDungeonGeneration.tinyBridgePose.add(offset);
 				HelperActions.setPlayerPosition(player, playerPose);
-			} else if (dungeonID == Dungeon.SMALL_BRIDGE) {
+			} else if (dungeonID == DungeonEnum.SMALL_BRIDGE) {
 				// start x, y and z of agent within dungeon
 				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
 				Pose offset = Pose.fromXyz(1.5, 5, 3);
@@ -108,7 +108,7 @@ public class CommandTeleport implements ICommand {
 				System.out.println("small bridge pose: " + HandlerDungeonGeneration.smallBridgePose);
 				System.out.println("player pose: " + playerPose);
 				HelperActions.setPlayerPosition(player, playerPose);
-			} else if (dungeonID == Dungeon.GRID) {
+			} else if (dungeonID == DungeonEnum.GRID) {
 				Pose offset = Pose.fromXyz(1.5, 5, 3);
 				Pose playerPose = HandlerDungeonGeneration.gridPose.add(offset);
 				System.out.println("grid pose: " + HandlerDungeonGeneration.gridPose);

@@ -7,7 +7,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import net.minecraft.block.Block;
 
@@ -42,24 +42,24 @@ public class StateGenerator {
 	private static int width;
 	private static int height;
 
-	public static State getCurrentState(Domain domain, Dungeon dungeonID) {
+	public static State getCurrentState(Domain domain, DungeonEnum dungeonID) {
 		System.out.println("Dungeon ID: " + dungeonID);
-		if (dungeonID == Dungeon.FINDER) {
+		if (dungeonID == DungeonEnum.FINDER) {
 			dungeonPose = HandlerDungeonGeneration.finderPose;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
-		} else if (dungeonID == Dungeon.TINY_BRIDGE) {
+		} else if (dungeonID == DungeonEnum.TINY_BRIDGE) {
 			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
 			length = tinyBridgeLength;
 			width = tinyBridgeWidth;
 			height = tinyBridgeHeight;
-		} else if (dungeonID == Dungeon.SMALL_BRIDGE) {
+		} else if (dungeonID == DungeonEnum.SMALL_BRIDGE) {
 			dungeonPose = HandlerDungeonGeneration.smallBridgePose;
 			length = smallBridgeLength;
 			width = smallBridgeWidth;
 			height = smallBridgeHeight;
-		} else if (dungeonID == Dungeon.GRID) {
+		} else if (dungeonID == DungeonEnum.GRID) {
 			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;
 			width = gridWidth;
@@ -139,24 +139,24 @@ public class StateGenerator {
 		
 	}
 	
-	public static int[][][] getMap(Dungeon dungeon) {
+	public static int[][][] getMap(DungeonEnum dungeon) {
 		
-		if (dungeon == Dungeon.FINDER) {
+		if (dungeon == DungeonEnum.FINDER) {
 			dungeonPose = HandlerDungeonGeneration.finderPose;
 			length = finderLength;
 			width = finderWidth;
 			height = finderHeight;
-		} else if (dungeon == Dungeon.TINY_BRIDGE) {
+		} else if (dungeon == DungeonEnum.TINY_BRIDGE) {
 			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
 			length = tinyBridgeLength;
 			width = tinyBridgeWidth;
 			height = tinyBridgeHeight;
-		} else if (dungeon == Dungeon.SMALL_BRIDGE) {
+		} else if (dungeon == DungeonEnum.SMALL_BRIDGE) {
 			dungeonPose = HandlerDungeonGeneration.smallBridgePose;
 			length = smallBridgeLength;
 			width = smallBridgeWidth;
 			height = smallBridgeHeight;
-		} else if (dungeon == Dungeon.GRID) {
+		} else if (dungeon == DungeonEnum.GRID) {
 			dungeonPose = HandlerDungeonGeneration.gridPose;
 			length = gridLength;
 			width = gridWidth;

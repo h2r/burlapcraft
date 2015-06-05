@@ -15,6 +15,7 @@ import edu.brown.cs.h2r.burlapcraft.command.CommandAStar;
 import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
 import edu.brown.cs.h2r.burlapcraft.command.CommandCreateDungeons;
 import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
+import edu.brown.cs.h2r.burlapcraft.command.CommandSmoothMove;
 import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
@@ -61,6 +62,7 @@ public class BurlapCraft {
     {
         // register server commands
     	event.registerServerCommand(new CommandTeleport());
+    	event.registerServerCommand(new CommandSmoothMove());
     	event.registerServerCommand(new CommandAStar());
     	event.registerServerCommand(new CommandBFS());
     	event.registerServerCommand(new CommandRMax());

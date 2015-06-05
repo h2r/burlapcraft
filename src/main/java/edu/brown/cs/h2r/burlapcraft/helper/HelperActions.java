@@ -22,6 +22,7 @@ import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 public class HelperActions {
   private static Minecraft mc = Minecraft.getMinecraft();
+  public static EntityPlayer player = mc.thePlayer;
   private final static Random rand = new Random();
   
   public static final Block[] mineableBlocks = { BurlapCraft.burlapStone, Blocks.gold_block };
@@ -184,20 +185,53 @@ public class HelperActions {
 	  return true;
   }
   
+  final private static double qDecay = 90.0;
+  final private static double snapThresh = 0.025;
+  final private static double minUpdate = 0.025;
+  final private static long timerPeriod = 2;
+  
+  public static void moveYawToTarget(final double yawTarget) {
+	final EntityPlayer player = HelperActions.player;
+	final Timer timer = new Timer();
+	timer.schedule(new TimerTask() {
+	  @Override
+	  public void run() {
+		  if (player.rotationYaw == yawTarget) {
+			  System.out.println("smoothMove: target reached.");
+			  timer.cancel();
+		  } else if (Math.abs(yawTarget - player.rotationYaw) > snapThresh){
+			  double update = (yawTarget - player.rotationYaw)/qDecay;		  
+			  if (Math.abs(update) < minUpdate) {
+				  update = Math.signum(update) * minUpdate;
+			  } else {
+			  }
+			  player.rotationYaw += update;
+			  //System.out.println("smoothMove: target = " + yawTarget + " current yaw = " + player.rotationYaw + " so adding.");
+		  } else {
+			  player.rotationYaw = (float)yawTarget;
+		  }
+	  }
+	}, 0, timerPeriod);
+  }
+  
   public static void faceSouth() {
-	  mc.thePlayer.rotationYaw = 0;
+	//mc.thePlayer.rotationYaw = 0;
+	moveYawToTarget(0);
   }
   
   public static void faceWest() {
-	  mc.thePlayer.rotationYaw = 90;
+	//mc.thePlayer.rotationYaw = 90;
+	moveYawToTarget(90);
   }
   
   public static void faceNorth() {
-	  mc.thePlayer.rotationYaw = -180;
+	//mc.thePlayer.rotationYaw = -180;
+	moveYawToTarget(-180);
   }
   
   public static void faceEast() {
-	  mc.thePlayer.rotationYaw = -90;
+	//mc.thePlayer.rotationYaw = -90;
+	moveYawToTarget(-90);
   }
   
   public static int getYawDirection()

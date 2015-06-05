@@ -79,6 +79,7 @@ public class HelperActions {
   }
   
   public static void setPlayerPosition(EntityPlayer player, Pose position) {
+	  player.setPositionAndUpdate(position.getX(), position.getY(), position.getZ());
 	  Chunk chunk = player.getEntityWorld().getChunkFromBlockCoords((int) position.getX(), (int) position.getZ());
 	  player.getEntityWorld().getChunkProvider().loadChunk((int) position.getX(), (int) position.getZ());
 	  
@@ -90,7 +91,7 @@ public class HelperActions {
 		  }
 		  
 	  }
-	  player.setPositionAndUpdate(position.getX(), position.getY(), position.getZ());
+	  
   }
 
   public static void overrideMovement(MovementInput i)

@@ -60,12 +60,20 @@ public class CommandTeleport implements ICommand {
 				return;
 			}
 			
-			if (args.length > 1) {
-				sender.addChatMessage(new ChatComponentText("This command takes just one argument"));
+			if (args.length != 1 && args.length != 3) {
+				sender.addChatMessage(new ChatComponentText("This command takes just one argument, or 3 integers for pose"));
 				return;
 			}
-			
 			EntityPlayer player = HandlerEvents.player;
+			if (args.length == 3) {
+				int x = Integer.valueOf(args[0]);
+				int y = Integer.valueOf(args[1])	;
+				int z = Integer.valueOf(args[2]);	
+				Pose newp= Pose.fromXyz(x, y, z);
+				HelperActions.setPlayerPosition(player, newp);
+				
+			}
+			
 			String dungeonName = args[0];
 
 			
@@ -73,7 +81,7 @@ public class CommandTeleport implements ICommand {
 				Pose spawnPoint = Pose.fromXyz(HandlerDungeonGeneration.playerSpawnPos.x, HandlerDungeonGeneration.playerSpawnPos.y, HandlerDungeonGeneration.playerSpawnPos.z);
 				HelperActions.setPlayerPosition(player, spawnPoint);
 				return;
-			}
+			} 
 			Dungeon dungeonID = Dungeon.fromString(dungeonName);			
 			BurlapCraft.dungeonID = dungeonID;
 			

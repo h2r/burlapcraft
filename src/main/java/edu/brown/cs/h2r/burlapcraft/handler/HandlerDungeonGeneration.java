@@ -68,7 +68,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		ChunkCoordinates coordinates = world.getSpawnPoint();
 		
 		//playerSpawnPos = getPlayerPosition();
-		playerSpawnPose = Pose.fromXyz(coordinates.posX, 100, coordinates.posZ);
+		playerSpawnPose = Pose.fromXyz(coordinates.posX, 30, coordinates.posZ);
 		int height = 50;
 		finderPose = Pose.fromXyz(playerSpawnPose.getX(), playerSpawnPose.getY() + height, playerSpawnPose.getZ());
 		
@@ -77,7 +77,8 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		smallBridgePose = Pose.fromXyz(playerSpawnPose.getX() + 30, playerSpawnPose.getY() + height, playerSpawnPose.getZ() + 10);
 		
 		
-		gridPose = Pose.fromXyz(playerSpawnPose.getZ() - 20, playerSpawnPose.getZ() + height, playerSpawnPose.getZ() - 10);
+		gridPose = Pose.fromXyz(playerSpawnPose.getX() - 20, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
+		
 		System.out.println("Setting gridPose: " + gridPose);
 		
 		

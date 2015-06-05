@@ -66,7 +66,8 @@ public class SolverPlanningSmallBridge {
 		//set up the initial state of the task
 		rf = new BridgeRF();
 		tf = new MovementTF();
-		goalCondition = new TFGoalCondition(tf);
+		goalCondition = new GoalCondition();
+		
 		
 		initialState = StateGenerator.getCurrentState(domain, Dungeon.SMALL_BRIDGE);
 		
@@ -78,6 +79,7 @@ public class SolverPlanningSmallBridge {
 		
 		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
 		planner.planFromState(initialState);
+		planner.setTf(tf);
 		
 		Policy p = new SDPlannerPolicy(planner);
 		
@@ -139,26 +141,27 @@ public class SolverPlanningSmallBridge {
 		}
 	}
 	
-	public static class MovementTF implements TerminalFunction{
 
-		/**
-		 * Find the gold block and return its pose. 
-		 * @param s the state
-		 * @return the pose of the agent being one unit above the gold block.
-		 */
-		Pose getGoalPose(State s) {
-			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
-			for (ObjectInstance block : blocks) {
-				if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
-					int goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
-					int goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
-					int goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-					
-					return Pose.fromXyz(goalX,  goalY + 1,  goalZ);
-				} 
-			}
-			return null;
+	/**
+	 * Find the gold block and return its pose. 
+	 * @param s the state
+	 * @return the pose of the agent being one unit above the gold block.
+	 */
+	public static Pose getGoalPose(State s) {
+		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+		for (ObjectInstance block : blocks) {
+			if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
+				int goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
+				int goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
+				int goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+				
+				return Pose.fromXyz(goalX,  goalY + 1,  goalZ);
+			} 
 		}
+		return null;
+	}
+
+	public static class MovementTF implements TerminalFunction{
 		
 		@Override
 		public boolean isTerminal(State s) {
@@ -194,6 +197,36 @@ public class SolverPlanningSmallBridge {
 			} else {
 				return false;
 			}
+		}
+		
+	}
+	
+	public class GoalCondition implements StateConditionTest {
+
+		@Override
+		public boolean satisfies(State s) {
+			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			
+					
+			Pose agentPose = Pose.fromXyz(ax, ay, az);
+			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
+			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
+			
+			Pose goalPose = getGoalPose(s);
+			
+			//are they at goal location or dead
+			double distance = goalPose.distance(agentPose);
+			//System.out.println("Distance: " + distance + " goal at: " + goalPose);
+			
+			if (goalPose.distance(agentPose) < 0.5) {
+				return true;
+			} else {
+				return false;
+			}			
+			
 		}
 		
 	}

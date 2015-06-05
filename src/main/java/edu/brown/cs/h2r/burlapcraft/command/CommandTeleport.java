@@ -103,6 +103,8 @@ public class CommandTeleport implements ICommand {
 			} else if (dungeonID == Dungeon.GRID) {
 				Pose offset = Pose.fromXyz(1.5, 5, 3);
 				Pose playerPose = HandlerDungeonGeneration.gridPose.add(offset);
+				System.out.println("grid pose: " + HandlerDungeonGeneration.gridPose);
+				System.out.println("player pose: " + playerPose);
 				HelperActions.setPlayerPosition(player, playerPose);
 			} else {
 				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);

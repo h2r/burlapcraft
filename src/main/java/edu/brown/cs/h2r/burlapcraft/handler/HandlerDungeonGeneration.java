@@ -22,6 +22,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	public static HelperPos playerSpawnPos;
 	private static Minecraft mc = Minecraft.getMinecraft();
 	public static boolean dungeonsCreated = false;
+	public static boolean currentlyGeneratingDungeons = false;
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,
@@ -52,19 +53,17 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 	}
 
 	private void generateSurface(World world, Random random, int i, int j) {
-		System.out.println("Generating dungeons: " + this + " created? " + dungeonsCreated + " player? " + mc.thePlayer);
 		if(mc.thePlayer != null && !dungeonsCreated) {
-			try {
-				doCreateDungeons(world);
-			} catch (Exception e) {
-				System.out.println("Exception creating dungeons in handler: " + this);
-				e.printStackTrace();
-			}
+			doCreateDungeons(world);
 		}
 	}
 	
 	public static void doCreateDungeons(World world) {
-		System.out.println("Generating dungeons with world: " + world);
+		if (currentlyGeneratingDungeons) {
+			return;
+		} else {
+			currentlyGeneratingDungeons = true;
+		}
 		playerSpawnPos = getPlayerPosition();
 		int height = 50;
 		finderPose = Pose.fromXyz(playerSpawnPos.x, playerSpawnPos.y + height, playerSpawnPos.z);
@@ -81,9 +80,9 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		DungeonGeneratorTinyBridge.generate(world, tinyBridgePose);
 		DungeonGeneratorSmallBridge.generate(world, smallBridgePose);
 		DungeonGeneratorGrid.generate(world, gridPose);
-			
+		
 		dungeonsCreated = true;
-			
+		currentlyGeneratingDungeons = false;
 	}
 	
 	private static HelperPos getPlayerPosition() {

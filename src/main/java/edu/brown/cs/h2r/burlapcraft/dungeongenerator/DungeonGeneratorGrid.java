@@ -23,6 +23,7 @@ public class DungeonGeneratorGrid {
 		for (int ax = 0; ax < w; ax++) {
 			for (int az = 0; az < w; az++) {
 				world.setBlock(x+ax, y+0, z+az, Block.getBlockById(7));
+				world.markBlockForUpdate(x+ax, y+0, z+az);
 			}
 		}
 		for (int ax = 0; ax < 10; ax++) {

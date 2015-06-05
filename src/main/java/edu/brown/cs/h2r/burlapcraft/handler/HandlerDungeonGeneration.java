@@ -10,7 +10,6 @@ import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGeneratorFinder;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.FinderDungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.GridDungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.SmallBridgeDungeon;
@@ -82,7 +81,6 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		System.out.println("Setting gridPose: " + gridPose);
 		
 		
-		DungeonGeneratorFinder.generate(world, finderPose);
 		BurlapCraft.registerDungeon(new FinderDungeon(finderPose));
 		BurlapCraft.registerDungeon(new TinyBridgeDungeon(tinyBridgePose));
 		BurlapCraft.registerDungeon(new SmallBridgeDungeon(smallBridgePose));

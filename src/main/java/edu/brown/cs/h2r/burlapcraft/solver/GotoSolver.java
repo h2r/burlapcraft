@@ -2,6 +2,7 @@ package edu.brown.cs.h2r.burlapcraft.solver;
 
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.learning.LearningAgent;
+import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
 import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
 import burlap.behavior.singleagent.planning.StateConditionTest;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * @author James MacGlashan.
  */
-public class GoToSolver {
+public class GotoSolver {
 
 	static LearningAgent lastLearningAgent = null;
 	static HelperNameSpace.DungeonEnum lastDungeon;
@@ -77,7 +78,9 @@ public class GoToSolver {
 
 		planner.planFromState(initialState);
 		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
-		p.evaluateBehavior(initialState, rf, tf);
+
+		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
+		rp.evaluateBehavior(initialState, rf, tf);
 
 	}
 
@@ -216,6 +219,5 @@ public class GoToSolver {
 		}
 
 	}
-
 
 }

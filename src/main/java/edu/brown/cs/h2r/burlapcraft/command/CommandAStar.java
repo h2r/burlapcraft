@@ -3,16 +3,20 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.brown.cs.h2r.burlapcraft.solver.*;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningTinyBridge;
+
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandAStar implements ICommand {
@@ -36,7 +40,7 @@ public class CommandAStar implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "astar";
+		return "astar [closed|open]\nIf closed/open not specified, closed it used";
 	}
 
 	@Override
@@ -48,8 +52,8 @@ public class CommandAStar implements ICommand {
 	public void processCommand(ICommandSender sender, String[] args) {
 		World world = sender.getEntityWorld();
 		if (!world.isRemote) {
-			if (args.length > 0) {
-				sender.addChatMessage(new ChatComponentText("This command takes no arguments"));
+			if (args.length > 1) {
+				sender.addChatMessage(new ChatComponentText("This command takes only 1 optional argument: closed or open"));
 				return;
 			}
 			
@@ -60,37 +64,18 @@ public class CommandAStar implements ICommand {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
+
 			
 			
-			if (dungeon.getName().equals("finder")) {
-				// create the solver and give it the map
-				SolverPlanningFinder finderSolver = new SolverPlanningFinder(StateGenerator.getMap(dungeon));
-				
-				// run ASTAR
-				finderSolver.ASTAR();
-				
-			} else if (dungeon.getName().equals("tiny_bridge")) {
-				// create the solver and give it the map
-				SolverPlanningTinyBridge bridgeSolver = new SolverPlanningTinyBridge(StateGenerator.getMap(dungeon));
-				
-				// run ASTAR
-				bridgeSolver.ASTAR();
-			} else if (dungeon.getName().equals("small_bridge")) {
-				// create the solver and give it the map
-				SolverPlanningSmallBridge bridgeSolver = new SolverPlanningSmallBridge(StateGenerator.getMap(dungeon));
-				
-				// run ASTAR
-				bridgeSolver.ASTAR();
-			} else if (dungeon.getName().equals("grid")) {
-				// create the solver and give it the map
-				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeon));
-				
-				// run ASTAR
-				gridSolver.ASTAR();
-				
-			} else {
-				throw new IllegalStateException("Bad dungeon ID: " + dungeon.getName());
+			boolean closed = true;
+			if(args.length == 1){
+				if(args[0].equals("open")){
+					closed = false;
+				}
 			}
+
+			GotoSolver.plan(1, closed);
+
 
 		}
 	}

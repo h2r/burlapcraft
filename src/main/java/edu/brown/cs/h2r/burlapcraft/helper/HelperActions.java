@@ -201,10 +201,13 @@ public class HelperActions {
   final private static double snapThresh = 0.025;
   final private static double minUpdate = 0.025;
   final private static long timerPeriod = 2;
+  final private static long maxUpdates = 1000;
   
   public static void moveYawToTarget(final double yawTarget) {
 	final EntityPlayer player = HelperActions.player;
 	final Timer timer = new Timer();
+	final ArrayList<Integer> numberOfIterations = new ArrayList<Integer>(1);
+	numberOfIterations.add(0);
 	timer.schedule(new TimerTask() {
 	  @Override
 	  public void run() {
@@ -218,7 +221,13 @@ public class HelperActions {
 			  } else {
 			  }
 			  player.rotationYaw += update;
-			  //System.out.println("smoothMove: target = " + yawTarget + " current yaw = " + player.rotationYaw + " so adding.");
+			  int tmp = numberOfIterations.get(0);
+			  numberOfIterations.set(0,tmp+1);
+			  //System.out.println("smoothMove: target = " + yawTarget + " current yaw = " + player.rotationYaw + ", update = " + update + ", performed " + numberOfIterations.get(0) + " iterations.");
+			  if (tmp >= maxUpdates) {
+				  timer.cancel();
+			  } else {
+			  }
 		  } else {
 			  player.rotationYaw = (float)yawTarget;
 		  }

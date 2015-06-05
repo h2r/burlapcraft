@@ -3,6 +3,7 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
@@ -59,30 +60,8 @@ public class CommandRMax implements ICommand {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
-			
-			if (dungeon.equals("finder")) {
-				// create the solver and give it the map
-				SolverLearningFinder finderSolver = new SolverLearningFinder(StateGenerator.getMap(dungeon));
-				
-				// run RMax
-				finderSolver.RMAX();
-				
-			} else if (dungeon.equals("tiny_bridge")) {
-				// create the solver and give it the map
-				SolverLearningBridge bridgeSolver = new SolverLearningBridge(StateGenerator.getMap(dungeon));
-				
-				// run RMax
-				bridgeSolver.RMAX();
-				
-			} else if (dungeon.equals("grid")) {
-				// create the solver and give it the map
-				SolverLearningGrid gridSolver = new SolverLearningGrid(StateGenerator.getMap(dungeon));
-				
-				// run RMax
-				gridSolver.RMAX();
-			} else {	
-				throw new IllegalStateException("Bad dungeon ID: " + dungeon.getName());
-			}
+
+			GotoSolver.learn();
 
 		}
 	}

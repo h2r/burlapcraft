@@ -3,6 +3,7 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.brown.cs.h2r.burlapcraft.solver.*;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
@@ -10,10 +11,6 @@ import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningTinyBridge;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandBFS implements ICommand {
@@ -37,7 +34,8 @@ public class CommandBFS implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "bfs";
+		return "bfs [closed|open]\n" +
+				"If closed/open not specified, closed it used";
 	}
 
 	@Override
@@ -49,8 +47,8 @@ public class CommandBFS implements ICommand {
 	public void processCommand(ICommandSender sender, String[] args) {
 		World world = sender.getEntityWorld();
 		if (!world.isRemote) {
-			if (args.length > 0) {
-				sender.addChatMessage(new ChatComponentText("This command takes no arguments"));
+			if (args.length > 1) {
+				sender.addChatMessage(new ChatComponentText("This command takes only 1 optional argument: closed or open"));
 				return;
 			}
 			
@@ -60,34 +58,16 @@ public class CommandBFS implements ICommand {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
-			
-			if (dungeon.getName().equals("finder")) {
-				// create the solver and give it the map
-				SolverPlanningFinder finderSolver = new SolverPlanningFinder(StateGenerator.getMap(dungeon));
-				
-				// run BFS
-				finderSolver.BFS();
-			} else if (dungeon.getName().equals("tiny_bridge")) {
-				// create the solver and give it the map
-				SolverPlanningTinyBridge bridgeSolver = new SolverPlanningTinyBridge(StateGenerator.getMap(dungeon));
-				
-				// run BFS
-				bridgeSolver.BFS();
-			} else if (dungeon.getName().equals("small_bridge")) {
-				// create the solver and give it the map
-				SolverPlanningSmallBridge smallBridgeSolver = new SolverPlanningSmallBridge(StateGenerator.getMap(dungeon));
-				
-				// run BFS
-				smallBridgeSolver.BFS();
-			} else if (dungeon.getName().equals("grid")) {
-				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeon));
-				gridSolver.BFS();
-			} else {
-				throw new IllegalStateException("Bad dungeon ID: " + dungeon.getName());
-					
+
+
+			boolean closed = true;
+			if(args.length == 1){
+				if(args[0].equals("open")){
+					closed = false;
+				}
 			}
-			
-				
+
+			GotoSolver.plan(0, closed);
 
 		}
 	}

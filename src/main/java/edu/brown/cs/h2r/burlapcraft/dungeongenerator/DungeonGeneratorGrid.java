@@ -7,17 +7,17 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-public class DungeonGeneratorGrid extends WorldGenerator {
+public class DungeonGeneratorGrid {
 
-	public boolean generate(World world, Random rand, Pose dungeonPose) {
+	public static boolean generate(World world, Pose dungeonPose) {
 		int x = (int) dungeonPose.getX();
 		int y = (int) dungeonPose.getY();
 		int z = (int) dungeonPose.getX();
-		return generate(world, rand, x, y, z);
+		return generate(world, x, y, z);
 	}
 
-	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+
+	public static boolean generate(World world, int x, int y, int z) {
 		System.out.println("Making grid dungeon at " + x + "," + y + "," + z);
 		int w = 10;
 		for (int ax = 0; ax < w; ax++) {

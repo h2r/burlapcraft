@@ -20,10 +20,15 @@ public class StateGenerator {
 	private static int finderLength = 5;
 	private static int finderWidth = 5;
 	private static int finderHeight = 3;
-	// bridge dungeon dimensions
+	// tiny bridge dungeon dimensions
 	private static int tinyBridgeLength = 4;
 	private static int tinyBridgeWidth = 5;
 	private static int tinyBridgeHeight = 4;
+	
+	// small bridge dungeon dimensions
+	private static int smallBridgeLength = 8;
+	private static int smallBridgeWidth = 8;
+	private static int smallBridgeHeight = 4;
 	// grid dungeon dimensions
 	private static int gridLength = 10;
 	private static int gridWidth = 10;

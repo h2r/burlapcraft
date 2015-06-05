@@ -39,13 +39,12 @@ public class HelperNameSpace {
 	
 	//-------------DUNGEON NAMES---------------
 	public static enum Dungeon {
-		FINDER, TINY_BRIDGE, GRID;
+		FINDER, TINY_BRIDGE, SMALL_BRIDGE, GRID;
 		public static Dungeon fromString(String s) {
 			return Dungeon.valueOf(s.toUpperCase());
 		}
 	}
-	public static final String[] dungeonNameList = {"|", "finder", "bridge", "grid"};
-	
+		
 	//-------------ENUMS-------------
 	public enum RotDirection {
 		NORTH(2), EAST(3), SOUTH(0), WEST(1);

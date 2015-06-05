@@ -8,103 +8,47 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-public class DungeonGeneratorSmallBridge extends WorldGenerator {
+public class DungeonGeneratorSmallBridge {
 
-	public boolean generate(World world, Random rand, Pose dungeonPose) {
+	public static boolean generate(World world, Pose dungeonPose) {
 		int x = (int) dungeonPose.getX();
 		int y = (int) dungeonPose.getY();
 		int z = (int) dungeonPose.getX();
-		return generate(world, rand, x, y, z);
+		return generate(world, x, y, z);
 	}
 
-	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public static boolean generate(World world, int x, int y, int z) {
 		
-		world.setBlock(x+0, y+0, z+0, Block.getBlockById(7));
-		world.setBlock(x+1, y+0, z+0, Block.getBlockById(7));
-		world.setBlock(x+2, y+0, z+0, Block.getBlockById(7));
-		world.setBlock(x+3, y+0, z+0, Block.getBlockById(7));
-		world.setBlock(x+0, y+0, z+1, Block.getBlockById(7));
-		world.setBlock(x+1, y+0, z+1, Block.getBlockById(7));
-		world.setBlock(x+2, y+0, z+1, Block.getBlockById(7));
-		world.setBlock(x+3, y+0, z+1, Block.getBlockById(7));
-		world.setBlock(x+0, y+0, z+2, Block.getBlockById(7));
-		world.setBlock(x+1, y+0, z+2, Block.getBlockById(7));
-		world.setBlock(x+2, y+0, z+2, Block.getBlockById(7));
-		world.setBlock(x+3, y+0, z+2, Block.getBlockById(7));
-		world.setBlock(x+0, y+0, z+3, Block.getBlockById(7));
-		world.setBlock(x+1, y+0, z+3, Block.getBlockById(7));
-		world.setBlock(x+2, y+0, z+3, Block.getBlockById(7));
-		world.setBlock(x+3, y+0, z+3, Block.getBlockById(7));
-		world.setBlock(x+0, y+0, z+4, Block.getBlockById(7));
-		world.setBlock(x+1, y+0, z+4, Block.getBlockById(7));
-		world.setBlock(x+2, y+0, z+4, Block.getBlockById(7));
-		world.setBlock(x+3, y+0, z+4, Block.getBlockById(7));
+		
+		System.out.println("Making small bridge dungeon at " + x + "," + y + "," + z);
+		int w = 8;
+		for (int ax = 0; ax < w; ax++) {
+			for (int az = 0; az < w; az++) {
+				world.setBlock(x+ax, y+0, z+az, Block.getBlockById(7));
+			}
+		}
+		for (int ax = 0; ax < 10; ax++) {
+			world.setBlock(x+ax, y+0, z+0, Block.getBlockById(7));
+			world.setBlock(x+ax, y+1, z+0, Block.getBlockById(7));
+			world.setBlock(x+ax, y+2, z+0, Block.getBlockById(7));
+			world.setBlock(x+ax, y+0, z+w, Block.getBlockById(7));
+			world.setBlock(x+ax, y+1, z+w, Block.getBlockById(7));
+			world.setBlock(x+ax, y+2, z+w, Block.getBlockById(7));
+		}	
 
-		world.setBlock(x+0, y+1, z+0, Block.getBlockById(7));
-		world.setBlock(x+1, y+1, z+0, Block.getBlockById(7));
-		world.setBlock(x+2, y+1, z+0, Block.getBlockById(7));
-		world.setBlock(x+3, y+1, z+0, Block.getBlockById(7));
-		world.setBlock(x+0, y+1, z+1, Block.getBlockById(7));
-		world.setBlock(x+1, y+1, z+1, Block.getBlockById(7));
-		world.setBlock(x+2, y+1, z+1, Block.getBlockById(7));
-		world.setBlock(x+3, y+1, z+1, Block.getBlockById(7));
-		world.setBlock(x+0, y+1, z+2, Block.getBlockById(7));
-		world.setBlock(x+1, y+1, z+2, Block.getBlockById(11));
-		world.setBlock(x+2, y+1, z+2, Block.getBlockById(11));
-		world.setBlock(x+3, y+1, z+2, Block.getBlockById(7));
-		world.setBlock(x+0, y+1, z+3, Block.getBlockById(7));
-		world.setBlock(x+1, y+1, z+3, Block.getBlockById(7));
-		world.setBlock(x+2, y+1, z+3, Block.getBlockById(7));
-		world.setBlock(x+3, y+1, z+3, Block.getBlockById(7));
-		world.setBlock(x+0, y+1, z+4, Block.getBlockById(7));
-		world.setBlock(x+1, y+1, z+4, Block.getBlockById(7));
-		world.setBlock(x+2, y+1, z+4, Block.getBlockById(7));
-		world.setBlock(x+3, y+1, z+4, Block.getBlockById(7));
-
-		world.setBlock(x+0, y+2, z+0, Block.getBlockById(7));
-		world.setBlock(x+1, y+2, z+0, Block.getBlockById(7));
-		world.setBlock(x+2, y+2, z+0, Block.getBlockById(7));
-		world.setBlock(x+3, y+2, z+0, Block.getBlockById(7));
-		world.setBlock(x+0, y+2, z+1, Block.getBlockById(7));
-		world.setBlock(x+1, y+2, z+1, Block.getBlockById(41));
-		world.setBlock(x+2, y+2, z+1, Block.getBlockById(0));
-		world.setBlock(x+3, y+2, z+1, Block.getBlockById(7));
-		world.setBlock(x+0, y+2, z+2, Block.getBlockById(7));
-		world.setBlock(x+1, y+2, z+2, Block.getBlockById(0));
-		world.setBlock(x+2, y+2, z+2, Block.getBlockById(0));
-		world.setBlock(x+3, y+2, z+2, Block.getBlockById(7));
-		world.setBlock(x+0, y+2, z+3, Block.getBlockById(7));
-		world.setBlock(x+1, y+2, z+3, Block.getBlockById(0));
-		world.setBlock(x+2, y+2, z+3, BurlapCraft.burlapStone);
-		world.setBlock(x+3, y+2, z+3, Block.getBlockById(7));
-		world.setBlock(x+0, y+2, z+4, Block.getBlockById(7));
-		world.setBlock(x+1, y+2, z+4, Block.getBlockById(7));
-		world.setBlock(x+2, y+2, z+4, Block.getBlockById(7));
-		world.setBlock(x+3, y+2, z+4, Block.getBlockById(7));
-
-		world.setBlock(x+0, y+3, z+0, Block.getBlockById(7));
-		world.setBlock(x+1, y+3, z+0, Block.getBlockById(7));
-		world.setBlock(x+2, y+3, z+0, Block.getBlockById(7));
-		world.setBlock(x+3, y+3, z+0, Block.getBlockById(7));
-		world.setBlock(x+0, y+3, z+1, Block.getBlockById(7));
-		world.setBlock(x+1, y+3, z+1, Block.getBlockById(0));
-		world.setBlock(x+2, y+3, z+1, Block.getBlockById(0));
-		world.setBlock(x+3, y+3, z+1, Block.getBlockById(7));
-		world.setBlock(x+0, y+3, z+2, Block.getBlockById(7));
-		world.setBlock(x+1, y+3, z+2, Block.getBlockById(0));
-		world.setBlock(x+2, y+3, z+2, Block.getBlockById(0));
-		world.setBlock(x+3, y+3, z+2, Block.getBlockById(7));
-		world.setBlock(x+0, y+3, z+3, Block.getBlockById(7));
-		world.setBlock(x+1, y+3, z+3, Block.getBlockById(0));
-		world.setBlock(x+2, y+3, z+3, Block.getBlockById(0));
-		world.setBlock(x+3, y+3, z+3, Block.getBlockById(7));
-		world.setBlock(x+0, y+3, z+4, Block.getBlockById(7));
-		world.setBlock(x+1, y+3, z+4, Block.getBlockById(7));
-		world.setBlock(x+2, y+3, z+4, Block.getBlockById(7));
-		world.setBlock(x+3, y+3, z+4, Block.getBlockById(7));
+		for (int az = 0; az < 10; az++) {
+			world.setBlock(x+0, y+0, z+az, Block.getBlockById(7));
+			world.setBlock(x+0, y+1, z+az, Block.getBlockById(7));
+			world.setBlock(x+0, y+2, z+az, Block.getBlockById(7));
+			world.setBlock(x+w, y+0, z+az, Block.getBlockById(7));
+			world.setBlock(x+w, y+1, z+az, Block.getBlockById(7));
+			world.setBlock(x+w, y+2, z+az, Block.getBlockById(7));
+		}
+		world.setBlock(x + w - 1, y+0, z+w - 1, Block.getBlockById(41));
 		
 		return true;
+		
+
 	}
 
 }

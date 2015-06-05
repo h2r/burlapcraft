@@ -1,7 +1,6 @@
 package edu.brown.cs.h2r.burlapcraft;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -14,6 +13,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
 import edu.brown.cs.h2r.burlapcraft.command.CommandAStar;
 import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
+import edu.brown.cs.h2r.burlapcraft.command.CommandCreateDungeons;
 import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
 import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
@@ -64,6 +64,7 @@ public class BurlapCraft {
     	event.registerServerCommand(new CommandAStar());
     	event.registerServerCommand(new CommandBFS());
     	event.registerServerCommand(new CommandRMax());
+    	event.registerServerCommand(new CommandCreateDungeons());
     	
     }
     

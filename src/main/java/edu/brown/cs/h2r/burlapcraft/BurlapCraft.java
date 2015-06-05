@@ -15,7 +15,7 @@ import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 
 @Mod(modid = BurlapCraft.MODID, version = BurlapCraft.VERSION)
 public class BurlapCraft {
@@ -35,7 +35,7 @@ public class BurlapCraft {
     HandlerFMLEvents fmlHandler = new HandlerFMLEvents();
     
     // player dungeon location | 0: None, 1: Finder, 2: Bridge
-    public static Dungeon dungeonID = null;
+    public static DungeonEnum dungeonID = null;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {

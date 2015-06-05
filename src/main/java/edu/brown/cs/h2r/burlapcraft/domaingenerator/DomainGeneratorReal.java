@@ -12,7 +12,7 @@ import edu.brown.cs.h2r.burlapcraft.action.ActionDestroyBlockReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 
 /**
  * Class to generate burlap domain for minecraft
@@ -25,7 +25,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 	protected int length;
 	protected int width;
 	protected int height;
-	public static Dungeon dungeonID;
+	public static DungeonEnum dungeonID;
 	
 	public DomainGeneratorReal(int length, int width, int height) {
 		

@@ -20,7 +20,7 @@ import burlap.oomdp.singleagent.common.UniformCostRF;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningFinder.MovementTF;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
@@ -64,7 +64,7 @@ public class SolverLearningBridge {
 		tf = new BridgeTF();
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = StateGenerator.getCurrentState(domain, Dungeon.GRID);
+		initialState = StateGenerator.getCurrentState(domain, DungeonEnum.GRID);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();

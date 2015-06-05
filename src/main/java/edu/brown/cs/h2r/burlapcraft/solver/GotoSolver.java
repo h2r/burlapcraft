@@ -32,10 +32,10 @@ import java.util.List;
 /**
  * @author James MacGlashan.
  */
-public class GotoSolver {
+public class GoToSolver {
 
 	static LearningAgent lastLearningAgent = null;
-	static HelperNameSpace.Dungeon lastDungeon;
+	static HelperNameSpace.DungeonEnum lastDungeon;
 	static Domain lastDomain;
 
 	static RewardFunction rf = new GotoRF();

@@ -29,7 +29,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class SolverPlanningSmallBridge {
@@ -76,7 +76,7 @@ public class SolverPlanningSmallBridge {
 		goalCondition = new GoalCondition();
 		
 		
-		initialState = StateGenerator.getCurrentState(domain, Dungeon.SMALL_BRIDGE);
+		initialState = StateGenerator.getCurrentState(domain, DungeonEnum.SMALL_BRIDGE);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();

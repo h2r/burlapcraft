@@ -28,7 +28,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningFinder.MovementTF;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
@@ -70,7 +70,7 @@ public class SolverPlanningFinder {
 		tf = new MovementTF();
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = StateGenerator.getCurrentState(domain, Dungeon.FINDER);
+		initialState = StateGenerator.getCurrentState(domain, DungeonEnum.FINDER);
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();

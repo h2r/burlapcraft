@@ -8,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningFinder;
@@ -52,35 +53,35 @@ public class CommandRMax implements ICommand {
 				return;
 			}
 			
-			DungeonEnum dungeonID = BurlapCraft.dungeonID;
+			Dungeon dungeon = BurlapCraft.currentDungeon;
 			
-			if (dungeonID == null) {
+			if (dungeon == null) {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
 			
-			if (dungeonID == DungeonEnum.FINDER) {
+			if (dungeon.equals("finder")) {
 				// create the solver and give it the map
-				SolverLearningFinder finderSolver = new SolverLearningFinder(StateGenerator.getMap(dungeonID));
+				SolverLearningFinder finderSolver = new SolverLearningFinder(StateGenerator.getMap(dungeon));
 				
 				// run RMax
 				finderSolver.RMAX();
 				
-			} else if (dungeonID == DungeonEnum.TINY_BRIDGE) {
+			} else if (dungeon.equals("tiny_bridge")) {
 				// create the solver and give it the map
-				SolverLearningBridge bridgeSolver = new SolverLearningBridge(StateGenerator.getMap(dungeonID));
+				SolverLearningBridge bridgeSolver = new SolverLearningBridge(StateGenerator.getMap(dungeon));
 				
 				// run RMax
 				bridgeSolver.RMAX();
 				
-			} else if (dungeonID == DungeonEnum.GRID) {
+			} else if (dungeon.equals("grid")) {
 				// create the solver and give it the map
-				SolverLearningGrid gridSolver = new SolverLearningGrid(StateGenerator.getMap(dungeonID));
+				SolverLearningGrid gridSolver = new SolverLearningGrid(StateGenerator.getMap(dungeon));
 				
 				// run RMax
 				gridSolver.RMAX();
 			} else {	
-				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
+				throw new IllegalStateException("Bad dungeon ID: " + dungeon.getName());
 			}
 
 		}

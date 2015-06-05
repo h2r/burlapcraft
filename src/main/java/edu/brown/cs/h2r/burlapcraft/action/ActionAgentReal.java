@@ -42,7 +42,7 @@ public abstract class ActionAgentReal extends Action {
 			e.printStackTrace();
 		}
 		
-		State newState = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonID);
+		State newState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 		
 		System.out.println(newState.toString());
 		

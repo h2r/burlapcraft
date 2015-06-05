@@ -8,7 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
 import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
@@ -53,41 +53,43 @@ public class CommandAStar implements ICommand {
 				return;
 			}
 			
-			DungeonEnum dungeonID = BurlapCraft.dungeonID;
+			Dungeon dungeon = BurlapCraft.currentDungeon;
+
 			
-			if (dungeonID == null) {
+			if (dungeon == null) {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
 			
-			if (dungeonID == DungeonEnum.FINDER) {
+			
+			if (dungeon.getName().equals("finder")) {
 				// create the solver and give it the map
-				SolverPlanningFinder finderSolver = new SolverPlanningFinder(StateGenerator.getMap(dungeonID));
+				SolverPlanningFinder finderSolver = new SolverPlanningFinder(StateGenerator.getMap(dungeon));
 				
 				// run ASTAR
 				finderSolver.ASTAR();
 				
-			} else if (dungeonID == DungeonEnum.TINY_BRIDGE) {
+			} else if (dungeon.getName().equals("tiny_bridge")) {
 				// create the solver and give it the map
-				SolverPlanningTinyBridge bridgeSolver = new SolverPlanningTinyBridge(StateGenerator.getMap(dungeonID));
+				SolverPlanningTinyBridge bridgeSolver = new SolverPlanningTinyBridge(StateGenerator.getMap(dungeon));
 				
 				// run ASTAR
 				bridgeSolver.ASTAR();
-			} else if (dungeonID == DungeonEnum.SMALL_BRIDGE) {
+			} else if (dungeon.getName().equals("small_bridge")) {
 				// create the solver and give it the map
-				SolverPlanningSmallBridge bridgeSolver = new SolverPlanningSmallBridge(StateGenerator.getMap(dungeonID));
+				SolverPlanningSmallBridge bridgeSolver = new SolverPlanningSmallBridge(StateGenerator.getMap(dungeon));
 				
 				// run ASTAR
 				bridgeSolver.ASTAR();
-			} else if (dungeonID == DungeonEnum.GRID) {
+			} else if (dungeon.getName().equals("grid")) {
 				// create the solver and give it the map
-				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeonID));
+				SolverPlanningGrid gridSolver = new SolverPlanningGrid(StateGenerator.getMap(dungeon));
 				
 				// run ASTAR
 				gridSolver.ASTAR();
 				
 			} else {
-				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
+				throw new IllegalStateException("Bad dungeon ID: " + dungeon.getName());
 			}
 
 		}

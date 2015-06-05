@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
@@ -82,41 +83,14 @@ public class CommandTeleport implements ICommand {
 				HelperActions.setPlayerPosition(player, spawnPoint);
 				return;
 			} 
-			DungeonEnum dungeonID = DungeonEnum.fromString(dungeonName);			
-			BurlapCraft.dungeonID = dungeonID;
 			
-			if (dungeonID == DungeonEnum.FINDER) {
-				// start x, y and z of player within dungeon
-				Pose offset = Pose.fromXyz(1.5, 5, 3);
-				Pose playerPose = HandlerDungeonGeneration.finderPose.add(offset);
-				// teleport the player to finder dungeon
-				HelperActions.setPlayerPosition(player, playerPose);
-			} else if (dungeonID == DungeonEnum.TINY_BRIDGE) {
-				// start x, y and z of agent within dungeon
-				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
-				Pose offset = Pose.fromXyz(1, 5, 3);
-				// teleport the player to bridge dungeon
-				Pose playerPose = HandlerDungeonGeneration.tinyBridgePose.add(offset);
-				HelperActions.setPlayerPosition(player, playerPose);
-			} else if (dungeonID == DungeonEnum.SMALL_BRIDGE) {
-				// start x, y and z of agent within dungeon
-				//Pose offset = Pose.fromXyz(1.5,  5,  3	);
-				Pose offset = Pose.fromXyz(1.5, 5, 3);
-				// teleport the player to bridge dungeon
-				
-				Pose playerPose = HandlerDungeonGeneration.smallBridgePose.add(offset);
-				System.out.println("small bridge pose: " + HandlerDungeonGeneration.smallBridgePose);
-				System.out.println("player pose: " + playerPose);
-				HelperActions.setPlayerPosition(player, playerPose);
-			} else if (dungeonID == DungeonEnum.GRID) {
-				Pose offset = Pose.fromXyz(1.5, 5, 3);
-				Pose playerPose = HandlerDungeonGeneration.gridPose.add(offset);
-				System.out.println("grid pose: " + HandlerDungeonGeneration.gridPose);
-				System.out.println("player pose: " + playerPose);
-				HelperActions.setPlayerPosition(player, playerPose);
-			} else {
-				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
-			}
+			Dungeon d = BurlapCraft.dungeonMap.get(dungeonName);
+
+			Pose offset = d.getPlayerStartOffset();
+			Pose playerPose = d.getPose().add(offset);
+			HelperActions.setPlayerPosition(player, playerPose);
+
+			BurlapCraft.currentDungeon = d;
 		}
 		
 	}

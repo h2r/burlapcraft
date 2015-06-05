@@ -15,7 +15,6 @@ public class SmallBridgeDungeon extends Dungeon {
 		
 	}
 
-
 	protected void generate(World world, int x, int y, int z) {
 		
 		

@@ -51,7 +51,7 @@ public class GoToSolver {
 	 */
 	public static void plan(int plannerToUse, boolean closedLoop){
 
-		int [][][] map = StateGenerator.getMap(BurlapCraft.dungeonID);
+		int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
 
 		DomainGeneratorSimulated simdg = new DomainGeneratorSimulated(map);
 		Domain domain = simdg.generateDomain();
@@ -59,7 +59,7 @@ public class GoToSolver {
 		DomainGenerator realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 		Domain realDomain = realdg.generateDomain();
 
-		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonID);
+		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 
 		DeterministicPlanner planner = null;
 		if(plannerToUse == 0){
@@ -84,7 +84,7 @@ public class GoToSolver {
 	public static void learn(){
 
 		if(BurlapCraft.dungeonID != lastDungeon || lastLearningAgent == null){
-			int [][][] map = StateGenerator.getMap(BurlapCraft.dungeonID);
+			int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
 			DomainGenerator realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 			lastDomain = realdg.generateDomain();
 			lastLearningAgent = new PotentialShapedRMax(lastDomain, rf, tf, 0.99, new DiscreteStateHashFactory(), 0, 1, 0.01, 200);
@@ -92,8 +92,7 @@ public class GoToSolver {
 			lastDungeon = BurlapCraft.dungeonID;
 		}
 
-		State initialState = StateGenerator.getCurrentState(lastDomain, BurlapCraft.dungeonID);
-		lastLearningAgent.runLearningEpisodeFrom(initialState);
+		State initialState = StateGenerator.getCurrentState(lastDomain, BurlapCraft.currentDungeon);
 
 
 	}

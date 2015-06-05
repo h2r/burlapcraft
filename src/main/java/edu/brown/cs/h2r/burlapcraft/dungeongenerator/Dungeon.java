@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+import net.minecraft.block.Block;
 
 public abstract class Dungeon {
 	
@@ -54,6 +55,9 @@ public abstract class Dungeon {
 	public Pose getPose() {
 		return pose;
 	}
+	public Pose getPlayerStartOffset() {
+		return playerStartOffset;
+	}
 	
 	public void generate(World world, Pose dungeonPose) {
 		int x = (int) dungeonPose.getX();
@@ -61,6 +65,10 @@ public abstract class Dungeon {
 		int z = (int) dungeonPose.getZ();
 		makeAir(world, x, y, z, width);
 		generate(world, x, y, z);
+	}
+	
+	public void regenerate(World world) {
+		generate(world, pose);
 	}
 
 	protected abstract void generate(World world, int x, int y, int z);

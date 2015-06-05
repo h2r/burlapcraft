@@ -42,7 +42,7 @@ public class CommandState implements ICommand{
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
-		State s = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonID);
+		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 		System.out.println(s.getCompleteStateDescriptionWithUnsetAttributesAsNull());
 	}
 

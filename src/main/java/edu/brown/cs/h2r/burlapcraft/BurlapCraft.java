@@ -1,6 +1,10 @@
 package edu.brown.cs.h2r.burlapcraft;
 
-import edu.brown.cs.h2r.burlapcraft.command.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -12,6 +16,15 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
+import edu.brown.cs.h2r.burlapcraft.command.CommandAStar;
+import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
+import edu.brown.cs.h2r.burlapcraft.command.CommandCreateDungeons;
+import edu.brown.cs.h2r.burlapcraft.command.CommandInventory;
+import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
+import edu.brown.cs.h2r.burlapcraft.command.CommandSmoothMove;
+import edu.brown.cs.h2r.burlapcraft.command.CommandState;
+import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
@@ -36,6 +49,15 @@ public class BurlapCraft {
     
     // player dungeon location | 0: None, 1: Finder, 2: Bridge
     public static DungeonEnum dungeonID = null;
+    
+    public static Dungeon currentDungeon;
+    public static List<Dungeon> dungeons = new ArrayList<Dungeon>();
+    public static Map<String, Dungeon> dungeonMap = new HashMap<String, Dungeon>();
+    
+    public static void registerDungeon(Dungeon d) {
+    	dungeons.add(d);
+    	dungeonMap.put(d.getName(), d);
+    }
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {

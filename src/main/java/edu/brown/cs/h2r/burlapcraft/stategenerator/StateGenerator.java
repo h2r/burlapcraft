@@ -3,6 +3,7 @@ package edu.brown.cs.h2r.burlapcraft.stategenerator;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
@@ -18,56 +19,19 @@ public class StateGenerator {
 	// tracking number of blocks to set blockIDs
 	public static int blockCount = 0;
 	
-	// finder dungeon dimensions
-	private static int finderLength = 5;
-	private static int finderWidth = 5;
-	private static int finderHeight = 3;
-	// tiny bridge dungeon dimensions
-	private static int tinyBridgeLength = 4;
-	private static int tinyBridgeWidth = 5;
-	private static int tinyBridgeHeight = 4;
-	
-	// small bridge dungeon dimensions
-	private static int smallBridgeLength = 10;
-	private static int smallBridgeWidth = 10;
-	private static int smallBridgeHeight = 5;
-	// grid dungeon dimensions
-	private static int gridLength = 10;
-	private static int gridWidth = 10;
-	private static int gridHeight = 4;
-	
 	
 	private static Pose dungeonPose;
 	private static int length;
 	private static int width;
 	private static int height;
 
-	public static State getCurrentState(Domain domain, DungeonEnum dungeonID) {
-		System.out.println("Dungeon ID: " + dungeonID);
-		if (dungeonID == DungeonEnum.FINDER) {
-			dungeonPose = HandlerDungeonGeneration.finderPose;
-			length = finderLength;
-			width = finderWidth;
-			height = finderHeight;
-		} else if (dungeonID == DungeonEnum.TINY_BRIDGE) {
-			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
-			length = tinyBridgeLength;
-			width = tinyBridgeWidth;
-			height = tinyBridgeHeight;
-		} else if (dungeonID == DungeonEnum.SMALL_BRIDGE) {
-			dungeonPose = HandlerDungeonGeneration.smallBridgePose;
-			length = smallBridgeLength;
-			width = smallBridgeWidth;
-			height = smallBridgeHeight;
-		} else if (dungeonID == DungeonEnum.GRID) {
-			dungeonPose = HandlerDungeonGeneration.gridPose;
-			length = gridLength;
-			width = gridWidth;
-			height = gridHeight;
-		} else {
-			throw new IllegalArgumentException("Bad dungeon ID: " + dungeonID);
-		}
+	public static State getCurrentState(Domain domain, Dungeon d) {
 		
+		dungeonPose = d.getPose();
+		length = d.getLength();
+		width = d.getWidth();
+		height = d.getHeight();
+
 		State s = new State();
 		
 		for (int i = 0; i < height; i++) {
@@ -139,31 +103,12 @@ public class StateGenerator {
 		
 	}
 	
-	public static int[][][] getMap(DungeonEnum dungeon) {
+	public static int[][][] getMap(Dungeon dungeon) {
 		
-		if (dungeon == DungeonEnum.FINDER) {
-			dungeonPose = HandlerDungeonGeneration.finderPose;
-			length = finderLength;
-			width = finderWidth;
-			height = finderHeight;
-		} else if (dungeon == DungeonEnum.TINY_BRIDGE) {
-			dungeonPose = HandlerDungeonGeneration.tinyBridgePose;
-			length = tinyBridgeLength;
-			width = tinyBridgeWidth;
-			height = tinyBridgeHeight;
-		} else if (dungeon == DungeonEnum.SMALL_BRIDGE) {
-			dungeonPose = HandlerDungeonGeneration.smallBridgePose;
-			length = smallBridgeLength;
-			width = smallBridgeWidth;
-			height = smallBridgeHeight;
-		} else if (dungeon == DungeonEnum.GRID) {
-			dungeonPose = HandlerDungeonGeneration.gridPose;
-			length = gridLength;
-			width = gridWidth;
-			height = gridHeight;
-		} else {
-			throw new IllegalArgumentException("Bad dungeon ID: " + dungeon);
-		}
+		Pose dungeonPose = dungeon.getPose();
+		int length = dungeon.getLength();
+		int width = dungeon.getWidth();
+		int height = dungeon.getHeight();
 		
 		int[][][] map = new int[height][length][width];
 		

@@ -1,16 +1,13 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
-import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
-import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
+import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
 import burlap.behavior.singleagent.planning.StateConditionTest;
+import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.TFGoalCondition;
@@ -18,24 +15,18 @@ import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
-import burlap.domain.singleagent.gridworld.GridWorldStateParser;
-import burlap.oomdp.auxiliary.StateParser;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
-import burlap.oomdp.singleagent.common.UniformCostRF;
-import burlap.oomdp.singleagent.explorer.TerminalExplorer;
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverLearningBridge.BridgeTF;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class SolverPlanningTinyBridge {
@@ -80,7 +71,7 @@ public class SolverPlanningTinyBridge {
 		tf = new BridgeTF();
 		goalCondition = new TFGoalCondition(tf);
 		
-		initialState = StateGenerator.getCurrentState(domain, DungeonEnum.TINY_BRIDGE);
+		initialState = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonMap.get("tinyBridge"));
 		
 		//set up the state hashing system
 		hashingFactory = new DiscreteStateHashFactory();

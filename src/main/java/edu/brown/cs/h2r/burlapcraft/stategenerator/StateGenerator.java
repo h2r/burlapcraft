@@ -11,6 +11,8 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import net.minecraft.block.Block;
 
+import java.util.Map;
+
 public class StateGenerator {
 	
 	// tracking number of blocks to set blockIDs
@@ -99,7 +101,19 @@ public class StateGenerator {
 		agent.setValue(HelperNameSpace.ATZ, curPos.z - dungeonPose.getZ());
 		agent.setValue(HelperNameSpace.ATROTDIR, rotateDirection);
 		agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
-		
+
+		Map<String, Integer> items = HelperActions.checkInventory();
+		int bcount = 0;
+		for(Map.Entry<String, Integer> i : items.entrySet()){
+			if(i.getKey().equals("tile.burlapcraftmod_burlapstone")){
+				ObjectInstance o = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK), "inventoryBlock" + bcount);
+				o.setValue(HelperNameSpace.ATBTYPE, 165);
+				o.setValue(HelperNameSpace.ATIBQUANT, i.getValue());
+				s.addObject(o);
+				bcount++;
+			}
+		}
+
 		s.addObject(agent);
 		validate(s);
 		return s;

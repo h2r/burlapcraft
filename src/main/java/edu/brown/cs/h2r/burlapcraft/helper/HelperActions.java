@@ -1,8 +1,6 @@
 package edu.brown.cs.h2r.burlapcraft.helper;
 
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 //import net.famzangl.minecraft.minebot.ai.command.AIChatController;
 //import net.famzangl.minecraft.minebot.ai.task.AITask;
@@ -12,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovementInput;
 import net.minecraft.world.chunk.Chunk;
@@ -319,4 +318,23 @@ public class HelperActions {
 		  mc.thePlayer.inventory.changeCurrentItem(-1);
 	  }
   }
+
+
+  public static Map<String, Integer> checkInventory(){
+
+    Map<String, Integer> itemSets = new HashMap<String, Integer>();
+
+    ItemStack[] items = mc.thePlayer.inventory.mainInventory;
+    for(ItemStack i : items){
+      if(i != null){
+        itemSets.put(i.getUnlocalizedName(), i.stackSize);
+      }
+    }
+
+
+    return itemSets;
+
+  }
+
+
 }

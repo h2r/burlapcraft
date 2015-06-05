@@ -58,7 +58,8 @@ public class DomainGeneratorReal implements DomainGenerator {
 		vertDirAt.setDiscValuesForRange(0, HelperNameSpace.VertDirection.size - 1, 1);
 		// Block type
 		Attribute bType = new Attribute(domain, HelperNameSpace.ATBTYPE, Attribute.AttributeType.INT);
-		
+		// Inventory Block quantity
+		Attribute ibQuantity = new Attribute(domain, HelperNameSpace.ATIBQUANT, Attribute.AttributeType.INT);
 		
 		// Object classes
 		// agent
@@ -74,6 +75,11 @@ public class DomainGeneratorReal implements DomainGenerator {
 		blockClass.addAttribute(yAtt);
 		blockClass.addAttribute(zAtt);
 		blockClass.addAttribute(bType);
+
+		// inventory blocks
+		ObjectClass inventoryBlockClass = new ObjectClass(domain, HelperNameSpace.CLASSINVENTORYBLOCK);
+		inventoryBlockClass.addAttribute(bType);
+		inventoryBlockClass.addAttribute(ibQuantity);
 		
 		
 		// Actions

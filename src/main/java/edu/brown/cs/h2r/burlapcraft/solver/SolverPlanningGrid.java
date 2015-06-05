@@ -4,6 +4,7 @@ import java.util.List;
 
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
+import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
 import burlap.behavior.singleagent.planning.StateConditionTest;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
@@ -21,6 +22,7 @@ import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
@@ -39,6 +41,9 @@ public class SolverPlanningGrid {
 	StateConditionTest			goalCondition;
 	State 						initialState;
 	DiscreteStateHashFactory	hashingFactory;
+
+	DomainGeneratorReal rdg;
+	Domain						realDomain;
 	
 	private int[][][] map;
 	private int[][] movementMap;
@@ -57,6 +62,9 @@ public class SolverPlanningGrid {
 		dwdg = new DomainGeneratorSimulated(map);
 
 		domain = dwdg.generateDomain();
+
+		rdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+		realDomain = rdg.generateDomain();
 		
 		//create the state parser
 		sp = new GridWorldStateParser(domain); 
@@ -73,10 +81,19 @@ public class SolverPlanningGrid {
 	}
 	
 	public void ASTAR() {
-		
+
+		System.out.println("****Beignning Grid AStar");
+
 		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
 		planner.planFromState(initialState);
-		
+
+
+		Policy p = new DDPlannerPolicy(planner);
+		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
+		rp.evaluateBehavior(initialState, rf, tf, 100);
+
+
+		/*
 		Policy p = new SDPlannerPolicy(planner);
 		
 		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
@@ -88,6 +105,7 @@ public class SolverPlanningGrid {
 		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
 		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
 		HandlerFMLEvents.evaluateActions = true;
+		*/
 	}
 	
 	public void BFS() {

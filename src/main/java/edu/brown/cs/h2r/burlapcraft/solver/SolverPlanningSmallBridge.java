@@ -2,6 +2,8 @@ package edu.brown.cs.h2r.burlapcraft.solver;
 
 import java.util.List;
 
+import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import net.minecraft.block.Block;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
@@ -41,6 +43,9 @@ public class SolverPlanningSmallBridge {
 	StateConditionTest			goalCondition;
 	State 						initialState;
 	DiscreteStateHashFactory	hashingFactory;
+
+	DomainGeneratorReal 		rdg;
+	Domain						realDomain;
 	
 	private int[][][] map;
 	private int[][] movementMap;
@@ -57,8 +62,10 @@ public class SolverPlanningSmallBridge {
 		
 		//create the domain
 		dwdg = new DomainGeneratorSimulated(map);
+		rdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 
 		domain = dwdg.generateDomain();
+		realDomain = rdg.generateDomain();
 		
 		//create the state parser
 		sp = new GridWorldStateParser(domain); 
@@ -76,11 +83,18 @@ public class SolverPlanningSmallBridge {
 	}
 	
 	public void ASTAR() {
-		
+
+
+		System.out.println("Running dynamic ASTAR for Small bridge");
 		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
 		planner.planFromState(initialState);
 		planner.setTf(tf);
-		
+
+		Policy p = new DDPlannerPolicy(planner);
+		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
+		rp.evaluateBehavior(initialState, rf, tf, 100);
+
+		/*
 		Policy p = new SDPlannerPolicy(planner);
 		
 		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
@@ -92,6 +106,7 @@ public class SolverPlanningSmallBridge {
 		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
 		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
 		HandlerFMLEvents.evaluateActions = true;
+		*/
 	}
 	
 	public void BFS() {

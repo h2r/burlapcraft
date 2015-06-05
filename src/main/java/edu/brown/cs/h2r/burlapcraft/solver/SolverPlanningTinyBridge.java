@@ -3,6 +3,8 @@ package edu.brown.cs.h2r.burlapcraft.solver;
 import java.util.ArrayList;
 import java.util.List;
 
+import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
+import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import burlap.behavior.singleagent.EpisodeAnalysis;
@@ -40,12 +42,15 @@ public class SolverPlanningTinyBridge {
 
 	DomainGeneratorSimulated 	dwdg;
 	Domain						domain;
-	StateParser 				sp;
+	//StateParser 				sp;
 	RewardFunction 				rf;
 	TerminalFunction			tf;
 	StateConditionTest			goalCondition;
 	State 						initialState;
 	DiscreteStateHashFactory	hashingFactory;
+
+	DomainGeneratorReal			rdg;
+	Domain						realDomain;
 	
 	private int[][][] map;
 	private int[][] movementMap;
@@ -62,11 +67,13 @@ public class SolverPlanningTinyBridge {
 		
 		//create the domain
 		dwdg = new DomainGeneratorSimulated(map);
+		rdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 
 		domain = dwdg.generateDomain();
+		realDomain = rdg.generateDomain();
 		
 		//create the state parser
-		sp = new GridWorldStateParser(domain); 
+		//sp = new GridWorldStateParser(domain);
 		
 		//set up the initial state of the task
 		rf = new BridgeRF();
@@ -80,10 +87,20 @@ public class SolverPlanningTinyBridge {
 	}
 	
 	public void ASTAR() {
-		
+
+		System.out.println("IN ASTAR WITH DYNAMIC");
+
 		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
 		planner.planFromState(initialState);
-		
+
+
+
+		Policy p = new DDPlannerPolicy(planner);
+		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
+		rp.evaluateBehavior(initialState, rf, tf, 100);
+
+
+		/*
 		Policy p = new SDPlannerPolicy(planner);
 		
 		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf);
@@ -95,6 +112,7 @@ public class SolverPlanningTinyBridge {
 		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
 		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
 		HandlerFMLEvents.evaluateActions = true;
+		*/
 	}
 	
 	public void BFS() {

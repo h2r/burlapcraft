@@ -3,6 +3,7 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
@@ -58,7 +59,10 @@ public class CommandRMax implements ICommand {
 				sender.addChatMessage(new ChatComponentText("You are not inside a dungeon"));
 				return;
 			}
-			
+
+			GotoSolver.learn();
+
+			/*
 			if (dungeonID == DungeonEnum.FINDER) {
 				// create the solver and give it the map
 				SolverLearningFinder finderSolver = new SolverLearningFinder(StateGenerator.getMap(dungeonID));
@@ -82,6 +86,7 @@ public class CommandRMax implements ICommand {
 			} else {	
 				throw new IllegalStateException("Bad dungeon ID: " + dungeonID);
 			}
+			*/
 
 		}
 	}

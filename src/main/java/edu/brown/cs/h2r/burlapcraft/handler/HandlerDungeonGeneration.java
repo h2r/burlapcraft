@@ -77,7 +77,7 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		Pose gridPose = Pose.fromXyz(playerSpawnPose.getX() - 20, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
 		System.out.println("Setting gridPose: " + gridPose);
 		
-		Pose mazePose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
+		Pose mazePose = Pose.fromXyz(playerSpawnPose.getX() - 60, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
 		System.out.println("Setting mazePose: " + mazePose);
 		
 		BurlapCraft.registerDungeon(new FinderDungeon(finderPose));

@@ -12,6 +12,7 @@ import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.FinderDungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.GridDungeon;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.MazeDungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.SmallBridgeDungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.TinyBridgeDungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
@@ -70,22 +71,20 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		playerSpawnPose = Pose.fromXyz(coordinates.posX, 30, coordinates.posZ);
 		int height = 50;
 		Pose finderPose = Pose.fromXyz(playerSpawnPose.getX(), playerSpawnPose.getY() + height, playerSpawnPose.getZ());
-		
 		Pose tinyBridgePose = Pose.fromXyz(playerSpawnPose.getX() + 20, playerSpawnPose.getY() + height, playerSpawnPose.getZ() + 10);
-		
 		Pose smallBridgePose = Pose.fromXyz(playerSpawnPose.getX() + 30, playerSpawnPose.getY() + height, playerSpawnPose.getZ() + 10);
 		
-		
 		Pose gridPose = Pose.fromXyz(playerSpawnPose.getX() - 20, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
-		
 		System.out.println("Setting gridPose: " + gridPose);
 		
+		Pose mazePose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
+		System.out.println("Setting mazePose: " + mazePose);
 		
 		BurlapCraft.registerDungeon(new FinderDungeon(finderPose));
 		BurlapCraft.registerDungeon(new TinyBridgeDungeon(tinyBridgePose));
 		BurlapCraft.registerDungeon(new SmallBridgeDungeon(smallBridgePose));
 		BurlapCraft.registerDungeon(new GridDungeon(gridPose));
-
+		BurlapCraft.registerDungeon(new MazeDungeon(mazePose));
 		
 		for (Dungeon d : BurlapCraft.dungeons) {
 			d.regenerate(world);

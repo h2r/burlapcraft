@@ -16,6 +16,7 @@ public class ActionDestroyBlockReal extends ActionAgentReal {
 		
 		System.out.println("Destroy Block");
 		HelperActions.destroyBlock();
+		
 
 	}
 

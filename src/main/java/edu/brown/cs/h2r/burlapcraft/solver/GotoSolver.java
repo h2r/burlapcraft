@@ -81,7 +81,8 @@ public class GotoSolver {
 		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
 
 		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
-		rp.evaluateBehavior(initialState, rf, tf);
+			//rp.evaluateBehavior(initialState, rf, tf); // this call isn't good because it ties up the Miencraft event loop
+		BurlapCraft.fmlHandler.execute(realDomain, rp, BurlapCraft.currentDungeon);
 
 	}
 

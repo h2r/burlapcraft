@@ -3,21 +3,13 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.brown.cs.h2r.burlapcraft.solver.*;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningGrid;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningTinyBridge;
-
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
 
 public class CommandAStar implements ICommand {
 	

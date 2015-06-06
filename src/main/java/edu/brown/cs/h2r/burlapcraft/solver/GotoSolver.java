@@ -1,5 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
+import java.util.List;
+
+import net.minecraft.block.Block;
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.learning.LearningAgent;
 import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
@@ -22,13 +25,11 @@ import burlap.oomdp.singleagent.RewardFunction;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
-import net.minecraft.block.Block;
-
-import java.util.List;
 
 /**
  * @author James MacGlashan.
@@ -36,7 +37,7 @@ import java.util.List;
 public class GotoSolver {
 
 	static LearningAgent lastLearningAgent = null;
-	static HelperNameSpace.DungeonEnum lastDungeon;
+	static Dungeon lastDungeon;
 	static Domain lastDomain;
 
 	static RewardFunction rf = new GotoRF();
@@ -86,13 +87,13 @@ public class GotoSolver {
 
 	public static void learn(){
 
-		if(BurlapCraft.dungeonID != lastDungeon || lastLearningAgent == null){
+		if(BurlapCraft.currentDungeon != lastDungeon || lastLearningAgent == null){
 			int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
 			DomainGenerator realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 			lastDomain = realdg.generateDomain();
 			lastLearningAgent = new PotentialShapedRMax(lastDomain, rf, tf, 0.99, new DiscreteStateHashFactory(), 0, 1, 0.01, 200);
 
-			lastDungeon = BurlapCraft.dungeonID;
+			lastDungeon = BurlapCraft.currentDungeon;
 		}
 
 		State initialState = StateGenerator.getCurrentState(lastDomain, BurlapCraft.currentDungeon);

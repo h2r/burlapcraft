@@ -1,18 +1,16 @@
 package edu.brown.cs.h2r.burlapcraft.stategenerator;
 
+import java.util.Map;
+
+import net.minecraft.block.Block;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
-import net.minecraft.block.Block;
-
-import java.util.Map;
 
 public class StateGenerator {
 	

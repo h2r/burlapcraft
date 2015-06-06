@@ -29,7 +29,6 @@ import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.DungeonEnum;
 
 @Mod(modid = BurlapCraft.MODID, version = BurlapCraft.VERSION)
 public class BurlapCraft {
@@ -46,10 +45,7 @@ public class BurlapCraft {
     // event handlers
     HandlerDungeonGeneration genHandler = new HandlerDungeonGeneration();   
     HandlerEvents eventHandler = new HandlerEvents();
-    HandlerFMLEvents fmlHandler = new HandlerFMLEvents();
-    
-    // player dungeon location | 0: None, 1: Finder, 2: Bridge
-    public static DungeonEnum dungeonID = null;
+    public static HandlerFMLEvents fmlHandler = new HandlerFMLEvents();
     
     public static Dungeon currentDungeon;
     public static List<Dungeon> dungeons = new ArrayList<Dungeon>();

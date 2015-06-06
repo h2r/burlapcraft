@@ -37,14 +37,6 @@ public class HelperNameSpace {
 	public static final String						ACTIONDOWNONE = "lookDownAction";
 	
 	
-	//-------------DUNGEON NAMES---------------
-	public static enum DungeonEnum {
-		FINDER, TINY_BRIDGE, SMALL_BRIDGE, GRID;
-		public static DungeonEnum fromString(String s) {
-			return DungeonEnum.valueOf(s.toUpperCase());
-		}
-	}
-		
 	//-------------ENUMS-------------
 	public enum RotDirection {
 		NORTH(2), EAST(3), SOUTH(0), WEST(1);

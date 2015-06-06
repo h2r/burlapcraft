@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * @author James MacGlashan.
  */
-public class CommandState implements ICommand{
+public class CommandCheckState implements ICommand{
 
 	List aliass = new ArrayList();
 	Domain domain;
 
-	public CommandState(){
+	public CommandCheckState(){
 		this.aliass.add("checkState");
 		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
 		domain = rdg.generateDomain();

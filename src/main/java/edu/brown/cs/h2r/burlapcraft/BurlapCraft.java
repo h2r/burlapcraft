@@ -18,11 +18,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
 import edu.brown.cs.h2r.burlapcraft.command.CommandAStar;
 import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
+import edu.brown.cs.h2r.burlapcraft.command.CommandCheckState;
 import edu.brown.cs.h2r.burlapcraft.command.CommandCreateDungeons;
 import edu.brown.cs.h2r.burlapcraft.command.CommandInventory;
 import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
+import edu.brown.cs.h2r.burlapcraft.command.CommandResetDungeon;
 import edu.brown.cs.h2r.burlapcraft.command.CommandSmoothMove;
-import edu.brown.cs.h2r.burlapcraft.command.CommandState;
 import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
@@ -85,7 +86,8 @@ public class BurlapCraft {
     	event.registerServerCommand(new CommandRMax());
     	event.registerServerCommand(new CommandCreateDungeons());
         event.registerServerCommand(new CommandInventory());
-        event.registerServerCommand(new CommandState());
+        event.registerServerCommand(new CommandCheckState());
+        event.registerServerCommand(new CommandResetDungeon());
     	
     }
     

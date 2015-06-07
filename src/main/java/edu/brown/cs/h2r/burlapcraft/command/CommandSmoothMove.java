@@ -90,6 +90,8 @@ public class CommandSmoothMove implements ICommand {
 			} else if (directionName.equals("sn") || directionName.equals("snap")) {
 				HelperActions.snapToGrid();
 				sender.addChatMessage(new ChatComponentText("Snapping to grid. Roughly."));
+			} else if (directionName.equals("y") || directionName.equals("yaw")) {
+				sender.addChatMessage(new ChatComponentText("Yaw come back now, here: " + HelperActions.player.rotationYaw));
 			} else {
 				sender.addChatMessage(new ChatComponentText("Invalid argument"));
 			}

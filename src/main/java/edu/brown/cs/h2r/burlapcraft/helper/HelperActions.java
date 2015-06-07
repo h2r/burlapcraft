@@ -216,6 +216,7 @@ public class HelperActions {
   
   public static void moveYawToTarget(final double yawTarget) {
 	final EntityPlayer player = HelperActions.player;
+	// consider snapping to range -360 to 360 in here to avoid massive unwinding...
 	final Timer timer = new Timer();
 	final ArrayList<Integer> numberOfIterations = new ArrayList<Integer>(1);
 	numberOfIterations.add(0);
@@ -230,6 +231,7 @@ public class HelperActions {
 			  if (Math.abs(update) < minUpdate) {
 				  update = Math.signum(update) * minUpdate;
 			  } else {
+				  // do nothing
 			  }
 			  player.rotationYaw += update;
 			  int tmp = numberOfIterations.get(0);
@@ -238,6 +240,7 @@ public class HelperActions {
 			  if (tmp >= maxUpdates) {
 				  timer.cancel();
 			  } else {
+				  // do nothing
 			  }
 		  } else {
 			  player.rotationYaw = (float)yawTarget;
@@ -262,6 +265,7 @@ public class HelperActions {
 				  if (Math.abs(update) < minUpdate) {
 					  update = Math.signum(update) * minUpdate;
 				  } else {
+					  // do nothing
 				  }
 				  player.rotationPitch += update;
 				  int tmp = numberOfIterations.get(0);
@@ -270,6 +274,7 @@ public class HelperActions {
 				  if (tmp >= maxUpdates) {
 					  timer.cancel();
 				  } else {
+					  // do nothing
 				  }
 			  } else {
 				  player.rotationPitch = (float)pitchTarget;
@@ -280,22 +285,43 @@ public class HelperActions {
   
   public static void faceSouth() {
 	//mc.thePlayer.rotationYaw = 0;
+	  
+	// this is right on the branch cut so we need to be careful
+	if (mc.thePlayer.rotationYaw < -180) {
+		mc.thePlayer.rotationYaw += 360;
+	} else if (mc.thePlayer.rotationYaw > 180) {
+		mc.thePlayer.rotationYaw -= 360;
+	} else {
+		// do nothing
+	}
 	moveYawToTarget(0);
   }
   
   public static void faceWest() {
 	//mc.thePlayer.rotationYaw = 90;
-	moveYawToTarget(90);
+	if (mc.thePlayer.rotationYaw <= -90) {
+		moveYawToTarget(-270);
+	} else {
+		moveYawToTarget(90);
+	}
   }
   
   public static void faceNorth() {
 	//mc.thePlayer.rotationYaw = -180;
-	moveYawToTarget(-180);
+	if (mc.thePlayer.rotationYaw <= 0) {
+		moveYawToTarget(-180);
+	} else {
+		moveYawToTarget(180);
+	}
   }
   
   public static void faceEast() {
 	//mc.thePlayer.rotationYaw = -90;
-	moveYawToTarget(-90);
+	if (mc.thePlayer.rotationYaw <= 90) {
+		moveYawToTarget(-90);
+	} else {
+		moveYawToTarget(270);
+	}
   }
   
   public static int getYawDirection()

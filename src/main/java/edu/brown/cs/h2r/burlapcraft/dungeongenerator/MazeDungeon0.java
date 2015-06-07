@@ -1,18 +1,19 @@
 package edu.brown.cs.h2r.burlapcraft.dungeongenerator;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
 
-public class MazeDungeon extends Dungeon {
+public class MazeDungeon0 extends Dungeon {
 
-	public MazeDungeon(Pose _pose) {
-		super("maze", _pose, 13, 13, 4, Pose.fromXyz(10, 5, 3));
+	public MazeDungeon0(Pose _pose) {
+		super("maze0", _pose, 13, 13, 4, Pose.fromXyz(10, 5, 2));
 		
 	}
 	@Override
 	protected void generate(World world, int x, int y, int z) {
-		System.out.println("Making maze dungeon at " + x + "," + y + "," + z);
+		System.out.println("Making maze0 dungeon at " + x + "," + y + "," + z);
 		
 		int internalWidth = 12;
 		int w = internalWidth+1;
@@ -33,6 +34,8 @@ public class MazeDungeon extends Dungeon {
 			world.setBlock(x+ax, y+0, z+w, Block.getBlockById(7));
 			world.setBlock(x+ax, y+1, z+w, Block.getBlockById(7));
 			world.setBlock(x+ax, y+2, z+w, Block.getBlockById(7));
+			//world.setBlock(x+ax, y+3, z+w, Block.getBlockById(124));
+			//world.setBlock(x+ax, y+4, z+w, Block.getBlockById(152));
 		}	
 		for (int az = 0; az <= w; az++) {
 			world.setBlock(x+0, y+0, z+az, Block.getBlockById(7));
@@ -70,7 +73,10 @@ public class MazeDungeon extends Dungeon {
 					world.setBlock(x+ax, y+0, z+az, Block.getBlockById(7));
 					world.setBlock(x+ax, y+1, z+az, Block.getBlockById(7));
 					world.setBlock(x+ax, y+2, z+az, Block.getBlockById(7));
+				} else if (mazeMap.charAt(mZ*internalWidth + mX) == '2') {
+					world.setBlock(x+ax, y+1, z+az, BurlapCraft.burlapStone);
 				} else {
+					// do nothing
 				}
 			}
 		}

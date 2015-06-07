@@ -12,7 +12,8 @@ import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.FinderDungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.GridDungeon;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.MazeDungeon;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.MazeDungeon0;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.MazeDungeon1;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.SmallBridgeDungeon;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.TinyBridgeDungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
@@ -77,14 +78,19 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		Pose gridPose = Pose.fromXyz(playerSpawnPose.getX() - 20, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
 		System.out.println("Setting gridPose: " + gridPose);
 		
-		Pose mazePose = Pose.fromXyz(playerSpawnPose.getX() - 60, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
-		System.out.println("Setting mazePose: " + mazePose);
+		int mazeFloorYOffset = 10;
+		int mazeFloorZOffset = 20;
+		Pose maze0Pose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
+		System.out.println("Setting maze0Pose: " + maze0Pose);
+		Pose maze1Pose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height + mazeFloorYOffset, playerSpawnPose.getZ() - 10 + mazeFloorZOffset);
+		System.out.println("Setting maze0Pose: " + maze1Pose);
 		
 		BurlapCraft.registerDungeon(new FinderDungeon(finderPose));
 		BurlapCraft.registerDungeon(new TinyBridgeDungeon(tinyBridgePose));
 		BurlapCraft.registerDungeon(new SmallBridgeDungeon(smallBridgePose));
 		BurlapCraft.registerDungeon(new GridDungeon(gridPose));
-		BurlapCraft.registerDungeon(new MazeDungeon(mazePose));
+		BurlapCraft.registerDungeon(new MazeDungeon0(maze0Pose));
+		BurlapCraft.registerDungeon(new MazeDungeon1(maze1Pose));
 		
 		for (Dungeon d : BurlapCraft.dungeons) {
 			d.regenerate(world);

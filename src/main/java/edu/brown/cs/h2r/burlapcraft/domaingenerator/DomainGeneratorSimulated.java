@@ -66,6 +66,14 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
 		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
 	}
+	
+	public void setActionWhiteListToNavigationAndDestroy(){
+		this.whiteListActions = new HashSet<String>();
+		this.whiteListActions.add(HelperNameSpace.ACTIONMOVE);
+		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
+		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
+		this.whiteListActions.add(HelperNameSpace.ACTIONDESTBLOCK);
+	}
 
 	public Set<String> getWhiteListActions() {
 		return whiteListActions;

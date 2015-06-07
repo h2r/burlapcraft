@@ -32,7 +32,7 @@ public class CommandAStar implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "astar [closed|open]\nIf closed/open not specified, closed it used";
+		return "astar [closed|open] [all|noplace]\nIf closed/open not specified, closed is used.\nIf all/noplace not specified, all is used.";
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class CommandAStar implements ICommand {
 	public void processCommand(ICommandSender sender, String[] args) {
 		World world = sender.getEntityWorld();
 		if (!world.isRemote) {
-			if (args.length > 1) {
-				sender.addChatMessage(new ChatComponentText("This command takes only 1 optional argument: closed or open"));
+			if (args.length > 2) {
+				sender.addChatMessage(new ChatComponentText("This command takes only 2 optional arguments: closed or open as the first, and all or noplace as the second."));
 				return;
 			}
 			
@@ -60,18 +60,29 @@ public class CommandAStar implements ICommand {
 			
 			
 			boolean closed = true;
+			boolean place = true;
 			if(args.length == 1){
 				if(args[0].equals("open")){
 					closed = false;
 				}
 			}
+			
+			if(args.length == 2){
+				if(args[0].equals("open")){
+					closed = false;
+				}
+				if(args[1].equals("noplace")){
+					place = false;
+				}
+			}
 
 			final boolean fclosed = closed;
+			final boolean fplace = place;
 
 			Thread bthread = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					GotoSolver.plan(1, fclosed);
+					GotoSolver.plan(1, fclosed, fplace);
 				}
 			});
 

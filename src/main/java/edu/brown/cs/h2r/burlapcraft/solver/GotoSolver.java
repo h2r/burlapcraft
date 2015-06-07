@@ -53,14 +53,19 @@ public class GotoSolver {
 	 * @param plannerToUse 0: BFS; 1: A*
 	 * @param closedLoop if true then a closed loop policy will be followed; if false, then open loop.
 	 */
-	public static void plan(int plannerToUse, boolean closedLoop){
+	public static void plan(int plannerToUse, boolean closedLoop, boolean place){
 
 		int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
 
 		DomainGeneratorSimulated simdg = new DomainGeneratorSimulated(map);
+		DomainGeneratorReal realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+		
+		if (!place) {
+			simdg.setActionWhiteListToNavigationAndDestroy();
+			realdg.setActionWhiteListToNavigationAndDestroy();
+		}
+		
 		Domain domain = simdg.generateDomain();
-
-		DomainGenerator realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 		Domain realDomain = realdg.generateDomain();
 
 		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);

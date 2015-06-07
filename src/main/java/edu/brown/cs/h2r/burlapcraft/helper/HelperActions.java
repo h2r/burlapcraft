@@ -17,6 +17,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.NibbleArray;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
 public class HelperActions {
@@ -178,10 +179,20 @@ public class HelperActions {
     return blockId;
   }
   
+  public static void snapToGrid() {
+	  EntityPlayer player = HandlerEvents.player;
+	  HelperPos oldPosition = HelperActions.getPlayerPosition();
+	  // HelperPos holds ints now but this code will port when the rest is switched to doubles...
+	  Pose newPosition = Pose.fromXyz(Math.floor(oldPosition.x)+0.5, Math.floor(oldPosition.y), Math.floor(oldPosition.z)+0.5);
+	  HelperActions.setPlayerPosition(player, newPosition);
+  }
+  
   public static boolean moveForward(boolean jump) {
 	  MovementInput movement = new MovementInput();
 	  movement.moveForward = (float) 0.55D;
 	  movement.jump = jump;
+	  
+	  snapToGrid();
 	  
 	  overrideMovement(movement);
 	  
@@ -212,7 +223,7 @@ public class HelperActions {
 	  @Override
 	  public void run() {
 		  if (player.rotationYaw == yawTarget) {
-			  System.out.println("smoothMove: target reached.");
+			  System.out.println("moveYawToTarget: target reached.");
 			  timer.cancel();
 		  } else if (Math.abs(yawTarget - player.rotationYaw) > snapThresh){
 			  double update = (yawTarget - player.rotationYaw)/qDecay;		  
@@ -234,6 +245,38 @@ public class HelperActions {
 	  }
 	}, 0, timerPeriod);
   }
+
+  public static void movePitchToTarget(final double pitchTarget) {
+		final EntityPlayer player = HelperActions.player;
+		final Timer timer = new Timer();
+		final ArrayList<Integer> numberOfIterations = new ArrayList<Integer>(1);
+		numberOfIterations.add(0);
+		timer.schedule(new TimerTask() {
+		  @Override
+		  public void run() {
+			  if (player.rotationPitch == pitchTarget) {
+				  System.out.println("movePitchToTarget: target reached.");
+				  timer.cancel();
+			  } else if (Math.abs(pitchTarget - player.rotationPitch) > snapThresh){
+				  double update = (pitchTarget - player.rotationPitch)/qDecay;		  
+				  if (Math.abs(update) < minUpdate) {
+					  update = Math.signum(update) * minUpdate;
+				  } else {
+				  }
+				  player.rotationPitch += update;
+				  int tmp = numberOfIterations.get(0);
+				  numberOfIterations.set(0,tmp+1);
+				  //System.out.println("smoothMove: target = " + pitchTarget + " current pitch = " + player.rotationPitch + ", update = " + update + ", performed " + numberOfIterations.get(0) + " iterations.");
+				  if (tmp >= maxUpdates) {
+					  timer.cancel();
+				  } else {
+				  }
+			  } else {
+				  player.rotationPitch = (float)pitchTarget;
+			  }
+		  }
+		}, 0, timerPeriod);
+	  }
   
   public static void faceSouth() {
 	//mc.thePlayer.rotationYaw = 0;
@@ -261,19 +304,23 @@ public class HelperActions {
   }
   
   public static void faceDownOne() {
-	  mc.thePlayer.rotationPitch = (float) 57;
+	//mc.thePlayer.rotationPitch = (float) 57;
+	movePitchToTarget(57);
   }
   
   public static void faceDownTwo() {
-	  mc.thePlayer.rotationPitch = (float) 49.5;
+	//mc.thePlayer.rotationPitch = (float) 49.5;
+	movePitchToTarget(49.5);
   }
   
   public static void faceDownThree() {
-	  mc.thePlayer.rotationPitch = (float) 32.5;
+	//mc.thePlayer.rotationPitch = (float) 32.5;
+	movePitchToTarget(32.5);
   }
   
   public static void faceAhead() {
-	  mc.thePlayer.rotationPitch = 0;
+	//mc.thePlayer.rotationPitch = 0;
+	movePitchToTarget(0);
   }
   
   public static int getPitchDirection() {

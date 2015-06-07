@@ -72,6 +72,24 @@ public class CommandSmoothMove implements ICommand {
 			} else if (directionName.equals("w") || directionName.equals("west")) {
 				HelperActions.faceWest();
 				sender.addChatMessage(new ChatComponentText("Facing west. Smoothly."));
+			} else if (directionName.equals("d1") || directionName.equals("down1")) {
+				HelperActions.faceDownOne();
+				sender.addChatMessage(new ChatComponentText("Facing down 1. Smoothly."));
+			} else if (directionName.equals("d2") || directionName.equals("down2")) {
+				HelperActions.faceDownTwo();
+				sender.addChatMessage(new ChatComponentText("Facing down 2. Smoothly."));
+			} else if (directionName.equals("d3") || directionName.equals("down3")) {
+				HelperActions.faceDownThree();
+				sender.addChatMessage(new ChatComponentText("Facing down 3. Smoothly."));
+			} else if (directionName.equals("a") || directionName.equals("ahead")) {
+				HelperActions.faceAhead();
+				sender.addChatMessage(new ChatComponentText("Facing ahead. Smoothly."));
+			} else if (directionName.equals("f") || directionName.equals("forward")) {
+				HelperActions.moveForward(false);
+				sender.addChatMessage(new ChatComponentText("Moving forward. Snapping along the way."));
+			} else if (directionName.equals("sn") || directionName.equals("snap")) {
+				HelperActions.snapToGrid();
+				sender.addChatMessage(new ChatComponentText("Snapping to grid. Roughly."));
 			} else {
 				sender.addChatMessage(new ChatComponentText("Invalid argument"));
 			}

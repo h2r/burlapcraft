@@ -1,7 +1,9 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import burlap.oomdp.singleagent.Action;
 import net.minecraft.block.Block;
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.learning.LearningAgent;
@@ -36,7 +38,7 @@ import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
  */
 public class GotoSolver {
 
-	static LearningAgent lastLearningAgent = null;
+	static PotentialShapedRMax lastLearningAgent = null;
 	static Dungeon lastDungeon;
 	static Domain lastDomain;
 
@@ -81,8 +83,8 @@ public class GotoSolver {
 		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
 
 		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
-			//rp.evaluateBehavior(initialState, rf, tf); // this call isn't good because it ties up the Miencraft event loop
-		BurlapCraft.fmlHandler.execute(realDomain, rp, BurlapCraft.currentDungeon);
+			rp.evaluateBehavior(initialState, rf, tf); // this call isn't good because it ties up the Miencraft event loop
+		//BurlapCraft.fmlHandler.execute(realDomain, rp, BurlapCraft.currentDungeon);
 
 	}
 
@@ -90,14 +92,19 @@ public class GotoSolver {
 
 		if(BurlapCraft.currentDungeon != lastDungeon || lastLearningAgent == null){
 			int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
-			DomainGenerator realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+			DomainGeneratorReal realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+			realdg.setActionWhiteListToNavigationOnly();
 			lastDomain = realdg.generateDomain();
 			lastLearningAgent = new PotentialShapedRMax(lastDomain, rf, tf, 0.99, new DiscreteStateHashFactory(), 0, 1, 0.01, 200);
 
+
 			lastDungeon = BurlapCraft.currentDungeon;
+
+			System.out.println("Starting new RMax");
 		}
 
 		State initialState = StateGenerator.getCurrentState(lastDomain, BurlapCraft.currentDungeon);
+		lastLearningAgent.runLearningEpisodeFrom(initialState);
 
 
 	}

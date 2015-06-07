@@ -1,7 +1,9 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.util.RegistryNamespaced;
 import burlap.oomdp.auxiliary.DomainGenerator;
@@ -48,6 +50,8 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 	private int length;
 	private int width;
 	private int height;
+
+	protected Set<String> whiteListActions = new HashSet<String>();
 	
 	public DomainGeneratorSimulated(int[][][] map) {
 		this.map = map;
@@ -55,7 +59,26 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		this.width = map[0][0].length;
 		this.height = map.length;
 	}
-	
+
+	public void setActionWhiteListToNavigationOnly(){
+		this.whiteListActions = new HashSet<String>();
+		this.whiteListActions.add(HelperNameSpace.ACTIONMOVE);
+		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
+		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
+	}
+
+	public Set<String> getWhiteListActions() {
+		return whiteListActions;
+	}
+
+	public void setWhiteListActions(Set<String> whiteListActions) {
+		this.whiteListActions = whiteListActions;
+	}
+
+	public void addActionToWhiteList(String actionName){
+		this.whiteListActions.add(actionName);
+	}
+
 	@Override
 	public Domain generateDomain() {
 		
@@ -103,14 +126,29 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		inventoryBlockClass.addAttribute(ibQuantity);
 		
 		// Actions
-		new ActionMoveForwardSimulated(HelperNameSpace.ACTIONMOVE, domain, this.map);
-		new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
-		new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
-		new ActionChangePitchSimulated(HelperNameSpace.ACTIONAHEAD, domain, 0);
-		new ActionChangePitchSimulated(HelperNameSpace.ACTIONDOWNONE, domain, HelperNameSpace.VertDirection.size - 1);
-		new ActionPlaceBlockSimulated(HelperNameSpace.ACTIONPLACEBLOCK, domain, this.map);
-		new ActionDestroyBlockSimulated(HelperNameSpace.ACTIONDESTBLOCK, domain);
-		
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVE)) {
+			new ActionMoveForwardSimulated(HelperNameSpace.ACTIONMOVE, domain, this.map);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATERIGHT)) {
+			new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATELEFT)) {
+			new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONAHEAD)) {
+			new ActionChangePitchSimulated(HelperNameSpace.ACTIONAHEAD, domain, 0);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDOWNONE)) {
+			new ActionChangePitchSimulated(HelperNameSpace.ACTIONDOWNONE, domain, HelperNameSpace.VertDirection.size - 1);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONPLACEBLOCK)) {
+			new ActionPlaceBlockSimulated(HelperNameSpace.ACTIONPLACEBLOCK, domain, this.map);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDESTBLOCK)) {
+			new ActionDestroyBlockSimulated(HelperNameSpace.ACTIONDESTBLOCK, domain);
+		}
+
+
 		return domain;
 		
 	}

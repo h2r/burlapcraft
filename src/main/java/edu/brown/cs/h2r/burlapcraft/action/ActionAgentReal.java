@@ -11,7 +11,9 @@ import burlap.oomdp.core.State;
 import burlap.oomdp.singleagent.Action;
 
 public abstract class ActionAgentReal extends Action {
-	
+
+	protected int sleepMS = 1000;
+
 	abstract void doAction(State state);
 	
 	/**
@@ -22,7 +24,20 @@ public abstract class ActionAgentReal extends Action {
 	public ActionAgentReal(String name, Domain domain) {
 		super(name, domain, "");
 	}
-	
+
+	public ActionAgentReal(String name, Domain domain, int sleepMS) {
+		super(name, domain, "");
+		this.sleepMS = sleepMS;
+	}
+
+	public int getSleepMS() {
+		return sleepMS;
+	}
+
+	public void setSleepMS(int sleepMS) {
+		this.sleepMS = sleepMS;
+	}
+
 	protected ActionAgentReal getAction() {
 		return this;
 	}
@@ -36,7 +51,7 @@ public abstract class ActionAgentReal extends Action {
 		action.doAction(s);
 		
 		try {
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.MILLISECONDS.sleep(this.sleepMS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +59,7 @@ public abstract class ActionAgentReal extends Action {
 		
 		State newState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 		
-		System.out.println(newState.toString());
+		//System.out.println(newState.toString());
 		
 		return newState;
 	}

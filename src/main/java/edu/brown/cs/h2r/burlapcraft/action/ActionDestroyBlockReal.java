@@ -11,6 +11,10 @@ public class ActionDestroyBlockReal extends ActionAgentReal {
 		super(name, domain);
 	}
 
+	public ActionDestroyBlockReal(String name, Domain domain, int sleepMS) {
+		super(name, domain, sleepMS);
+	}
+
 	@Override
 	void doAction(State state) {
 		

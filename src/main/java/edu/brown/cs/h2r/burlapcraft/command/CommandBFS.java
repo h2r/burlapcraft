@@ -65,7 +65,16 @@ public class CommandBFS implements ICommand {
 				}
 			}
 
-			GotoSolver.plan(0, closed);
+			final boolean fclosed = closed;
+
+			Thread bthread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					GotoSolver.plan(0, fclosed);
+				}
+			});
+
+			bthread.start();
 
 		}
 	}

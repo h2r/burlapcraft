@@ -18,6 +18,13 @@ public class ActionChangeYawReal extends ActionAgentReal {
 		
 	}
 
+	public ActionChangeYawReal(String name, Domain domain, int sleepMS, int direction) {
+
+		super(name, domain, sleepMS);
+		this.direction = direction;
+
+	}
+
 	@Override
 	void doAction(State state) {
 		

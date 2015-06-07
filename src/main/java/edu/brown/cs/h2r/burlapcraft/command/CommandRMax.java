@@ -56,7 +56,14 @@ public class CommandRMax implements ICommand {
 				return;
 			}
 
-			GotoSolver.learn();
+
+			Thread btread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					GotoSolver.learn();
+				}
+			});
+			btread.start();
 
 		}
 	}

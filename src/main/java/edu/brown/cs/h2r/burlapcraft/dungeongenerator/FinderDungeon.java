@@ -46,7 +46,7 @@ public class FinderDungeon extends Dungeon {
 		world.setBlock(x+3, y+1, z+0, Block.getBlockById(7));
 		world.setBlock(x+4, y+1, z+0, Block.getBlockById(7));
 		world.setBlock(x+0, y+1, z+1, Block.getBlockById(7));
-		world.setBlock(x+1, y+1, z+1, Block.getBlockById(41));
+		world.setBlock(x+1, y+0, z+1, Block.getBlockById(41)); //goal block
 		world.setBlock(x+2, y+1, z+1, Block.getBlockById(0));
 		world.setBlock(x+3, y+1, z+1, Block.getBlockById(0));
 		world.setBlock(x+4, y+1, z+1, Block.getBlockById(7));

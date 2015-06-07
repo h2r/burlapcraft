@@ -13,6 +13,9 @@ import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Class to generate burlap domain for minecraft
  * @author Krishna Aluru
@@ -25,6 +28,9 @@ public class DomainGeneratorReal implements DomainGenerator {
 	protected int width;
 	protected int height;
 
+	protected int sleepMS = 1000;
+
+	protected Set<String> whiteListActions = new HashSet<String>();
 	
 	public DomainGeneratorReal(int length, int width, int height) {
 		
@@ -33,7 +39,34 @@ public class DomainGeneratorReal implements DomainGenerator {
 		this.height = height;
 		
 	}
-	
+
+	public int getSleepMS() {
+		return sleepMS;
+	}
+
+	public void setSleepMS(int sleepMS) {
+		this.sleepMS = sleepMS;
+	}
+
+	public void setActionWhiteListToNavigationOnly(){
+		this.whiteListActions = new HashSet<String>();
+		this.whiteListActions.add(HelperNameSpace.ACTIONMOVE);
+		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
+		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
+	}
+
+	public Set<String> getWhiteListActions() {
+		return whiteListActions;
+	}
+
+	public void setWhiteListActions(Set<String> whiteListActions) {
+		this.whiteListActions = whiteListActions;
+	}
+
+	public void addActionToWhiteList(String actionName){
+		this.whiteListActions.add(actionName);
+	}
+
 	@Override
 	public Domain generateDomain() {
 		
@@ -82,13 +115,27 @@ public class DomainGeneratorReal implements DomainGenerator {
 		
 		
 		// Actions
-		new ActionMoveForwardReal(HelperNameSpace.ACTIONMOVE, domain);
-		new ActionChangeYawReal(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
-		new ActionChangeYawReal(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
-		new ActionChangePitchReal(HelperNameSpace.ACTIONAHEAD, domain, 0);
-		new ActionChangePitchReal(HelperNameSpace.ACTIONDOWNONE, domain, HelperNameSpace.VertDirection.size - 1);
-		new ActionPlaceBlockReal(HelperNameSpace.ACTIONPLACEBLOCK, domain);
-		new ActionDestroyBlockReal(HelperNameSpace.ACTIONDESTBLOCK, domain);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVE)) {
+			new ActionMoveForwardReal(HelperNameSpace.ACTIONMOVE, domain, this.sleepMS);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATERIGHT)) {
+			new ActionChangeYawReal(HelperNameSpace.ACTIONROTATERIGHT, domain, this.sleepMS, 1);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATELEFT)) {
+			new ActionChangeYawReal(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONAHEAD)) {
+			new ActionChangePitchReal(HelperNameSpace.ACTIONAHEAD, domain, this.sleepMS, 0);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDOWNONE)) {
+			new ActionChangePitchReal(HelperNameSpace.ACTIONDOWNONE, domain, this.sleepMS, HelperNameSpace.VertDirection.size - 1);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONPLACEBLOCK)) {
+			new ActionPlaceBlockReal(HelperNameSpace.ACTIONPLACEBLOCK, domain, this.sleepMS);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDESTBLOCK)) {
+			new ActionDestroyBlockReal(HelperNameSpace.ACTIONDESTBLOCK, domain, this.sleepMS);
+		}
 		
 		return domain;
 		

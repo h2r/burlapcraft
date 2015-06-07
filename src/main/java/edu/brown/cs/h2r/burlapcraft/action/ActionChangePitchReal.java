@@ -16,6 +16,13 @@ public class ActionChangePitchReal extends ActionAgentReal {
 		
 	}
 
+	public ActionChangePitchReal(String name, Domain domain, int sleepMS, int rotateVertDirection) {
+
+		super(name, domain, sleepMS);
+		this.vertDirection = rotateVertDirection;
+
+	}
+
 	@Override
 	void doAction(State state) {
 

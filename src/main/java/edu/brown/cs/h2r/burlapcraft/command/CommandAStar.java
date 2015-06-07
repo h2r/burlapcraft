@@ -66,7 +66,17 @@ public class CommandAStar implements ICommand {
 				}
 			}
 
-			GotoSolver.plan(1, closed);
+			final boolean fclosed = closed;
+
+			Thread bthread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					GotoSolver.plan(1, fclosed);
+				}
+			});
+
+			bthread.start();
+
 
 
 		}

@@ -17,6 +17,12 @@ public class ActionMoveForwardReal extends ActionAgentReal {
 		
 	}
 
+	public ActionMoveForwardReal(String name, Domain domain, int sleepMS) {
+
+		super(name, domain, sleepMS);
+
+	}
+
 	@Override
 	void doAction(State state) {
 		

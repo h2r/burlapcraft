@@ -1,6 +1,7 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.command.ICommand;
@@ -83,6 +84,12 @@ public class CommandTeleport implements ICommand {
 			} 
 			
 			Dungeon d = BurlapCraft.dungeonMap.get(dungeonName);
+			if (d == null) {
+				ArrayList dungeonNames = new ArrayList(BurlapCraft.dungeonMap.keySet());
+				Collections.sort(dungeonNames);
+				sender.addChatMessage(new ChatComponentText("No dungeon '" + dungeonName + "'.  Dungeons are: "  + dungeonNames));
+				return;
+			}
 
 			Pose offset = d.getPlayerStartOffset();
 			Pose playerPose = d.getPose().add(offset);

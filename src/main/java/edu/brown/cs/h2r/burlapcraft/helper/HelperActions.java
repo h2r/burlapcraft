@@ -217,6 +217,33 @@ public class HelperActions {
 	public static int getBlockId(double x, double y, double z) {
 		return getBlockId((int) x, (int) y, (int) z);
 	}
+	
+	public static int getBlockId(int x, int y, int z) {
+		Chunk chunk = mc.theWorld.getChunkFromChunkCoords(x >> 4, z >> 4);
+		chunk.getBlock(x & 0xF, y, z & 0xF);
+		int blockId = 0;
+
+		ExtendedBlockStorage[] sa = chunk.getBlockStorageArray();
+		if (y >> 4 < sa.length) {
+			ExtendedBlockStorage extendedblockstorage = sa[(y >> 4)];
+
+			if (extendedblockstorage != null) {
+				int lx = x & 0xF;
+				int ly = y & 0xF;
+				int lz = z & 0xF;
+				blockId = extendedblockstorage.getBlockLSBArray()[(ly << 8
+						| lz << 4 | lx)] & 0xFF;
+				NibbleArray blockMSBArray = extendedblockstorage
+						.getBlockMSBArray();
+
+				if (blockMSBArray != null) {
+					blockId |= blockMSBArray.get(lx, ly, lz) << 8;
+				}
+			}
+		}
+
+		return blockId;
+	}
 
 	public static void snapToGrid() {
 		EntityPlayer player = HandlerEvents.player;

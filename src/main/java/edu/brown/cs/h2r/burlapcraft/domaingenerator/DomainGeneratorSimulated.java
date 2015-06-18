@@ -32,6 +32,7 @@ import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockSimulated;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentInRoom;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
@@ -179,7 +180,9 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 			new ActionDestroyBlockSimulated(HelperNameSpace.ACTIONDESTBLOCK, domain);
 		}
 
-
+		// Propositional Functions
+		new PFAgentInRoom(HelperNameSpace.PFINROOM, domain, new String[]{HelperNameSpace.CLASSAGENT, HelperNameSpace.CLASSROOM});
+		
 		return domain;
 		
 	}

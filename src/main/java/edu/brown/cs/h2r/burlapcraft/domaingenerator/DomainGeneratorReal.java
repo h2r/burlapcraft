@@ -11,6 +11,7 @@ import edu.brown.cs.h2r.burlapcraft.action.ActionChangeYawReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionDestroyBlockReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentInRoom;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 
 import java.util.ArrayList;
@@ -173,6 +174,9 @@ public class DomainGeneratorReal implements DomainGenerator {
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDESTBLOCK)) {
 			new ActionDestroyBlockReal(HelperNameSpace.ACTIONDESTBLOCK, domain, this.sleepMS);
 		}
+		
+		// Propositional Functions
+		new PFAgentInRoom(HelperNameSpace.PFINROOM, domain, new String[]{HelperNameSpace.CLASSAGENT, HelperNameSpace.CLASSROOM});
 		
 		return domain;
 		

@@ -35,7 +35,7 @@ public class HelperActions {
 
 	// categories of blocks
 	public static final Block[] mineableBlocks = { BurlapCraft.burlapStone,
-			Blocks.gold_block };
+			Blocks.gold_block, BurlapCraft.mineableBlueRock, BurlapCraft.mineableGreenRock, BurlapCraft.mineableOrangeRock, BurlapCraft.mineableRedRock };
 
 	public static final Block[] dangerBlocks = { Blocks.lava };
 

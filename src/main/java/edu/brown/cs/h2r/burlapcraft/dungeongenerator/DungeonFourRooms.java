@@ -543,7 +543,9 @@ public class DungeonFourRooms extends Dungeon {
 		world.setBlock(x+7, y+3, z+11, BurlapCraft.greenRock);
 		world.setBlock(x+8, y+3, z+11, BurlapCraft.greenRock);
 		world.setBlock(x+9, y+3, z+11, BurlapCraft.greenRock);
-		world.setBlock(x+10, y+3, z+11, BurlapCraft.greenRock);		
+		world.setBlock(x+10, y+3, z+11, BurlapCraft.greenRock);
+
+		world.setBlock(x+3, y+2, z+7, BurlapCraft.mineableBlueRock);
 	}
 	
 	

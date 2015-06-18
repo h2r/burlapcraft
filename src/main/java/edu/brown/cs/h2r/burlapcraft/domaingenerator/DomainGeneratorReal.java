@@ -12,6 +12,10 @@ import edu.brown.cs.h2r.burlapcraft.action.ActionDestroyBlockReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentInRoom;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsBlue;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsGreen;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsOrange;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsRed;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 
 import java.util.ArrayList;
@@ -177,6 +181,10 @@ public class DomainGeneratorReal implements DomainGenerator {
 		
 		// Propositional Functions
 		new PFAgentInRoom(HelperNameSpace.PFINROOM, domain, new String[]{HelperNameSpace.CLASSAGENT, HelperNameSpace.CLASSROOM});
+		new PFRoomIsRed(HelperNameSpace.PFROOMRED, domain, HelperNameSpace.CLASSROOM);
+		new PFRoomIsBlue(HelperNameSpace.PFROOMBLUE, domain, HelperNameSpace.CLASSROOM);
+		new PFRoomIsGreen(HelperNameSpace.PFROOMGREEN, domain, HelperNameSpace.CLASSROOM);
+		new PFRoomIsOrange(HelperNameSpace.PFROOMORANGE, domain, HelperNameSpace.CLASSROOM);
 		
 		return domain;
 		

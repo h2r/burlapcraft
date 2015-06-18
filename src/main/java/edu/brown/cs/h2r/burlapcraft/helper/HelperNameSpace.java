@@ -44,6 +44,10 @@ public class HelperNameSpace {
 	
 	//-------------PROPOSITIONAL FUNCTION STRINGS-------------
 	public static final String							PFINROOM = "agentInRoom";
+	public static final String							PFROOMRED = "roomIsRed";
+	public static final String							PFROOMBLUE = "roomIsBlue";
+	public static final String							PFROOMGREEN = "roomIsGreen";
+	public static final String							PFROOMORANGE = "roomIsOrange";
 	
 	//-------------ENUMS-------------
 	public enum RotDirection {

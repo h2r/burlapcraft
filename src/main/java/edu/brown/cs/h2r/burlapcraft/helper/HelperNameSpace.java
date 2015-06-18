@@ -34,20 +34,22 @@ public class HelperNameSpace {
 	public static final String							CLASSROOM = "room";
 	
 	//-------------ACTIONS STRINGS-------------
-	public static final String							ACTIONMOVE = "moveFowardAction";
-	public static final String							ACTIONROTATERIGHT = "rotateRightAction";
-	public static final String 							ACTIONROTATELEFT = "rotateLeftAction";
-	public static final String 							ACTIONDESTBLOCK = "destroyBlockAction";
-	public static final String							ACTIONPLACEBLOCK = "placeBlockAction";
-	public static final String							ACTIONAHEAD = "lookAheadAction";
-	public static final String							ACTIONDOWNONE = "lookDownAction";
+	public static final String							ACTIONMOVE = "moveFoward";
+	public static final String							ACTIONROTATERIGHT = "rotateRight";
+	public static final String 							ACTIONROTATELEFT = "rotateLeft";
+	public static final String 							ACTIONDESTBLOCK = "destroyBlock";
+	public static final String							ACTIONPLACEBLOCK = "placeBlock";
+	public static final String							ACTIONAHEAD = "lookAhead";
+	public static final String							ACTIONDOWNONE = "lookDown";
 	
 	//-------------PROPOSITIONAL FUNCTION STRINGS-------------
-	public static final String							PFINROOM = "agentInRoom";
+	public static final String							PFAGENTINROOM = "agentInRoom";
+	public static final String							PFBLOCKINROOM = "blockInRoom";
 	public static final String							PFROOMRED = "roomIsRed";
 	public static final String							PFROOMBLUE = "roomIsBlue";
 	public static final String							PFROOMGREEN = "roomIsGreen";
 	public static final String							PFROOMORANGE = "roomIsOrange";
+	public static final String							PFAGENTHASBLOCK = "agentHasBlock";
 	
 	//-------------ENUMS-------------
 	public enum RotDirection {

@@ -17,7 +17,7 @@ public class PFRoomIsOrange extends PropositionalFunction {
 	public boolean isTrue(State s, String[] params) {
 		// TODO Auto-generated method stub
 		ObjectInstance room = s.getObject(params[0]);
-		if (room.getIntArrayValForAttribute(HelperNameSpace.ATCOLOR).equals("orange")) {
+		if (room.getStringValForAttribute(HelperNameSpace.ATCOLOR).equals("orange")) {
 			return true;
 		}
 		

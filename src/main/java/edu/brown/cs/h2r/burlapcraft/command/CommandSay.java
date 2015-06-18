@@ -57,10 +57,11 @@ private final List aliases;
 		
 		final String commandToExecute = StringUtils.join(args, " ");
 
+		final ICommandSender fsender = sender;
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				NaturalLanguageSolver.obeyNaturalLanguageCommand(commandToExecute);
+				NaturalLanguageSolver.obeyNaturalLanguageCommand(fsender, commandToExecute);
 			}
 		});
 

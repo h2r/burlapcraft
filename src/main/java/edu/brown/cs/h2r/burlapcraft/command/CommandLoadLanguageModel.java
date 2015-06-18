@@ -44,10 +44,11 @@ public class CommandLoadLanguageModel implements ICommand{
 			path = "../languageModels/expertLangModelParams.yaml";
 		}
 
+		final ICommandSender fsender = sender;
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				NaturalLanguageSolver.initializeCommandController(path);
+				NaturalLanguageSolver.initializeCommandController(fsender, path);
 			}
 		});
 

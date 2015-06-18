@@ -94,6 +94,7 @@ public class BurlapCraft {
         event.registerServerCommand(new CommandResetDungeon());
         event.registerServerCommand(new CommandLoadLanguageModel());
         event.registerServerCommand(new CommandSay());
+        event.registerServerCommand(new CommandCheckProps());
     	
     }
     

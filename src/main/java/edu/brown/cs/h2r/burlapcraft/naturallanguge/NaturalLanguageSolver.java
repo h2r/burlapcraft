@@ -1,10 +1,20 @@
 package edu.brown.cs.h2r.burlapcraft.naturallanguge;
 
+import burlap.behavior.singleagent.Policy;
+import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
+import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
+import burlap.behavior.singleagent.planning.deterministic.GoalConditionTF;
+import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
+import burlap.behavior.singleagent.planning.deterministic.TFGoalCondition;
+import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
+import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
 import burlap.behavior.statehashing.StateHashFactory;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.GroundedProp;
 import burlap.oomdp.core.State;
+import burlap.oomdp.singleagent.RewardFunction;
+import burlap.oomdp.singleagent.common.UniformCostRF;
 import commands.model3.GPConjunction;
 import commands.model3.TaskModule;
 import commands.model3.TrajectoryModule;
@@ -17,6 +27,8 @@ import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import generativemodel.GMQueryResult;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.ChatComponentText;
 import org.lwjgl.Sys;
 
 import java.util.ArrayList;
@@ -36,7 +48,7 @@ public class NaturalLanguageSolver {
 	protected static boolean loaded = false;
 
 
-	public static void initializeCommandController(String languageModelPath){
+	public static void initializeCommandController(ICommandSender sender, String languageModelPath){
 
 		loaded = false;
 
@@ -56,9 +68,9 @@ public class NaturalLanguageSolver {
 		Tokenizer tokenizer = new Tokenizer(true ,true);
 		tokenizer.addDelimiter("-");
 		languageModel = new MTWeaklySupervisedModel(commandController, tokenizer, 10);
-		System.out.println("Loading language model");
+		chatOrSystemPrint(sender, "Loading language model");
 		languageModel.loadModel(languageModelPath);
-		System.out.println("Finished loading language model");
+		chatOrSystemPrint(sender, "Finished loading language model");
 
 		commandController.setLanguageModel(languageModel);
 
@@ -66,10 +78,19 @@ public class NaturalLanguageSolver {
 
 	}
 
-	public static void obeyNaturalLanguageCommand(String command){
+	public static void chatOrSystemPrint(ICommandSender sender, String msg){
+		if(sender != null){
+			sender.addChatMessage(new ChatComponentText(msg));
+		}
+		else{
+			System.out.println(msg);
+		}
+	}
+
+	public static void obeyNaturalLanguageCommand(ICommandSender sender, String command){
 
 		if(loaded == false){
-			System.out.println("Cannot obey command because the language model either has not been loaded or has not finished loading.");
+			chatOrSystemPrint(sender, "Cannot obey command because the language model either has not been loaded or has not finished loading.");
 			return;
 		}
 
@@ -88,8 +109,22 @@ public class NaturalLanguageSolver {
 
 		TaskModule.RFConVariableValue gr = (TaskModule.RFConVariableValue)predicted.getQueryForVariable(commandController.getGM().getRVarWithName(TaskModule.GROUNDEDRFNAME));
 		TrajectoryModule.ConjunctiveGroundedPropTF tf = new TrajectoryModule.ConjunctiveGroundedPropTF(gr.rf);
+		TFGoalCondition gc = new TFGoalCondition(tf);
 
-		System.out.println("Obeying command to achieve " + tf.toString());
+		RewardFunction rf = new UniformCostRF();
+
+		chatOrSystemPrint(sender, "Obeying command to achieve " + tf.toString());
+
+		AStar planner = new AStar(domain, rf, gc, new DiscreteStateHashFactory(), new NullHeuristic());
+		planner.planFromState(initialState);
+		Policy p = new DDPlannerPolicy(planner);
+
+		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
+		rp.evaluateBehavior(initialState, rf, tf);
+
+
+
+
 
 	}
 

@@ -5,9 +5,9 @@ import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
-public class TinyBridgeDungeon extends Dungeon {
+public class DungeonTinyBridge extends Dungeon {
 	
-	public TinyBridgeDungeon(Pose pose) {
+	public DungeonTinyBridge(Pose pose) {
 		super("tiny_bridge", pose, 4, 5, 4, Pose.fromXyz(1, 5, 3));
 		
 	}

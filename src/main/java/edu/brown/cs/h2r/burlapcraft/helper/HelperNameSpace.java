@@ -21,11 +21,17 @@ public class HelperNameSpace {
 	public static final String 							ATROTDIR = "rotationalDirection";
 	public static final String							ATVERTDIR = "verticalDirection";
 	public static final String							ATIBQUANT = "inventoryBlockQuantity";
+	public static final String							ATXMIN = "roomXMin";
+	public static final String							ATXMAX = "roomXMax";
+	public static final String							ATZMIN = "roomZMin";
+	public static final String							ATZMAX = "roomZMax";
+	public static final String							ATCOLOR = "roomColor";
 	
 	//-------------BURLAP OBJECTCLASS STRINGS-------------
 	public static final String							CLASSAGENT = "agent";
 	public static final String							CLASSBLOCK = "block";
 	public static final String							CLASSINVENTORYBLOCK = "inventoryBlock";
+	public static final String							CLASSROOM = "room";
 	
 	//-------------ACTIONS STRINGS-------------
 	public static final String						ACTIONMOVE = "moveFowardAction";

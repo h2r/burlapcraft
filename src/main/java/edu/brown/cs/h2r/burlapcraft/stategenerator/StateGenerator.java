@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
@@ -32,10 +33,89 @@ public class StateGenerator {
 
 		State s = new State();
 		
+		int xMaxBlue = -1;
+		int xMinBlue = Integer.MAX_VALUE;
+		int zMinBlue = Integer.MAX_VALUE;
+		int zMaxBlue = -1;
+		int xMaxOrange = -1;
+		int xMinOrange = Integer.MAX_VALUE;
+		int zMinOrange = Integer.MAX_VALUE;
+		int zMaxOrange = -1;
+		int xMaxRed = -1;
+		int xMinRed = Integer.MAX_VALUE;
+		int zMinRed = Integer.MAX_VALUE;
+		int zMaxRed = -1;
+		int xMaxGreen = -1;
+		int xMinGreen = Integer.MAX_VALUE;
+		int zMinGreen = Integer.MAX_VALUE;
+		int zMaxGreen = -1;
+		boolean fourRoomsFound = false;
+		
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < length; j++) {
 				for (int k = 0; k < width; k++) {
 					Block block = HelperActions.getBlock(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
+					
+					if (d.getName().equals("fourrooms")) {
+						fourRoomsFound = true;
+						if (block.equals(BurlapCraft.blueRock)) {
+							if (j > xMaxBlue) {
+								xMaxBlue = j;
+							}
+							if (j < xMinBlue) {
+								xMinBlue = j;
+							}
+							if (k > zMaxBlue) {
+								zMaxBlue = k;
+							}
+							if (k < zMinBlue) {
+								zMinBlue = k;
+							}
+						}
+						else if (block.equals(BurlapCraft.orangeRock)) {
+							if (j > xMaxOrange) {
+								xMaxOrange = j;
+							}
+							if (j < xMinOrange) {
+								xMinOrange = j;
+							}
+							if (k > zMaxOrange) {
+								zMaxOrange = k;
+							}
+							if (k < zMinOrange) {
+								zMinOrange = k;
+							}
+						}
+						else if (block.equals(BurlapCraft.greenRock)) {
+							if (j > xMaxGreen) {
+								xMaxGreen = j;
+							}
+							if (j < xMinGreen) {
+								xMinGreen = j;
+							}
+							if (k > zMaxGreen) {
+								zMaxGreen = k;
+							}
+							if (k < zMinGreen) {
+								zMinGreen = k;
+							}
+						}
+						else if (block.equals(BurlapCraft.redRock)) {
+							if (j > xMaxRed) {
+								xMaxRed = j;
+							}
+							if (j < xMinRed) {
+								xMinRed = j;
+							}
+							if (k > zMaxRed) {
+								zMaxRed = k;
+							}
+							if (k < zMinRed) {
+								zMinRed = k;
+							}
+						}
+					}
+					
 					if (HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks)) {
 						int blockID = HelperActions.getBlockId(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
 						blockCount += 1;
@@ -50,6 +130,45 @@ public class StateGenerator {
 					}
 				}
 			}
+			
+			if (fourRoomsFound) {
+				if (xMaxBlue !=  -1 && xMinBlue != Integer.MAX_VALUE && zMaxBlue != -1 && zMinBlue != Integer.MAX_VALUE) {
+					ObjectInstance blueRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomblue");
+					blueRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxBlue);
+					blueRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinBlue);
+					blueRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxBlue);
+					blueRoomInstance.setValue(HelperNameSpace.ATZMIN, zMinBlue);
+					blueRoomInstance.setValue(HelperNameSpace.ATCOLOR, "blue");
+					s.addObject(blueRoomInstance);
+				}
+				if (xMaxRed != -1 && xMinRed != Integer.MAX_VALUE && zMaxRed != -1 && zMinRed != Integer.MAX_VALUE) {
+					ObjectInstance redRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomred");
+					redRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxRed);
+					redRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinRed);
+					redRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxRed);
+					redRoomInstance.setValue(HelperNameSpace.ATZMIN, zMinRed);
+					redRoomInstance.setValue(HelperNameSpace.ATCOLOR, "red");
+					s.addObject(redRoomInstance);
+				}
+				if (xMaxGreen != -1 && xMinGreen != Integer.MAX_VALUE && zMaxGreen != -1 && zMinGreen != Integer.MAX_VALUE) {
+					ObjectInstance greenRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomgreen");
+					greenRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxGreen);
+					greenRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinGreen);
+					greenRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxGreen);
+					greenRoomInstance.setValue(HelperNameSpace.ATZMIN, zMinGreen);
+					greenRoomInstance.setValue(HelperNameSpace.ATCOLOR, "green");
+					s.addObject(greenRoomInstance);
+				}
+				if (xMaxOrange != -1 && xMinOrange != Integer.MAX_VALUE && zMaxOrange != -1 && zMinOrange != Integer.MAX_VALUE) {
+					ObjectInstance orangeRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomorange");
+					orangeRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATZMIN, zMinOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATCOLOR, "orange");
+					s.addObject(orangeRoomInstance);
+				}
+			}		
 		}
 
 		HelperPos curPos = HelperActions.getPlayerPosition();

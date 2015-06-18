@@ -8,9 +8,9 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-public class SmallBridgeDungeon extends Dungeon {
+public class DungeonSmallBridge extends Dungeon {
 	
-	public SmallBridgeDungeon(Pose pose) {
+	public DungeonSmallBridge(Pose pose) {
 		super("small_bridge", pose, 10, 10, 5, Pose.fromXyz(1.5, 5, 3));
 		
 	}

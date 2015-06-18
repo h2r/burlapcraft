@@ -10,12 +10,13 @@ import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.FinderDungeon;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.GridDungeon;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.MazeDungeon0;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.MazeDungeon1;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.SmallBridgeDungeon;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.TinyBridgeDungeon;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonFinder;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonFourRooms;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonGrid;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonMaze0;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonMaze1;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonSmallBridge;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonTinyBridge;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 
@@ -83,14 +84,18 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		Pose maze0Pose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10);
 		System.out.println("Setting maze0Pose: " + maze0Pose);
 		Pose maze1Pose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height + mazeFloorYOffset, playerSpawnPose.getZ() - 10 + mazeFloorZOffset);
-		System.out.println("Setting maze0Pose: " + maze1Pose);
+		System.out.println("Setting maze1Pose: " + maze1Pose);
 		
-		BurlapCraft.registerDungeon(new FinderDungeon(finderPose));
-		BurlapCraft.registerDungeon(new TinyBridgeDungeon(tinyBridgePose));
-		BurlapCraft.registerDungeon(new SmallBridgeDungeon(smallBridgePose));
-		BurlapCraft.registerDungeon(new GridDungeon(gridPose));
-		BurlapCraft.registerDungeon(new MazeDungeon0(maze0Pose));
-		BurlapCraft.registerDungeon(new MazeDungeon1(maze1Pose));
+		int fourRoomsZOffset = 50;
+		Pose fourRoomsPose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10 + fourRoomsZOffset);
+		
+		BurlapCraft.registerDungeon(new DungeonFinder(finderPose));
+		BurlapCraft.registerDungeon(new DungeonTinyBridge(tinyBridgePose));
+		BurlapCraft.registerDungeon(new DungeonSmallBridge(smallBridgePose));
+		BurlapCraft.registerDungeon(new DungeonGrid(gridPose));
+		BurlapCraft.registerDungeon(new DungeonMaze0(maze0Pose));
+		BurlapCraft.registerDungeon(new DungeonMaze1(maze1Pose));
+		BurlapCraft.registerDungeon(new DungeonFourRooms(fourRoomsPose));
 		
 		for (Dungeon d : BurlapCraft.dungeons) {
 			d.regenerate(world);

@@ -21,8 +21,6 @@ import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
-
-
 import cpw.mods.fml.common.registry.GameData;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchSimulated;
@@ -52,6 +50,13 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 	private int height;
 
 	protected Set<String> whiteListActions = new HashSet<String>();
+	
+	protected ArrayList<String> colors = new ArrayList<String>() {{
+	    add("red");
+	    add("green");
+	    add("blue");
+	    add("orange");
+	}};
 	
 	public DomainGeneratorSimulated(int[][][] map) {
 		this.map = map;
@@ -112,6 +117,17 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		Attribute bType = new Attribute(domain, HelperNameSpace.ATBTYPE, Attribute.AttributeType.INT);
 		// Inventory Block quantity
 		Attribute ibQuantity = new Attribute(domain, HelperNameSpace.ATIBQUANT, Attribute.AttributeType.INT);
+		// Room xMin bound
+		Attribute xMin = new Attribute(domain, HelperNameSpace.ATXMIN, Attribute.AttributeType.INT);
+		// Room xMax bound
+		Attribute xMax = new Attribute(domain, HelperNameSpace.ATXMAX, Attribute.AttributeType.INT);
+		// Room yMin bound
+		Attribute zMin = new Attribute(domain, HelperNameSpace.ATZMIN, Attribute.AttributeType.INT);
+		// Room yMax bound
+		Attribute zMax = new Attribute(domain, HelperNameSpace.ATZMAX, Attribute.AttributeType.INT);
+		// Room color
+		Attribute color = new Attribute(domain, HelperNameSpace.ATCOLOR, Attribute.AttributeType.DISC);
+		color.setDiscValues(this.colors);
 		
 		
 		// Object classes
@@ -132,6 +148,13 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		ObjectClass inventoryBlockClass = new ObjectClass(domain, HelperNameSpace.CLASSINVENTORYBLOCK);
 		inventoryBlockClass.addAttribute(bType);
 		inventoryBlockClass.addAttribute(ibQuantity);
+		// rooms
+		ObjectClass roomClass = new ObjectClass(domain, HelperNameSpace.CLASSROOM);
+		roomClass.addAttribute(xMax);
+		roomClass.addAttribute(xMin);
+		roomClass.addAttribute(zMax);
+		roomClass.addAttribute(zMin);
+		roomClass.addAttribute(color);
 		
 		// Actions
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVE)) {

@@ -1,5 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
@@ -8,36 +11,30 @@ import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
-import java.util.ArrayList;
-import java.util.List;
+public class CommandCheckMap implements ICommand {
 
-/**
- * @author James MacGlashan.
- */
-public class CommandCheckState implements ICommand{
-
-	List aliass = new ArrayList();
+	List aliases = new ArrayList();
 	Domain domain;
 
-	public CommandCheckState(){
-		this.aliass.add("checkState");
+	public CommandCheckMap() {
+		this.aliases.add("checkMap");
 		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
 		domain = rdg.generateDomain();
 	}
 
 	@Override
 	public String getCommandName() {
-		return "checkState";
+		return "checkMap";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "checkState";
+		return "checkMap";
 	}
 
 	@Override
 	public List getCommandAliases() {
-		return aliass;
+		return aliases;
 	}
 
 	@Override

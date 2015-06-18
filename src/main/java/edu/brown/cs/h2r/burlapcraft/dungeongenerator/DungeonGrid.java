@@ -4,9 +4,9 @@ import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
 
-public class GridDungeon extends Dungeon {
+public class DungeonGrid extends Dungeon {
 
-	public GridDungeon(Pose _pose) {
+	public DungeonGrid(Pose _pose) {
 		super("grid", _pose, 10, 10, 4, Pose.fromXyz(1.5, 5, 3));
 		
 	}

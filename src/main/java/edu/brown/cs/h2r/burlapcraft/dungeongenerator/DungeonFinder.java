@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
-public class FinderDungeon extends Dungeon {
+public class DungeonFinder extends Dungeon {
 
-	public FinderDungeon(Pose _pose) {
+	public DungeonFinder(Pose _pose) {
 		super("finder", _pose, 5, 5, 3, Pose.fromXyz(1.5, 5, 3));
 	}
 

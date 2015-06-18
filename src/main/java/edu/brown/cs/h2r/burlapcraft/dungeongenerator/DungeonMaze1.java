@@ -5,9 +5,9 @@ import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
 
-public class MazeDungeon1 extends Dungeon {
+public class DungeonMaze1 extends Dungeon {
 
-	public MazeDungeon1(Pose _pose) {
+	public DungeonMaze1(Pose _pose) {
 		super("maze1", _pose, 13, 13, 4, Pose.fromXyz(10, 5, 2));
 		
 	}

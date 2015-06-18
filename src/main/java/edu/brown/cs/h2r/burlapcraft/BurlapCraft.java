@@ -15,7 +15,11 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import edu.brown.cs.h2r.burlapcraft.block.BlockBlueRock;
 import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
+import edu.brown.cs.h2r.burlapcraft.block.BlockGreenRock;
+import edu.brown.cs.h2r.burlapcraft.block.BlockOrangeRock;
+import edu.brown.cs.h2r.burlapcraft.block.BlockRedRock;
 import edu.brown.cs.h2r.burlapcraft.command.CommandAStar;
 import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
 import edu.brown.cs.h2r.burlapcraft.command.CommandCheckState;
@@ -41,6 +45,10 @@ public class BurlapCraft {
     
     // blocks
     public static Block burlapStone;
+    public static Block redRock;
+    public static Block blueRock;
+    public static Block greenRock;
+    public static Block orangeRock;
     
     // event handlers
     HandlerDungeonGeneration genHandler = new HandlerDungeonGeneration();   
@@ -61,9 +69,17 @@ public class BurlapCraft {
     	
 
     	burlapStone = new BlockBurlapStone();
+    	redRock = new BlockRedRock();
+    	blueRock = new BlockBlueRock();
+    	orangeRock = new BlockOrangeRock();
+    	greenRock = new BlockGreenRock();
     	
     	// make sure minecraft knows
     	GameRegistry.registerBlock(burlapStone, "burlapstone");
+    	GameRegistry.registerBlock(redRock, "redrock");
+    	GameRegistry.registerBlock(blueRock, "bluerock");
+    	GameRegistry.registerBlock(greenRock, "greenrock");
+    	GameRegistry.registerBlock(orangeRock, "orangerock");
     	GameRegistry.registerWorldGenerator(genHandler, 0);
     	
     	MinecraftForge.EVENT_BUS.register(eventHandler);

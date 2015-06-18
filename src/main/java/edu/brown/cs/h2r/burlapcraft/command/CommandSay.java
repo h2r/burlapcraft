@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import edu.brown.cs.h2r.burlapcraft.naturallanguge.NaturalLanguageSolver;
 import org.apache.commons.lang3.StringUtils;
 
 import net.minecraft.command.ICommand;
@@ -54,7 +55,16 @@ private final List aliases;
 			return;
 		}
 		
-		String commandToExecute = StringUtils.join(args, " ");
+		final String commandToExecute = StringUtils.join(args, " ");
+
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				NaturalLanguageSolver.obeyNaturalLanguageCommand(commandToExecute);
+			}
+		});
+
+		thread.start();
 	}
 
 	@Override

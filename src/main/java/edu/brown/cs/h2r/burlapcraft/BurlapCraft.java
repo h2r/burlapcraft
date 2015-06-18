@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.brown.cs.h2r.burlapcraft.command.*;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -20,15 +21,6 @@ import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
 import edu.brown.cs.h2r.burlapcraft.block.BlockGreenRock;
 import edu.brown.cs.h2r.burlapcraft.block.BlockOrangeRock;
 import edu.brown.cs.h2r.burlapcraft.block.BlockRedRock;
-import edu.brown.cs.h2r.burlapcraft.command.CommandAStar;
-import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
-import edu.brown.cs.h2r.burlapcraft.command.CommandCheckState;
-import edu.brown.cs.h2r.burlapcraft.command.CommandCreateDungeons;
-import edu.brown.cs.h2r.burlapcraft.command.CommandInventory;
-import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
-import edu.brown.cs.h2r.burlapcraft.command.CommandResetDungeon;
-import edu.brown.cs.h2r.burlapcraft.command.CommandSmoothMove;
-import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
@@ -100,6 +92,8 @@ public class BurlapCraft {
         event.registerServerCommand(new CommandInventory());
         event.registerServerCommand(new CommandCheckState());
         event.registerServerCommand(new CommandResetDungeon());
+        event.registerServerCommand(new CommandLoadLanguageModel());
+        event.registerServerCommand(new CommandSay());
     	
     }
     

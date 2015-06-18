@@ -43,7 +43,7 @@ public class HelperNameSpace {
 	public static final String							ACTIONDOWNONE = "lookDownAction";
 	
 	//-------------PROPOSITIONAL FUNCTION STRINGS-------------
-	public static final String							PFINROOM = "inRoomPF";
+	public static final String							PFINROOM = "agentInRoom";
 	
 	//-------------ENUMS-------------
 	public enum RotDirection {

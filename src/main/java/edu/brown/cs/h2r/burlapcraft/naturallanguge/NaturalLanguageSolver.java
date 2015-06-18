@@ -58,7 +58,7 @@ public class NaturalLanguageSolver {
 		liftedTasks = new ArrayList<GPConjunction>(2);
 
 		GPConjunction agentToRoom = new GPConjunction();
-		agentToRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFINROOM),new String[]{"a", "r"}));
+		agentToRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFAGENTINROOM),new String[]{"a", "r"}));
 		liftedTasks.add(agentToRoom);
 
 		hashingFactory = new DiscreteStateHashFactory();

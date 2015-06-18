@@ -55,6 +55,10 @@ public class CommandCheckProps implements ICommand{
 			buf.append(gp.toString());
 			buf.append("\n");
 		}
+		
+		for (PropositionalFunction p : domain.getPropFunctions()) {
+			System.out.println(p.getName());
+		}
 
 		sender.addChatMessage(new ChatComponentText(buf.toString()));
 

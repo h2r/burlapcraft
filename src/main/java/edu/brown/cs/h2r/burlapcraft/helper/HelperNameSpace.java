@@ -50,6 +50,12 @@ public class HelperNameSpace {
 	public static final String							PFROOMGREEN = "roomIsGreen";
 	public static final String							PFROOMORANGE = "roomIsOrange";
 	public static final String							PFAGENTHASBLOCK = "agentHasBlock";
+
+	public static final String							PFBLOCKCOLORBASE = "blockIs";
+	public static final String							PFBLOCKRED = PFBLOCKCOLORBASE+"Red";
+	public static final String							PFBLOCKGREEN = PFBLOCKCOLORBASE+"Green";
+	public static final String							PFBLOCKBLUE = PFBLOCKCOLORBASE+"Blue";
+	public static final String							PFBLOCKORANGE = PFBLOCKCOLORBASE+"Orange";
 	
 	//-------------ENUMS-------------
 	public enum RotDirection {

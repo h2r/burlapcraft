@@ -28,7 +28,7 @@ public class CommandCheckProps implements ICommand{
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return commandName;
+		return commandName + " [+not]";
 	}
 
 	@Override
@@ -44,16 +44,30 @@ public class CommandCheckProps implements ICommand{
 		DomainGeneratorReal rdg = new DomainGeneratorReal(100, 100, 100);
 		Domain domain = rdg.generateDomain();
 
+		boolean printFalse = false;
+		if(args.length > 0){
+			if(args[0].equals("+not")){
+				printFalse = true;
+			}
+		}
+
 		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 
 		List<GroundedProp> gps = PropositionalFunction.getAllGroundedPropsFromPFList(domain.getPropFunctions(), s);
 		StringBuffer buf = new StringBuffer();
 		for(GroundedProp gp : gps){
 			if(!gp.isTrue(s)){
-				buf.append("NOT ");
+				if(printFalse) {
+					buf.append("NOT ");
+					buf.append(gp.toString());
+					buf.append("\n");
+				}
 			}
-			buf.append(gp.toString());
-			buf.append("\n");
+			else{
+				buf.append(gp.toString());
+				buf.append("\n");
+			}
+
 		}
 		
 

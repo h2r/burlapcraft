@@ -16,11 +16,11 @@ import java.util.List;
  */
 public class CommandCheckState implements ICommand{
 
-	List aliass = new ArrayList();
+	List aliases = new ArrayList();
 	Domain domain;
 
 	public CommandCheckState(){
-		this.aliass.add("checkState");
+		this.aliases.add("checkState");
 		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
 		domain = rdg.generateDomain();
 	}
@@ -37,7 +37,7 @@ public class CommandCheckState implements ICommand{
 
 	@Override
 	public List getCommandAliases() {
-		return aliass;
+		return aliases;
 	}
 
 	@Override

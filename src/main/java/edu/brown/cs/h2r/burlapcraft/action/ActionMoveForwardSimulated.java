@@ -78,13 +78,13 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 		
 		//make sure new position is valid (not a wall or off bounds)
 		if(nx < 0 || nx >= length || nz < 0 || nz >= width ||  
-			map[curY][nx][nz] >= 1){
+			map[curY][nx][nz] >= 1 || map[curY + 1][nx][nz] >= 1){
 			nx = curX;
 			nz = curZ;
 		}
 		
 		for(HelperPos coord : coords) {
-			if (nx == coord.x && curY == coord.y && nz == coord.z) {
+			if (nx == coord.x && (curY == coord.y || curY + 1 == coord.y) && nz == coord.z) {
 				nx = curX;
 				nz = curZ;
 			}

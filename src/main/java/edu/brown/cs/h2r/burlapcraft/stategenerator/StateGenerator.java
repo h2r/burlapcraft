@@ -56,7 +56,7 @@ public class StateGenerator {
 				for (int k = 0; k < width; k++) {
 					Block block = HelperActions.getBlock(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
 					
-					if (d.getName().equals("fourrooms")) {
+					if (d.getName().equals("fourrooms") || d.getName().equals("cleanup")) {
 						fourRoomsFound = true;
 						if (block.equals(BurlapCraft.blueRock)) {
 							if (j > xMaxBlue) {

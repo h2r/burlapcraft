@@ -1,20 +1,20 @@
 package edu.brown.cs.h2r.burlapcraft.dungeongenerator;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 
-public class DungeonFourRooms extends Dungeon {
+public class DungeonCleanUp extends Dungeon {
 
-	public DungeonFourRooms(Pose _pose) {
-		super("fourrooms", _pose, 11, 12, 4, Pose.fromXyz(1.5, 5, 3));
+	public DungeonCleanUp(Pose _pose) {
+		super("cleanup", _pose, 11, 12, 4, Pose.fromXyz(1.5, 5, 3));
 	}
 
 	@Override
 	protected void generate(World world, int x, int y, int z) {
 
-		System.out.println("Making four rooms dungeon at " + x + "," + y + "," + z);
+		System.out.println("Making cleanup dungeon at " + x + "," + y + "," + z);
 
 		world.setBlock(x+0, y+0, z+0, BurlapCraft.redRock);
 		world.setBlock(x+1, y+0, z+0, BurlapCraft.redRock);
@@ -173,11 +173,11 @@ public class DungeonFourRooms extends Dungeon {
 		world.setBlock(x+0, y+1, z+2, BurlapCraft.redRock);
 		world.setBlock(x+1, y+1, z+2, Block.getBlockById(0));
 		world.setBlock(x+2, y+1, z+2, Block.getBlockById(0));
-		world.setBlock(x+3, y+1, z+2, Block.getBlockById(0));
+		world.setBlock(x+3, y+1, z+2, BurlapCraft.mineableBlueRock);
 		world.setBlock(x+4, y+1, z+2, Block.getBlockById(0));
 		world.setBlock(x+5, y+1, z+2, BurlapCraft.redRock);
 		world.setBlock(x+6, y+1, z+2, BurlapCraft.orangeRock);
-		world.setBlock(x+7, y+1, z+2, Block.getBlockById(0));
+		world.setBlock(x+7, y+1, z+2, BurlapCraft.mineableRedRock);
 		world.setBlock(x+8, y+1, z+2, Block.getBlockById(0));
 		world.setBlock(x+9, y+1, z+2, Block.getBlockById(0));
 		world.setBlock(x+10, y+1, z+2, BurlapCraft.orangeRock);
@@ -227,13 +227,13 @@ public class DungeonFourRooms extends Dungeon {
 		world.setBlock(x+10, y+1, z+6, BurlapCraft.greenRock);
 		world.setBlock(x+0, y+1, z+7, BurlapCraft.blueRock);
 		world.setBlock(x+1, y+1, z+7, Block.getBlockById(0));
-		world.setBlock(x+2, y+1, z+7, Block.getBlockById(0));
+		world.setBlock(x+2, y+1, z+7, BurlapCraft.mineableGreenRock);
 		world.setBlock(x+3, y+1, z+7, Block.getBlockById(0));
 		world.setBlock(x+4, y+1, z+7, BurlapCraft.blueRock);
 		world.setBlock(x+5, y+1, z+7, BurlapCraft.greenRock);
 		world.setBlock(x+6, y+1, z+7, Block.getBlockById(0));
 		world.setBlock(x+7, y+1, z+7, Block.getBlockById(0));
-		world.setBlock(x+8, y+1, z+7, Block.getBlockById(0));
+		world.setBlock(x+8, y+1, z+7, BurlapCraft.mineableOrangeRock);
 		world.setBlock(x+9, y+1, z+7, Block.getBlockById(0));
 		world.setBlock(x+10, y+1, z+7, BurlapCraft.greenRock);
 		world.setBlock(x+0, y+1, z+8, BurlapCraft.blueRock);

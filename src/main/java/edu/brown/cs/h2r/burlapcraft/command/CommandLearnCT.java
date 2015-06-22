@@ -10,10 +10,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
+import burlap.oomdp.singleagent.Action;
+import burlap.oomdp.singleagent.GroundedAction;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperCommandPair;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperLanguageTriplet;
 import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
@@ -25,15 +28,12 @@ public class CommandLearnCT implements ICommand {
 
 	private final List aliases;
 	Domain domain;
-	private ArrayList<State> states = new ArrayList<State>();
-	public static ArrayList<HelperCommandPair> learnList = new ArrayList<HelperCommandPair>();
+	private ArrayList<HelperLanguageTriplet> learnList = new ArrayList<HelperLanguageTriplet>();
 	public static boolean endLearning = false;
 	
 	public CommandLearnCT() {
 		aliases = new ArrayList();
 		aliases.add("learnCT");
-		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
-		domain = rdg.generateDomain();
 	}
 
 	@Override
@@ -64,16 +64,16 @@ public class CommandLearnCT implements ICommand {
 		}
 		
 		final String commandToLearn = StringUtils.join(args, " ");
+		DomainGeneratorSimulated sdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		domain = sdg.generateDomain();
+		final ArrayList<State> states = new ArrayList<State>();
 		
 		final Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				if (endLearning) {
-					HelperCommandPair pair = new HelperCommandPair(commandToLearn, states);
-					System.out.println("State List: " + states);
-					learnList.add(pair);
-					states = null;
+					inferActions(commandToLearn, states);
 					endLearning = false;
 					timer.cancel();
 				}
@@ -108,5 +108,21 @@ public class CommandLearnCT implements ICommand {
 		return false;
 	}
 
+	public void inferActions(String commandToLearn, ArrayList<State> states) {
+		ArrayList<Action> actions = new ArrayList<Action>();
+		for (int i = 1; i < states.size(); i++) {
+			State initialState = states.get(i - 1);
+			State targetState = states.get(i);
+			for (GroundedAction groundedAction : Action.getAllApplicableGroundedActionsFromActionList(domain.getActions(), initialState)) {
+				if (groundedAction.executeIn(initialState).equals(targetState)) {
+					actions.add(groundedAction.action);
+				}
+			}
+		}
+		HelperLanguageTriplet triplet = new HelperLanguageTriplet(commandToLearn, states, actions);
+		System.out.println("StateList: " + states);
+		System.out.println("ActionList: " + actions);
+		learnList.add(triplet);
+	}
 	
 }

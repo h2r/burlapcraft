@@ -21,11 +21,11 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 
 public class HelperActions {
-	
+
 	// minecraft and player
 	private static Minecraft mc = Minecraft.getMinecraft();
 	public static EntityPlayer player = mc.thePlayer;
-	
+
 	// click interactions
 	private static MovementInput resetMovementInput;
 	private static KeyBinding resetAttackKey;
@@ -35,7 +35,9 @@ public class HelperActions {
 
 	// categories of blocks
 	public static final Block[] mineableBlocks = { BurlapCraft.burlapStone,
-			Blocks.gold_block, BurlapCraft.mineableBlueRock, BurlapCraft.mineableGreenRock, BurlapCraft.mineableOrangeRock, BurlapCraft.mineableRedRock };
+			Blocks.gold_block, BurlapCraft.mineableBlueRock,
+			BurlapCraft.mineableGreenRock, BurlapCraft.mineableOrangeRock,
+			BurlapCraft.mineableRedRock };
 
 	public static final Block[] dangerBlocks = { Blocks.lava };
 
@@ -126,7 +128,7 @@ public class HelperActions {
 		int z = MathHelper.floor_double(getMinecraft().thePlayer.posZ);
 		return new HelperPos(x, y, z);
 	}
-	
+
 	public static Block getBlock(int x, int y, int z) {
 		return mc.theWorld.getBlock(x, y, z);
 	}
@@ -217,7 +219,7 @@ public class HelperActions {
 	public static int getBlockId(double x, double y, double z) {
 		return getBlockId((int) x, (int) y, (int) z);
 	}
-	
+
 	public static int getBlockId(int x, int y, int z) {
 		Chunk chunk = mc.theWorld.getChunkFromChunkCoords(x >> 4, z >> 4);
 		chunk.getBlock(x & 0xF, y, z & 0xF);

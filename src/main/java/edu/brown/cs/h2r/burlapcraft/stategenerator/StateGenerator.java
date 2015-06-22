@@ -1,5 +1,7 @@
 package edu.brown.cs.h2r.burlapcraft.stategenerator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.Block;
@@ -14,25 +16,24 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 
 public class StateGenerator {
-	
+
 	// tracking number of blocks to set blockIDs
 	public static int blockCount = 0;
-	
-	
+
 	private static Pose dungeonPose;
 	private static int length;
 	private static int width;
 	private static int height;
 
 	public static State getCurrentState(Domain domain, Dungeon d) {
-		
+
 		dungeonPose = d.getPose();
 		length = d.getLength();
 		width = d.getWidth();
 		height = d.getHeight();
 
 		State s = new State();
-		
+
 		int xMaxBlue = -1;
 		int xMinBlue = Integer.MAX_VALUE;
 		int zMinBlue = Integer.MAX_VALUE;
@@ -50,13 +51,16 @@ public class StateGenerator {
 		int zMinGreen = Integer.MAX_VALUE;
 		int zMaxGreen = -1;
 		boolean fourRoomsFound = false;
-		
+
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < length; j++) {
 				for (int k = 0; k < width; k++) {
-					Block block = HelperActions.getBlock(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
-					
-					if (d.getName().equals("fourrooms") || d.getName().equals("cleanup")) {
+					Block block = HelperActions.getBlock(
+							dungeonPose.getX() + j, dungeonPose.getY() + i,
+							dungeonPose.getZ() + k);
+
+					if (d.getName().equals("fourrooms")
+							|| d.getName().equals("cleanup")) {
 						fourRoomsFound = true;
 						if (block.equals(BurlapCraft.blueRock)) {
 							if (j > xMaxBlue) {
@@ -71,8 +75,7 @@ public class StateGenerator {
 							if (k < zMinBlue) {
 								zMinBlue = k;
 							}
-						}
-						else if (block.equals(BurlapCraft.orangeRock)) {
+						} else if (block.equals(BurlapCraft.orangeRock)) {
 							if (j > xMaxOrange) {
 								xMaxOrange = j;
 							}
@@ -85,8 +88,7 @@ public class StateGenerator {
 							if (k < zMinOrange) {
 								zMinOrange = k;
 							}
-						}
-						else if (block.equals(BurlapCraft.greenRock)) {
+						} else if (block.equals(BurlapCraft.greenRock)) {
 							if (j > xMaxGreen) {
 								xMaxGreen = j;
 							}
@@ -99,8 +101,7 @@ public class StateGenerator {
 							if (k < zMinGreen) {
 								zMinGreen = k;
 							}
-						}
-						else if (block.equals(BurlapCraft.redRock)) {
+						} else if (block.equals(BurlapCraft.redRock)) {
 							if (j > xMaxRed) {
 								xMaxRed = j;
 							}
@@ -115,25 +116,36 @@ public class StateGenerator {
 							}
 						}
 					}
-					
-					if (HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks)) {
-						int blockID = HelperActions.getBlockId(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
+
+					if (HelperActions.blockIsOneOf(block,
+							HelperActions.mineableBlocks)
+							|| HelperActions.blockIsOneOf(block,
+									HelperActions.dangerBlocks)) {
+						int blockID = HelperActions.getBlockId(
+								dungeonPose.getX() + j, dungeonPose.getY() + i,
+								dungeonPose.getZ() + k);
 						blockCount += 1;
 						// Note: name block after its x, y, and z coordinates
-						ObjectInstance blockInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), "block" + blockCount);
+						ObjectInstance blockInstance = new ObjectInstance(
+								domain.getObjectClass(HelperNameSpace.CLASSBLOCK),
+								"block" + blockCount);
 						blockInstance.setValue(HelperNameSpace.ATX, j);
 						blockInstance.setValue(HelperNameSpace.ATY, i);
 						blockInstance.setValue(HelperNameSpace.ATZ, k);
-						blockInstance.setValue(HelperNameSpace.ATBTYPE, blockID);
-						
+						blockInstance
+								.setValue(HelperNameSpace.ATBTYPE, blockID);
+
 						s.addObject(blockInstance);
 					}
 				}
 			}
-			
+
 			if (fourRoomsFound) {
-				if (xMaxBlue !=  -1 && xMinBlue != Integer.MAX_VALUE && zMaxBlue != -1 && zMinBlue != Integer.MAX_VALUE) {
-					ObjectInstance blueRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomblue");
+				if (xMaxBlue != -1 && xMinBlue != Integer.MAX_VALUE
+						&& zMaxBlue != -1 && zMinBlue != Integer.MAX_VALUE) {
+					ObjectInstance blueRoomInstance = new ObjectInstance(
+							domain.getObjectClass(HelperNameSpace.CLASSROOM),
+							"roomblue");
 					blueRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxBlue);
 					blueRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinBlue);
 					blueRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxBlue);
@@ -141,8 +153,11 @@ public class StateGenerator {
 					blueRoomInstance.setValue(HelperNameSpace.ATCOLOR, "blue");
 					s.addObject(blueRoomInstance);
 				}
-				if (xMaxRed != -1 && xMinRed != Integer.MAX_VALUE && zMaxRed != -1 && zMinRed != Integer.MAX_VALUE) {
-					ObjectInstance redRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomred");
+				if (xMaxRed != -1 && xMinRed != Integer.MAX_VALUE
+						&& zMaxRed != -1 && zMinRed != Integer.MAX_VALUE) {
+					ObjectInstance redRoomInstance = new ObjectInstance(
+							domain.getObjectClass(HelperNameSpace.CLASSROOM),
+							"roomred");
 					redRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxRed);
 					redRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinRed);
 					redRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxRed);
@@ -150,25 +165,41 @@ public class StateGenerator {
 					redRoomInstance.setValue(HelperNameSpace.ATCOLOR, "red");
 					s.addObject(redRoomInstance);
 				}
-				if (xMaxGreen != -1 && xMinGreen != Integer.MAX_VALUE && zMaxGreen != -1 && zMinGreen != Integer.MAX_VALUE) {
-					ObjectInstance greenRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomgreen");
-					greenRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxGreen);
-					greenRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinGreen);
-					greenRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxGreen);
-					greenRoomInstance.setValue(HelperNameSpace.ATZMIN, zMinGreen);
-					greenRoomInstance.setValue(HelperNameSpace.ATCOLOR, "green");
+				if (xMaxGreen != -1 && xMinGreen != Integer.MAX_VALUE
+						&& zMaxGreen != -1 && zMinGreen != Integer.MAX_VALUE) {
+					ObjectInstance greenRoomInstance = new ObjectInstance(
+							domain.getObjectClass(HelperNameSpace.CLASSROOM),
+							"roomgreen");
+					greenRoomInstance.setValue(HelperNameSpace.ATXMAX,
+							xMaxGreen);
+					greenRoomInstance.setValue(HelperNameSpace.ATXMIN,
+							xMinGreen);
+					greenRoomInstance.setValue(HelperNameSpace.ATZMAX,
+							zMaxGreen);
+					greenRoomInstance.setValue(HelperNameSpace.ATZMIN,
+							zMinGreen);
+					greenRoomInstance
+							.setValue(HelperNameSpace.ATCOLOR, "green");
 					s.addObject(greenRoomInstance);
 				}
-				if (xMaxOrange != -1 && xMinOrange != Integer.MAX_VALUE && zMaxOrange != -1 && zMinOrange != Integer.MAX_VALUE) {
-					ObjectInstance orangeRoomInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSROOM), "roomorange");
-					orangeRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxOrange);
-					orangeRoomInstance.setValue(HelperNameSpace.ATXMIN, xMinOrange);
-					orangeRoomInstance.setValue(HelperNameSpace.ATZMAX, zMaxOrange);
-					orangeRoomInstance.setValue(HelperNameSpace.ATZMIN, zMinOrange);
-					orangeRoomInstance.setValue(HelperNameSpace.ATCOLOR, "orange");
+				if (xMaxOrange != -1 && xMinOrange != Integer.MAX_VALUE
+						&& zMaxOrange != -1 && zMinOrange != Integer.MAX_VALUE) {
+					ObjectInstance orangeRoomInstance = new ObjectInstance(
+							domain.getObjectClass(HelperNameSpace.CLASSROOM),
+							"roomorange");
+					orangeRoomInstance.setValue(HelperNameSpace.ATXMAX,
+							xMaxOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATXMIN,
+							xMinOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATZMAX,
+							zMaxOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATZMIN,
+							zMinOrange);
+					orangeRoomInstance.setValue(HelperNameSpace.ATCOLOR,
+							"orange");
 					s.addObject(orangeRoomInstance);
 				}
-			}		
+			}
 		}
 
 		HelperPos curPos = HelperActions.getPlayerPosition();
@@ -176,7 +207,8 @@ public class StateGenerator {
 		int rotateVertDirection = HelperActions.getPitchDirection();
 		System.out.println("Player position: " + curPos);
 		System.out.println("Dungeon: " + dungeonPose);
-		ObjectInstance agent = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSAGENT), "agent0");
+		ObjectInstance agent = new ObjectInstance(
+				domain.getObjectClass(HelperNameSpace.CLASSAGENT), "agent0");
 		agent.setValue(HelperNameSpace.ATX, curPos.x - dungeonPose.getX());
 		agent.setValue(HelperNameSpace.ATY, curPos.y - dungeonPose.getY());
 		agent.setValue(HelperNameSpace.ATZ, curPos.z - dungeonPose.getZ());
@@ -185,13 +217,21 @@ public class StateGenerator {
 
 		Map<String, Integer> items = HelperActions.checkInventory();
 		int bcount = 0;
-		for(Map.Entry<String, Integer> i : items.entrySet()){
-			if(i.getKey().equals("tile.burlapcraftmod_burlapstone")){
-				ObjectInstance o = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK), "inventoryBlock" + bcount);
-				o.setValue(HelperNameSpace.ATBTYPE, 165);
-				o.setValue(HelperNameSpace.ATIBQUANT, i.getValue());
-				s.addObject(o);
-				bcount++;
+		HashMap<String, Integer> blockMap = new HashMap<String, Integer>();
+		for (Block block : HelperActions.mineableBlocks) {
+			blockMap.put(block.getUnlocalizedName(), block.getIdFromBlock(block));
+		}
+		for (Map.Entry<String, Integer> i : items.entrySet()) {
+			for (String name : blockMap.keySet()) {
+				if (i.getKey().equals(name)) {
+					ObjectInstance o = new ObjectInstance(
+							domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK),
+							"inventoryBlock" + bcount);
+					o.setValue(HelperNameSpace.ATBTYPE, blockMap.get(name));
+					o.setValue(HelperNameSpace.ATIBQUANT, i.getValue());
+					s.addObject(o);
+					bcount++;
+				}
 			}
 		}
 
@@ -199,14 +239,15 @@ public class StateGenerator {
 		validate(s);
 		return s;
 	}
-	
+
 	public static void validate(State s) {
-		
-		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);		
+
+		ObjectInstance agent = s
+				.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-		
+
 		if (ax < 0) {
 			throw new IllegalStateException("Invalid agent x: " + ax);
 		}
@@ -216,31 +257,36 @@ public class StateGenerator {
 		if (az < 0) {
 			throw new IllegalStateException("Invalid agent z: " + az);
 		}
-		
-		
+
 	}
-	
+
 	public static int[][][] getMap(Dungeon dungeon) {
-		
+
 		Pose dungeonPose = dungeon.getPose();
 		int length = dungeon.getLength();
 		int width = dungeon.getWidth();
 		int height = dungeon.getHeight();
-		
+
 		int[][][] map = new int[height][length][width];
-		
+
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < length; j++) {
 				for (int k = 0; k < width; k++) {
-					Block block = HelperActions.getBlock(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
-					if (!(HelperActions.blockIsOneOf(block, HelperActions.mineableBlocks) || HelperActions.blockIsOneOf(block, HelperActions.dangerBlocks))) {
-						int blockID = HelperActions.getBlockId(dungeonPose.getX() + j, dungeonPose.getY() + i, dungeonPose.getZ() + k);
+					Block block = HelperActions.getBlock(
+							dungeonPose.getX() + j, dungeonPose.getY() + i,
+							dungeonPose.getZ() + k);
+					if (!(HelperActions.blockIsOneOf(block,
+							HelperActions.mineableBlocks) || HelperActions
+							.blockIsOneOf(block, HelperActions.dangerBlocks))) {
+						int blockID = HelperActions.getBlockId(
+								dungeonPose.getX() + j, dungeonPose.getY() + i,
+								dungeonPose.getZ() + k);
 						map[i][j][k] = blockID;
 					}
 				}
 			}
-		}	
+		}
 		return map;
 	}
-	
+
 }

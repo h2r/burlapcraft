@@ -88,8 +88,9 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		System.out.println("Setting maze1Pose: " + maze1Pose);
 		
 		int fourRoomsZOffset = 50;
+		int cleanUpZOffset = 70;
 		Pose fourRoomsPose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10 + fourRoomsZOffset);
-		Pose cleanUpPose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height + 15, playerSpawnPose.getZ() - 10 + fourRoomsZOffset);
+		Pose cleanUpPose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height + 15, playerSpawnPose.getZ() - 10 + cleanUpZOffset);
 		
 		BurlapCraft.registerDungeon(new DungeonFinder(finderPose));
 		BurlapCraft.registerDungeon(new DungeonTinyBridge(tinyBridgePose));

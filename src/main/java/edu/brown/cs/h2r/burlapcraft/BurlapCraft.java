@@ -29,7 +29,9 @@ import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
 import edu.brown.cs.h2r.burlapcraft.command.CommandCheckProps;
 import edu.brown.cs.h2r.burlapcraft.command.CommandCheckState;
 import edu.brown.cs.h2r.burlapcraft.command.CommandCreateDungeons;
+import edu.brown.cs.h2r.burlapcraft.command.CommandEndLearn;
 import edu.brown.cs.h2r.burlapcraft.command.CommandInventory;
+import edu.brown.cs.h2r.burlapcraft.command.CommandLearnCT;
 import edu.brown.cs.h2r.burlapcraft.command.CommandLoadLanguageModel;
 import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
 import edu.brown.cs.h2r.burlapcraft.command.CommandResetDungeon;
@@ -122,6 +124,8 @@ public class BurlapCraft {
         event.registerServerCommand(new CommandLoadLanguageModel());
         event.registerServerCommand(new CommandSay());
         event.registerServerCommand(new CommandCheckProps());
+        event.registerServerCommand(new CommandLearnCT());
+        event.registerServerCommand(new CommandEndLearn());
     	
     }
     

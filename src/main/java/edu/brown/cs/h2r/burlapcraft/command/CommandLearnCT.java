@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import org.apache.commons.lang3.StringUtils;
 
 import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
@@ -24,8 +25,8 @@ public class CommandLearnCT implements ICommand {
 
 	private final List aliases;
 	Domain domain;
-	private List states;
-	public static List learnList = new ArrayList<HelperCommandPair>();
+	private ArrayList<State> states = new ArrayList<State>();
+	public static ArrayList<HelperCommandPair> learnList = new ArrayList<HelperCommandPair>();
 	public static boolean endLearning = false;
 	
 	public CommandLearnCT() {
@@ -70,16 +71,25 @@ public class CommandLearnCT implements ICommand {
 			public void run() {
 				if (endLearning) {
 					HelperCommandPair pair = new HelperCommandPair(commandToLearn, states);
+					System.out.println("State List: " + states);
 					learnList.add(pair);
 					states = null;
 					endLearning = false;
 					timer.cancel();
 				}
 				else {
-					states.add(StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon));
+					State curState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+					if (states.size() == 0) {
+						states.add(curState);
+					}
+					else {
+						if (!curState.equals(states.get(states.size() - 1))) {
+							states.add(curState);
+						}
+					}
 				}
 			}
-		}, 0, 1000);
+		}, 0, 500);
 	}
 
 	@Override

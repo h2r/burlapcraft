@@ -24,16 +24,16 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class CommandLearnCT implements ICommand {
+public class CommandLearn implements ICommand {
 
 	private final List aliases;
 	Domain domain;
 	private ArrayList<HelperLanguageTriplet> learnList = new ArrayList<HelperLanguageTriplet>();
 	public static boolean endLearning = false;
 	
-	public CommandLearnCT() {
+	public CommandLearn() {
 		aliases = new ArrayList();
-		aliases.add("learnCT");
+		aliases.add("learn");
 	}
 
 	@Override
@@ -43,12 +43,12 @@ public class CommandLearnCT implements ICommand {
 
 	@Override
 	public String getCommandName() {
-		return "learnCT";
+		return "learn";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "learnCT <string command here>";
+		return "learn <string command here>";
 	}
 
 	@Override
@@ -108,21 +108,30 @@ public class CommandLearnCT implements ICommand {
 		return false;
 	}
 
-	public void inferActions(String commandToLearn, ArrayList<State> states) {
+	public void inferActions(String commandToLearn, ArrayList states) {
 		ArrayList<Action> actions = new ArrayList<Action>();
-		for (int i = 1; i < states.size(); i++) {
-			State initialState = states.get(i - 1);
-			State targetState = states.get(i);
-			for (GroundedAction groundedAction : Action.getAllApplicableGroundedActionsFromActionList(domain.getActions(), initialState)) {
-				if (groundedAction.executeIn(initialState).equals(targetState)) {
-					actions.add(groundedAction.action);
+		for (int i = 0; i < states.size() - 1; i++) {
+			if (states.get(i) == null) {
+				continue;
+			}
+			State curState = (State) states.get(i);
+			for (int j = i + 1; j < states.size(); j++) {
+				State targetState = (State) states.get(j);
+				for (GroundedAction groundedAction : Action.getAllApplicableGroundedActionsFromActionList(domain.getActions(), curState)) {
+					if (groundedAction.executeIn(curState).equals(targetState)) {
+						int k = j - i - 1;
+						while (k != 0) {
+							states.set(i + k, null);
+							k--;
+						}
+						actions.add(groundedAction.action);
+					}
 				}
 			}
 		}
 		HelperLanguageTriplet triplet = new HelperLanguageTriplet(commandToLearn, states, actions);
-		System.out.println("StateList: " + states);
-		System.out.println("ActionList: " + actions);
 		learnList.add(triplet);
+		System.out.println(learnList);
 	}
 	
 }

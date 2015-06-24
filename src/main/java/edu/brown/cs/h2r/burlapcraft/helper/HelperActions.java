@@ -115,6 +115,27 @@ public class HelperActions {
 			Blocks.double_plant, Blocks.red_mushroom, Blocks.brown_mushroom,
 			Blocks.redstone_wire, Blocks.fence, Blocks.fence_gate,
 			Blocks.cobblestone_wall, Blocks.cactus, Blocks.reeds };
+	
+    public static final Map<Integer, String> blockColorMap;
+    static
+    {
+        blockColorMap = new HashMap<Integer, String>();
+        blockColorMap.put(176, "red");
+    	blockColorMap.put(177, "green");
+    	blockColorMap.put(178, "blue");
+    	blockColorMap.put(179, "orange");
+    }
+    
+    public static final Map<Integer, String> blockShapeMap;
+    static
+    {
+    	blockShapeMap = new HashMap<Integer, String>();
+    	blockShapeMap.put(176, "chair");
+    	blockShapeMap.put(177, "bag");
+    	blockShapeMap.put(178, "chair");
+    	blockShapeMap.put(179, "bag");
+    }
+	
 
 	public static Minecraft getMinecraft() {
 		return mc;

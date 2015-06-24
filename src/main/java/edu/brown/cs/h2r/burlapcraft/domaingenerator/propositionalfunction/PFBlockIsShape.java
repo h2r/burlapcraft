@@ -4,24 +4,23 @@ import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.PropositionalFunction;
 import burlap.oomdp.core.State;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 
-/**
- * @author James MacGlashan.
- */
-public class PFBlockColor extends PropositionalFunction {
+public class PFBlockIsShape extends PropositionalFunction {
 
-	protected int blockType;
+	protected String shape;
 
-	public PFBlockColor(String name, Domain domain, int blockType) {
-		super(name, domain, new String[]{HelperNameSpace.CLASSBLOCK});
-		this.blockType = blockType;
+	public PFBlockIsShape(String name, Domain domain, String[] parameterClasses, String shape) {
+		super(name, domain, parameterClasses);
+		this.shape = shape;
 	}
 
 	@Override
 	public boolean isTrue(State s, String[] params) {
 		ObjectInstance block = s.getObject(params[0]);
 		int blockType = block.getIntValForAttribute(HelperNameSpace.ATBTYPE);
-		return blockType == this.blockType;
+		return HelperActions.blockColorMap.get(blockType) == this.shape;
 	}
+	
 }

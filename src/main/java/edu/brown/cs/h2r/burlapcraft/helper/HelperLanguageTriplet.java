@@ -35,4 +35,10 @@ public class HelperLanguageTriplet<Command, StateList, ActionList> {
     	this.a = a;
     }
     
+    @Override
+    public String toString() {
+        return "LanguageTriplet [Command=" + this.c + ", StateList=" + this.s + ", ActionList=" + this.a + "]";
+    }
+    
+    
 }

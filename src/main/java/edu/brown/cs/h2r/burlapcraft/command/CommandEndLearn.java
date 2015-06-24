@@ -52,7 +52,7 @@ public class CommandEndLearn implements ICommand {
 			return;
 		}
 		
-		CommandLearnCT.endLearning = true;
+		CommandLearn.endLearning = true;
 	}
 
 	@Override

@@ -34,7 +34,9 @@ import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockSimulated;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentHasBlock;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentInRoom;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockIsColor;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockInRoom;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockIsShape;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsBlue;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsGreen;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsOrange;
@@ -194,6 +196,12 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		new PFRoomIsOrange(HelperNameSpace.PFROOMORANGE, domain, HelperNameSpace.CLASSROOM);
 		new PFBlockInRoom(HelperNameSpace.PFBLOCKINROOM, domain, new String[]{HelperNameSpace.CLASSBLOCK, HelperNameSpace.CLASSROOM});
 		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK, HelperNameSpace.CLASSBLOCK});
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKRED, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "red");
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKBLUE, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "blue");
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKGREEN, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "green");
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKORANGE, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "orange");
+		new PFBlockIsShape(HelperNameSpace.PFBLOCKCHAIR, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "chair");
+		new PFBlockIsShape(HelperNameSpace.PFBLOCKBAG, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "bag");
 		
 		return domain;
 		

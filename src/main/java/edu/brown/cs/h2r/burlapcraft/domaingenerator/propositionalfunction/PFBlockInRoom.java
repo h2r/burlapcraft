@@ -20,6 +20,10 @@ public class PFBlockInRoom extends PropositionalFunction {
 		ObjectInstance block = s.getObject(params[0]);
 		ObjectInstance room = s.getObject(params[1]);
 		
+		if (block == null) {
+			return false;
+		}
+		
 		int blockX = block.getIntValForAttribute(HelperNameSpace.ATX);
 		int blockZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
 		

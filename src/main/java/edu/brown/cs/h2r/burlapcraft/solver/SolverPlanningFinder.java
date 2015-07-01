@@ -12,6 +12,7 @@ import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
+import burlap.behavior.statehashing.NameDependentStateHashFactory;
 import burlap.domain.singleagent.gridworld.GridWorldStateParser;
 import burlap.oomdp.auxiliary.StateParser;
 import burlap.oomdp.core.Domain;
@@ -36,7 +37,7 @@ public class SolverPlanningFinder {
 	TerminalFunction			tf;
 	StateConditionTest			goalCondition;
 	State 						initialState;
-	DiscreteStateHashFactory	hashingFactory;
+	NameDependentStateHashFactory hashingFactory;
 	
 	private int[][][] map;
 	private int[][] movementMap;
@@ -67,7 +68,7 @@ public class SolverPlanningFinder {
 		initialState = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonMap.get("finder"));
 		
 		//set up the state hashing system
-		hashingFactory = new DiscreteStateHashFactory();
+		hashingFactory = new NameDependentStateHashFactory();
 	}
 	
 	public void ASTAR() {
@@ -83,9 +84,9 @@ public class SolverPlanningFinder {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
-		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
-		HandlerFMLEvents.evaluateActions = true;
+//		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
+//		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
+//		HandlerFMLEvents.evaluateActions = true;
 	}
 	
 	public void BFS() {
@@ -100,9 +101,9 @@ public class SolverPlanningFinder {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
-		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length; 
-		HandlerFMLEvents.evaluateActions = true;
+//		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
+//		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length; 
+//		HandlerFMLEvents.evaluateActions = true;
 	}
 	
 //	private void executeActions(String actionSequence) {

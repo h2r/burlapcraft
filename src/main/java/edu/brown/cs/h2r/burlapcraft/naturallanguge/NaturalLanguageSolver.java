@@ -9,6 +9,7 @@ import burlap.behavior.singleagent.planning.deterministic.TFGoalCondition;
 import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
+import burlap.behavior.statehashing.NameDependentStateHashFactory;
 import burlap.behavior.statehashing.StateHashFactory;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.GroundedProp;
@@ -29,6 +30,7 @@ import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import generativemodel.GMQueryResult;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
+
 import org.lwjgl.Sys;
 
 import java.util.ArrayList;
@@ -65,7 +67,7 @@ public class NaturalLanguageSolver {
 		blockInRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFBLOCKINROOM), new String[]{"b", "r"}));
 		liftedTasks.add(blockInRoom);
 
-		hashingFactory = new DiscreteStateHashFactory();
+		hashingFactory = new NameDependentStateHashFactory();
 
 		commandController = new WeaklySupervisedController(referenceDomain, liftedTasks, hashingFactory, true);
 
@@ -119,7 +121,7 @@ public class NaturalLanguageSolver {
 
 		chatOrSystemPrint(sender, "Obeying command to achieve " + tf.toString());
 
-		AStar planner = new AStar(domain, rf, gc, new DiscreteStateHashFactory(), new NullHeuristic());
+		AStar planner = new AStar(domain, rf, gc, new NameDependentStateHashFactory(), new NullHeuristic());
 		planner.planFromState(initialState);
 		Policy p = new DDPlannerPolicy(planner);
 

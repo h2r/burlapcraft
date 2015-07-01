@@ -38,6 +38,8 @@ import edu.brown.cs.h2r.burlapcraft.command.CommandResetDungeon;
 import edu.brown.cs.h2r.burlapcraft.command.CommandSay;
 import edu.brown.cs.h2r.burlapcraft.command.CommandSmoothMove;
 import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
+import edu.brown.cs.h2r.burlapcraft.command.CommandTerminalExplore;
+import edu.brown.cs.h2r.burlapcraft.command.CommandTest;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
@@ -126,7 +128,9 @@ public class BurlapCraft {
         event.registerServerCommand(new CommandCheckProps());
         event.registerServerCommand(new CommandLearn());
         event.registerServerCommand(new CommandEndLearn());
-    	
+    	event.registerServerCommand(new CommandTest());
+    	event.registerServerCommand(new CommandTerminalExplore());
+        
     }
     
     @EventHandler

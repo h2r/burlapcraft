@@ -6,6 +6,7 @@ import burlap.oomdp.core.Attribute.AttributeType;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectClass;
 import burlap.oomdp.singleagent.SADomain;
+import edu.brown.cs.h2r.burlapcraft.action.ActionChangeItemReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangeYawReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionDestroyBlockReal;
@@ -131,6 +132,10 @@ public class DomainGeneratorReal implements DomainGenerator {
 		// Room color
 		Attribute color = new Attribute(domain, HelperNameSpace.ATCOLOR, Attribute.AttributeType.DISC);
 		color.setDiscValues(this.colors);
+		// Current Item ID
+		Attribute selectedItemID = new Attribute(domain, HelperNameSpace.ATSELECTEDITEMID, Attribute.AttributeType.INT);
+		// names of blocks
+		Attribute blockNames = new Attribute(domain, HelperNameSpace.ATBLOCKNAMES, Attribute.AttributeType.MULTITARGETRELATIONAL);
 		
 		// Object classes
 		// agent
@@ -140,6 +145,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 		agentClass.addAttribute(zAtt);
 		agentClass.addAttribute(rotDirAt);
 		agentClass.addAttribute(vertDirAt);
+		agentClass.addAttribute(selectedItemID);
 		// blocks
 		ObjectClass blockClass = new ObjectClass(domain, HelperNameSpace.CLASSBLOCK);
 		blockClass.addAttribute(xAtt);
@@ -150,7 +156,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 		// inventory blocks
 		ObjectClass inventoryBlockClass = new ObjectClass(domain, HelperNameSpace.CLASSINVENTORYBLOCK);
 		inventoryBlockClass.addAttribute(bType);
-		inventoryBlockClass.addAttribute(ibQuantity);
+		inventoryBlockClass.addAttribute(blockNames);
 		
 		// rooms
 		ObjectClass roomClass = new ObjectClass(domain, HelperNameSpace.CLASSROOM);
@@ -181,6 +187,9 @@ public class DomainGeneratorReal implements DomainGenerator {
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDESTBLOCK)) {
 			new ActionDestroyBlockReal(HelperNameSpace.ACTIONDESTBLOCK, domain, this.sleepMS);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONCHANGEITEM)) {
+			new ActionChangeItemReal(HelperNameSpace.ACTIONCHANGEITEM, domain, this.sleepMS);
 		}
 		
 		// Propositional Functions

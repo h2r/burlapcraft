@@ -26,6 +26,8 @@ public class HelperNameSpace {
 	public static final String							ATZMIN = "roomZMin";
 	public static final String							ATZMAX = "roomZMax";
 	public static final String							ATCOLOR = "roomColor";
+	public static final String							ATSELECTEDITEMID = "selectedItemID";
+	public static final String							ATBLOCKNAMES = "blockNames";
 	
 	//-------------BURLAP OBJECTCLASS STRINGS-------------
 	public static final String							CLASSAGENT = "agent";
@@ -34,13 +36,14 @@ public class HelperNameSpace {
 	public static final String							CLASSROOM = "room";
 	
 	//-------------ACTIONS STRINGS-------------
-	public static final String							ACTIONMOVE = "moveFoward";
+	public static final String							ACTIONMOVE = "moveForward";
 	public static final String							ACTIONROTATERIGHT = "rotateRight";
 	public static final String 							ACTIONROTATELEFT = "rotateLeft";
 	public static final String 							ACTIONDESTBLOCK = "destroyBlock";
 	public static final String							ACTIONPLACEBLOCK = "placeBlock";
 	public static final String							ACTIONAHEAD = "lookAhead";
 	public static final String							ACTIONDOWNONE = "lookDown";
+	public static final String							ACTIONCHANGEITEM = "changeItem";
 	
 	//-------------PROPOSITIONAL FUNCTION STRINGS-------------
 	public static final String							PFAGENTINROOM = "agentInRoom";

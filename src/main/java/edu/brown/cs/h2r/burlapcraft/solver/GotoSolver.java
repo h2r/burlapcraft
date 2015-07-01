@@ -17,6 +17,7 @@ import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
+import burlap.behavior.statehashing.NameDependentStateHashFactory;
 import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.ObjectInstance;
@@ -72,11 +73,11 @@ public class GotoSolver {
 
 		DeterministicPlanner planner = null;
 		if(plannerToUse == 0){
-			planner = new BFS(domain, gc, new DiscreteStateHashFactory());
+			planner = new BFS(domain, gc, new NameDependentStateHashFactory());
 
 		}
 		else if(plannerToUse == 1){
-			planner = new AStar(domain, rf, gc, new DiscreteStateHashFactory(), new NullHeuristic());
+			planner = new AStar(domain, rf, gc, new NameDependentStateHashFactory(), new NullHeuristic());
 		}
 		else{
 			throw new RuntimeException("Error: planner type is " + planner + "; use 0 for BFS or 1 for A*");

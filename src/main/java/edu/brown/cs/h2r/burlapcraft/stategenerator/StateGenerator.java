@@ -19,11 +19,15 @@ public class StateGenerator {
 
 	// tracking number of blocks to set blockIDs
 	public static int blockCount = 0;
+	public static int invBlockCount = 0;
+	public static HashMap<String, String> blockNameMap = new HashMap<String, String>();
+	public static HashMap<Integer, ArrayList<String>> invBlockNameMap = new HashMap<Integer, ArrayList<String>>();
 
 	private static Pose dungeonPose;
 	private static int length;
 	private static int width;
 	private static int height;
+	
 
 	public static State getCurrentState(Domain domain, Dungeon d) {
 
@@ -124,11 +128,25 @@ public class StateGenerator {
 						int blockID = HelperActions.getBlockId(
 								dungeonPose.getX() + j, dungeonPose.getY() + i,
 								dungeonPose.getZ() + k);
-						blockCount += 1;
+						int keyX = (int) dungeonPose.getX() + j;
+						int keyY = (int) dungeonPose.getY() + i;
+						int keyZ = (int) dungeonPose.getZ() + k;
+						String blockName;
+						blockName = "block";
+						String key = keyX + "," + keyY + "," + keyZ;
+						if (blockNameMap.containsKey(key)) {
+							blockName += blockNameMap.get(key);
+						}
+						else {
+							blockName += blockCount;
+							blockNameMap.put(key, "" + blockCount);
+							blockCount += 1;
+						}
+						
 						// Note: name block after its x, y, and z coordinates
 						ObjectInstance blockInstance = new ObjectInstance(
 								domain.getObjectClass(HelperNameSpace.CLASSBLOCK),
-								"block" + blockCount);
+								blockName);
 						blockInstance.setValue(HelperNameSpace.ATX, j);
 						blockInstance.setValue(HelperNameSpace.ATY, i);
 						blockInstance.setValue(HelperNameSpace.ATZ, k);
@@ -205,6 +223,7 @@ public class StateGenerator {
 		HelperPos curPos = HelperActions.getPlayerPosition();
 		int rotateDirection = HelperActions.getYawDirection();
 		int rotateVertDirection = HelperActions.getPitchDirection();
+		int selectedItemID = HelperActions.getCurrentItemID();
 		System.out.println("Player position: " + curPos);
 		System.out.println("Dungeon: " + dungeonPose);
 		ObjectInstance agent = new ObjectInstance(
@@ -214,9 +233,9 @@ public class StateGenerator {
 		agent.setValue(HelperNameSpace.ATZ, curPos.z - dungeonPose.getZ());
 		agent.setValue(HelperNameSpace.ATROTDIR, rotateDirection);
 		agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
+		agent.setValue(HelperNameSpace.ATSELECTEDITEMID, selectedItemID);
 
 		Map<String, Integer> items = HelperActions.checkInventory();
-		int bcount = 0;
 		HashMap<String, Integer> blockMap = new HashMap<String, Integer>();
 		for (Block block : HelperActions.mineableBlocks) {
 			blockMap.put(block.getUnlocalizedName(), block.getIdFromBlock(block));
@@ -226,17 +245,28 @@ public class StateGenerator {
 				if (i.getKey().equals(name)) {
 					ObjectInstance o = new ObjectInstance(
 							domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK),
-							"inventoryBlock" + bcount);
+							"invBlock" + invBlockCount);
+					Integer key = blockMap.get(name);
+					if (invBlockNameMap.containsKey(key)) {
+						for (String invBlockName : invBlockNameMap.get(key)) {
+							o.addRelationalTarget(HelperNameSpace.ATBLOCKNAMES, invBlockName);
+						}
+					}
+					else {
+						o.addRelationalTarget(HelperNameSpace.ATBLOCKNAMES, "block" + blockCount);
+						blockCount++;
+					}
+					
 					o.setValue(HelperNameSpace.ATBTYPE, blockMap.get(name));
-					o.setValue(HelperNameSpace.ATIBQUANT, i.getValue());
 					s.addObject(o);
-					bcount++;
+					invBlockCount++;
 				}
 			}
 		}
 
 		s.addObject(agent);
 		validate(s);
+		System.out.println(s.toString());
 		return s;
 	}
 

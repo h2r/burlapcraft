@@ -15,6 +15,7 @@ import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandTeleport implements ICommand {
 	
@@ -91,6 +92,8 @@ public class CommandTeleport implements ICommand {
 				return;
 			}
 
+			StateGenerator.blockNameMap.clear();
+			StateGenerator.invBlockNameMap.clear();
 			Pose offset = d.getPlayerStartOffset();
 			Pose playerPose = d.getPose().add(offset);
 			HelperActions.setPlayerPosition(player, playerPose);

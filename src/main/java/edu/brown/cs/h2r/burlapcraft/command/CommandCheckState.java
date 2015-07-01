@@ -44,6 +44,8 @@ public class CommandCheckState implements ICommand{
 	public void processCommand(ICommandSender sender, String[] args) {
 		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 		System.out.println(s.getCompleteStateDescriptionWithUnsetAttributesAsNull());
+		System.out.println(StateGenerator.invBlockNameMap);
+		System.out.println(StateGenerator.blockNameMap);
 	}
 
 	@Override

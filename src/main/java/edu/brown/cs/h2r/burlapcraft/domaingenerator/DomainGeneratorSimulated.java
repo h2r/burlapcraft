@@ -22,6 +22,7 @@ import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 import cpw.mods.fml.common.registry.GameData;
+import edu.brown.cs.h2r.burlapcraft.action.ActionChangeItemSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangeYawReal;
@@ -137,6 +138,10 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		// Room color
 		Attribute color = new Attribute(domain, HelperNameSpace.ATCOLOR, Attribute.AttributeType.DISC);
 		color.setDiscValues(this.colors);
+		// Current Item ID
+		Attribute selectedItemID = new Attribute(domain, HelperNameSpace.ATSELECTEDITEMID, Attribute.AttributeType.INT);
+		// names of blocks
+		Attribute blockNames = new Attribute(domain, HelperNameSpace.ATBLOCKNAMES, Attribute.AttributeType.MULTITARGETRELATIONAL);
 		
 		
 		// Object classes
@@ -147,6 +152,7 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		agentClass.addAttribute(zAtt);
 		agentClass.addAttribute(rotDirAt);
 		agentClass.addAttribute(vertDirAt);
+		agentClass.addAttribute(selectedItemID);
 		// blocks
 		ObjectClass blockClass = new ObjectClass(domain, HelperNameSpace.CLASSBLOCK);
 		blockClass.addAttribute(xAtt);
@@ -156,7 +162,7 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		// inventory blocks
 		ObjectClass inventoryBlockClass = new ObjectClass(domain, HelperNameSpace.CLASSINVENTORYBLOCK);
 		inventoryBlockClass.addAttribute(bType);
-		inventoryBlockClass.addAttribute(ibQuantity);
+		inventoryBlockClass.addAttribute(blockNames);
 		// rooms
 		ObjectClass roomClass = new ObjectClass(domain, HelperNameSpace.CLASSROOM);
 		roomClass.addAttribute(xMax);
@@ -186,6 +192,9 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDESTBLOCK)) {
 			new ActionDestroyBlockSimulated(HelperNameSpace.ACTIONDESTBLOCK, domain);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONCHANGEITEM)) {
+			new ActionChangeItemSimulated(HelperNameSpace.ACTIONCHANGEITEM, domain);
 		}
 
 		// Propositional Functions

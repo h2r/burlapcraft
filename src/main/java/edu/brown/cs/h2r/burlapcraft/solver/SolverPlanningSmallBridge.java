@@ -13,6 +13,7 @@ import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
+import burlap.behavior.statehashing.NameDependentStateHashFactory;
 import burlap.domain.singleagent.gridworld.GridWorldStateParser;
 import burlap.oomdp.auxiliary.StateParser;
 import burlap.oomdp.core.Domain;
@@ -21,6 +22,7 @@ import burlap.oomdp.core.State;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
+import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
@@ -40,8 +42,7 @@ public class SolverPlanningSmallBridge {
 	TerminalFunction			tf;
 	StateConditionTest			goalCondition;
 	State 						initialState;
-	DiscreteStateHashFactory	hashingFactory;
-
+	NameDependentStateHashFactory hashingFactory;
 	DomainGeneratorReal 		rdg;
 	Domain						realDomain;
 	
@@ -77,7 +78,7 @@ public class SolverPlanningSmallBridge {
 		initialState = StateGenerator.getCurrentState(domain, BurlapCraft.dungeonMap.get("small_bridge"));
 		
 		//set up the state hashing system
-		hashingFactory = new DiscreteStateHashFactory();
+		hashingFactory = new NameDependentStateHashFactory();
 	}
 	
 	public void ASTAR() {
@@ -87,11 +88,17 @@ public class SolverPlanningSmallBridge {
 		DeterministicPlanner planner = new AStar(domain, rf, goalCondition, hashingFactory, new NullHeuristic());
 		planner.planFromState(initialState);
 		planner.setTf(tf);
+		
+//		TerminalExplorer exp = new TerminalExplorer(domain);
+//		exp.exploreFromState(initialState);
 
 		Policy p = new DDPlannerPolicy(planner);
 		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
-		rp.evaluateBehavior(initialState, rf, tf, 100);
-
+		EpisodeAnalysis ea = p.evaluateBehavior(initialState, rf, tf, 100);
+		for (int i = 0; i < ea.numTimeSteps() - 1; i++) {
+			System.out.println(ea.getState(i).toString());
+			System.out.println(ea.getAction(i).toString());
+		}
 		/*
 		Policy p = new SDPlannerPolicy(planner);
 		
@@ -121,9 +128,9 @@ public class SolverPlanningSmallBridge {
 			System.out.println(ea.getState(i).toString());
 			System.out.println(ea.getAction(i).toString());
 		}
-		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
-		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
-		HandlerFMLEvents.evaluateActions = true;
+//		HandlerFMLEvents.actions = ea.getActionSequenceString().split("; ");
+//		HandlerFMLEvents.actionsLeft = HandlerFMLEvents.actions.length;
+//		HandlerFMLEvents.evaluateActions = true;
 	}
 	
 		

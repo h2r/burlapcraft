@@ -10,6 +10,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovementInput;
@@ -41,7 +43,10 @@ public class HelperActions {
 
 	public static final Block[] dangerBlocks = { Blocks.lava };
 
-	public static final Block[] placeOnBlocks = { Blocks.lava, Blocks.air };
+	public static final Block[] placeInBlocks = { Blocks.lava, Blocks.air };
+	
+	public static final Block[] unbreakableBlocks = { Blocks.bedrock, BurlapCraft.redRock, BurlapCraft.blueRock,
+		BurlapCraft.greenRock, BurlapCraft.orangeRock };
 
 	public static final Block[] normalBlocks = { Blocks.bedrock,
 			Blocks.bookshelf, Blocks.brick_block, Blocks.brown_mushroom_block,
@@ -458,24 +463,16 @@ public class HelperActions {
 	}
 
 	public static void placeBlock() {
-		int count = 9;
-		for (int i = 0; i < count; i++) {
-			if (mc.thePlayer.inventory.getCurrentItem() != null) {
-				if (mc.thePlayer.getCurrentEquippedItem().getUnlocalizedName()
-						.equals("tile.burlapcraftmod_burlapstone")) {
-					overrideUseItem();
-					final Timer timer = new Timer();
-					timer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							resetAllInputs();
-							timer.cancel();
-						}
-					}, 200, 10);
-					break;
+		if (mc.thePlayer.inventory.getCurrentItem() != null) {
+			overrideUseItem();
+			final Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					resetAllInputs();
+					timer.cancel();
 				}
-			}
-			mc.thePlayer.inventory.changeCurrentItem(-1);
+			}, 200, 10);
 		}
 	}
 
@@ -514,6 +511,21 @@ public class HelperActions {
 
 		return itemSets;
 
+	}
+	
+	public static int changeItem() {
+		mc.thePlayer.inventory.changeCurrentItem(-1);
+		if (mc.thePlayer.inventory.getCurrentItem() != null) {
+			return getCurrentItemID();
+		}
+		return -1;
+	}
+	
+	public static int getCurrentItemID() {
+		if (mc.thePlayer.inventory.getCurrentItem() != null) {
+			return Item.getIdFromItem(mc.thePlayer.inventory.getCurrentItem().getItem());
+		}
+		return -1;
 	}
 
 }

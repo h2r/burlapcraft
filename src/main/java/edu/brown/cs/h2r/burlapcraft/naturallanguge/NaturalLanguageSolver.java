@@ -1,5 +1,6 @@
 package edu.brown.cs.h2r.burlapcraft.naturallanguge;
 
+import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.Policy;
 import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;

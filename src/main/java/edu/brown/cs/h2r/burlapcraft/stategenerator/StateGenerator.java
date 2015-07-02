@@ -2,6 +2,7 @@ package edu.brown.cs.h2r.burlapcraft.stategenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
@@ -19,7 +20,6 @@ public class StateGenerator {
 
 	// tracking number of blocks to set blockIDs
 	public static int blockCount = 0;
-	public static int invBlockCount = 0;
 	public static HashMap<String, String> blockNameMap = new HashMap<String, String>();
 	public static HashMap<Integer, ArrayList<String>> invBlockNameMap = new HashMap<Integer, ArrayList<String>>();
 
@@ -135,11 +135,11 @@ public class StateGenerator {
 						blockName = "block";
 						String key = keyX + "," + keyY + "," + keyZ;
 						if (blockNameMap.containsKey(key)) {
-							blockName += blockNameMap.get(key);
+							blockName = blockNameMap.get(key);
 						}
 						else {
 							blockName += blockCount;
-							blockNameMap.put(key, "" + blockCount);
+							blockNameMap.put(key, blockName);
 							blockCount += 1;
 						}
 						
@@ -234,6 +234,9 @@ public class StateGenerator {
 		agent.setValue(HelperNameSpace.ATROTDIR, rotateDirection);
 		agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
 		agent.setValue(HelperNameSpace.ATSELECTEDITEMID, selectedItemID);
+		
+		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASSINVENTORYBLOCK);
+		int invBlockCount = invBlocks.size();
 
 		Map<String, Integer> items = HelperActions.checkInventory();
 		HashMap<String, Integer> blockMap = new HashMap<String, Integer>();
@@ -245,7 +248,7 @@ public class StateGenerator {
 				if (i.getKey().equals(name)) {
 					ObjectInstance o = new ObjectInstance(
 							domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK),
-							"invBlock" + invBlockCount);
+							"inventoryBlock" + invBlockCount);
 					Integer key = blockMap.get(name);
 					if (invBlockNameMap.containsKey(key)) {
 						for (String invBlockName : invBlockNameMap.get(key)) {
@@ -259,14 +262,12 @@ public class StateGenerator {
 					
 					o.setValue(HelperNameSpace.ATBTYPE, blockMap.get(name));
 					s.addObject(o);
-					invBlockCount++;
 				}
 			}
 		}
 
 		s.addObject(agent);
 		validate(s);
-		System.out.println(s.toString());
 		return s;
 	}
 

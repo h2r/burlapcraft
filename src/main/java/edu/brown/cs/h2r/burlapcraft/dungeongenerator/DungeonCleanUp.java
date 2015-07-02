@@ -163,7 +163,7 @@ public class DungeonCleanUp extends Dungeon {
 		world.setBlock(x+1, y+1, z+1, Block.getBlockById(0));
 		world.setBlock(x+2, y+1, z+1, Block.getBlockById(0));
 		world.setBlock(x+3, y+1, z+1, Block.getBlockById(0));
-		world.setBlock(x+4, y+1, z+1, Block.getBlockById(0));
+		world.setBlock(x+4, y+1, z+1, BurlapCraft.mineableBlueRock);
 		world.setBlock(x+5, y+1, z+1, BurlapCraft.redRock);
 		world.setBlock(x+6, y+1, z+1, BurlapCraft.orangeRock);
 		world.setBlock(x+7, y+1, z+1, Block.getBlockById(0));
@@ -173,7 +173,7 @@ public class DungeonCleanUp extends Dungeon {
 		world.setBlock(x+0, y+1, z+2, BurlapCraft.redRock);
 		world.setBlock(x+1, y+1, z+2, Block.getBlockById(0));
 		world.setBlock(x+2, y+1, z+2, Block.getBlockById(0));
-		world.setBlock(x+3, y+1, z+2, BurlapCraft.mineableBlueRock);
+		world.setBlock(x+3, y+1, z+2, Block.getBlockById(0));
 		world.setBlock(x+4, y+1, z+2, Block.getBlockById(0));
 		world.setBlock(x+5, y+1, z+2, BurlapCraft.redRock);
 		world.setBlock(x+6, y+1, z+2, BurlapCraft.orangeRock);

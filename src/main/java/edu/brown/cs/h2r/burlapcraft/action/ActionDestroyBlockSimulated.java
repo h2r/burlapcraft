@@ -75,8 +75,7 @@ public class ActionDestroyBlockSimulated extends ActionAgentSimulated {
 				}
 				if (!present) {
 					// create a new object instance if it is not present
-					ObjectInstance inventoryBlockInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK), "inventoryBlock" + StateGenerator.invBlockCount);
-					StateGenerator.invBlockCount++;
+					ObjectInstance inventoryBlockInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK), "inventoryBlock" + invBlocks.size());
 					inventoryBlockInstance.setValue(HelperNameSpace.ATBTYPE, blockID);
 					inventoryBlockInstance.addRelationalTarget(HelperNameSpace.ATBLOCKNAMES, blockName);
 					s.addObject(inventoryBlockInstance);

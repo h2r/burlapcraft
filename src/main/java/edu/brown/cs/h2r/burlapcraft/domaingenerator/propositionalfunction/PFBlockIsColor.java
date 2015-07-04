@@ -20,6 +20,6 @@ public class PFBlockIsColor extends PropositionalFunction {
 	public boolean isTrue(State s, String[] params) {
 		ObjectInstance block = s.getObject(params[0]);
 		int blockType = block.getIntValForAttribute(HelperNameSpace.ATBTYPE);
-		return HelperActions.blockColorMap.get(blockType) == this.color;
+		return HelperActions.blockColorMap.get(blockType).equals(this.color);
 	}
 }

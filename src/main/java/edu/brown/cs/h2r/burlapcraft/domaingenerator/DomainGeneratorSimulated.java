@@ -205,12 +205,12 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		new PFRoomIsOrange(HelperNameSpace.PFROOMORANGE, domain, HelperNameSpace.CLASSROOM);
 		new PFBlockInRoom(HelperNameSpace.PFBLOCKINROOM, domain, new String[]{HelperNameSpace.CLASSBLOCK, HelperNameSpace.CLASSROOM});
 		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK, HelperNameSpace.CLASSBLOCK});
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKRED, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "red");
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKBLUE, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "blue");
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKGREEN, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "green");
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKORANGE, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "orange");
-		new PFBlockIsShape(HelperNameSpace.PFBLOCKCHAIR, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "chair");
-		new PFBlockIsShape(HelperNameSpace.PFBLOCKBAG, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK}, "bag");
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKRED, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "red");
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKBLUE, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "blue");
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKGREEN, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "green");
+		new PFBlockIsColor(HelperNameSpace.PFBLOCKORANGE, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "orange");
+		new PFBlockIsShape(HelperNameSpace.PFBLOCKCHAIR, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "chair");
+		new PFBlockIsShape(HelperNameSpace.PFBLOCKBAG, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "bag");
 		
 		return domain;
 		

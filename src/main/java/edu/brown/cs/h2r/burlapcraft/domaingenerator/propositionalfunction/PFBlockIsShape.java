@@ -20,7 +20,7 @@ public class PFBlockIsShape extends PropositionalFunction {
 	public boolean isTrue(State s, String[] params) {
 		ObjectInstance block = s.getObject(params[0]);
 		int blockType = block.getIntValForAttribute(HelperNameSpace.ATBTYPE);
-		return HelperActions.blockColorMap.get(blockType) == this.shape;
+		return HelperActions.blockShapeMap.get(blockType).equals(this.shape);
 	}
 	
 }

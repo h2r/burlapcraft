@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import burlap.oomdp.auxiliary.StateParser;
+import burlap.oomdp.auxiliary.common.StateJSONParser;
 import burlap.oomdp.auxiliary.common.StateYAMLParser;
 import burlap.oomdp.core.Domain;
 import commands.data.TrainingElement;
 import commands.data.TrainingElementParser;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
@@ -55,10 +57,10 @@ public class CommandWriteLanguageData implements ICommand {
 		
 		String path = args[0];
 		
-		DomainGeneratorSimulated sdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
-		Domain domain = sdg.generateDomain();
+		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
+		Domain domain = rdg.generateDomain();
 		
-		StateParser sp = new StateYAMLParser(domain);
+		StateParser sp = new StateJSONParser(domain);
 		
 		TrainingElementParser tep = new TrainingElementParser(domain, sp);
 		

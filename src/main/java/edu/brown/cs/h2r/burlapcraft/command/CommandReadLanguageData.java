@@ -2,24 +2,15 @@ package edu.brown.cs.h2r.burlapcraft.command;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
-
-import org.apache.commons.lang3.StringUtils;
-
 import burlap.oomdp.auxiliary.StateParser;
-import burlap.oomdp.auxiliary.common.StateYAMLParser;
+import burlap.oomdp.auxiliary.common.StateJSONParser;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.State;
-import burlap.oomdp.singleagent.Action;
-import burlap.oomdp.singleagent.GroundedAction;
 import commands.data.TrainingElement;
 import commands.data.TrainingElementParser;
-import commands.data.Trajectory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
@@ -63,10 +54,10 @@ public class CommandReadLanguageData implements ICommand {
 		
 		String path = args[0];
 		
-		DomainGeneratorSimulated sdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
-		Domain domain = sdg.generateDomain();
+		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
+		Domain domain = rdg.generateDomain();
 		
-		StateParser sp = new StateYAMLParser(domain);
+		StateParser sp = new StateJSONParser(domain);
 		
 		TrainingElementParser tep = new TrainingElementParser(domain, sp);
 		List<TrainingElement> teList = tep.getTrainingElementDataset("languagedata", "txt");

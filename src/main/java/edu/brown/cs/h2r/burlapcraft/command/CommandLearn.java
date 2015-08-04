@@ -1,5 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +21,13 @@ import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperLanguageTriplet;
+import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGestureTuple;
 import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
@@ -50,7 +55,7 @@ public class CommandLearn implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "learn <string command here>";
+		return "learn [-gesture] <if gesture is specified enter time in milliseconds here> <string command here if gesture is not specified>";
 	}
 
 	@Override
@@ -61,37 +66,65 @@ public class CommandLearn implements ICommand {
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		if (args.length < 1) {
-			sender.addChatMessage(new ChatComponentText("Please enter a command to learn transitions for."));
+			sender.addChatMessage(new ChatComponentText("Please enter a command to learn transitions for or use [-gesture] to track cursor trajectory."));
 			return;
 		}
 		
-		final String commandToLearn = StringUtils.join(args, " ");
-		DomainGeneratorSimulated sdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
-		domain = sdg.generateDomain();
-		final ArrayList<State> states = new ArrayList<State>();
-		
-		final Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				if (endLearning) {
-					inferActions(commandToLearn, states);
-					endLearning = false;
-					timer.cancel();
-				}
-				else {
-					State curState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
-					if (states.size() == 0) {
-						states.add(curState);
+		if (args.length == 2 && args[0].equals("-gesture")) {
+			final ArrayList<HelperGestureTuple> gestureTuples = new ArrayList<HelperGestureTuple>();
+			int time = Integer.valueOf(args[1]);
+			final Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					if (endLearning) {
+						try {
+							writeGestureTuplesToFile(gestureTuples);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						endLearning = false;
+						timer.cancel();
 					}
 					else {
-						if (!curState.equals(states.get(states.size() - 1))) {
+						EntityPlayer player = HandlerEvents.player;
+						float pitch = player.rotationPitch;
+						float yaw = player.rotationYaw;
+						gestureTuples.add(new HelperGestureTuple(pitch, yaw));
+					}
+				}
+			}, 0, time);
+		}
+		else {
+			final String commandToLearn = StringUtils.join(args, " ");
+			DomainGeneratorSimulated sdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
+			domain = sdg.generateDomain();
+			final ArrayList<State> states = new ArrayList<State>();
+			
+			final Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					if (endLearning) {
+						inferActions(commandToLearn, states);
+						endLearning = false;
+						timer.cancel();
+					}
+					else {
+						State curState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+						if (states.size() == 0) {
 							states.add(curState);
+						}
+						else {
+							if (!curState.equals(states.get(states.size() - 1))) {
+								states.add(curState);
+							}
 						}
 					}
 				}
-			}
-		}, 0, 100);
+			}, 0, 100);
+		}
 	}
 
 	@Override
@@ -108,6 +141,15 @@ public class CommandLearn implements ICommand {
 	@Override
 	public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_) {
 		return false;
+	}
+	
+	public void writeGestureTuplesToFile(ArrayList gestureTuples) throws IOException {
+		FileWriter fw = new FileWriter("out.txt");
+		for (int i = 0; i < gestureTuples.size(); i++) {
+			HelperGestureTuple tuple = (HelperGestureTuple) gestureTuples.get(i);
+			fw.write(tuple.getPitch() + " " + tuple.getYaw() + "\n");
+		}
+		fw.close();
 	}
 
 	public void inferActions(String commandToLearn, ArrayList states) {

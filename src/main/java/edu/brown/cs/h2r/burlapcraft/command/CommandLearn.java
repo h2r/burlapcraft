@@ -35,7 +35,7 @@ public class CommandLearn implements ICommand {
 
 	private final List aliases;
 	Domain domain;
-	private ArrayList<TrainingElement> teList = new ArrayList<TrainingElement>();
+	public static ArrayList<TrainingElement> teList = new ArrayList<TrainingElement>();
 	public static boolean endLearning = false;
 	
 	public CommandLearn() {

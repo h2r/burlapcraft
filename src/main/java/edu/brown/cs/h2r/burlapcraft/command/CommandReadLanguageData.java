@@ -3,6 +3,7 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.brown.cs.h2r.burlapcraft.naturallanguge.NaturalLanguageSolver;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
@@ -53,7 +54,10 @@ public class CommandReadLanguageData implements ICommand {
 		}
 		
 		String path = args[0];
-		
+
+		NaturalLanguageSolver.initializeAndTrainCommandController(sender, path);
+
+		/*
 		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
 		Domain domain = rdg.generateDomain();
 		
@@ -65,7 +69,7 @@ public class CommandReadLanguageData implements ICommand {
 			System.out.println(te.command);
 			System.out.println(te.trajectory.actions);
 		}
-
+		*/
 		
 	}
 

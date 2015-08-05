@@ -104,13 +104,28 @@ public class NaturalLanguageSolver {
 		languageModel = new MTWeaklySupervisedModel(commandController, tokenizer, 10);
 		commandController.setLanguageModel(languageModel);
 
+		chatOrSystemPrint(sender, "Beginning training...");
+
 		//instantiate the weakly supervised language model dataset using IRL
 		commandController.createWeaklySupervisedTrainingDatasetFromTrajectoryDataset(teData);
 
 		//perform learning
 		commandController.trainLanguageModel();
 
+		chatOrSystemPrint(sender, "Finished training.");
 
+	}
+
+	public static void saveLanguageModel(ICommandSender sender, String pathToFile){
+
+		if(languageModel == null){
+			chatOrSystemPrint(sender, "Cannot save language model because it has not been trained!");
+			return;
+		}
+
+		chatOrSystemPrint(sender, "Writing language model to disk...");
+		commandController.dumpLanguageMode(pathToFile);
+		chatOrSystemPrint(sender, "Finished writing language model.");
 
 	}
 

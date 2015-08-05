@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.brown.cs.h2r.burlapcraft.command.*;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -24,25 +25,6 @@ import edu.brown.cs.h2r.burlapcraft.block.BlockMineableOrangeRock;
 import edu.brown.cs.h2r.burlapcraft.block.BlockMineableRedRock;
 import edu.brown.cs.h2r.burlapcraft.block.BlockOrangeRock;
 import edu.brown.cs.h2r.burlapcraft.block.BlockRedRock;
-import edu.brown.cs.h2r.burlapcraft.command.CommandAStar;
-import edu.brown.cs.h2r.burlapcraft.command.CommandBFS;
-import edu.brown.cs.h2r.burlapcraft.command.CommandCheckProps;
-import edu.brown.cs.h2r.burlapcraft.command.CommandCheckState;
-import edu.brown.cs.h2r.burlapcraft.command.CommandCreateDungeons;
-import edu.brown.cs.h2r.burlapcraft.command.CommandEndLearn;
-import edu.brown.cs.h2r.burlapcraft.command.CommandInventory;
-import edu.brown.cs.h2r.burlapcraft.command.CommandLearn;
-import edu.brown.cs.h2r.burlapcraft.command.CommandLoadLanguageModel;
-import edu.brown.cs.h2r.burlapcraft.command.CommandRMax;
-import edu.brown.cs.h2r.burlapcraft.command.CommandReadLanguageData;
-import edu.brown.cs.h2r.burlapcraft.command.CommandResetDungeon;
-import edu.brown.cs.h2r.burlapcraft.command.CommandSay;
-import edu.brown.cs.h2r.burlapcraft.command.CommandSmoothMove;
-import edu.brown.cs.h2r.burlapcraft.command.CommandTeleport;
-import edu.brown.cs.h2r.burlapcraft.command.CommandTerminalExplore;
-import edu.brown.cs.h2r.burlapcraft.command.CommandTest;
-import edu.brown.cs.h2r.burlapcraft.command.CommandTrackCursor;
-import edu.brown.cs.h2r.burlapcraft.command.CommandWriteLanguageData;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
@@ -136,6 +118,7 @@ public class BurlapCraft {
     	event.registerServerCommand(new CommandTrackCursor());
     	event.registerServerCommand(new CommandWriteLanguageData());
     	event.registerServerCommand(new CommandReadLanguageData());
+        event.registerServerCommand(new CommandWriteLanguageModel());
         
     }
     

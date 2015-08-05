@@ -57,12 +57,6 @@ public class HandlerEvents {
 				StateGenerator.invBlockNameMap.put(blockID, blockNames);
 			}
 			StateGenerator.blockNameMap.remove(key);
-			ArrayList<String> blockNames = StateGenerator.invBlockNameMap.get(blockID);
-			System.out.print("inventory: ");
-			for(String ele : blockNames){
-				System.out.print(ele + " ");
-			}
-			System.out.println();
 
 		}
 	}

@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.*;
+import net.minecraft.block.Block;
 import net.minecraft.util.RegistryNamespaced;
 import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Attribute;
@@ -33,15 +35,6 @@ import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockReal;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockSimulated;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentHasBlock;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentInRoom;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockIsColor;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockInRoom;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockIsShape;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsBlue;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsGreen;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsOrange;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFRoomIsRed;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
@@ -205,13 +198,20 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		new PFRoomIsOrange(HelperNameSpace.PFROOMORANGE, domain, HelperNameSpace.CLASSROOM);
 		new PFBlockInRoom(HelperNameSpace.PFBLOCKINROOM, domain, new String[]{HelperNameSpace.CLASSBLOCK, HelperNameSpace.CLASSROOM});
 		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK, HelperNameSpace.CLASSBLOCK});
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKRED, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "red");
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKBLUE, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "blue");
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKGREEN, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "green");
-		new PFBlockIsColor(HelperNameSpace.PFBLOCKORANGE, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "orange");
-		new PFBlockIsShape(HelperNameSpace.PFBLOCKCHAIR, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "chair");
-		new PFBlockIsShape(HelperNameSpace.PFBLOCKBAG, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "bag");
-		
+
+		for(Block b : HelperActions.mineableBlocks) {
+			int id = Block.getIdFromBlock(b);
+			new PFBlockIsType(HelperNameSpace.PFBLOCKISTYPE+id, domain, new String[]{HelperNameSpace.CLASSBLOCK}, id);
+		}
+
+
+//		new PFBlockIsColor(HelperNameSpace.PFBLOCKRED, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "red");
+//		new PFBlockIsColor(HelperNameSpace.PFBLOCKBLUE, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "blue");
+//		new PFBlockIsColor(HelperNameSpace.PFBLOCKGREEN, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "green");
+//		new PFBlockIsColor(HelperNameSpace.PFBLOCKORANGE, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "orange");
+//		new PFBlockIsShape(HelperNameSpace.PFBLOCKCHAIR, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "chair");
+//		new PFBlockIsShape(HelperNameSpace.PFBLOCKBAG, domain, new String[] {HelperNameSpace.CLASSBLOCK}, "bag");
+//
 		return domain;
 		
 	}

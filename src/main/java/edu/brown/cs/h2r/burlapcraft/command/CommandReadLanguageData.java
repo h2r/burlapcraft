@@ -53,9 +53,17 @@ public class CommandReadLanguageData implements ICommand {
 			return;
 		}
 		
-		String path = args[0];
+		final String path = args[0];
 
-		NaturalLanguageSolver.initializeAndTrainCommandController(sender, path);
+		final ICommandSender fsender = sender;
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				NaturalLanguageSolver.initializeAndTrainCommandController(fsender, path);
+			}
+		});
+		thread.start();
+
 
 		/*
 		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);

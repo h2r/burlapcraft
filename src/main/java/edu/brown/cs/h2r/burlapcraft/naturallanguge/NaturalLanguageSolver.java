@@ -28,6 +28,7 @@ import commands.model3.TrajectoryModule;
 import commands.model3.mt.Tokenizer;
 import commands.model3.weaklysupervisedinterface.MTWeaklySupervisedModel;
 import commands.model3.weaklysupervisedinterface.WeaklySupervisedController;
+import commands.model3.weaklysupervisedinterface.WeaklySupervisedTrainingInstance;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
@@ -86,6 +87,8 @@ public class NaturalLanguageSolver {
 
 		loaded = false;
 
+		List <WeaklySupervisedTrainingInstance> oldTrainingData = commandController.getWeaklySupervisedTrainingDataset();
+
 		//DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
 		DomainGenerator simdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
 		referenceDomain = simdg.generateDomain();
@@ -105,16 +108,23 @@ public class NaturalLanguageSolver {
 		tokenizer.addDelimiter("-");
 		languageModel = new MTWeaklySupervisedModel(commandController, tokenizer, 10);
 		commandController.setLanguageModel(languageModel);
+		if(oldTrainingData != null){
+			commandController.setWeaklySupervisedTrainingDataset(oldTrainingData);
+		}
+
 
 		chatOrSystemPrint(sender, "Beginning training...");
 
 		//instantiate the weakly supervised language model dataset using IRL
-		commandController.createWeaklySupervisedTrainingDatasetFromTrajectoryDataset(teData);
+		//commandController.createWeaklySupervisedTrainingDatasetFromTrajectoryDataset(teData);
+		commandController.createOrAddWeaklySupervisedTrainingDatasetFromTrajectoryDataset(teData);
 
 		//perform learning
 		commandController.trainLanguageModel();
 
 		chatOrSystemPrint(sender, "Finished training.");
+
+		loaded = true;
 
 	}
 

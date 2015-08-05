@@ -35,7 +35,7 @@ public class CommandBFS implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "bfs [closed|open] [all|noplace]\nIf closed/open not specified, closed it used.\nIf all/noplace not specified, all is used.";
+		return "bfs [closed|open] [all|noplace]\nIf closed/open not specified, closed is used.\nIf all/noplace not specified, all is used.";
 	}
 
 	@Override

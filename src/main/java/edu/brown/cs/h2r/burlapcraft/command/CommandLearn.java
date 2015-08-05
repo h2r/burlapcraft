@@ -1,5 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.TimerTask;
 
 import org.apache.commons.lang3.StringUtils;
 
+import commands.data.TrainingElement;
+import commands.data.Trajectory;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.State;
 import burlap.oomdp.singleagent.Action;
@@ -16,11 +21,13 @@ import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperLanguageTriplet;
+import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperGestureTuple;
 import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
@@ -28,7 +35,7 @@ public class CommandLearn implements ICommand {
 
 	private final List aliases;
 	Domain domain;
-	private ArrayList<HelperLanguageTriplet> learnList = new ArrayList<HelperLanguageTriplet>();
+	public static ArrayList<TrainingElement> teList = new ArrayList<TrainingElement>();
 	public static boolean endLearning = false;
 	
 	public CommandLearn() {
@@ -48,7 +55,7 @@ public class CommandLearn implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "learn <string command here>";
+		return "learn <string command here if gesture is not specified>";
 	}
 
 	@Override
@@ -89,7 +96,7 @@ public class CommandLearn implements ICommand {
 					}
 				}
 			}
-		}, 0, 500);
+		}, 0, 100);
 	}
 
 	@Override
@@ -107,31 +114,76 @@ public class CommandLearn implements ICommand {
 	public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_) {
 		return false;
 	}
-
+	
 	public void inferActions(String commandToLearn, ArrayList states) {
-		ArrayList<Action> actions = new ArrayList<Action>();
-		for (int i = 0; i < states.size() - 1; i++) {
-			if (states.get(i) == null) {
-				continue;
+		
+		State start = (State) states.get(0);
+		State end = (State) states.get(states.size() - 1);
+		
+		for (GroundedAction groundedAction : Action.getAllApplicableGroundedActionsFromActionList(domain.getActions(), start)) {
+			if (groundedAction.executeIn(start).equals(end)) {
+				ArrayList<State> stateList = new ArrayList<State>();
+				stateList.add(start);
+				stateList.add(end);
+				ArrayList<GroundedAction> actionList = new ArrayList<GroundedAction>();
+				actionList.add(groundedAction);
+				TrainingElement te = new TrainingElement(commandToLearn, new Trajectory(stateList, actionList));
+				teList.add(te);
+				System.out.println(teList);
+				return;
 			}
+		}
+		
+		ArrayList<ArrayList<State>> trackStates = new ArrayList<ArrayList<State>>();
+		ArrayList<State> firstList = new ArrayList<State>();
+		firstList.add(start);
+		trackStates.add(firstList);
+		for (int i = 0; i < states.size() - 1; i++) {
+			ArrayList<State> nullList = new ArrayList<State>();
+			trackStates.add(nullList);
+		}
+		
+		for (int i = 0; i < states.size(); i++) {
 			State curState = (State) states.get(i);
-			for (int j = i + 1; j < states.size(); j++) {
-				State targetState = (State) states.get(j);
-				for (GroundedAction groundedAction : Action.getAllApplicableGroundedActionsFromActionList(domain.getActions(), curState)) {
-					if (groundedAction.executeIn(curState).equals(targetState)) {
-						int k = j - i - 1;
-						while (k != 0) {
-							states.set(i + k, null);
-							k--;
+			ArrayList<State> curStateList = trackStates.get(i);
+			for (int j = 0; j < i; j++) {
+				State prevState = (State) states.get(j);
+				ArrayList<State> prevStateList = trackStates.get(j);
+				
+				if (prevStateList.size() != 0) {
+					if (prevState.equals(start) || prevStateList.get(0).equals(start)) {
+						for (GroundedAction groundedAction : Action.getAllApplicableGroundedActionsFromActionList(domain.getActions(), prevState)) {
+							if (groundedAction.executeIn(prevState).equals(curState)) {
+								if (prevStateList.size() + 1 < curStateList.size() || curStateList.size() == 0) {
+									ArrayList<State> combinedList = new ArrayList<State>();
+									for (State s : prevStateList) {
+										combinedList.add(s);
+									}
+									combinedList.add(curState);
+									trackStates.set(i, combinedList);
+								}
+							} 
 						}
-						actions.add(groundedAction.action);
 					}
 				}
 			}
 		}
-		HelperLanguageTriplet triplet = new HelperLanguageTriplet(commandToLearn, states, actions);
-		learnList.add(triplet);
-		System.out.println(learnList);
+		
+		ArrayList<State> finalStateList = trackStates.get(states.size() - 1);
+		ArrayList<GroundedAction> finalActionList = new ArrayList<GroundedAction>();
+		
+		for (int i = 0; i < finalStateList.size() - 1; i++) {
+			State curState = finalStateList.get(i);
+			State nextState = finalStateList.get(i + 1);
+			for (GroundedAction groundedAction : Action.getAllApplicableGroundedActionsFromActionList(domain.getActions(), curState)) {
+				if (groundedAction.executeIn(curState).equals(nextState)) {
+					finalActionList.add(groundedAction);
+					break;
+				}
+			}
+		}
+		
+		TrainingElement te = new TrainingElement(commandToLearn, new Trajectory(finalStateList, finalActionList));
+		teList.add(te);
 	}
-	
 }

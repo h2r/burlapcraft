@@ -12,11 +12,15 @@ import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
 import burlap.behavior.statehashing.NameDependentStateHashFactory;
 import burlap.behavior.statehashing.StateHashFactory;
+import burlap.oomdp.auxiliary.common.StateJSONParser;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.GroundedProp;
 import burlap.oomdp.core.State;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
+import commands.data.TrainingElement;
+import commands.data.TrainingElementParser;
+import commands.data.TrajectoryParser;
 import commands.model3.GPConjunction;
 import commands.model3.TaskModule;
 import commands.model3.TrajectoryModule;
@@ -58,15 +62,7 @@ public class NaturalLanguageSolver {
 		DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
 		referenceDomain = realdg.generateDomain();
 
-		liftedTasks = new ArrayList<GPConjunction>(2);
-
-		GPConjunction agentToRoom = new GPConjunction();
-		agentToRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFAGENTINROOM),new String[]{"a", "r"}));
-		liftedTasks.add(agentToRoom);
-		
-		GPConjunction blockInRoom = new GPConjunction();
-		blockInRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFBLOCKINROOM), new String[]{"b", "r"}));
-		liftedTasks.add(blockInRoom);
+		liftedTasks = getRSSTasks();
 
 		hashingFactory = new NameDependentStateHashFactory();
 
@@ -84,6 +80,54 @@ public class NaturalLanguageSolver {
 		loaded = true;
 
 	}
+
+	public static void initializeAndTrainCommandController(ICommandSender sender, String pathToDatasetDirectory){
+
+		loaded = false;
+
+		DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
+		referenceDomain = realdg.generateDomain();
+
+		liftedTasks = getRSSTasks();
+
+		hashingFactory = new NameDependentStateHashFactory();
+
+		commandController = new WeaklySupervisedController(referenceDomain, liftedTasks, hashingFactory, true);
+
+		TrainingElementParser teParser = new TrainingElementParser(referenceDomain, new StateJSONParser(referenceDomain));
+		List<TrainingElement> teData = teParser.getTrainingElementDataset(pathToDatasetDirectory, "txt");
+
+
+
+		Tokenizer tokenizer = new Tokenizer(true ,true);
+		tokenizer.addDelimiter("-");
+		languageModel = new MTWeaklySupervisedModel(commandController, tokenizer, 10);
+		commandController.setLanguageModel(languageModel);
+
+		//instantiate the weakly supervised language model dataset using IRL
+		commandController.createWeaklySupervisedTrainingDatasetFromTrajectoryDataset(teData);
+
+		//perform learning
+		commandController.trainLanguageModel();
+
+
+
+	}
+
+	protected static List<GPConjunction> getRSSTasks(){
+		liftedTasks = new ArrayList<GPConjunction>(2);
+
+		GPConjunction agentToRoom = new GPConjunction();
+		agentToRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFAGENTINROOM),new String[]{"a", "r"}));
+		liftedTasks.add(agentToRoom);
+
+		GPConjunction blockInRoom = new GPConjunction();
+		blockInRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFBLOCKINROOM), new String[]{"b", "r"}));
+		liftedTasks.add(blockInRoom);
+
+		return liftedTasks;
+	}
+
 
 	public static void chatOrSystemPrint(ICommandSender sender, String msg){
 		if(sender != null){

@@ -26,7 +26,6 @@ public class HelperActions {
 
 	// minecraft and player
 	private static Minecraft mc = Minecraft.getMinecraft();
-	public static EntityPlayer player = mc.thePlayer;
 
 	// click interactions
 	private static MovementInput resetMovementInput;
@@ -274,7 +273,7 @@ public class HelperActions {
 	}
 
 	public static void snapToGrid() {
-		EntityPlayer player = HandlerEvents.player;
+		EntityPlayer player = mc.thePlayer;
 		HelperPos oldPosition = HelperActions.getPlayerPosition();
 		// HelperPos holds ints now but this code will port when the rest is
 		// switched to doubles...
@@ -311,7 +310,7 @@ public class HelperActions {
 	final private static long maxUpdates = 1000;
 
 	public static void moveYawToTarget(final double yawTarget) {
-		final EntityPlayer player = HelperActions.player;
+		final EntityPlayer player = mc.thePlayer;
 		// consider snapping to range -360 to 360 in here to avoid massive
 		// unwinding...
 		final Timer timer = new Timer();
@@ -350,7 +349,7 @@ public class HelperActions {
 	}
 
 	public static void movePitchToTarget(final double pitchTarget) {
-		final EntityPlayer player = HelperActions.player;
+		final EntityPlayer player = mc.thePlayer;
 		final Timer timer = new Timer();
 		final ArrayList<Integer> numberOfIterations = new ArrayList<Integer>(1);
 		numberOfIterations.add(0);

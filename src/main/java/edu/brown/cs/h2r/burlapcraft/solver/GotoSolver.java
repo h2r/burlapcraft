@@ -130,17 +130,6 @@ public class GotoSolver {
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
 
-			List<ObjectInstance> blocks = sprime.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
-			for (ObjectInstance block : blocks) {
-				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
-					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
-					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
-					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
-						return -10.0;
-					}
-				}
-			}
 			return -1.0;
 		}
 	}
@@ -173,18 +162,6 @@ public class GotoSolver {
 			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
 			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-
-			List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
-			for (ObjectInstance block : blocks) {
-				if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
-					int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
-					int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
-					int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-					if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
-						return true;
-					}
-				}
-			}
 
 			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(ax, ay, az);
 			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);

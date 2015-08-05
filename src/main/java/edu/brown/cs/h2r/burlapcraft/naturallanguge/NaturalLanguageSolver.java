@@ -12,6 +12,7 @@ import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
 import burlap.behavior.statehashing.NameDependentStateHashFactory;
 import burlap.behavior.statehashing.StateHashFactory;
+import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.auxiliary.common.StateJSONParser;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.GroundedProp;
@@ -85,8 +86,9 @@ public class NaturalLanguageSolver {
 
 		loaded = false;
 
-		DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
-		referenceDomain = realdg.generateDomain();
+		//DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
+		DomainGenerator simdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		referenceDomain = simdg.generateDomain();
 
 		liftedTasks = getRSSTasks();
 

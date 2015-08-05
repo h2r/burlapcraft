@@ -51,6 +51,26 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 	}
 	
 	@Override
+	public boolean applicableInState(State s, String[] params) {
+		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+		for (ObjectInstance block : blocks) {
+			if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+				int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+				int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+				int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+				if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	@Override
 	public List<TransitionProbability> getTransitions(State s, String [] params){
 		
 		return this.deterministicTransition(s, params);

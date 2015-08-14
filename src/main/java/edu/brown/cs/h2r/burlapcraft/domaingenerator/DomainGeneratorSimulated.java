@@ -80,7 +80,9 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		this.whiteListActions.add(HelperNameSpace.ACTIONMOVE);
 		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
 		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
+		this.whiteListActions.add(HelperNameSpace.ACTIONDOWNONE);
 		this.whiteListActions.add(HelperNameSpace.ACTIONDESTBLOCK);
+		this.whiteListActions.add(HelperNameSpace.ACTIONCHANGEITEM);
 	}
 
 	public Set<String> getWhiteListActions() {
@@ -198,6 +200,7 @@ public class DomainGeneratorSimulated implements DomainGenerator {
 		new PFRoomIsOrange(HelperNameSpace.PFROOMORANGE, domain, HelperNameSpace.CLASSROOM);
 		new PFBlockInRoom(HelperNameSpace.PFBLOCKINROOM, domain, new String[]{HelperNameSpace.CLASSBLOCK, HelperNameSpace.CLASSROOM});
 		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK, HelperNameSpace.CLASSBLOCK});
+		new PFAgentOnBlock(HelperNameSpace.PFAGENTONBLOCK, domain, new String[] {HelperNameSpace.CLASSAGENT, HelperNameSpace.CLASSBLOCK});
 
 		for(Block b : HelperActions.mineableBlocks) {
 			int id = Block.getIdFromBlock(b);

@@ -8,7 +8,7 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 public class DungeonMaze1 extends Dungeon {
 
 	public DungeonMaze1(Pose _pose) {
-		super("maze1", _pose, 13, 13, 4, Pose.fromXyz(10, 5, 2));
+		super("maze1", _pose, 14, 14, 4, Pose.fromXyz(10, 5, 2));
 		
 	}
 	@Override

@@ -36,7 +36,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 	protected int width;
 	protected int height;
 
-	protected int sleepMS = 1000;
+	protected int sleepMS = 1500;
 
 	protected Set<String> whiteListActions = new HashSet<String>();
 	
@@ -76,6 +76,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
 		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
 		this.whiteListActions.add(HelperNameSpace.ACTIONDESTBLOCK);
+		this.whiteListActions.add(HelperNameSpace.ACTIONCHANGEITEM);
 	}
 
 	public Set<String> getWhiteListActions() {
@@ -168,7 +169,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 			new ActionChangeYawReal(HelperNameSpace.ACTIONROTATERIGHT, domain, this.sleepMS, 1);
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATELEFT)) {
-			new ActionChangeYawReal(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
+			new ActionChangeYawReal(HelperNameSpace.ACTIONROTATELEFT, domain, this.sleepMS, HelperNameSpace.RotDirection.size - 1);
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONAHEAD)) {
 			new ActionChangePitchReal(HelperNameSpace.ACTIONAHEAD, domain, this.sleepMS, 0);
@@ -194,6 +195,7 @@ public class DomainGeneratorReal implements DomainGenerator {
 		new PFRoomIsOrange(HelperNameSpace.PFROOMORANGE, domain, HelperNameSpace.CLASSROOM);
 		new PFBlockInRoom(HelperNameSpace.PFBLOCKINROOM, domain, new String[]{HelperNameSpace.CLASSBLOCK, HelperNameSpace.CLASSROOM});
 		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK, HelperNameSpace.CLASSBLOCK});
+		new PFAgentOnBlock(HelperNameSpace.PFAGENTONBLOCK, domain, new String[] {HelperNameSpace.CLASSAGENT, HelperNameSpace.CLASSBLOCK});
 
 		for(Block b : HelperActions.mineableBlocks) {
 			int id = Block.getIdFromBlock(b);

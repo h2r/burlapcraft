@@ -64,7 +64,7 @@ public class NaturalLanguageSolver {
 		DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
 		referenceDomain = realdg.generateDomain();
 
-		liftedTasks = getRSSTasks();
+		liftedTasks = getMinecraftTasks();
 
 		hashingFactory = new NameDependentStateHashFactory();
 
@@ -87,17 +87,16 @@ public class NaturalLanguageSolver {
 
 		loaded = false;
 
-		List <WeaklySupervisedTrainingInstance> oldTrainingData = commandController.getWeaklySupervisedTrainingDataset();
-
 		//DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
 		DomainGenerator simdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
 		referenceDomain = simdg.generateDomain();
 
-		liftedTasks = getRSSTasks();
+		liftedTasks = getMinecraftTasks();
 
 		hashingFactory = new NameDependentStateHashFactory();
 
 		commandController = new WeaklySupervisedController(referenceDomain, liftedTasks, hashingFactory, true);
+		List <WeaklySupervisedTrainingInstance> oldTrainingData = commandController.getWeaklySupervisedTrainingDataset();
 
 		TrainingElementParser teParser = new TrainingElementParser(referenceDomain, new StateJSONParser(referenceDomain));
 		List<TrainingElement> teData = teParser.getTrainingElementDataset(pathToDatasetDirectory, "txt");
@@ -151,6 +150,24 @@ public class NaturalLanguageSolver {
 		GPConjunction blockInRoom = new GPConjunction();
 		blockInRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFBLOCKINROOM), new String[]{"b", "r"}));
 		liftedTasks.add(blockInRoom);
+
+		return liftedTasks;
+	}
+	
+	protected static List<GPConjunction> getMinecraftTasks() {
+		liftedTasks = new ArrayList<GPConjunction>(3);
+		
+		GPConjunction agentToRoom = new GPConjunction();
+		agentToRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFAGENTINROOM),new String[]{"a", "r"}));
+		liftedTasks.add(agentToRoom);
+
+		GPConjunction blockInRoom = new GPConjunction();
+		blockInRoom.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFBLOCKINROOM), new String[]{"b", "r"}));
+		liftedTasks.add(blockInRoom);
+		
+		GPConjunction agentOnBlock = new GPConjunction();
+		agentOnBlock.addGP(new GroundedProp(referenceDomain.getPropFunction(HelperNameSpace.PFAGENTONBLOCK), new String[]{"a", "b"}));
+		liftedTasks.add(agentOnBlock);
 
 		return liftedTasks;
 	}

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author James MacGlashan.
  */
-public class CommandLoadLanguageModel implements ICommand{
+public class CommandReadLanguageModel implements ICommand{
 
 	static String commandName = "loadLanguageModel";
 

@@ -20,7 +20,7 @@ import burlap.oomdp.singleagent.GroundedAction;
 import commands.data.TrainingElement;
 import commands.data.Trajectory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGestureTuple;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;

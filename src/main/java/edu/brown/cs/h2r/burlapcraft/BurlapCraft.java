@@ -28,7 +28,6 @@ import edu.brown.cs.h2r.burlapcraft.block.BlockRedRock;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
-import edu.brown.cs.h2r.burlapcraft.handler.HandlerFMLEvents;
 
 @Mod(modid = BurlapCraft.MODID, version = BurlapCraft.VERSION)
 public class BurlapCraft {
@@ -53,7 +52,6 @@ public class BurlapCraft {
     // event handlers
     HandlerDungeonGeneration genHandler = new HandlerDungeonGeneration();   
     HandlerEvents eventHandler = new HandlerEvents();
-    public static HandlerFMLEvents fmlHandler = new HandlerFMLEvents();
     
     public static Dungeon currentDungeon;
     public static List<Dungeon> dungeons = new ArrayList<Dungeon>();
@@ -91,7 +89,7 @@ public class BurlapCraft {
     	GameRegistry.registerWorldGenerator(genHandler, 0);
     	
     	MinecraftForge.EVENT_BUS.register(eventHandler);
-    	FMLCommonHandler.instance().bus().register(fmlHandler);
+    	// FMLCommonHandler.instance().bus().register(fmlHandler);
     	
     }
     

@@ -10,11 +10,14 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.objects.MutableObjectInstance;
+import burlap.oomdp.core.objects.ObjectInstance;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.core.TransitionProbability;
+import burlap.oomdp.singleagent.GroundedAction;
+import burlap.oomdp.singleagent.common.SimpleAction.SimpleDeterministicAction;
 
-public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
+public class ActionPlaceBlockSimulated extends SimpleDeterministicAction {
 	
 	private int[][][] map;
 
@@ -22,9 +25,9 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 		super(name, domain);
 		this.map = map;
 	}
-
+	
 	@Override
-	State doAction(State s) {
+	protected State performActionHelper(State s, GroundedAction groundedAction) {
 		//get agent and current position
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int curX = agent.getIntValForAttribute(HelperNameSpace.ATX);
@@ -47,34 +50,6 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 		}
 		
 		return s;
-		
-	}
-	
-	@Override
-	public boolean applicableInState(State s, String[] params) {
-		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
-		for (ObjectInstance block : blocks) {
-			if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
-				int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
-				int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
-				int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-				if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	@Override
-	public List<TransitionProbability> getTransitions(State s, String [] params){
-		
-		return this.deterministicTransition(s, params);
-		
 	}
 	
 	protected State placeResult(int curX, int curY, int curZ, int rotDir, int vertDir, List<ObjectInstance> blocks, ObjectInstance invBlock, State s, ObjectInstance agent) {
@@ -118,7 +93,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 							blockNames.remove(blockName);
 						}
 						
-						ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+						ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 						newBlock.setValue(HelperNameSpace.ATX, curX);
 						newBlock.setValue(HelperNameSpace.ATY, curY - 1);
 						newBlock.setValue(HelperNameSpace.ATZ, curZ + 1);
@@ -143,7 +118,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 						blockNames.remove(blockName);
 					}
 					
-					ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+					ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 					newBlock.setValue(HelperNameSpace.ATX, curX);
 					newBlock.setValue(HelperNameSpace.ATY, curY);
 					newBlock.setValue(HelperNameSpace.ATZ, curZ + 1);
@@ -186,7 +161,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 							blockNames.remove(blockName);
 						}
 						
-						ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+						ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 						newBlock.setValue(HelperNameSpace.ATX, curX - 1);
 						newBlock.setValue(HelperNameSpace.ATY, curY - 1);
 						newBlock.setValue(HelperNameSpace.ATZ, curZ);
@@ -210,7 +185,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 						blockNames.remove(blockName);
 					}
 					
-					ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+					ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 					newBlock.setValue(HelperNameSpace.ATX, curX - 1);
 					newBlock.setValue(HelperNameSpace.ATY, curY);
 					newBlock.setValue(HelperNameSpace.ATZ, curZ);
@@ -253,7 +228,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 							blockNames.remove(blockName);
 						}
 						
-						ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+						ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 						newBlock.setValue(HelperNameSpace.ATX, curX);
 						newBlock.setValue(HelperNameSpace.ATY, curY - 1);
 						newBlock.setValue(HelperNameSpace.ATZ, curZ - 1);
@@ -277,7 +252,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 						blockNames.remove(blockName);
 					}
 					
-					ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+					ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 					newBlock.setValue(HelperNameSpace.ATX, curX);
 					newBlock.setValue(HelperNameSpace.ATY, curY);
 					newBlock.setValue(HelperNameSpace.ATZ, curZ - 1);
@@ -320,7 +295,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 							blockNames.remove(blockName);
 						}
 						
-						ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+						ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 						newBlock.setValue(HelperNameSpace.ATX, curX + 1);
 						newBlock.setValue(HelperNameSpace.ATY, curY - 1);
 						newBlock.setValue(HelperNameSpace.ATZ, curZ);
@@ -344,7 +319,7 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 						blockNames.remove(blockName);
 					}
 					
-					ObjectInstance newBlock = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
+					ObjectInstance newBlock = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSBLOCK), blockName);
 					newBlock.setValue(HelperNameSpace.ATX, curX + 1);
 					newBlock.setValue(HelperNameSpace.ATY, curY);
 					newBlock.setValue(HelperNameSpace.ATZ, curZ);
@@ -360,6 +335,26 @@ public class ActionPlaceBlockSimulated extends ActionAgentSimulated {
 		
 		return s;
 		
+	}	
+	
+	@Override
+	public boolean applicableInState(State s, GroundedAction groundedAction) {
+		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+		for (ObjectInstance block : blocks) {
+			if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+				int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+				int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+				int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+				if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 }

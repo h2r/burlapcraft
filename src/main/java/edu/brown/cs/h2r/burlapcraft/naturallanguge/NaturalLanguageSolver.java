@@ -31,7 +31,7 @@ import commands.model3.weaklysupervisedinterface.WeaklySupervisedController;
 import commands.model3.weaklysupervisedinterface.WeaklySupervisedTrainingInstance;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import generativemodel.GMQueryResult;
@@ -88,7 +88,7 @@ public class NaturalLanguageSolver {
 		loaded = false;
 
 		//DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
-		DomainGenerator simdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		DomainGenerator simdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
 		referenceDomain = simdg.generateDomain();
 
 		liftedTasks = getMinecraftTasks();
@@ -191,7 +191,7 @@ public class NaturalLanguageSolver {
 
 		int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
 
-		DomainGeneratorSimulated simdg = new DomainGeneratorSimulated(map);
+		MinecraftDomainGenerator simdg = new MinecraftDomainGenerator(map);
 		DomainGeneratorReal realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
 
 		Domain domain = simdg.generateDomain();

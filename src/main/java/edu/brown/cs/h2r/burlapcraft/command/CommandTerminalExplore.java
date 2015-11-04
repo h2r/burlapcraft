@@ -7,7 +7,7 @@ import burlap.oomdp.core.Domain;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -45,7 +45,7 @@ public class CommandTerminalExplore implements ICommand {
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		
-		DomainGeneratorSimulated sdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		MinecraftDomainGenerator sdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
 		domain = sdg.generateDomain();
 		
 		TerminalExplorer exp = new TerminalExplorer(domain);

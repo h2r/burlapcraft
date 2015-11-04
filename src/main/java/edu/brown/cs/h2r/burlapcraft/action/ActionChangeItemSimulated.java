@@ -8,21 +8,23 @@ import net.minecraft.block.Block;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.objects.ObjectInstance;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.core.TransitionProbability;
+import burlap.oomdp.singleagent.GroundedAction;
+import burlap.oomdp.singleagent.common.SimpleAction.SimpleDeterministicAction;
 
-public class ActionChangeItemSimulated extends ActionAgentSimulated {
+public class ActionChangeItemSimulated extends SimpleDeterministicAction {
 
 	public ActionChangeItemSimulated(String name, Domain domain) {
 		super(name, domain);
 	}
 
 	@Override
-	State doAction(State state) {
-		ObjectInstance agent = state.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+	protected State performActionHelper(State s, GroundedAction groundedAction) {
+		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int currentEquippedItemID = agent.getIntValForAttribute(HelperNameSpace.ATSELECTEDITEMID);
-		List<ObjectInstance> invBlocks = state.getObjectsOfClass(HelperNameSpace.CLASSINVENTORYBLOCK);
+		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASSINVENTORYBLOCK);
 		List<Integer> blockIDs = new ArrayList<Integer>();
 		for (ObjectInstance invBlock : invBlocks) {
 			int blockID = invBlock.getIntValForAttribute(HelperNameSpace.ATBTYPE);
@@ -39,11 +41,11 @@ public class ActionChangeItemSimulated extends ActionAgentSimulated {
 			agent.setValue(HelperNameSpace.ATSELECTEDITEMID, blockIDs.get(rand.nextInt(blockIDs.size())));
 		}
 		
-		return state;
+		return s;
 	}
 	
 	@Override
-	public boolean applicableInState(State s, String[] params) {
+	public boolean applicableInState(State s, GroundedAction groundedAction) {
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
@@ -60,13 +62,6 @@ public class ActionChangeItemSimulated extends ActionAgentSimulated {
 			}
 		}
 		return true;
-	}
-	
-	@Override
-	public List<TransitionProbability> getTransitions(State s, String [] params){
-		
-		return this.deterministicTransition(s, params);
-		
 	}
 
 }

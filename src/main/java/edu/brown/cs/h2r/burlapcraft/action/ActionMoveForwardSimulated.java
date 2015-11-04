@@ -5,15 +5,17 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.objects.ObjectInstance;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.core.TransitionProbability;
+import burlap.oomdp.singleagent.GroundedAction;
+import burlap.oomdp.singleagent.common.SimpleAction.SimpleDeterministicAction;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
-public class ActionMoveForwardSimulated extends ActionAgentSimulated {
+public class ActionMoveForwardSimulated extends SimpleDeterministicAction {
 	
 	private int[][][] map;
 
@@ -23,7 +25,8 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 	}
 
 	@Override
-	State doAction(State s) {
+	protected State performActionHelper(State s, GroundedAction groundedAction) {
+		
 		StateGenerator.validate(s);
 		//get agent and current position
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
@@ -51,7 +54,7 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 		StateGenerator.validate(s);
 		//return the state we just modified
 		return s;
-
+		
 	}
 	
 	protected HelperPos moveResult(int curX, int curY, int curZ, int direction, List<HelperPos> coords) {
@@ -97,7 +100,7 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 	}
 	
 	@Override
-	public boolean applicableInState(State s, String[] params) {
+	public boolean applicableInState(State s, GroundedAction groundedAction) {
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
@@ -114,13 +117,6 @@ public class ActionMoveForwardSimulated extends ActionAgentSimulated {
 			}
 		}
 		return true;
-	}
-	
-	@Override
-	public List<TransitionProbability> getTransitions(State s, String [] params){
-		
-		return this.deterministicTransition(s, params);
-		
 	}
 
 }

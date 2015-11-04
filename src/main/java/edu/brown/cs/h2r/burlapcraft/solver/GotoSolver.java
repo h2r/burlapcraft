@@ -6,11 +6,10 @@ import java.util.List;
 import burlap.oomdp.singleagent.Action;
 import net.minecraft.block.Block;
 import burlap.behavior.singleagent.EpisodeAnalysis;
-import burlap.behavior.singleagent.Policy;
+import burlap.behavior.policy.Policy;
 import burlap.behavior.singleagent.learning.LearningAgent;
-import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
 import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
-import burlap.behavior.singleagent.planning.StateConditionTest;
+import burlap.oomdp.auxiliary.stateconditiontest.StateConditionTest;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
@@ -18,19 +17,18 @@ import burlap.behavior.singleagent.planning.deterministic.informed.Heuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
-import burlap.behavior.statehashing.DiscreteStateHashFactory;
-import burlap.behavior.statehashing.NameDependentStateHashFactory;
 import burlap.debugtools.MyTimer;
 import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.objects.ObjectInstance;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
+import burlap.oomdp.statehashing.SimpleHashableStateFactory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.MinecraftEnvironment;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry;
@@ -61,22 +59,19 @@ public class GotoSolver {
 
 		int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
 
-		DomainGeneratorSimulated simdg = new DomainGeneratorSimulated(map);
-		DomainGeneratorReal realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+		MinecraftDomainGenerator simdg = new MinecraftDomainGenerator(map);
 		
 		if (!place) {
 			simdg.setActionWhiteListToNavigationAndDestroy();
-			realdg.setActionWhiteListToNavigationAndDestroy();
 		}
 		
 		Domain domain = simdg.generateDomain();
-		Domain realDomain = realdg.generateDomain();
 
 		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 
 		DeterministicPlanner planner = null;
 		if(plannerToUse == 0){
-			planner = new BFS(domain, gc, new NameDependentStateHashFactory());
+			planner = new BFS(domain, gc, new SimpleHashableStateFactory());
 
 		}
 		else if(plannerToUse == 1){
@@ -102,7 +97,7 @@ public class GotoSolver {
 					return -mdist;
 				}
 			};
-			planner = new AStar(domain, rf, gc, new NameDependentStateHashFactory(), mdistHeuristic);
+			planner = new AStar(domain, rf, gc, new SimpleHashableStateFactory(), mdistHeuristic);
 		}
 		else{
 			throw new RuntimeException("Error: planner type is " + planner + "; use 0 for BFS or 1 for A*");
@@ -113,9 +108,9 @@ public class GotoSolver {
 
 		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
 
-		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
-		rp.evaluateBehavior(initialState, rf, tf);
-
+		MinecraftEnvironment me = new MinecraftEnvironment(domain);
+		p.evaluateBehavior(me);
+		
 	}
 
 	public static void learn(){

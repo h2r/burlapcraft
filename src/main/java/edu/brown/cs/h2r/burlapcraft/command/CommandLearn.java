@@ -184,6 +184,7 @@ public class CommandLearn implements ICommand {
 		}
 		
 		TrainingElement te = new TrainingElement(commandToLearn, new Trajectory(finalStateList, finalActionList));
+		System.out.println(finalActionList.toString());
 		teList.add(te);
 	}
 }

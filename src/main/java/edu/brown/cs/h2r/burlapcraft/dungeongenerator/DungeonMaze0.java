@@ -34,8 +34,6 @@ public class DungeonMaze0 extends Dungeon {
 			world.setBlock(x+ax, y+0, z+w, Block.getBlockById(7));
 			world.setBlock(x+ax, y+1, z+w, Block.getBlockById(7));
 			world.setBlock(x+ax, y+2, z+w, Block.getBlockById(7));
-			//world.setBlock(x+ax, y+3, z+w, Block.getBlockById(124));
-			//world.setBlock(x+ax, y+4, z+w, Block.getBlockById(152));
 		}	
 		for (int az = 0; az <= w; az++) {
 			world.setBlock(x+0, y+0, z+az, Block.getBlockById(7));

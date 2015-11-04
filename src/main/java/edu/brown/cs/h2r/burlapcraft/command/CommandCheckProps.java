@@ -55,6 +55,7 @@ public class CommandCheckProps implements ICommand{
 
 		List<GroundedProp> gps = PropositionalFunction.getAllGroundedPropsFromPFList(domain.getPropFunctions(), s);
 		StringBuffer buf = new StringBuffer();
+		buf.append("\n");
 		for(GroundedProp gp : gps){
 			if(!gp.isTrue(s)){
 				if(printFalse) {

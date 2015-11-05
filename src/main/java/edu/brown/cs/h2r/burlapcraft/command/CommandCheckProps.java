@@ -3,9 +3,9 @@ package edu.brown.cs.h2r.burlapcraft.command;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.GroundedProp;
 import burlap.oomdp.core.PropositionalFunction;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.states.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -41,8 +41,8 @@ public class CommandCheckProps implements ICommand{
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 
-		DomainGeneratorReal rdg = new DomainGeneratorReal(100, 100, 100);
-		Domain domain = rdg.generateDomain();
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(100, 100, 100);
+		Domain domain = mdg.generateDomain();
 
 		boolean printFalse = false;
 		if(args.length > 0){

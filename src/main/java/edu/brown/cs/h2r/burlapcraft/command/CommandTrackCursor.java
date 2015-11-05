@@ -14,7 +14,7 @@ import net.minecraft.util.ChatComponentText;
 
 import org.apache.commons.lang3.StringUtils;
 
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.singleagent.Action;
 import burlap.oomdp.singleagent.GroundedAction;
 import commands.data.TrainingElement;

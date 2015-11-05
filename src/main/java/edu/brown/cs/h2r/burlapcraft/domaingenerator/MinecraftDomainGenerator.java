@@ -62,6 +62,12 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		this.width = map[0][0].length;
 		this.height = map.length;
 	}
+	
+	public MinecraftDomainGenerator(int x, int y, int z) {
+		this.length = x;
+		this.width = z;
+		this.height = y;
+	}
 
 	public void setActionWhiteListToNavigationOnly(){
 		this.whiteListActions = new HashSet<String>();

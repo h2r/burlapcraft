@@ -7,13 +7,10 @@ import edu.brown.cs.h2r.burlapcraft.naturallanguge.NaturalLanguageSolver;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
-import burlap.oomdp.auxiliary.StateParser;
-import burlap.oomdp.auxiliary.common.StateJSONParser;
 import burlap.oomdp.core.Domain;
 import commands.data.TrainingElement;
 import commands.data.TrainingElementParser;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 

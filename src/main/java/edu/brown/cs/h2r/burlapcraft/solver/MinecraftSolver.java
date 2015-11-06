@@ -27,9 +27,9 @@ import burlap.oomdp.singleagent.GroundedAction;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.statehashing.SimpleHashableStateFactory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.MinecraftEnvironment;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.environment.MinecraftEnvironment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
@@ -38,7 +38,7 @@ import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 /**
  * @author James MacGlashan.
  */
-public class GotoSolver {
+public class MinecraftSolver {
 
 	static PotentialShapedRMax lastLearningAgent = null;
 	static Dungeon lastDungeon;
@@ -71,7 +71,7 @@ public class GotoSolver {
 
 		DeterministicPlanner planner = null;
 		if(plannerToUse == 0){
-			planner = new BFS(domain, gc, new SimpleHashableStateFactory());
+			planner = new BFS(domain, gc, new SimpleHashableStateFactory(false));
 
 		}
 		else if(plannerToUse == 1){
@@ -97,18 +97,20 @@ public class GotoSolver {
 					return -mdist;
 				}
 			};
-			planner = new AStar(domain, rf, gc, new SimpleHashableStateFactory(), mdistHeuristic);
+			planner = new AStar(domain, rf, gc, new SimpleHashableStateFactory(false), mdistHeuristic);
 		}
 		else{
 			throw new RuntimeException("Error: planner type is " + planner + "; use 0 for BFS or 1 for A*");
 		}
-		planner.setTf(tf);
+//		planner.setTf(tf);
 		
 		planner.planFromState(initialState);
 
 		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
 
 		MinecraftEnvironment me = new MinecraftEnvironment(domain);
+		me.setTerminalFunction(tf);
+		
 		p.evaluateBehavior(me);
 		
 	}
@@ -117,21 +119,23 @@ public class GotoSolver {
 
 		if(BurlapCraft.currentDungeon != lastDungeon || lastLearningAgent == null){
 			int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
-			DomainGeneratorReal realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
-			realdg.setActionWhiteListToNavigationOnly();
-			lastDomain = realdg.generateDomain();
-			lastLearningAgent = new PotentialShapedRMax(lastDomain, rf, tf, 0.99, new DiscreteStateHashFactory(), 0, 1, 0.01, 200);
-
-
+			MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(map);
+			mdg.setActionWhiteListToNavigationOnly();
+			
+			lastDomain = mdg.generateDomain();
+			lastLearningAgent = new PotentialShapedRMax(lastDomain, 0.99, new SimpleHashableStateFactory(false), 0, 1, 0.01, 200);
 			lastDungeon = BurlapCraft.currentDungeon;
-
+			
 			System.out.println("Starting new RMax");
 		}
 
 		State initialState = StateGenerator.getCurrentState(lastDomain, BurlapCraft.currentDungeon);
+		MinecraftEnvironment me = new MinecraftEnvironment(lastDomain);
+		me.setRewardFunction(rf);
+		me.setTerminalFunction(tf);
 		
 		newTimer.start();
-		lastLearningAgent.runLearningEpisodeFrom(initialState);
+		lastLearningAgent.runLearningEpisode(me);
 		newTimer.stop();
 		
 		System.out.println(newTimer.getTotalTime());

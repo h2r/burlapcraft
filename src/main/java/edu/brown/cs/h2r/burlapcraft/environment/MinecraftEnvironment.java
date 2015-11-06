@@ -1,7 +1,8 @@
-package edu.brown.cs.h2r.burlapcraft;
+package edu.brown.cs.h2r.burlapcraft.environment;
 
 import java.util.HashMap;
 
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.action.ActionController;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangeItem;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangePitch;

@@ -47,8 +47,8 @@ public class CommandTerminalExplore implements ICommand {
 		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
 		domain = mdg.generateDomain();
 		
-		TerminalExplorer exp = new TerminalExplorer(domain); 
-		exp.exploreFromState(StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon));
+		TerminalExplorer exp = new TerminalExplorer(domain, StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon)); 
+		exp.explore();
 		
 	}
 

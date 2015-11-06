@@ -113,7 +113,6 @@ public class BurlapCraft {
         event.registerServerCommand(new CommandEndLearn());
     	event.registerServerCommand(new CommandTest());
     	event.registerServerCommand(new CommandTerminalExplore());
-    	event.registerServerCommand(new CommandTrackCursor());
     	event.registerServerCommand(new CommandWriteLanguageData());
     	event.registerServerCommand(new CommandReadLanguageData());
         event.registerServerCommand(new CommandWriteLanguageModel());

@@ -9,7 +9,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
+import edu.brown.cs.h2r.burlapcraft.solver.MinecraftSolver;
 
 public class CommandRMax implements ICommand {
 
@@ -60,7 +60,7 @@ public class CommandRMax implements ICommand {
 			Thread btread = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					GotoSolver.learn();
+					MinecraftSolver.learn();
 				}
 			});
 			btread.start();

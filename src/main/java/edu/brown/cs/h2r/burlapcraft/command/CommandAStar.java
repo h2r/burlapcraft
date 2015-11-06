@@ -9,9 +9,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
+import edu.brown.cs.h2r.burlapcraft.solver.MinecraftSolver;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandAStar implements ICommand {
@@ -85,7 +83,7 @@ public class CommandAStar implements ICommand {
 			Thread bthread = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					GotoSolver.plan(1, fclosed, fplace);
+					MinecraftSolver.plan(1, fclosed, fplace);
 				}
 			});
 

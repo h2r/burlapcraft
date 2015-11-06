@@ -9,19 +9,21 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.objects.MutableObjectInstance;
+import burlap.oomdp.core.objects.ObjectInstance;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.core.TransitionProbability;
+import burlap.oomdp.singleagent.GroundedAction;
+import burlap.oomdp.singleagent.common.SimpleAction.SimpleDeterministicAction;
 
-public class ActionDestroyBlockSimulated extends ActionAgentSimulated {
+public class ActionDestroyBlockSimulated extends SimpleDeterministicAction {
 
 	public ActionDestroyBlockSimulated(String name, Domain domain) {
 		super(name, domain);
 	}
 
 	@Override
-	State doAction(State s) {
-		
+	protected State performActionHelper(State s, GroundedAction groundedAction) {
 		//get agent and current position
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int curX = agent.getIntValForAttribute(HelperNameSpace.ATX);
@@ -42,33 +44,6 @@ public class ActionDestroyBlockSimulated extends ActionAgentSimulated {
 		}
 		
 		return s;
-	}
-	
-	@Override
-	public boolean applicableInState(State s, String[] params) {
-		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
-		for (ObjectInstance block : blocks) {
-			if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
-				int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
-				int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
-				int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-				if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	@Override
-	public List<TransitionProbability> getTransitions(State s, String [] params) {
-		
-		return this.deterministicTransition(s, params);
-		
 	}
 	
 	protected State destroyResult(int curX, int curY, int curZ, int rotDir, int vertDir, List<ObjectInstance> invBlocks, List<ObjectInstance> blocks, State s) {
@@ -97,19 +72,38 @@ public class ActionDestroyBlockSimulated extends ActionAgentSimulated {
 				}
 				if (!present) {
 					// create a new object instance if it is not present
-					ObjectInstance inventoryBlockInstance = new ObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK), "inventoryBlock" + invBlocks.size());
+					ObjectInstance inventoryBlockInstance = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK), "inventoryBlock" + invBlocks.size());
 					inventoryBlockInstance.setValue(HelperNameSpace.ATBTYPE, blockID);
 					inventoryBlockInstance.addRelationalTarget(HelperNameSpace.ATBLOCKNAMES, blockName);
 					s.addObject(inventoryBlockInstance);
 				}
 				
 				s.removeObject(block);
-//				System.out.println("Destroyed: " + blockX + "," + blockY + "," + blockZ);
 			}
 		}
 		
 		return s;
 		
+	}
+	
+	@Override
+	public boolean applicableInState(State s, GroundedAction groundedAction) {
+		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
+		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
+		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
+		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+		for (ObjectInstance block : blocks) {
+			if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
+				int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
+				int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
+				int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+				if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 }

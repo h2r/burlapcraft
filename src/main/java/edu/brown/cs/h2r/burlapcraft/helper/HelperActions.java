@@ -2,6 +2,7 @@ package edu.brown.cs.h2r.burlapcraft.helper;
 
 import java.util.*;
 
+import burlap.oomdp.singleagent.GroundedAction;
 //import net.famzangl.minecraft.minebot.ai.command.AIChatController;
 //import net.famzangl.minecraft.minebot.ai.task.AITask;
 //import net.famzangl.minecraft.minebot.build.BuildManager;
@@ -39,14 +40,18 @@ public class HelperActions {
 			Blocks.gold_block, BurlapCraft.mineableBlueRock,
 			BurlapCraft.mineableGreenRock, BurlapCraft.mineableOrangeRock,
 			BurlapCraft.mineableRedRock };
-
+	
+	// danger blocks
 	public static final Block[] dangerBlocks = { Blocks.lava };
 
+	// blocks that can be placed in
 	public static final Block[] placeInBlocks = { Blocks.lava, Blocks.air };
 	
+	// blocks that cannot be mined
 	public static final Block[] unbreakableBlocks = { Blocks.bedrock, BurlapCraft.redRock, BurlapCraft.blueRock,
 		BurlapCraft.greenRock, BurlapCraft.orangeRock };
 
+	// regular blocks
 	public static final Block[] normalBlocks = { Blocks.bedrock,
 			Blocks.bookshelf, Blocks.brick_block, Blocks.brown_mushroom_block,
 			Blocks.cake, Blocks.coal_block, Blocks.coal_ore,
@@ -67,8 +72,10 @@ public class HelperActions {
 			Blocks.stained_glass, Blocks.stained_hardened_clay, Blocks.stone,
 			Blocks.stonebrick, Blocks.web, Blocks.wool };
 
-	public static final Block[] fallingBlocks = { Blocks.gravel, Blocks.sand };
+	// blocks that fall
+	public static final Block[] fallingBlocks = { Blocks.gravel, Blocks.sand, Blocks.lava };
 
+	// stair blocks
 	public static final Block[] stairBlocks = { Blocks.acacia_stairs,
 			Blocks.birch_stairs, Blocks.brick_stairs, Blocks.dark_oak_stairs,
 			Blocks.jungle_stairs, Blocks.nether_brick_stairs,
@@ -76,6 +83,7 @@ public class HelperActions {
 			Blocks.stone_brick_stairs, Blocks.stone_stairs, Blocks.stone_slab,
 			Blocks.wooden_slab, Blocks.quartz_stairs };
 
+	// blocks that can be walked on
 	public static final Block[] walkableBlocks = { Blocks.tallgrass,
 			Blocks.yellow_flower, Blocks.red_flower, Blocks.wheat,
 			Blocks.carrots, Blocks.potatoes, Blocks.pumpkin_stem,
@@ -84,10 +92,12 @@ public class HelperActions {
 			Blocks.double_plant, Blocks.red_mushroom, Blocks.brown_mushroom,
 			Blocks.redstone_wire };
 
+	// safe side blocks
 	public static final Block[] safeSideBlocks = { Blocks.fence,
 			Blocks.fence_gate, Blocks.cobblestone_wall, Blocks.cactus,
 			Blocks.reeds };
 
+	// all blocks
 	public static final Block[] allBlocks = { Blocks.bedrock, Blocks.bookshelf,
 			Blocks.brick_block, Blocks.brown_mushroom_block, Blocks.cake,
 			Blocks.coal_block, Blocks.coal_ore, Blocks.cobblestone,
@@ -171,24 +181,6 @@ public class HelperActions {
 				position.getZ());
 		Chunk chunk = player.getEntityWorld().getChunkFromBlockCoords(
 				(int) position.getX(), (int) position.getZ());
-
-		// System.out.println("Is chunk loaded: " + chunk);
-		// player.getEntityWorld().getChunkProvider().loadChunk((int)
-		// position.getX(), (int) position.getZ());
-		// player.getEntityWorld().getChunkProvider().loadChunk((int)
-		// position.getX(), (int) position.getZ());
-		// System.out.println("Is chunk loaded: " + chunk);
-		// for (int ix = -10; ix < 10; ix ++) {
-		// for (int iy = -10; iy < 10; iy ++) {
-		// for (int iz = -10; iz < 10; iz ++) {
-		// player.getEntityWorld().getChunkProvider().loadChunk((int)
-		// position.getX() + ix, (int) position.getZ() + iz);
-		// player.getEntityWorld().markBlockForUpdate((int) position.getX() +
-		// ix, (int) position.getY() + iy, (int) position.getZ() + iz);
-		// }
-		// }
-		// }
-		// System.out.println("Is chunk loaded: " + chunk);
 	}
 
 	public static void overrideMovement(MovementInput i) {

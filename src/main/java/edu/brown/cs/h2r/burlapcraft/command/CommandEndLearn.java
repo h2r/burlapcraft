@@ -7,9 +7,8 @@ import java.util.TimerTask;
 
 import burlap.oomdp.core.Domain;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
+import edu.brown.cs.h2r.burlapcraft.solver.MinecraftSolver;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;

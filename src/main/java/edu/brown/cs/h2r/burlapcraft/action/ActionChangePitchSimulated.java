@@ -6,11 +6,13 @@ import net.minecraft.block.Block;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.objects.ObjectInstance;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.core.TransitionProbability;
+import burlap.oomdp.singleagent.GroundedAction;
+import burlap.oomdp.singleagent.common.SimpleAction.SimpleDeterministicAction;
 
-public class ActionChangePitchSimulated extends ActionAgentSimulated {
+public class ActionChangePitchSimulated extends SimpleDeterministicAction {
 
 	private int vertDirection;
 	
@@ -18,10 +20,9 @@ public class ActionChangePitchSimulated extends ActionAgentSimulated {
 		super(name, domain);
 		this.vertDirection = rotateVertDirection;
 	}
-
+	
 	@Override
-	State doAction(State s) {
-		
+	protected State performActionHelper(State s, GroundedAction groundedAction) {
 		//get agent
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		
@@ -30,11 +31,10 @@ public class ActionChangePitchSimulated extends ActionAgentSimulated {
 		
 		//return the state we just modified
 		return s;
-		
 	}
 	
 	@Override
-	public boolean applicableInState(State s, String[] params) {
+	public boolean applicableInState(State s, GroundedAction groundedAction) {
 		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
 		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
 		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
@@ -51,13 +51,6 @@ public class ActionChangePitchSimulated extends ActionAgentSimulated {
 			}
 		}
 		return true;
-	}
-	
-	@Override
-	public List<TransitionProbability> getTransitions(State s, String [] params){
-		
-		return this.deterministicTransition(s, params);
-		
 	}
 
 }

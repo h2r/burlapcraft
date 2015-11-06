@@ -1,9 +1,9 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.states.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -21,8 +21,8 @@ public class CommandCheckState implements ICommand{
 
 	public CommandCheckState(){
 		this.aliases.add("checkState");
-		DomainGeneratorReal rdg = new DomainGeneratorReal(30, 30, 30);
-		domain = rdg.generateDomain();
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(30, 30, 30);
+		domain = mdg.generateDomain();
 	}
 
 	@Override

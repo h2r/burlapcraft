@@ -7,8 +7,10 @@ import java.util.Map;
 
 import net.minecraft.block.Block;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectInstance;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.objects.MutableObjectInstance;
+import burlap.oomdp.core.objects.ObjectInstance;
+import burlap.oomdp.core.states.MutableState;
+import burlap.oomdp.core.states.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
@@ -36,7 +38,7 @@ public class StateGenerator {
 		width = d.getWidth();
 		height = d.getHeight();
 
-		State s = new State();
+		State s = new MutableState();
 
 		int xMaxBlue = -1;
 		int xMinBlue = Integer.MAX_VALUE;
@@ -144,7 +146,7 @@ public class StateGenerator {
 						}
 						
 						// Note: name block after its x, y, and z coordinates
-						ObjectInstance blockInstance = new ObjectInstance(
+						ObjectInstance blockInstance = new MutableObjectInstance(
 								domain.getObjectClass(HelperNameSpace.CLASSBLOCK),
 								blockName);
 						blockInstance.setValue(HelperNameSpace.ATX, j);
@@ -161,7 +163,7 @@ public class StateGenerator {
 			if (fourRoomsFound) {
 				if (xMaxBlue != -1 && xMinBlue != Integer.MAX_VALUE
 						&& zMaxBlue != -1 && zMinBlue != Integer.MAX_VALUE) {
-					ObjectInstance blueRoomInstance = new ObjectInstance(
+					ObjectInstance blueRoomInstance = new MutableObjectInstance(
 							domain.getObjectClass(HelperNameSpace.CLASSROOM),
 							"roomblue");
 					blueRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxBlue);
@@ -173,7 +175,7 @@ public class StateGenerator {
 				}
 				if (xMaxRed != -1 && xMinRed != Integer.MAX_VALUE
 						&& zMaxRed != -1 && zMinRed != Integer.MAX_VALUE) {
-					ObjectInstance redRoomInstance = new ObjectInstance(
+					ObjectInstance redRoomInstance = new MutableObjectInstance(
 							domain.getObjectClass(HelperNameSpace.CLASSROOM),
 							"roomred");
 					redRoomInstance.setValue(HelperNameSpace.ATXMAX, xMaxRed);
@@ -185,7 +187,7 @@ public class StateGenerator {
 				}
 				if (xMaxGreen != -1 && xMinGreen != Integer.MAX_VALUE
 						&& zMaxGreen != -1 && zMinGreen != Integer.MAX_VALUE) {
-					ObjectInstance greenRoomInstance = new ObjectInstance(
+					ObjectInstance greenRoomInstance = new MutableObjectInstance(
 							domain.getObjectClass(HelperNameSpace.CLASSROOM),
 							"roomgreen");
 					greenRoomInstance.setValue(HelperNameSpace.ATXMAX,
@@ -202,7 +204,7 @@ public class StateGenerator {
 				}
 				if (xMaxOrange != -1 && xMinOrange != Integer.MAX_VALUE
 						&& zMaxOrange != -1 && zMinOrange != Integer.MAX_VALUE) {
-					ObjectInstance orangeRoomInstance = new ObjectInstance(
+					ObjectInstance orangeRoomInstance = new MutableObjectInstance(
 							domain.getObjectClass(HelperNameSpace.CLASSROOM),
 							"roomorange");
 					orangeRoomInstance.setValue(HelperNameSpace.ATXMAX,
@@ -226,7 +228,7 @@ public class StateGenerator {
 		int selectedItemID = HelperActions.getCurrentItemID();
 		System.out.println("Player position: " + curPos);
 		System.out.println("Dungeon: " + dungeonPose);
-		ObjectInstance agent = new ObjectInstance(
+		ObjectInstance agent = new MutableObjectInstance(
 				domain.getObjectClass(HelperNameSpace.CLASSAGENT), "agent0");
 		agent.setValue(HelperNameSpace.ATX, curPos.x - dungeonPose.getX());
 		agent.setValue(HelperNameSpace.ATY, curPos.y - dungeonPose.getY());
@@ -246,7 +248,7 @@ public class StateGenerator {
 		for (Map.Entry<String, Integer> i : items.entrySet()) {
 			for (String name : blockMap.keySet()) {
 				if (i.getKey().equals(name)) {
-					ObjectInstance o = new ObjectInstance(
+					ObjectInstance o = new MutableObjectInstance(
 							domain.getObjectClass(HelperNameSpace.CLASSINVENTORYBLOCK),
 							"inventoryBlock" + invBlockCount);
 					Integer key = blockMap.get(name);

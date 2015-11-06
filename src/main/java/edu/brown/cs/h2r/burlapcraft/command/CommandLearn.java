@@ -14,16 +14,15 @@ import org.apache.commons.lang3.StringUtils;
 import commands.data.TrainingElement;
 import commands.data.Trajectory;
 import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.singleagent.Action;
 import burlap.oomdp.singleagent.GroundedAction;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGestureTuple;
-import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
+import edu.brown.cs.h2r.burlapcraft.solver.MinecraftSolver;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -71,7 +70,7 @@ public class CommandLearn implements ICommand {
 		}
 		
 		final String commandToLearn = StringUtils.join(args, " ");
-		DomainGeneratorSimulated sdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		MinecraftDomainGenerator sdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
 		domain = sdg.generateDomain();
 		final ArrayList<State> states = new ArrayList<State>();
 		

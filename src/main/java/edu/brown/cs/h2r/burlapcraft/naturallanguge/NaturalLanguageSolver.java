@@ -1,24 +1,20 @@
 package edu.brown.cs.h2r.burlapcraft.naturallanguge;
 
+import burlap.behavior.policy.Policy;
 import burlap.behavior.singleagent.EpisodeAnalysis;
-import burlap.behavior.singleagent.Policy;
-import burlap.behavior.singleagent.learning.modellearning.DomainMappedPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
-import burlap.behavior.singleagent.planning.deterministic.GoalConditionTF;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
-import burlap.behavior.singleagent.planning.deterministic.TFGoalCondition;
 import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
-import burlap.behavior.statehashing.DiscreteStateHashFactory;
-import burlap.behavior.statehashing.NameDependentStateHashFactory;
-import burlap.behavior.statehashing.StateHashFactory;
 import burlap.oomdp.auxiliary.DomainGenerator;
-import burlap.oomdp.auxiliary.common.StateJSONParser;
+import burlap.oomdp.auxiliary.stateconditiontest.TFGoalCondition;
+import burlap.oomdp.legacy.StateJSONParser;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.GroundedProp;
-import burlap.oomdp.core.State;
+import burlap.oomdp.core.states.State;
 import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.common.UniformCostRF;
+import burlap.oomdp.statehashing.SimpleHashableStateFactory;
 import commands.data.TrainingElement;
 import commands.data.TrainingElementParser;
 import commands.data.TrajectoryParser;
@@ -30,8 +26,8 @@ import commands.model3.weaklysupervisedinterface.MTWeaklySupervisedModel;
 import commands.model3.weaklysupervisedinterface.WeaklySupervisedController;
 import commands.model3.weaklysupervisedinterface.WeaklySupervisedTrainingInstance;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorReal;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.DomainGeneratorSimulated;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
+import edu.brown.cs.h2r.burlapcraft.environment.MinecraftEnvironment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import generativemodel.GMQueryResult;
@@ -51,7 +47,7 @@ public class NaturalLanguageSolver {
 	protected static Domain referenceDomain;
 	protected static List<GPConjunction> liftedTasks;
 	protected static WeaklySupervisedController commandController;
-	protected static StateHashFactory hashingFactory;
+	protected static SimpleHashableStateFactory hashingFactory;
 	protected static MTWeaklySupervisedModel languageModel;
 
 	protected static boolean loaded = false;
@@ -61,12 +57,12 @@ public class NaturalLanguageSolver {
 
 		loaded = false;
 
-		DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
+		MinecraftDomainGenerator realdg = new MinecraftDomainGenerator(100, 100, 100);
 		referenceDomain = realdg.generateDomain();
 
 		liftedTasks = getMinecraftTasks();
 
-		hashingFactory = new NameDependentStateHashFactory();
+		hashingFactory = new SimpleHashableStateFactory(false);
 
 		commandController = new WeaklySupervisedController(referenceDomain, liftedTasks, hashingFactory, true);
 
@@ -88,12 +84,12 @@ public class NaturalLanguageSolver {
 		loaded = false;
 
 		//DomainGeneratorReal realdg = new DomainGeneratorReal(100, 100, 100);
-		DomainGenerator simdg = new DomainGeneratorSimulated(StateGenerator.getMap(BurlapCraft.currentDungeon));
-		referenceDomain = simdg.generateDomain();
+		DomainGenerator mdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		referenceDomain = mdg.generateDomain();
 
 		liftedTasks = getMinecraftTasks();
 
-		hashingFactory = new NameDependentStateHashFactory();
+		hashingFactory = new SimpleHashableStateFactory(false);
 
 		commandController = new WeaklySupervisedController(referenceDomain, liftedTasks, hashingFactory, true);
 		List <WeaklySupervisedTrainingInstance> oldTrainingData = commandController.getWeaklySupervisedTrainingDataset();
@@ -191,11 +187,10 @@ public class NaturalLanguageSolver {
 
 		int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
 
-		DomainGeneratorSimulated simdg = new DomainGeneratorSimulated(map);
-		DomainGeneratorReal realdg = new DomainGeneratorReal(map[0].length, map[0][0].length, map.length);
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(map);
 
-		Domain domain = simdg.generateDomain();
-		Domain realDomain = realdg.generateDomain();
+		Domain domain = mdg.generateDomain();
+		MinecraftEnvironment me = new MinecraftEnvironment(domain);
 
 		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 
@@ -205,21 +200,18 @@ public class NaturalLanguageSolver {
 		TaskModule.RFConVariableValue gr = (TaskModule.RFConVariableValue)predicted.getQueryForVariable(commandController.getGM().getRVarWithName(TaskModule.GROUNDEDRFNAME));
 		TrajectoryModule.ConjunctiveGroundedPropTF tf = new TrajectoryModule.ConjunctiveGroundedPropTF(gr.rf);
 		TFGoalCondition gc = new TFGoalCondition(tf);
+		me.setTerminalFunction(tf);
 
 		RewardFunction rf = new UniformCostRF();
 
 		chatOrSystemPrint(sender, "Obeying command to achieve " + tf.toString());
 
-		AStar planner = new AStar(domain, rf, gc, new NameDependentStateHashFactory(), new NullHeuristic());
+		AStar planner = new AStar(domain, rf, gc, new SimpleHashableStateFactory(false), new NullHeuristic());
 		planner.planFromState(initialState);
 		Policy p = new DDPlannerPolicy(planner);
 
-		DomainMappedPolicy rp = new DomainMappedPolicy( realDomain, p);
-		rp.evaluateBehavior(initialState, rf, tf);
-
-
-
-
+		
+		p.evaluateBehavior(me);
 
 	}
 

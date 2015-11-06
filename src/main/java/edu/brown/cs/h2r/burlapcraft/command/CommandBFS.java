@@ -9,9 +9,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.GotoSolver;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningFinder;
-import edu.brown.cs.h2r.burlapcraft.solver.SolverPlanningSmallBridge;
+import edu.brown.cs.h2r.burlapcraft.solver.MinecraftSolver;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
 public class CommandBFS implements ICommand {
@@ -83,7 +81,7 @@ public class CommandBFS implements ICommand {
 			Thread bthread = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					GotoSolver.plan(0, fclosed, fplace);
+					MinecraftSolver.plan(0, fclosed, fplace);
 				}
 			});
 

@@ -10,6 +10,7 @@ import burlap.behavior.policy.Policy;
 import burlap.behavior.singleagent.learning.LearningAgent;
 import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
 import burlap.oomdp.auxiliary.stateconditiontest.StateConditionTest;
+import burlap.behavior.singleagent.planning.Planner;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
@@ -17,6 +18,7 @@ import burlap.behavior.singleagent.planning.deterministic.informed.Heuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
+import burlap.behavior.singleagent.planning.stochastic.valueiteration.ValueIteration;
 import burlap.debugtools.MyTimer;
 import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Domain;
@@ -113,6 +115,24 @@ public class MinecraftSolver {
 		
 		p.evaluateBehavior(me);
 		
+	}
+	
+	public static void stocasticPlan(double gamma){
+		
+		int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
+
+		MinecraftDomainGenerator simdg = new MinecraftDomainGenerator(map);
+		
+		Domain domain = simdg.generateDomain();
+
+		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+		
+		Planner planner = new ValueIteration(domain, rf, tf, gamma, new SimpleHashableStateFactory(false), 0.001, 1000);
+		
+		Policy p = planner.planFromState(initialState);
+		
+		MinecraftEnvironment me = new MinecraftEnvironment(domain);
+		p.evaluateBehavior(me);
 	}
 
 	public static void learn(){

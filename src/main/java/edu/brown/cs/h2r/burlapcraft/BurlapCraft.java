@@ -101,6 +101,7 @@ public class BurlapCraft {
     	event.registerServerCommand(new CommandSmoothMove());
     	event.registerServerCommand(new CommandAStar());
     	event.registerServerCommand(new CommandBFS());
+    	event.registerServerCommand(new CommandVI());
     	event.registerServerCommand(new CommandRMax());
     	event.registerServerCommand(new CommandCreateDungeons());
         event.registerServerCommand(new CommandInventory());

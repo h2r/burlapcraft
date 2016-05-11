@@ -4,11 +4,16 @@ import java.util.HashMap;
 
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.action.ActionController;
+import edu.brown.cs.h2r.burlapcraft.action.ActionControllerAttack;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangeItem;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangePitch;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangeYaw;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerDestroyBlock;
+import edu.brown.cs.h2r.burlapcraft.action.ActionControllerMoveEast;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerMoveForward;
+import edu.brown.cs.h2r.burlapcraft.action.ActionControllerMoveNorth;
+import edu.brown.cs.h2r.burlapcraft.action.ActionControllerMoveSouth;
+import edu.brown.cs.h2r.burlapcraft.action.ActionControllerMoveWest;
 import edu.brown.cs.h2r.burlapcraft.action.ActionControllerPlaceBlock;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
@@ -34,7 +39,7 @@ public class MinecraftEnvironment implements Environment {
 		this.d = d;
 		this.rewardFunction = new NullRewardFunction();
 		this.terminalFunction = new NullTermination();
-		int delayMS = 1500;
+		int delayMS = 300;
 		actionControllerMap = new HashMap<String, ActionController>();
 		actionControllerMap.put(HelperNameSpace.ACTIONMOVE, new ActionControllerMoveForward(delayMS, this));
 		actionControllerMap.put(HelperNameSpace.ACTIONROTATERIGHT, new ActionControllerChangeYaw(delayMS, this, 1));
@@ -44,6 +49,12 @@ public class MinecraftEnvironment implements Environment {
 		actionControllerMap.put(HelperNameSpace.ACTIONDESTBLOCK, new ActionControllerDestroyBlock(delayMS, this));
 		actionControllerMap.put(HelperNameSpace.ACTIONPLACEBLOCK, new ActionControllerPlaceBlock(delayMS, this));
 		actionControllerMap.put(HelperNameSpace.ACTIONCHANGEITEM, new ActionControllerChangeItem(delayMS, this));
+		
+		actionControllerMap.put(HelperNameSpace.ATTACK, new ActionControllerAttack(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTIONMOVENORTH, new ActionControllerMoveNorth(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTIONMOVEEAST, new ActionControllerMoveEast(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTIONMOVEWEST, new ActionControllerMoveWest(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTIONMOVESOUTH, new ActionControllerMoveSouth(delayMS, this));
 	}
 	
 	@Override

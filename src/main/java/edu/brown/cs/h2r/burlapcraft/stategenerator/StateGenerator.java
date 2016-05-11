@@ -6,15 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.monster.EntityMob;
 import burlap.oomdp.core.Domain;
+import burlap.oomdp.core.ObjectClass;
 import burlap.oomdp.core.objects.MutableObjectInstance;
 import burlap.oomdp.core.objects.ObjectInstance;
 import burlap.oomdp.core.states.MutableState;
 import burlap.oomdp.core.states.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonCombat;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
+import edu.brown.cs.h2r.burlapcraft.solver.FightSolver;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 
@@ -226,16 +230,46 @@ public class StateGenerator {
 		int rotateDirection = HelperActions.getYawDirection();
 		int rotateVertDirection = HelperActions.getPitchDirection();
 		int selectedItemID = HelperActions.getCurrentItemID();
-		System.out.println("Player position: " + curPos);
-		System.out.println("Dungeon: " + dungeonPose);
+		//System.out.println("Player position: " + curPos);
+		//System.out.println("Dungeon: " + dungeonPose);
+
 		ObjectInstance agent = new MutableObjectInstance(
 				domain.getObjectClass(HelperNameSpace.CLASSAGENT), "agent0");
 		agent.setValue(HelperNameSpace.ATX, curPos.x - dungeonPose.getX());
 		agent.setValue(HelperNameSpace.ATY, curPos.y - dungeonPose.getY());
 		agent.setValue(HelperNameSpace.ATZ, curPos.z - dungeonPose.getZ());
-		agent.setValue(HelperNameSpace.ATROTDIR, rotateDirection);
-		agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
-		agent.setValue(HelperNameSpace.ATSELECTEDITEMID, selectedItemID);
+		//agent.setValue(HelperNameSpace.ATROTDIR, rotateDirection);
+		//agent.setValue(HelperNameSpace.ATVERTDIR, rotateVertDirection);
+		//agent.setValue(HelperNameSpace.ATSELECTEDITEMID, selectedItemID);
+		s.addObject(agent);
+
+		if (FightSolver.ALGORITHM_NAME.equals("tile")) {
+			ObjectInstance positionDelta = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.POSITIONDELTA), "agentDelta0");
+			positionDelta.setValue(HelperNameSpace.XDELTA, curPos.x - FightSolver.mob.posX);
+			positionDelta.setValue(HelperNameSpace.ZDELTA, curPos.z - FightSolver.mob.posZ);
+			s.addObject(positionDelta);
+
+			validate(s);
+			return s;
+		}
+
+		if (d instanceof DungeonCombat) {
+			DungeonCombat dc = (DungeonCombat) d;
+
+			EntityMob mob = FightSolver.mob;
+			// Positions appear to be doubles, but it might be best to use ints to simplify the state space
+			int mobX = (int) mob.posX;
+			int mobY = (int) mob.posY;
+			int mobZ = (int) mob.posZ;
+
+			ObjectInstance mobObject = new MutableObjectInstance(
+					domain.getObjectClass(HelperNameSpace.MOB), "mob0");
+			mobObject.setValue(HelperNameSpace.ATX, mobX - dungeonPose.getX());
+			mobObject.setValue(HelperNameSpace.ATY, mobY - dungeonPose.getY());
+			mobObject.setValue(HelperNameSpace.ATZ, mobZ - dungeonPose.getZ());
+
+			s.addObject(mobObject);
+		}
 		
 		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASSINVENTORYBLOCK);
 		int invBlockCount = invBlocks.size();
@@ -267,8 +301,7 @@ public class StateGenerator {
 				}
 			}
 		}
-
-		s.addObject(agent);
+		
 		validate(s);
 		return s;
 	}

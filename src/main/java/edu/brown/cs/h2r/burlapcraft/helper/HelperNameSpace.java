@@ -29,11 +29,17 @@ public class HelperNameSpace {
 	public static final String							ATSELECTEDITEMID = "selectedItemID";
 	public static final String							ATBLOCKNAMES = "blockNames";
 	
+	public static final String							XDELTA = "xdelta";
+	public static final String							ZDELTA = "zdelta";
+	
 	//-------------BURLAP OBJECTCLASS STRINGS-------------
 	public static final String							CLASSAGENT = "agent";
 	public static final String							CLASSBLOCK = "block";
 	public static final String							CLASSINVENTORYBLOCK = "inventoryBlock";
 	public static final String							CLASSROOM = "room";
+	
+	public static final String							MOB = "mob";
+	public static final String							POSITIONDELTA = "delta";
 	
 	//-------------ACTIONS STRINGS-------------
 	public static final String							ACTIONMOVE = "moveForward";
@@ -44,6 +50,12 @@ public class HelperNameSpace {
 	public static final String							ACTIONAHEAD = "lookAhead";
 	public static final String							ACTIONDOWNONE = "lookDown";
 	public static final String							ACTIONCHANGEITEM = "changeItem";
+	
+	public static final String							ATTACK = "attack";
+	public static final String							ACTIONMOVENORTH = "moveNorth";
+	public static final String							ACTIONMOVEEAST = "moveEast";
+	public static final String							ACTIONMOVEWEST = "moveWest";
+	public static final String							ACTIONMOVESOUTH = "moveSouth";
 	
 	//-------------PROPOSITIONAL FUNCTION STRINGS-------------
 	public static final String							PFAGENTINROOM = "agentInRoom";

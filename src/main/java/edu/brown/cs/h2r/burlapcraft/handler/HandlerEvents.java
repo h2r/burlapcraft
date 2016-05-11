@@ -24,12 +24,22 @@ public class HandlerEvents {
 	
 	public static EntityPlayer player;
 	
+//	@SubscribeEvent
+//	public void givePickaxeEvent(LivingEvent.LivingUpdateEvent event) {
+//		if (event.entity instanceof EntityPlayer) {
+//			EntityPlayer player = (EntityPlayer) event.entity;
+//			if (!player.inventory.hasItem(Items.diamond_pickaxe)) {
+//				player.inventory.addItemStackToInventory(new ItemStack(Items.diamond_pickaxe));
+//			}
+//		}
+//	}
+	
 	@SubscribeEvent
-	public void givePickaxeEvent(LivingEvent.LivingUpdateEvent event) {
+	public void giveSwordEvent(LivingEvent.LivingUpdateEvent event) {
 		if (event.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entity;
-			if (!player.inventory.hasItem(Items.diamond_pickaxe)) {
-				player.inventory.addItemStackToInventory(new ItemStack(Items.diamond_pickaxe));
+			if (!player.inventory.hasItem(Items.diamond_sword)) {
+				player.inventory.addItemStackToInventory(new ItemStack(Items.diamond_sword));
 			}
 		}
 	}

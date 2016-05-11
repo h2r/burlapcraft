@@ -7,6 +7,13 @@ import java.util.Map;
 
 import edu.brown.cs.h2r.burlapcraft.command.*;
 import net.minecraft.block.Block;
+import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityWitch;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -15,6 +22,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import edu.brown.cs.h2r.burlapcraft.block.BlockBlueRock;
 import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
@@ -28,6 +36,8 @@ import edu.brown.cs.h2r.burlapcraft.block.BlockRedRock;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
+import mobs.PassiveSpider;
+import mobs.PersistentWitch;
 
 @Mod(modid = BurlapCraft.MODID, version = BurlapCraft.VERSION)
 public class BurlapCraft {
@@ -57,6 +67,8 @@ public class BurlapCraft {
     public static List<Dungeon> dungeons = new ArrayList<Dungeon>();
     public static Map<String, Dungeon> dungeonMap = new HashMap<String, Dungeon>();
     
+    CommandFight commandFight = new CommandFight();
+    
     public static void registerDungeon(Dungeon d) {
     	dungeons.add(d);
     	dungeonMap.put(d.getName(), d);
@@ -76,6 +88,14 @@ public class BurlapCraft {
     	mineableGreenRock = new BlockMineableGreenRock();
     	mineableBlueRock = new BlockMineableBlueRock();
     	
+    	EntityRegistry.registerModEntity(EntityZombie.class, "PersistentZombie", 1, this, 80, 3, true);
+    	EntityRegistry.registerModEntity(EntitySpider.class, "PassiveSpider", 2, this, 80, 3, true);
+    	EntityRegistry.registerModEntity(EntityWitch.class, "PersistentWitch", 3, this, 80, 3, true);
+    	EntityRegistry.registerModEntity(EntityCreeper.class, "PersistentCreeper", 4, this, 80, 3, true);
+    	EntityRegistry.registerModEntity(EntitySkeleton.class, "PersistentSkeleton", 5, this, 80, 3, true);
+    	EntityRegistry.registerModEntity(EntityMagmaCube.class, "PersistentMagmaCube", 6, this, 80, 3, true);
+    	EntityRegistry.registerModEntity(EntityBlaze.class, "PersistentBlaze", 7, this, 80, 3, true);
+    	
     	// make sure minecraft knows
     	GameRegistry.registerBlock(burlapStone, "burlapstone");
     	GameRegistry.registerBlock(redRock, "redrock");
@@ -90,6 +110,8 @@ public class BurlapCraft {
     	
     	MinecraftForge.EVENT_BUS.register(eventHandler);
     	// FMLCommonHandler.instance().bus().register(fmlHandler);
+    	
+    	MinecraftForge.EVENT_BUS.register(commandFight);
     	
     }
     
@@ -117,6 +139,8 @@ public class BurlapCraft {
     	event.registerServerCommand(new CommandReadLanguageData());
         event.registerServerCommand(new CommandWriteLanguageModel());
         event.registerServerCommand(new CommandCurrentPath());
+        
+        event.registerServerCommand(commandFight);
         
     }
     

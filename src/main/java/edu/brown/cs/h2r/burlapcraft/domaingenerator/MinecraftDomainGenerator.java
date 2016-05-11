@@ -24,11 +24,16 @@ import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.singleagent.explorer.TerminalExplorer;
 import cpw.mods.fml.common.registry.GameData;
+import edu.brown.cs.h2r.burlapcraft.action.ActionAttackSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangeItemSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionChangeYawSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionDestroyBlockSimulated;
+import edu.brown.cs.h2r.burlapcraft.action.ActionMoveEastSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardSimulated;
+import edu.brown.cs.h2r.burlapcraft.action.ActionMoveNorthSimulated;
+import edu.brown.cs.h2r.burlapcraft.action.ActionMoveSouthSimulated;
+import edu.brown.cs.h2r.burlapcraft.action.ActionMoveWestSimulated;
 import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockSimulated;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
@@ -85,6 +90,15 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		this.whiteListActions.add(HelperNameSpace.ACTIONDESTBLOCK);
 		this.whiteListActions.add(HelperNameSpace.ACTIONCHANGEITEM);
 	}
+	
+	public void setActionWhiteListToNavigationAndAttack() {
+		this.whiteListActions = new HashSet<String>();
+		this.whiteListActions.add(HelperNameSpace.ACTIONMOVENORTH);
+		this.whiteListActions.add(HelperNameSpace.ACTIONMOVEEAST);
+		this.whiteListActions.add(HelperNameSpace.ACTIONMOVEWEST);
+		this.whiteListActions.add(HelperNameSpace.ACTIONMOVESOUTH);
+		this.whiteListActions.add(HelperNameSpace.ATTACK);
+	}
 
 	public Set<String> getWhiteListActions() {
 		return whiteListActions;
@@ -139,6 +153,10 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		// names of blocks
 		Attribute blockNames = new Attribute(domain, HelperNameSpace.ATBLOCKNAMES, Attribute.AttributeType.MULTITARGETRELATIONAL);
 		
+		// Difference between x coordinates of agent and mob
+		Attribute xDelta = new Attribute(domain, HelperNameSpace.XDELTA, Attribute.AttributeType.INT);
+		// Difference between z coordinates of agent and mob
+		Attribute zDelta = new Attribute(domain, HelperNameSpace.ZDELTA, Attribute.AttributeType.INT);
 		
 		// Object classes
 		// agent
@@ -146,9 +164,9 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		agentClass.addAttribute(xAtt);
 		agentClass.addAttribute(yAtt);
 		agentClass.addAttribute(zAtt);
-		agentClass.addAttribute(rotDirAt);
-		agentClass.addAttribute(vertDirAt);
-		agentClass.addAttribute(selectedItemID);
+		//agentClass.addAttribute(rotDirAt);
+		//agentClass.addAttribute(vertDirAt);
+		//agentClass.addAttribute(selectedItemID);
 		// blocks
 		ObjectClass blockClass = new ObjectClass(domain, HelperNameSpace.CLASSBLOCK);
 		blockClass.addAttribute(xAtt);
@@ -166,6 +184,17 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		roomClass.addAttribute(zMax);
 		roomClass.addAttribute(zMin);
 		roomClass.addAttribute(color);
+		
+		//mobs
+		ObjectClass mobClass = new ObjectClass(domain, HelperNameSpace.MOB);
+		mobClass.addAttribute(xAtt);
+		mobClass.addAttribute(yAtt);
+		mobClass.addAttribute(zAtt);
+		
+		//position delta
+		ObjectClass positionDelta = new ObjectClass(domain, HelperNameSpace.POSITIONDELTA);
+		positionDelta.addAttribute(xDelta);
+		positionDelta.addAttribute(zDelta);		
 		
 		// Actions
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVE)) {
@@ -191,6 +220,22 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONCHANGEITEM)) {
 			new ActionChangeItemSimulated(HelperNameSpace.ACTIONCHANGEITEM, domain);
+		}
+		
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ATTACK)) {
+			new ActionAttackSimulated(HelperNameSpace.ATTACK, domain);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVENORTH)) {
+			new ActionMoveNorthSimulated(HelperNameSpace.ACTIONMOVENORTH, domain, this.map);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVEEAST)) {
+			new ActionMoveEastSimulated(HelperNameSpace.ACTIONMOVEEAST, domain, this.map);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVEWEST)) {
+			new ActionMoveWestSimulated(HelperNameSpace.ACTIONMOVEWEST, domain, this.map);
+		}
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVESOUTH)) {
+			new ActionMoveSouthSimulated(HelperNameSpace.ACTIONMOVESOUTH, domain, this.map);
 		}
 
 		// Propositional Functions

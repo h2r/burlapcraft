@@ -10,6 +10,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonCombat;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonCleanUp;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonFinder;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.DungeonFourRooms;
@@ -92,14 +93,17 @@ public class HandlerDungeonGeneration implements IWorldGenerator {
 		Pose fourRoomsPose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height, playerSpawnPose.getZ() - 10 + fourRoomsZOffset);
 		Pose cleanUpPose = Pose.fromXyz(playerSpawnPose.getX() - 40, playerSpawnPose.getY() + height + 15, playerSpawnPose.getZ() - 10 + cleanUpZOffset);
 		
-		BurlapCraft.registerDungeon(new DungeonFinder(finderPose));
-		BurlapCraft.registerDungeon(new DungeonTinyBridge(tinyBridgePose));
-		BurlapCraft.registerDungeon(new DungeonSmallBridge(smallBridgePose));
-		BurlapCraft.registerDungeon(new DungeonGrid(gridPose));
-		BurlapCraft.registerDungeon(new DungeonMaze0(maze0Pose));
-		BurlapCraft.registerDungeon(new DungeonMaze1(maze1Pose));
-		BurlapCraft.registerDungeon(new DungeonFourRooms(fourRoomsPose));
-		BurlapCraft.registerDungeon(new DungeonCleanUp(cleanUpPose));
+		Pose combatPose = Pose.fromXyz(playerSpawnPose.getX(), playerSpawnPose.getY() + 20, playerSpawnPose.getZ());
+		
+//		BurlapCraft.registerDungeon(new DungeonFinder(finderPose));
+//		BurlapCraft.registerDungeon(new DungeonTinyBridge(tinyBridgePose));
+//		BurlapCraft.registerDungeon(new DungeonSmallBridge(smallBridgePose));
+//		BurlapCraft.registerDungeon(new DungeonGrid(gridPose));
+//		BurlapCraft.registerDungeon(new DungeonMaze0(maze0Pose));
+//		BurlapCraft.registerDungeon(new DungeonMaze1(maze1Pose));
+//		BurlapCraft.registerDungeon(new DungeonFourRooms(fourRoomsPose));
+//		BurlapCraft.registerDungeon(new DungeonCleanUp(cleanUpPose));
+		BurlapCraft.registerDungeon(new DungeonCombat(combatPose));
 		
 		for (Dungeon d : BurlapCraft.dungeons) {
 			d.regenerate(world);

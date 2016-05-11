@@ -276,7 +276,7 @@ public class HelperActions {
 
 	public static boolean moveForward(boolean jump) {
 		MovementInput movement = new MovementInput();
-		movement.moveForward = (float) 0.55D;
+		movement.moveForward = (float) 2.20D;
 		movement.jump = jump;
 
 		snapToGrid();
@@ -290,15 +290,15 @@ public class HelperActions {
 				resetAllInputs();
 				timer.cancel();
 			}
-		}, 440, 10);
+		}, 200, 2);
 
 		return true;
 	}
 
 	final private static double qDecay = 90.0;
-	final private static double snapThresh = 0.025;
-	final private static double minUpdate = 0.025;
-	final private static long timerPeriod = 2;
+	final private static double snapThresh = 1;
+	final private static double minUpdate = 1;
+	final private static long timerPeriod = 1;
 	final private static long maxUpdates = 1000;
 
 	public static void moveYawToTarget(final double yawTarget) {
@@ -312,7 +312,7 @@ public class HelperActions {
 			@Override
 			public void run() {
 				if (player.rotationYaw == yawTarget) {
-					System.out.println("moveYawToTarget: target reached.");
+					//System.out.println("moveYawToTarget: target reached.");
 					timer.cancel();
 				} else if (Math.abs(yawTarget - player.rotationYaw) > snapThresh) {
 					double update = (yawTarget - player.rotationYaw) / qDecay;
@@ -333,6 +333,24 @@ public class HelperActions {
 					} else {
 						// do nothing
 					}
+				} else {
+					player.rotationYaw = (float) yawTarget;
+				}
+			}
+		}, 0, timerPeriod);
+	}
+	
+	public static void moveYawToTargetDirect(final double yawTarget) {
+		final EntityPlayer player = mc.thePlayer;
+		// consider snapping to range -360 to 360 in here to avoid massive
+		// unwinding...
+		final Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if (player.rotationYaw == yawTarget) {
+					System.out.println("moveYawToTarget: target reached.");
+					timer.cancel();
 				} else {
 					player.rotationYaw = (float) yawTarget;
 				}
@@ -418,6 +436,47 @@ public class HelperActions {
 			moveYawToTarget(270);
 		}
 	}
+	
+	public static void faceSouthDirect() {
+		// mc.thePlayer.rotationYaw = 0;
+
+		// this is right on the branch cut so we need to be careful
+		if (mc.thePlayer.rotationYaw < -180) {
+			mc.thePlayer.rotationYaw += 360;
+		} else if (mc.thePlayer.rotationYaw > 180) {
+			mc.thePlayer.rotationYaw -= 360;
+		} else {
+			// do nothing
+		}
+		moveYawToTargetDirect(0);
+	}
+
+	public static void faceWestDirect() {
+		// mc.thePlayer.rotationYaw = 90;
+		if (mc.thePlayer.rotationYaw <= -90) {
+			moveYawToTargetDirect(-270);
+		} else {
+			moveYawToTargetDirect(90);
+		}
+	}
+
+	public static void faceNorthDirect() {
+		// mc.thePlayer.rotationYaw = -180;
+		if (mc.thePlayer.rotationYaw <= 0) {
+			moveYawToTargetDirect(-180);
+		} else {
+			moveYawToTargetDirect(180);
+		}
+	}
+
+	public static void faceEastDirect() {
+		// mc.thePlayer.rotationYaw = -90;
+		if (mc.thePlayer.rotationYaw <= 90) {
+			moveYawToTargetDirect(-90);
+		} else {
+			moveYawToTargetDirect(270);
+		}
+	}
 
 	public static int getYawDirection() {
 		return (MathHelper
@@ -463,7 +522,7 @@ public class HelperActions {
 					resetAllInputs();
 					timer.cancel();
 				}
-			}, 200, 10);
+			}, 100, 10);
 		}
 	}
 
@@ -481,12 +540,24 @@ public class HelperActions {
 							resetAllInputs();
 							timer.cancel();
 						}
-					}, 200, 10);
+					}, 100, 10);
 					break;
 				}
 			}
 			mc.thePlayer.inventory.changeCurrentItem(-1);
 		}
+	}
+	
+	public static void attack() {
+		overrideAttack();
+		final Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				resetAllInputs();
+				timer.cancel();
+			}
+		}, 100, 10);
 	}
 
 	public static Map<String, Integer> checkInventory() {

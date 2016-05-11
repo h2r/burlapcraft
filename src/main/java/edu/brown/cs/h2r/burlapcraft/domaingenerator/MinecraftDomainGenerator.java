@@ -1,38 +1,23 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.*;
-import net.minecraft.block.Block;
-import net.minecraft.util.RegistryNamespaced;
-import burlap.oomdp.auxiliary.DomainGenerator;
-import burlap.oomdp.core.Attribute;
-import burlap.oomdp.core.Attribute.AttributeType;
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.ObjectClass;
-import burlap.oomdp.core.objects.ObjectInstance;
-import burlap.oomdp.core.PropositionalFunction;
-import burlap.oomdp.core.states.State;
-import burlap.oomdp.core.TerminalFunction;
-import burlap.oomdp.core.TransitionProbability;
-import burlap.oomdp.singleagent.Action;
-import burlap.oomdp.singleagent.GroundedAction;
-import burlap.oomdp.singleagent.RewardFunction;
-import burlap.oomdp.singleagent.SADomain;
-import burlap.oomdp.singleagent.explorer.TerminalExplorer;
-import cpw.mods.fml.common.registry.GameData;
-import edu.brown.cs.h2r.burlapcraft.action.ActionChangeItemSimulated;
-import edu.brown.cs.h2r.burlapcraft.action.ActionChangePitchSimulated;
-import edu.brown.cs.h2r.burlapcraft.action.ActionChangeYawSimulated;
-import edu.brown.cs.h2r.burlapcraft.action.ActionDestroyBlockSimulated;
-import edu.brown.cs.h2r.burlapcraft.action.ActionMoveForwardSimulated;
-import edu.brown.cs.h2r.burlapcraft.action.ActionPlaceBlockSimulated;
+import burlap.mdp.auxiliary.DomainGenerator;
+import burlap.mdp.singleagent.oo.OOSADomain;
+import edu.brown.cs.h2r.burlapcraft.action.*;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentHasBlock;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentOnBlock;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockIsType;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCMap;
+import net.minecraft.block.Block;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.*;
 
 /**
  * Class to generate burlap domain for minecraft
@@ -99,77 +84,18 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 	}
 
 	@Override
-	public Domain generateDomain() {
+	public OOSADomain generateDomain() {
 		
-		Domain domain = new SADomain();
-		
-		// Attributes
-		// x-position attribute
-		Attribute xAtt = new Attribute(domain, HelperNameSpace.ATX, AttributeType.INT);
-		xAtt.setLims(0, this.length - 1);
-		// y-position attribute
-		Attribute yAtt = new Attribute(domain, HelperNameSpace.ATY, AttributeType.INT);
-		yAtt.setLims(0, this.height - 1);
-		// z-position attribute
-		Attribute zAtt = new Attribute(domain, HelperNameSpace.ATZ, AttributeType.INT);
-		zAtt.setLims(0, this.width - 1);
-		// Rotational direction for agent
-		Attribute rotDirAt = new Attribute(domain, HelperNameSpace.ATROTDIR, Attribute.AttributeType.DISC);
-		rotDirAt.setDiscValuesForRange(0, HelperNameSpace.RotDirection.size - 1, 1);
-		// Agent's vertical direction attribute
-		Attribute vertDirAt = new Attribute(domain, HelperNameSpace.ATVERTDIR, Attribute.AttributeType.DISC);
-		vertDirAt.setDiscValuesForRange(0, HelperNameSpace.VertDirection.size - 1, 1);
-		// Block type
-		Attribute bType = new Attribute(domain, HelperNameSpace.ATBTYPE, Attribute.AttributeType.INT);
-		// Inventory Block quantity
-		Attribute ibQuantity = new Attribute(domain, HelperNameSpace.ATIBQUANT, Attribute.AttributeType.INT);
-		// Room xMin bound
-		Attribute xMin = new Attribute(domain, HelperNameSpace.ATXMIN, Attribute.AttributeType.INT);
-		// Room xMax bound
-		Attribute xMax = new Attribute(domain, HelperNameSpace.ATXMAX, Attribute.AttributeType.INT);
-		// Room yMin bound
-		Attribute zMin = new Attribute(domain, HelperNameSpace.ATZMIN, Attribute.AttributeType.INT);
-		// Room yMax bound
-		Attribute zMax = new Attribute(domain, HelperNameSpace.ATZMAX, Attribute.AttributeType.INT);
-		// Room color
-		Attribute color = new Attribute(domain, HelperNameSpace.ATCOLOR, Attribute.AttributeType.DISC);
-		color.setDiscValues(this.colors);
-		// Current Item ID
-		Attribute selectedItemID = new Attribute(domain, HelperNameSpace.ATSELECTEDITEMID, Attribute.AttributeType.INT);
-		// names of blocks
-		Attribute blockNames = new Attribute(domain, HelperNameSpace.ATBLOCKNAMES, Attribute.AttributeType.MULTITARGETRELATIONAL);
-		
-		
-		// Object classes
-		// agent
-		ObjectClass agentClass = new ObjectClass(domain, HelperNameSpace.CLASSAGENT);
-		agentClass.addAttribute(xAtt);
-		agentClass.addAttribute(yAtt);
-		agentClass.addAttribute(zAtt);
-		agentClass.addAttribute(rotDirAt);
-		agentClass.addAttribute(vertDirAt);
-		agentClass.addAttribute(selectedItemID);
-		// blocks
-		ObjectClass blockClass = new ObjectClass(domain, HelperNameSpace.CLASSBLOCK);
-		blockClass.addAttribute(xAtt);
-		blockClass.addAttribute(yAtt);
-		blockClass.addAttribute(zAtt);
-		blockClass.addAttribute(bType);
-		// inventory blocks
-		ObjectClass inventoryBlockClass = new ObjectClass(domain, HelperNameSpace.CLASSINVENTORYBLOCK);
-		inventoryBlockClass.addAttribute(bType);
-		inventoryBlockClass.addAttribute(blockNames);
-		// rooms
-		ObjectClass roomClass = new ObjectClass(domain, HelperNameSpace.CLASSROOM);
-		roomClass.addAttribute(xMax);
-		roomClass.addAttribute(xMin);
-		roomClass.addAttribute(zMax);
-		roomClass.addAttribute(zMin);
-		roomClass.addAttribute(color);
+		OOSADomain domain = new OOSADomain();
+
+		domain.addStateClass(CLASS_AGENT, BCAgent.class)
+				.addStateClass(CLASS_BLOCK, BCBlock.class)
+				.addStateClass(CLASS_MAP, BCMap.class);
+
 		
 		// Actions
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVE)) {
-			new ActionMoveForwardSimulated(HelperNameSpace.ACTIONMOVE, domain, this.map);
+			new ActionMoveForwardSimulated(HelperNameSpace.ACTIONMOVE, domain);
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATERIGHT)) {
 			new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
@@ -194,18 +120,12 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		}
 
 		// Propositional Functions
-		new PFAgentInRoom(HelperNameSpace.PFAGENTINROOM, domain, new String[]{HelperNameSpace.CLASSAGENT, HelperNameSpace.CLASSROOM});
-		new PFRoomIsRed(HelperNameSpace.PFROOMRED, domain, HelperNameSpace.CLASSROOM);
-		new PFRoomIsBlue(HelperNameSpace.PFROOMBLUE, domain, HelperNameSpace.CLASSROOM);
-		new PFRoomIsGreen(HelperNameSpace.PFROOMGREEN, domain, HelperNameSpace.CLASSROOM);
-		new PFRoomIsOrange(HelperNameSpace.PFROOMORANGE, domain, HelperNameSpace.CLASSROOM);
-		new PFBlockInRoom(HelperNameSpace.PFBLOCKINROOM, domain, new String[]{HelperNameSpace.CLASSBLOCK, HelperNameSpace.CLASSROOM});
-		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASSINVENTORYBLOCK, HelperNameSpace.CLASSBLOCK});
-		new PFAgentOnBlock(HelperNameSpace.PFAGENTONBLOCK, domain, new String[] {HelperNameSpace.CLASSAGENT, HelperNameSpace.CLASSBLOCK});
+		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASS_INVENTORY_BLOCK, HelperNameSpace.CLASS_BLOCK});
+		new PFAgentOnBlock(HelperNameSpace.PFAGENTONBLOCK, domain, new String[] {CLASS_AGENT, HelperNameSpace.CLASS_BLOCK});
 
 		for(Block b : HelperActions.mineableBlocks) {
 			int id = Block.getIdFromBlock(b);
-			new PFBlockIsType(HelperNameSpace.PFBLOCKISTYPE+id, domain, new String[]{HelperNameSpace.CLASSBLOCK}, id);
+			new PFBlockIsType(HelperNameSpace.PFBLOCKISTYPE+id, domain, new String[]{HelperNameSpace.CLASS_BLOCK}, id);
 		}
 
 		return domain;

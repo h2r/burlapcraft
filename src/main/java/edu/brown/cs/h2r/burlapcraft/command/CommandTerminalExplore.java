@@ -1,15 +1,15 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.singleagent.explorer.TerminalExplorer;
+import burlap.mdp.core.Domain;
+import burlap.shell.EnvironmentShell;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandTerminalExplore implements ICommand {
 
@@ -46,9 +46,9 @@ public class CommandTerminalExplore implements ICommand {
 		
 		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
 		domain = mdg.generateDomain();
-		
-		TerminalExplorer exp = new TerminalExplorer(domain, StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon)); 
-		exp.explore();
+
+		EnvironmentShell shell = new EnvironmentShell(domain, StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon));
+		shell.start();
 		
 	}
 

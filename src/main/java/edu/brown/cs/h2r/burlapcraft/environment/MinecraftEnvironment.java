@@ -1,26 +1,21 @@
 package edu.brown.cs.h2r.burlapcraft.environment;
 
-import java.util.HashMap;
-
+import burlap.mdp.auxiliary.common.NullTermination;
+import burlap.mdp.core.Domain;
+import burlap.mdp.core.TerminalFunction;
+import burlap.mdp.core.state.State;
+import burlap.mdp.singleagent.GroundedAction;
+import burlap.mdp.singleagent.RewardFunction;
+import burlap.mdp.singleagent.common.NullRewardFunction;
+import burlap.mdp.singleagent.environment.Environment;
+import burlap.mdp.singleagent.environment.EnvironmentOutcome;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.action.ActionController;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangeItem;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangePitch;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangeYaw;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerDestroyBlock;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerMoveForward;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerPlaceBlock;
+import edu.brown.cs.h2r.burlapcraft.action.*;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
-import burlap.oomdp.auxiliary.common.NullTermination;
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.TerminalFunction;
-import burlap.oomdp.core.states.State;
-import burlap.oomdp.singleagent.GroundedAction;
-import burlap.oomdp.singleagent.common.NullRewardFunction;
-import burlap.oomdp.singleagent.RewardFunction;
-import burlap.oomdp.singleagent.environment.Environment;
-import burlap.oomdp.singleagent.environment.EnvironmentOutcome;
+
+import java.util.HashMap;
+
 
 public class MinecraftEnvironment implements Environment {
 	
@@ -47,13 +42,13 @@ public class MinecraftEnvironment implements Environment {
 	}
 	
 	@Override
-	public State getCurrentObservation() {
+	public State currentObservation() {
 		return StateGenerator.getCurrentState(this.d, BurlapCraft.currentDungeon);
 	}
 
 	@Override
 	public EnvironmentOutcome executeAction(GroundedAction ga) {
-		State startState = this.getCurrentObservation();
+		State startState = this.currentObservation();
 		
 		ActionController ac = this.actionControllerMap.get(ga.actionName());
 		int delay = ac.executeAction(ga);
@@ -65,7 +60,7 @@ public class MinecraftEnvironment implements Environment {
 			}
 		}
 		
-		State finalState = this.getCurrentObservation();
+		State finalState = this.currentObservation();
 		
 		this.lastReward = this.rewardFunction.reward(startState, ga, finalState);
 		
@@ -75,13 +70,13 @@ public class MinecraftEnvironment implements Environment {
 	}
 
 	@Override
-	public double getLastReward() {
+	public double lastReward() {
 		return this.lastReward;
 	}
 
 	@Override
 	public boolean isInTerminalState() {
-		return this.terminalFunction.isTerminal(this.getCurrentObservation());
+		return this.terminalFunction.isTerminal(this.currentObservation());
 	}
 
 	@Override

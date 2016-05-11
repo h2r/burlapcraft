@@ -1,7 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.states.State;
+
+import burlap.mdp.core.Domain;
+import burlap.mdp.core.state.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
@@ -43,7 +44,7 @@ public class CommandCheckState implements ICommand{
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
-		System.out.println("\n" + s.getCompleteStateDescriptionWithUnsetAttributesAsNull());
+		System.out.println("\n" + s.toString());
 		System.out.println(StateGenerator.invBlockNameMap);
 		System.out.println(StateGenerator.blockNameMap);
 	}

@@ -1,62 +1,66 @@
 package edu.brown.cs.h2r.burlapcraft.action;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.block.Block;
+import burlap.mdp.core.Domain;
+import burlap.mdp.core.oo.state.OOState;
+import burlap.mdp.core.oo.state.ObjectInstance;
+import burlap.mdp.core.oo.state.generic.GenericOOState;
+import burlap.mdp.core.state.State;
+import burlap.mdp.singleagent.GroundedAction;
+import burlap.mdp.singleagent.common.SimpleAction;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.objects.ObjectInstance;
-import burlap.oomdp.core.states.State;
-import burlap.oomdp.core.TransitionProbability;
-import burlap.oomdp.singleagent.GroundedAction;
-import burlap.oomdp.singleagent.common.SimpleAction.SimpleDeterministicAction;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
+import net.minecraft.block.Block;
 
-public class ActionChangeItemSimulated extends SimpleDeterministicAction {
+import java.util.List;
+
+import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_AGENT;
+
+public class ActionChangeItemSimulated extends SimpleAction.SimpleDeterministicAction {
 
 	public ActionChangeItemSimulated(String name, Domain domain) {
 		super(name, domain);
 	}
 
 	@Override
-	protected State performActionHelper(State s, GroundedAction groundedAction) {
-		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-		int currentEquippedItemID = agent.getIntValForAttribute(HelperNameSpace.ATSELECTEDITEMID);
-		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASSINVENTORYBLOCK);
-		List<Integer> blockIDs = new ArrayList<Integer>();
-		for (ObjectInstance invBlock : invBlocks) {
-			int blockID = invBlock.getIntValForAttribute(HelperNameSpace.ATBTYPE);
-			if (blockID != currentEquippedItemID) {
-				blockIDs.add(blockID);
-			}
-		}
-		if (currentEquippedItemID != 278) {
-			blockIDs.add(278);
-		}
-		
-		Random rand = new Random(); 
-		if (blockIDs.size() > 0) {
-			agent.setValue(HelperNameSpace.ATSELECTEDITEMID, blockIDs.get(rand.nextInt(blockIDs.size())));
-		}
+	protected State sampleHelper(State s, GroundedAction groundedAction) {
+		GenericOOState gs = (GenericOOState)s;
+
+		//get agent and current position
+		BCAgent agent = (BCAgent)gs.touch(CLASS_AGENT);
+//		int currentEquippedItemID = agent.getIntValForAttribute(HelperNameSpace.VAR_SEL);
+//		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASS_INVENTORY_BLOCK);
+//		List<Integer> blockIDs = new ArrayList<Integer>();
+//		for (ObjectInstance invBlock : invBlocks) {
+//			int blockID = invBlock.getIntValForAttribute(HelperNameSpace.VAR_BT);
+//			if (blockID != currentEquippedItemID) {
+//				blockIDs.add(blockID);
+//			}
+//		}
+//		if (currentEquippedItemID != 278) {
+//			blockIDs.add(278);
+//		}
+//
+//		Random rand = new Random();
+//		if (blockIDs.size() > 0) {
+//			agent.setValue(HelperNameSpace.VAR_SEL, blockIDs.get(rand.nextInt(blockIDs.size())));
+//		}
 		
 		return s;
 	}
 	
 	@Override
 	public boolean applicableInState(State s, GroundedAction groundedAction) {
-		ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
+		BCAgent a = (BCAgent)((GenericOOState)s).object(CLASS_AGENT);
+
+		List<ObjectInstance> blocks = ((OOState)s).objectsOfClass(HelperNameSpace.CLASS_BLOCK);
 		for (ObjectInstance block : blocks) {
-			if (HelperActions.blockIsOneOf(Block.getBlockById(block.getIntValForAttribute(HelperNameSpace.ATBTYPE)), HelperActions.dangerBlocks)) {
-				int dangerX = block.getIntValForAttribute(HelperNameSpace.ATX);
-				int dangerY = block.getIntValForAttribute(HelperNameSpace.ATY);
-				int dangerZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
-				if ((ax == dangerX) && (ay - 1 == dangerY) && (az == dangerZ) || (ax == dangerX) && (ay == dangerY) && (az == dangerZ)) {
+			if (HelperActions.blockIsOneOf(Block.getBlockById(((BCBlock)block).type), HelperActions.dangerBlocks)) {
+				int dangerX = ((BCBlock)block).x;
+				int dangerY = ((BCBlock)block).y;
+				int dangerZ = ((BCBlock)block).z;
+				if ((a.x == dangerX) && (a.y - 1 == dangerY) && (a.z == dangerZ) || (a.x == dangerX) && (a.y == dangerY) && (a.z == dangerZ)) {
 					return false;
 				}
 			}

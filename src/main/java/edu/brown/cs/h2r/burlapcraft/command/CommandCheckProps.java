@@ -1,9 +1,10 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.GroundedProp;
-import burlap.oomdp.core.PropositionalFunction;
-import burlap.oomdp.core.states.State;
+import burlap.mdp.core.oo.propositional.GroundedProp;
+import burlap.mdp.core.oo.propositional.PropositionalFunction;
+import burlap.mdp.core.oo.state.OOState;
+import burlap.mdp.core.state.State;
+import burlap.mdp.singleagent.oo.OOSADomain;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
@@ -42,7 +43,7 @@ public class CommandCheckProps implements ICommand{
 	public void processCommand(ICommandSender sender, String[] args) {
 
 		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(100, 100, 100);
-		Domain domain = mdg.generateDomain();
+		OOSADomain domain = mdg.generateDomain();
 
 		boolean printFalse = false;
 		if(args.length > 0){
@@ -57,7 +58,7 @@ public class CommandCheckProps implements ICommand{
 		StringBuffer buf = new StringBuffer();
 		buf.append("\n");
 		for(GroundedProp gp : gps){
-			if(!gp.isTrue(s)){
+			if(!gp.isTrue((OOState)s)){
 				if(printFalse) {
 					buf.append("NOT ");
 					buf.append(gp.toString());

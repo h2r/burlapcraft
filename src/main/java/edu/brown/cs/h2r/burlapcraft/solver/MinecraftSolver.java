@@ -1,39 +1,36 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import burlap.oomdp.singleagent.Action;
-import net.minecraft.block.Block;
-import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.policy.Policy;
-import burlap.behavior.singleagent.learning.LearningAgent;
 import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
-import burlap.oomdp.auxiliary.stateconditiontest.StateConditionTest;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.informed.Heuristic;
-import burlap.behavior.singleagent.planning.deterministic.informed.NullHeuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import burlap.debugtools.MyTimer;
-import burlap.oomdp.auxiliary.DomainGenerator;
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.objects.ObjectInstance;
-import burlap.oomdp.core.states.State;
-import burlap.oomdp.core.TerminalFunction;
-import burlap.oomdp.singleagent.GroundedAction;
-import burlap.oomdp.singleagent.RewardFunction;
-import burlap.oomdp.statehashing.SimpleHashableStateFactory;
+import burlap.mdp.auxiliary.stateconditiontest.StateConditionTest;
+import burlap.mdp.core.Domain;
+import burlap.mdp.core.TerminalFunction;
+import burlap.mdp.core.oo.state.OOState;
+import burlap.mdp.core.oo.state.ObjectInstance;
+import burlap.mdp.core.state.State;
+import burlap.mdp.singleagent.GroundedAction;
+import burlap.mdp.singleagent.RewardFunction;
+import burlap.mdp.statehashing.SimpleHashableStateFactory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.environment.MinecraftEnvironment;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+
+import java.util.List;
+
+import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_AGENT;
 
 /**
  * @author James MacGlashan.
@@ -79,11 +76,11 @@ public class MinecraftSolver {
 				
 				@Override
 				public double h(State s) {
-					
-					ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-					int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-					int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-					int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+
+					OOState os = (OOState)s;
+
+					BCAgent a = (BCAgent)os.object(CLASS_AGENT);
+
 
 					HelperGeometry.Pose goalPose = getGoalPose(s);
 					
@@ -92,7 +89,7 @@ public class MinecraftSolver {
 					int gz = (int) goalPose.getZ();
 					
 					//compute Manhattan distance
-					double mdist = Math.abs(ax-gx) + Math.abs(ay-gy) + Math.abs(az-gz);
+					double mdist = Math.abs(a.x-gx) + Math.abs(a.y-gy) + Math.abs(a.z-gz);
 					
 					return -mdist;
 				}
@@ -148,11 +145,6 @@ public class MinecraftSolver {
 		@Override
 		public double reward(State s, GroundedAction a, State sprime) {
 
-			//get location of agent in next state
-			ObjectInstance agent = sprime.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
 
 			return -1.0;
 		}
@@ -165,12 +157,16 @@ public class MinecraftSolver {
 	 * @return the pose of the agent being one unit above the gold block.
 	 */
 	public static HelperGeometry.Pose getGoalPose(State s) {
-		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASSBLOCK);
-		for (ObjectInstance block : blocks) {
-			if (block.getIntValForAttribute(HelperNameSpace.ATBTYPE) == 41) {
-				int goalX = block.getIntValForAttribute(HelperNameSpace.ATX);
-				int goalY = block.getIntValForAttribute(HelperNameSpace.ATY);
-				int goalZ = block.getIntValForAttribute(HelperNameSpace.ATZ);
+
+		OOState os = (OOState)s;
+
+		List<ObjectInstance> blocks = os.objectsOfClass(HelperNameSpace.CLASS_BLOCK);
+		for (ObjectInstance oblock : blocks) {
+			BCBlock block = (BCBlock)oblock;
+			if (block.type == 41) {
+				int goalX = block.x;
+				int goalY = block.y;
+				int goalZ = block.z;
 
 				return HelperGeometry.Pose.fromXyz(goalX, goalY + 1, goalZ);
 			}
@@ -182,14 +178,13 @@ public class MinecraftSolver {
 
 		@Override
 		public boolean isTerminal(State s) {
-			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+			OOState os = (OOState)s;
 
-			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(ax, ay, az);
-			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
-			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
+			BCAgent a = (BCAgent)os.object(CLASS_AGENT);
+
+			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(a.x, a.y, a.z);
+			int rotDir = a.rdir;
+			int vertDir = a.vdir;
 
 			HelperGeometry.Pose goalPose = getGoalPose(s);
 
@@ -210,21 +205,17 @@ public class MinecraftSolver {
 
 		@Override
 		public boolean satisfies(State s) {
-			ObjectInstance agent = s.getFirstObjectOfClass(HelperNameSpace.CLASSAGENT);
-			int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-			int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-			int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
+
+			OOState os = (OOState)s;
+
+			BCAgent a = (BCAgent)os.object(CLASS_AGENT);
 
 
-			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(ax, ay, az);
-			int rotDir = agent.getIntValForAttribute(HelperNameSpace.ATROTDIR);
-			int vertDir = agent.getIntValForAttribute(HelperNameSpace.ATVERTDIR);
+
+			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(a.x, a.y, a.z);
 
 			HelperGeometry.Pose goalPose = getGoalPose(s);
 
-			//are they at goal location or dead
-			double distance = goalPose.distance(agentPose);
-			//System.out.println("Distance: " + distance + " goal at: " + goalPose);
 
 			if (goalPose.distance(agentPose) < 0.5) {
 				return true;

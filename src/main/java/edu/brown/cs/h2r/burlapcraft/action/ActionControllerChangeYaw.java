@@ -1,11 +1,12 @@
 package edu.brown.cs.h2r.burlapcraft.action;
 
-import burlap.oomdp.core.objects.ObjectInstance;
-import burlap.oomdp.core.states.State;
-import burlap.oomdp.singleagent.GroundedAction;
-import burlap.oomdp.singleagent.environment.Environment;
+
+import burlap.mdp.core.oo.state.OOState;
+import burlap.mdp.singleagent.GroundedAction;
+import burlap.mdp.singleagent.environment.Environment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
 
 public class ActionControllerChangeYaw implements ActionController {
 
@@ -22,9 +23,9 @@ public class ActionControllerChangeYaw implements ActionController {
 	@Override
 	public int executeAction(GroundedAction ga) {
 		
-		ObjectInstance agent = this.environment.getCurrentObservation().getObjectsOfClass(HelperNameSpace.CLASSAGENT).get(0);
+		BCAgent agent = (BCAgent)((OOState)this.environment.currentObservation()).object(HelperNameSpace.CLASS_AGENT);
 		
-		int rotDir = ((this.direction + agent.getIntValForAttribute(HelperNameSpace.ATROTDIR)) % 4);
+		int rotDir = ((this.direction + agent.rdir) % 4);
 		
 		System.out.println(rotDir);
 		

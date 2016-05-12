@@ -22,6 +22,7 @@ import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_AGENT;
  */
 public class CommandReachable implements ICommand{
 
+
 	@Override
 	public String getCommandName() {
 		return "reachable";

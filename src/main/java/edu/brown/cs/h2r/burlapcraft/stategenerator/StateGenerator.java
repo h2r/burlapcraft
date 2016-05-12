@@ -10,6 +10,9 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry.Pose;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +82,8 @@ public class StateGenerator {
 		HelperPos curPos = HelperActions.getPlayerPosition();
 		int rotateDirection = HelperActions.getYawDirection();
 		int rotateVertDirection = HelperActions.getPitchDirection();
-		int selectedItemID = HelperActions.getCurrentItemID();
+		//int selectedItemID = HelperActions.getCurrentItemID();
+		int selectedItemID = HelperActions.currentItemIndex();
 		System.out.println("Player position: " + curPos);
 		System.out.println("Dungeon: " + dungeonPose);
 
@@ -91,37 +95,22 @@ public class StateGenerator {
 				rotateVertDirection,
 				selectedItemID);
 
-		
-//		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASS_INVENTORY_BLOCK);
-//		int invBlockCount = invBlocks.size();
-//
-//		Map<String, Integer> items = HelperActions.checkInventory();
-//		HashMap<String, Integer> blockMap = new HashMap<String, Integer>();
-//		for (Block block : HelperActions.mineableBlocks) {
-//			blockMap.put(block.getUnlocalizedName(), block.getIdFromBlock(block));
-//		}
-//		for (Map.Entry<String, Integer> i : items.entrySet()) {
-//			for (String name : blockMap.keySet()) {
-//				if (i.getKey().equals(name)) {
-//					ObjectInstance o = new MutableObjectInstance(
-//							domain.getObjectClass(HelperNameSpace.CLASS_INVENTORY_BLOCK),
-//							"inventoryBlock" + invBlockCount);
-//					Integer key = blockMap.get(name);
-//					if (invBlockNameMap.containsKey(key)) {
-//						for (String invBlockName : invBlockNameMap.get(key)) {
-//							o.addRelationalTarget(HelperNameSpace.VAR_BLOCK_NAMES, invBlockName);
-//						}
-//					}
-//					else {
-//						o.addRelationalTarget(HelperNameSpace.VAR_BLOCK_NAMES, "block" + blockCount);
-//						blockCount++;
-//					}
-//
-//					o.setValue(HelperNameSpace.VAR_BT, blockMap.get(name));
-//					s.addObject(o);
-//				}
-//			}
-//		}
+
+		BCInventory inv = new BCInventory();
+		Minecraft mc = Minecraft.getMinecraft();
+		for(int i = 0; i < 9; i++){
+			ItemStack itemStack = mc.thePlayer.inventory.mainInventory[i];
+			if(itemStack == null){
+				inv.inv[i] = new BCInventory.BCIStack(-1, 0);
+			}
+			else {
+				Item item = itemStack.getItem();
+				inv.inv[i] = new BCInventory.BCIStack(Item.getIdFromItem(item), itemStack.stackSize);
+			}
+		}
+
+		s.addObject(inv);
+
 
 		s.addObject(agent);
 

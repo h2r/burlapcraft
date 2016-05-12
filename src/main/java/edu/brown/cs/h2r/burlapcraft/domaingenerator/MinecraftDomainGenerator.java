@@ -56,19 +56,19 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 
 	public void setActionWhiteListToNavigationOnly(){
 		this.whiteListActions = new HashSet<String>();
-		this.whiteListActions.add(HelperNameSpace.ACTIONMOVE);
-		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
-		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
+		this.whiteListActions.add(HelperNameSpace.ACTION_MOVE);
+		this.whiteListActions.add(HelperNameSpace.ACTION_ROTATE_LEFT);
+		this.whiteListActions.add(HelperNameSpace.ACTION_ROTATE_RIGHT);
 	}
 	
 	public void setActionWhiteListToNavigationAndDestroy(){
 		this.whiteListActions = new HashSet<String>();
-		this.whiteListActions.add(HelperNameSpace.ACTIONMOVE);
-		this.whiteListActions.add(HelperNameSpace.ACTIONROTATELEFT);
-		this.whiteListActions.add(HelperNameSpace.ACTIONROTATERIGHT);
-		this.whiteListActions.add(HelperNameSpace.ACTIONDOWNONE);
-		this.whiteListActions.add(HelperNameSpace.ACTIONDESTBLOCK);
-		this.whiteListActions.add(HelperNameSpace.ACTIONCHANGEITEM);
+		this.whiteListActions.add(HelperNameSpace.ACTION_MOVE);
+		this.whiteListActions.add(HelperNameSpace.ACTION_ROTATE_LEFT);
+		this.whiteListActions.add(HelperNameSpace.ACTION_ROTATE_RIGHT);
+		this.whiteListActions.add(HelperNameSpace.ACTION_DOWN_ONE);
+		this.whiteListActions.add(HelperNameSpace.ACTION_DEST_BLOCK);
+		this.whiteListActions.add(HelperNameSpace.ACTION_CHANGE_ITEM);
 	}
 
 	public Set<String> getWhiteListActions() {
@@ -94,38 +94,38 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 
 		
 		// Actions
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONMOVE)) {
-			new ActionMoveForwardSimulated(HelperNameSpace.ACTIONMOVE, domain);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_MOVE)) {
+			new ActionMoveForwardSimulated(HelperNameSpace.ACTION_MOVE, domain);
 		}
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATERIGHT)) {
-			new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATERIGHT, domain, 1);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_ROTATE_RIGHT)) {
+			new ActionChangeYawSimulated(HelperNameSpace.ACTION_ROTATE_RIGHT, domain, 1);
 		}
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONROTATELEFT)) {
-			new ActionChangeYawSimulated(HelperNameSpace.ACTIONROTATELEFT, domain, HelperNameSpace.RotDirection.size - 1);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_ROTATE_LEFT)) {
+			new ActionChangeYawSimulated(HelperNameSpace.ACTION_ROTATE_LEFT, domain, HelperNameSpace.RotDirection.size - 1);
 		}
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONAHEAD)) {
-			new ActionChangePitchSimulated(HelperNameSpace.ACTIONAHEAD, domain, 0);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_AHEAD)) {
+			new ActionChangePitchSimulated(HelperNameSpace.ACTION_AHEAD, domain, 0);
 		}
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDOWNONE)) {
-			new ActionChangePitchSimulated(HelperNameSpace.ACTIONDOWNONE, domain, HelperNameSpace.VertDirection.size - 1);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_DOWN_ONE)) {
+			new ActionChangePitchSimulated(HelperNameSpace.ACTION_DOWN_ONE, domain, HelperNameSpace.VertDirection.size - 1);
 		}
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONPLACEBLOCK)) {
-			new ActionPlaceBlockSimulated(HelperNameSpace.ACTIONPLACEBLOCK, domain, this.map);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_PLACE_BLOCK)) {
+			new ActionPlaceBlockSimulated(HelperNameSpace.ACTION_PLACE_BLOCK, domain);
 		}
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONDESTBLOCK)) {
-			new ActionDestroyBlockSimulated(HelperNameSpace.ACTIONDESTBLOCK, domain);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_DEST_BLOCK)) {
+			new ActionDestroyBlockSimulated(HelperNameSpace.ACTION_DEST_BLOCK, domain);
 		}
-		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTIONCHANGEITEM)) {
-			new ActionChangeItemSimulated(HelperNameSpace.ACTIONCHANGEITEM, domain);
+		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_CHANGE_ITEM)) {
+			new ActionChangeItemSimulated(HelperNameSpace.ACTION_CHANGE_ITEM, domain);
 		}
 
 		// Propositional Functions
-		new PFAgentHasBlock(HelperNameSpace.PFAGENTHASBLOCK, domain, new String[] {HelperNameSpace.CLASS_INVENTORY_BLOCK, HelperNameSpace.CLASS_BLOCK});
-		new PFAgentOnBlock(HelperNameSpace.PFAGENTONBLOCK, domain, new String[] {CLASS_AGENT, HelperNameSpace.CLASS_BLOCK});
+		new PFAgentHasBlock(HelperNameSpace.PF_AGENT_HAS_BLOCK, domain, new String[] {HelperNameSpace.CLASS_INVENTORY, HelperNameSpace.CLASS_BLOCK});
+		new PFAgentOnBlock(HelperNameSpace.PF_AGENT_ON_BLOCK, domain, new String[] {CLASS_AGENT, HelperNameSpace.CLASS_BLOCK});
 
 		for(Block b : HelperActions.mineableBlocks) {
 			int id = Block.getIdFromBlock(b);
-			new PFBlockIsType(HelperNameSpace.PFBLOCKISTYPE+id, domain, new String[]{HelperNameSpace.CLASS_BLOCK}, id);
+			new PFBlockIsType(HelperNameSpace.PF_BLOCK_IS_TYPE +id, domain, new String[]{HelperNameSpace.CLASS_BLOCK}, id);
 		}
 
 		return domain;

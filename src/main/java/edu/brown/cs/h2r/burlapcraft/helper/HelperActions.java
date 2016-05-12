@@ -501,6 +501,10 @@ public class HelperActions {
 		return itemSets;
 
 	}
+
+	public static int currentItemIndex(){
+		return mc.thePlayer.inventory.currentItem;
+	}
 	
 	public static int changeItem() {
 		mc.thePlayer.inventory.changeCurrentItem(-1);

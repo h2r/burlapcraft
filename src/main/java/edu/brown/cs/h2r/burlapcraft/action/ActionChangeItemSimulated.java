@@ -27,25 +27,11 @@ public class ActionChangeItemSimulated extends SimpleAction.SimpleDeterministicA
 	protected State sampleHelper(State s, GroundedAction groundedAction) {
 		GenericOOState gs = (GenericOOState)s;
 
-		//get agent and current position
+		//get agent
 		BCAgent agent = (BCAgent)gs.touch(CLASS_AGENT);
-//		int currentEquippedItemID = agent.getIntValForAttribute(HelperNameSpace.VAR_SEL);
-//		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASS_INVENTORY_BLOCK);
-//		List<Integer> blockIDs = new ArrayList<Integer>();
-//		for (ObjectInstance invBlock : invBlocks) {
-//			int blockID = invBlock.getIntValForAttribute(HelperNameSpace.VAR_BT);
-//			if (blockID != currentEquippedItemID) {
-//				blockIDs.add(blockID);
-//			}
-//		}
-//		if (currentEquippedItemID != 278) {
-//			blockIDs.add(278);
-//		}
-//
-//		Random rand = new Random();
-//		if (blockIDs.size() > 0) {
-//			agent.setValue(HelperNameSpace.VAR_SEL, blockIDs.get(rand.nextInt(blockIDs.size())));
-//		}
+		int curItem = agent.selected;
+		int nextItem = curItem >= 0 && curItem < 9 ? (curItem+1) % 9 : 0;
+		agent.selected = nextItem;
 		
 		return s;
 	}

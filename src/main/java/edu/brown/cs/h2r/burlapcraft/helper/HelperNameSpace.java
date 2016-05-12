@@ -11,32 +11,30 @@ public class HelperNameSpace {
 	public static final String VAR_V_DIR = "verticalDirection";
 	public static final String VAR_INV_NUM = "inventoryBlockQuantity";
 	public static final String VAR_SEL = "selectedItemID";
-	public static final String VAR_BLOCK_NAMES = "blockNames";
 	public static final String VAR_MAP = "map";
 
 	//-------------BURLAP OBJECTCLASS STRINGS-------------
 	public static final String CLASS_AGENT = "agent";
 	public static final String CLASS_BLOCK = "block";
 	public static final String CLASS_MAP = "map";
-	public static final String CLASS_INVENTORY_BLOCK = "inventoryBlock";
+	public static final String CLASS_INVENTORY = "inventory";
 	
 	//-------------ACTIONS STRINGS-------------
-	public static final String							ACTIONMOVE = "moveForward";
-	public static final String							ACTIONROTATERIGHT = "rotateRight";
-	public static final String 							ACTIONROTATELEFT = "rotateLeft";
-	public static final String 							ACTIONDESTBLOCK = "destroyBlock";
-	public static final String							ACTIONPLACEBLOCK = "placeBlock";
-	public static final String							ACTIONAHEAD = "lookAhead";
-	public static final String							ACTIONDOWNONE = "lookDown";
-	public static final String							ACTIONCHANGEITEM = "changeItem";
+	public static final String ACTION_MOVE = "moveForward";
+	public static final String ACTION_ROTATE_RIGHT = "rotateRight";
+	public static final String ACTION_ROTATE_LEFT = "rotateLeft";
+	public static final String ACTION_DEST_BLOCK = "destroyBlock";
+	public static final String ACTION_PLACE_BLOCK = "placeBlock";
+	public static final String ACTION_AHEAD = "lookAhead";
+	public static final String ACTION_DOWN_ONE = "lookDown";
+	public static final String ACTION_CHANGE_ITEM = "changeItem";
 	
 	//-------------PROPOSITIONAL FUNCTION STRINGS-------------
-	public static final String							PFAGENTINROOM = "agentInRoom";
-	public static final String							PFAGENTHASBLOCK = "agentHasBlock";
-	public static final String							PFAGENTONBLOCK = "agentOnBlock";
+	public static final String PF_AGENT_HAS_BLOCK = "agentHasBlock";
+	public static final String PF_AGENT_ON_BLOCK = "agentOnBlock";
 
-	public static final String							PFBLOCKBASE = "blockIs";
-	public static final String							PFBLOCKISTYPE = PFBLOCKBASE + "TYPE";
+	public static final String PF_BLOCK_BASE = "blockIs";
+	public static final String PF_BLOCK_IS_TYPE = PF_BLOCK_BASE + "TYPE";
 	
 	
 	//-------------ENUMS-------------

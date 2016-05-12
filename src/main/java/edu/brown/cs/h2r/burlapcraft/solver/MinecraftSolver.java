@@ -94,7 +94,7 @@ public class MinecraftSolver {
 					return -mdist;
 				}
 			};
-			planner = new AStar(domain, rf, gc, new SimpleHashableStateFactory(false), mdistHeuristic);
+			planner = new AStar(domain, rf, gc, new SimpleHashableStateFactory(), mdistHeuristic);
 		}
 		else{
 			throw new RuntimeException("Error: planner type is " + planner + "; use 0 for BFS or 1 for A*");
@@ -120,7 +120,7 @@ public class MinecraftSolver {
 			mdg.setActionWhiteListToNavigationOnly();
 			
 			lastDomain = mdg.generateDomain();
-			lastLearningAgent = new PotentialShapedRMax(lastDomain, 0.99, new SimpleHashableStateFactory(false), 0, 1, 0.01, 200);
+			lastLearningAgent = new PotentialShapedRMax(lastDomain, 0.99, new SimpleHashableStateFactory(), 0, 1, 0.01, 200);
 			lastDungeon = BurlapCraft.currentDungeon;
 			
 			System.out.println("Starting new RMax");

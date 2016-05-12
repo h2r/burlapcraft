@@ -31,14 +31,14 @@ public class MinecraftEnvironment implements Environment {
 		this.terminalFunction = new NullTermination();
 		int delayMS = 1500;
 		actionControllerMap = new HashMap<String, ActionController>();
-		actionControllerMap.put(HelperNameSpace.ACTIONMOVE, new ActionControllerMoveForward(delayMS, this));
-		actionControllerMap.put(HelperNameSpace.ACTIONROTATERIGHT, new ActionControllerChangeYaw(delayMS, this, 1));
-		actionControllerMap.put(HelperNameSpace.ACTIONROTATELEFT, new ActionControllerChangeYaw(delayMS, this, HelperNameSpace.RotDirection.size - 1));
-		actionControllerMap.put(HelperNameSpace.ACTIONAHEAD, new ActionControllerChangePitch(delayMS, this, 0));
-		actionControllerMap.put(HelperNameSpace.ACTIONDOWNONE, new ActionControllerChangePitch(delayMS, this, HelperNameSpace.VertDirection.size - 1));
-		actionControllerMap.put(HelperNameSpace.ACTIONDESTBLOCK, new ActionControllerDestroyBlock(delayMS, this));
-		actionControllerMap.put(HelperNameSpace.ACTIONPLACEBLOCK, new ActionControllerPlaceBlock(delayMS, this));
-		actionControllerMap.put(HelperNameSpace.ACTIONCHANGEITEM, new ActionControllerChangeItem(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_MOVE, new ActionControllerMoveForward(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_ROTATE_RIGHT, new ActionControllerChangeYaw(delayMS, this, 1));
+		actionControllerMap.put(HelperNameSpace.ACTION_ROTATE_LEFT, new ActionControllerChangeYaw(delayMS, this, HelperNameSpace.RotDirection.size - 1));
+		actionControllerMap.put(HelperNameSpace.ACTION_AHEAD, new ActionControllerChangePitch(delayMS, this, 0));
+		actionControllerMap.put(HelperNameSpace.ACTION_DOWN_ONE, new ActionControllerChangePitch(delayMS, this, HelperNameSpace.VertDirection.size - 1));
+		actionControllerMap.put(HelperNameSpace.ACTION_DEST_BLOCK, new ActionControllerDestroyBlock(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_PLACE_BLOCK, new ActionControllerPlaceBlock(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_CHANGE_ITEM, new ActionControllerChangeItem(delayMS, this));
 	}
 	
 	@Override

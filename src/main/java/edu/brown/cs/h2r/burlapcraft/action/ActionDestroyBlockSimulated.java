@@ -11,11 +11,13 @@ import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
+import edu.brown.cs.h2r.burlapcraft.stategenerator.BCInventory;
 import net.minecraft.block.Block;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_AGENT;
+import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.*;
 
 public class ActionDestroyBlockSimulated extends SimpleAction.SimpleDeterministicAction {
 
@@ -29,63 +31,59 @@ public class ActionDestroyBlockSimulated extends SimpleAction.SimpleDeterministi
 		GenericOOState gs = (GenericOOState)s;
 
 		//get agent and current position
-		BCAgent agent = (BCAgent)gs.touch(CLASS_AGENT);
+		BCAgent agent = (BCAgent)gs.object(CLASS_AGENT);
+		BCInventory inv = (BCInventory)gs.object(CLASS_INVENTORY);
+		if(agent.selected < 0 || agent.selected > 8 || agent.vdir != 1){
+			return s;
+		}
 
-//		int curX = agent.getIntValForAttribute(HelperNameSpace.VAR_X);
-//		int curY = agent.getIntValForAttribute(HelperNameSpace.VAR_Y);
-//		int curZ = agent.getIntValForAttribute(HelperNameSpace.VAR_Z);
-//		int rotDir = agent.getIntValForAttribute(HelperNameSpace.VAR_R_DIR);
-//		int vertDir = agent.getIntValForAttribute(HelperNameSpace.VAR_V_DIR);
-//		int currentItemID = agent.getIntValForAttribute(HelperNameSpace.VAR_SEL);
-//
-//		//get block objects and their positions
-//		List<ObjectInstance> blocks = s.getObjectsOfClass(HelperNameSpace.CLASS_BLOCK);
-//
-//		//get inventory block objects
-//		List<ObjectInstance> invBlocks = s.getObjectsOfClass(HelperNameSpace.CLASS_INVENTORY_BLOCK);
-//
-//		if (currentItemID == 278) {
-//			return destroyResult(curX, curY, curZ, rotDir, vertDir, invBlocks, blocks, s);
-//		}
-		
-		return s;
+		int itemId = inv.inv[agent.selected].type;
+		if(itemId != 278){
+			return s;
+		}
+
+		List<ObjectInstance> oblocks = gs.objectsOfClass(CLASS_BLOCK);
+
+		List<BCBlock> blocks = new ArrayList<BCBlock>(oblocks.size());
+		for(ObjectInstance ob : oblocks){
+			blocks.add((BCBlock)ob);
+		}
+
+		return this.destroyResult(agent.x, agent.y, agent.z, agent.rdir, blocks, gs);
+
 	}
 	
-	protected State destroyResult(int curX, int curY, int curZ, int rotDir, int vertDir, List<ObjectInstance> invBlocks, List<ObjectInstance> blocks, State s) {
+	protected State destroyResult(int curX, int curY, int curZ, int rotDir, List<BCBlock> blocks, GenericOOState s) {
 		//System.out.println("Destroying at: " + curX + "," + curY + "," + curZ);
 		// go through blocks and see if any of them can be mined
-//		for (ObjectInstance block : blocks) {
-//			int blockX = block.getIntValForAttribute(HelperNameSpace.VAR_X);
-//			int blockY = block.getIntValForAttribute(HelperNameSpace.VAR_Y);
-//			int blockZ = block.getIntValForAttribute(HelperNameSpace.VAR_Z);
-//			if (((blockX == curX) && (blockZ == curZ + 1) && (blockY == curY) && (rotDir == 0) && (vertDir == 1))
-//					|| ((blockX == curX) && (blockZ == curZ - 1) && (blockY == curY) && (rotDir == 2) && (vertDir == 1))
-//					|| ((blockX == curX + 1) && (blockZ == curZ) && (blockY == curY) && (rotDir == 3) && (vertDir == 1))
-//					|| ((blockX == curX - 1) && (blockZ == curZ) && (blockY == curY) && (rotDir == 1) && (vertDir == 1))) {
-//				// get id of the block
-//				int blockID = block.getIntValForAttribute(HelperNameSpace.VAR_BT);
-//				// get the blockname
-//				String blockName = block.getName();
-//				boolean present = false;
-//				for (ObjectInstance invBlock : invBlocks) {
-//					// check if an invBlock instance of the same block type exists
-//					if (blockID == invBlock.getIntValForAttribute(HelperNameSpace.VAR_BT)) {
-//						// add the blockName to the blockNames relational attribute
-//						invBlock.addRelationalTarget(HelperNameSpace.VAR_BLOCK_NAMES, blockName);
-//						present = true;
-//					}
-//				}
-//				if (!present) {
-//					// create a new object instance if it is not present
-//					ObjectInstance inventoryBlockInstance = new MutableObjectInstance(domain.getObjectClass(HelperNameSpace.CLASS_INVENTORY_BLOCK), "inventoryBlock" + invBlocks.size());
-//					inventoryBlockInstance.setValue(HelperNameSpace.VAR_BT, blockID);
-//					inventoryBlockInstance.addRelationalTarget(HelperNameSpace.VAR_BLOCK_NAMES, blockName);
-//					s.addObject(inventoryBlockInstance);
-//				}
-//
-//				s.removeObject(block);
-//			}
-//		}
+		for (BCBlock block : blocks) {
+
+			if (((block.x == curX) && (block.z == curZ + 1) && (block.y == curY) && (rotDir == 0))
+					|| ((block.x == curX) && (block.z == curZ - 1) && (block.y == curY) && (rotDir == 2))
+					|| ((block.x == curX + 1) && (block.z == curZ) && (block.y == curY) && (rotDir == 3))
+					|| ((block.x == curX - 1) && (block.z == curZ) && (block.y == curY) && (rotDir == 1))) {
+				// get id of the block
+				int blockID = block.type;
+
+				boolean present = false;
+
+				BCInventory inv = (BCInventory)s.touch(CLASS_INVENTORY);
+				int invInd = inv.indexOfType(blockID);
+				if(invInd == -1){
+					invInd = inv.firstFree();
+				}
+				if(invInd == -1){
+					return s; //no free slots!
+				}
+				BCInventory.BCIStack [] stack = inv.touch();
+				stack[invInd].type = blockID;
+				stack[invInd].inc();
+
+
+				s.removeObject(block.name());
+				break;
+			}
+		}
 		
 		return s;
 		

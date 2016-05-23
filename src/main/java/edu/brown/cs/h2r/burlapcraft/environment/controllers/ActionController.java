@@ -1,4 +1,4 @@
-package edu.brown.cs.h2r.burlapcraft.action;
+package edu.brown.cs.h2r.burlapcraft.environment.controllers;
 
 
 import burlap.mdp.core.Action;

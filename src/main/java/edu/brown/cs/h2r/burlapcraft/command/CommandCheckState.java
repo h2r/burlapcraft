@@ -1,11 +1,10 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
 
-import burlap.mdp.core.Domain;
 import burlap.mdp.core.state.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
@@ -18,12 +17,10 @@ import java.util.List;
 public class CommandCheckState implements ICommand{
 
 	List aliases = new ArrayList();
-	Domain domain;
 
 	public CommandCheckState(){
 		this.aliases.add("checkState");
 		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
-		domain = mdg.generateDomain();
 	}
 
 	@Override
@@ -43,10 +40,10 @@ public class CommandCheckState implements ICommand{
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
-		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+		State s = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
 		System.out.println("\n" + s.toString());
-		System.out.println(StateGenerator.invBlockNameMap);
-		System.out.println(StateGenerator.blockNameMap);
+		System.out.println(MinecraftStateGeneratorHelper.invBlockNameMap);
+		System.out.println(MinecraftStateGeneratorHelper.blockNameMap);
 	}
 
 	@Override

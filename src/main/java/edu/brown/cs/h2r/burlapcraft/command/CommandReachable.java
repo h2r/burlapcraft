@@ -7,8 +7,8 @@ import burlap.mdp.singleagent.SADomain;
 import burlap.statehashing.simple.SimpleHashableStateFactory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
@@ -44,7 +44,7 @@ public class CommandReachable implements ICommand{
 		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 		SADomain domain = mdg.generateDomain();
 
-		State in = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+		State in = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
 		List<State> reachable = StateReachability.getReachableStates(in, domain, new SimpleHashableStateFactory());
 		for(State s : reachable){
 			OOState os = (OOState)s;

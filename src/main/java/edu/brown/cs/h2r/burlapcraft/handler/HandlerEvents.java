@@ -10,15 +10,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.world.BlockEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 
 public class HandlerEvents {
 	
@@ -46,17 +44,17 @@ public class HandlerEvents {
 		Block brokenBlock = event.block;
 		String key = event.x + "," + event.y + "," + event.z;
 		int blockID = Block.getIdFromBlock(brokenBlock);
-		if (StateGenerator.blockNameMap.containsKey(key)) {
-			if (StateGenerator.invBlockNameMap.containsKey(blockID)) {
-				ArrayList<String> blockNames = StateGenerator.invBlockNameMap.get(blockID);
-				blockNames.add(StateGenerator.blockNameMap.get(key));
+		if (MinecraftStateGeneratorHelper.blockNameMap.containsKey(key)) {
+			if (MinecraftStateGeneratorHelper.invBlockNameMap.containsKey(blockID)) {
+				ArrayList<String> blockNames = MinecraftStateGeneratorHelper.invBlockNameMap.get(blockID);
+				blockNames.add(MinecraftStateGeneratorHelper.blockNameMap.get(key));
 			}
 			else {
 				ArrayList<String> blockNames = new ArrayList<String>();
-				blockNames.add(StateGenerator.blockNameMap.get(key));
-				StateGenerator.invBlockNameMap.put(blockID, blockNames);
+				blockNames.add(MinecraftStateGeneratorHelper.blockNameMap.get(key));
+				MinecraftStateGeneratorHelper.invBlockNameMap.put(blockID, blockNames);
 			}
-			StateGenerator.blockNameMap.remove(key);
+			MinecraftStateGeneratorHelper.blockNameMap.remove(key);
 
 		}
 	}
@@ -77,16 +75,16 @@ public class HandlerEvents {
 	    		for (HelperPos pos : blockPoss) {
 	    			String key = pos.x + "," + pos.y + "," + pos.z;
 	    			if (HelperActions.blockIsOneOf(HelperActions.getBlock(pos), HelperActions.mineableBlocks) && 
-	    					!StateGenerator.blockNameMap.containsKey(key)) {
+	    					!MinecraftStateGeneratorHelper.blockNameMap.containsKey(key)) {
 	    				int blockID = HelperActions.getBlockId(pos.x, pos.y, pos.z);
-	    				ArrayList<String> blockNames = StateGenerator.invBlockNameMap.get(blockID);
+	    				ArrayList<String> blockNames = MinecraftStateGeneratorHelper.invBlockNameMap.get(blockID);
 	    				if (blockNames != null && blockNames.size() == 1) {
-	    					StateGenerator.blockNameMap.put(key, blockNames.get(0));
-	    					StateGenerator.invBlockNameMap.remove(blockID);
+	    					MinecraftStateGeneratorHelper.blockNameMap.put(key, blockNames.get(0));
+	    					MinecraftStateGeneratorHelper.invBlockNameMap.remove(blockID);
 	    				}
 	    				else {
 							if(blockNames != null) {
-								StateGenerator.blockNameMap.put(key, blockNames.get(0));
+								MinecraftStateGeneratorHelper.blockNameMap.put(key, blockNames.get(0));
 								blockNames.remove(0);
 							}
 	    				}

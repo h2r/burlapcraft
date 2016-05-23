@@ -1,15 +1,18 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
 import burlap.mdp.core.Domain;
+import burlap.mdp.core.oo.state.generic.GenericOOState;
 import burlap.mdp.core.state.State;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_MAP;
 
 public class CommandCheckMap implements ICommand {
 
@@ -39,8 +42,8 @@ public class CommandCheckMap implements ICommand {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
-		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
-		System.out.println(s.toString());
+		State s = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
+		System.out.println(((GenericOOState)s).object(CLASS_MAP).toString());
 	}
 
 	@Override

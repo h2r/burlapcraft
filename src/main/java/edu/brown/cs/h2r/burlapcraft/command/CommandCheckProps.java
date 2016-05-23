@@ -7,7 +7,7 @@ import burlap.mdp.core.state.State;
 import burlap.mdp.singleagent.oo.OOSADomain;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
@@ -52,7 +52,7 @@ public class CommandCheckProps implements ICommand{
 			}
 		}
 
-		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+		State s = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
 
 		List<GroundedProp> gps = PropositionalFunction.getAllGroundedPropsFromPFList(domain.getPropFunctions(), s);
 		StringBuffer buf = new StringBuffer();

@@ -12,9 +12,9 @@ import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgen
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockIsType;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCMap;
+import edu.brown.cs.h2r.burlapcraft.state.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.state.BCBlock;
+import edu.brown.cs.h2r.burlapcraft.state.BCMap;
 import net.minecraft.block.Block;
 
 import java.util.ArrayList;

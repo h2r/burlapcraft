@@ -4,7 +4,7 @@ import burlap.mdp.singleagent.SADomain;
 import burlap.shell.EnvironmentShell;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
@@ -47,7 +47,7 @@ public class CommandTerminalExplore implements ICommand {
 		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 		domain = mdg.generateDomain();
 
-		EnvironmentShell shell = new EnvironmentShell(domain, StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon));
+		EnvironmentShell shell = new EnvironmentShell(domain, MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon));
 		shell.start();
 		
 	}

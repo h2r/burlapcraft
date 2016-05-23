@@ -2,8 +2,8 @@ package edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction;
 
 import burlap.mdp.core.oo.propositional.PropositionalFunction;
 import burlap.mdp.core.oo.state.OOState;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
+import edu.brown.cs.h2r.burlapcraft.state.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.state.BCBlock;
 
 
 public class PFAgentOnBlock extends PropositionalFunction {

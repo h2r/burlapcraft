@@ -15,7 +15,6 @@ import burlap.mdp.auxiliary.stateconditiontest.TFGoalCondition;
 import burlap.mdp.core.oo.state.OOState;
 import burlap.mdp.core.state.State;
 import burlap.mdp.singleagent.SADomain;
-import burlap.mdp.singleagent.common.UniformCostRF;
 import burlap.statehashing.simple.SimpleHashableStateFactory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.GoldBlockTF;
@@ -23,8 +22,8 @@ import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.environment.MinecraftEnvironment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 
 import static edu.brown.cs.h2r.burlapcraft.domaingenerator.GoldBlockTF.getGoalPose;
 import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_AGENT;
@@ -58,7 +57,7 @@ public class MinecraftSolver {
 		
 		SADomain domain = simdg.generateDomain();
 
-		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+		State initialState = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
 
 		DeterministicPlanner planner = null;
 		if(plannerToUse == 0){
@@ -98,9 +97,7 @@ public class MinecraftSolver {
 
 		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
 
-		MinecraftEnvironment me = new MinecraftEnvironment(domain);
-		me.setRewardFunction(new UniformCostRF());
-		me.setTerminalFunction(new GoldBlockTF());
+		MinecraftEnvironment me = new MinecraftEnvironment();
 
 		PolicyUtils.rollout(p, me);
 		
@@ -119,9 +116,7 @@ public class MinecraftSolver {
 			System.out.println("Starting new RMax");
 		}
 
-		MinecraftEnvironment me = new MinecraftEnvironment(lastDomain);
-		me.setRewardFunction(new UniformCostRF());
-		me.setTerminalFunction(new GoldBlockTF());
+		MinecraftEnvironment me = new MinecraftEnvironment();
 		
 		newTimer.start();
 		lastLearningAgent.runLearningEpisode(me);

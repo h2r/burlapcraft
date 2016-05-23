@@ -6,7 +6,7 @@ import burlap.mdp.core.oo.state.OOState;
 import burlap.mdp.singleagent.environment.Environment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.state.BCAgent;
 
 public class ActionControllerChangeYaw implements ActionController {
 

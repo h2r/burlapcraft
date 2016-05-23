@@ -9,10 +9,10 @@ import burlap.mdp.singleagent.model.statemodel.FullStateModel;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperPos;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCInventory;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCMap;
+import edu.brown.cs.h2r.burlapcraft.state.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.state.BCBlock;
+import edu.brown.cs.h2r.burlapcraft.state.BCInventory;
+import edu.brown.cs.h2r.burlapcraft.state.BCMap;
 import net.minecraft.block.Block;
 
 import java.util.ArrayList;

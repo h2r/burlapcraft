@@ -1,4 +1,4 @@
-package edu.brown.cs.h2r.burlapcraft.stategenerator;
+package edu.brown.cs.h2r.burlapcraft.state;
 
 import burlap.mdp.core.oo.state.OOStateUtilities;
 import burlap.mdp.core.oo.state.ObjectInstance;

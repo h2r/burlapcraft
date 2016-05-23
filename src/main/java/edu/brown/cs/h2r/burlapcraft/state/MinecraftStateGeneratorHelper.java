@@ -1,6 +1,5 @@
-package edu.brown.cs.h2r.burlapcraft.stategenerator;
+package edu.brown.cs.h2r.burlapcraft.state;
 
-import burlap.mdp.core.Domain;
 import burlap.mdp.core.oo.state.OOState;
 import burlap.mdp.core.oo.state.generic.GenericOOState;
 import burlap.mdp.core.state.State;
@@ -17,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StateGenerator {
+public class MinecraftStateGeneratorHelper {
 
 	// tracking number of blocks to set blockIDs
 	public static int blockCount = 0;
@@ -33,7 +32,7 @@ public class StateGenerator {
 	private static Dungeon lastMapDungeon = null;
 	
 
-	public static State getCurrentState(Domain domain, Dungeon d) {
+	public static State getCurrentState(Dungeon d) {
 
 		dungeonPose = d.getPose();
 		length = d.getLength();

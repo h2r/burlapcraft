@@ -44,7 +44,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    compile 'edu.brown.cs.burlap:burlap:2.2.0-SNAPSHOT'
+    compile 'edu.brown.cs.burlap:burlap:3.0.0-SNAPSHOT'
 
 }
 

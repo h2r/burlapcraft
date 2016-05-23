@@ -1,14 +1,14 @@
 package edu.brown.cs.h2r.burlapcraft.environment;
 
 import burlap.mdp.auxiliary.common.NullTermination;
+import burlap.mdp.core.Action;
 import burlap.mdp.core.Domain;
 import burlap.mdp.core.TerminalFunction;
 import burlap.mdp.core.state.State;
-import burlap.mdp.singleagent.GroundedAction;
-import burlap.mdp.singleagent.RewardFunction;
 import burlap.mdp.singleagent.common.NullRewardFunction;
 import burlap.mdp.singleagent.environment.Environment;
 import burlap.mdp.singleagent.environment.EnvironmentOutcome;
+import burlap.mdp.singleagent.model.RewardFunction;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.action.*;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
@@ -47,11 +47,11 @@ public class MinecraftEnvironment implements Environment {
 	}
 
 	@Override
-	public EnvironmentOutcome executeAction(GroundedAction ga) {
+	public EnvironmentOutcome executeAction(Action a) {
 		State startState = this.currentObservation();
 		
-		ActionController ac = this.actionControllerMap.get(ga.actionName());
-		int delay = ac.executeAction(ga);
+		ActionController ac = this.actionControllerMap.get(a.actionName());
+		int delay = ac.executeAction(a);
 		if (delay > 0) {
 			try {
 				Thread.sleep(delay);
@@ -62,9 +62,9 @@ public class MinecraftEnvironment implements Environment {
 		
 		State finalState = this.currentObservation();
 		
-		this.lastReward = this.rewardFunction.reward(startState, ga, finalState);
+		this.lastReward = this.rewardFunction.reward(startState, a, finalState);
 		
-		EnvironmentOutcome eo = new EnvironmentOutcome(startState, ga, finalState, this.lastReward, this.isInTerminalState());
+		EnvironmentOutcome eo = new EnvironmentOutcome(startState, a, finalState, this.lastReward, this.isInTerminalState());
 		
 		return eo;
 	}

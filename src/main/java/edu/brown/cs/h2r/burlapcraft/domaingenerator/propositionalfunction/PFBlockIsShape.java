@@ -1,7 +1,6 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction;
 
 
-import burlap.mdp.core.oo.OODomain;
 import burlap.mdp.core.oo.propositional.PropositionalFunction;
 import burlap.mdp.core.oo.state.OOState;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
@@ -11,8 +10,8 @@ public class PFBlockIsShape extends PropositionalFunction {
 
 	protected String shape;
 
-	public PFBlockIsShape(String name, OODomain domain, String[] parameterClasses, String shape) {
-		super(name, domain, parameterClasses);
+	public PFBlockIsShape(String name, String[] parameterClasses, String shape) {
+		super(name, parameterClasses);
 		this.shape = shape;
 	}
 

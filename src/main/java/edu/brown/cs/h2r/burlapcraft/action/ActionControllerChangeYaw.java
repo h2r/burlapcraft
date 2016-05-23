@@ -1,8 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.action;
 
 
+import burlap.mdp.core.Action;
 import burlap.mdp.core.oo.state.OOState;
-import burlap.mdp.singleagent.GroundedAction;
 import burlap.mdp.singleagent.environment.Environment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
@@ -21,7 +21,7 @@ public class ActionControllerChangeYaw implements ActionController {
 	}
 
 	@Override
-	public int executeAction(GroundedAction ga) {
+	public int executeAction(Action a) {
 		
 		BCAgent agent = (BCAgent)((OOState)this.environment.currentObservation()).object(HelperNameSpace.CLASS_AGENT);
 		

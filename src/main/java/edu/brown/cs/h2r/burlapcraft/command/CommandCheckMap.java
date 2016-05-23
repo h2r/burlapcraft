@@ -18,7 +18,7 @@ public class CommandCheckMap implements ICommand {
 
 	public CommandCheckMap() {
 		this.aliases.add("checkMap");
-		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(30, 30, 30);
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 		domain = mdg.generateDomain();
 	}
 

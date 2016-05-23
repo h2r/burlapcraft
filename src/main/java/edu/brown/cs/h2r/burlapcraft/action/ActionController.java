@@ -1,10 +1,10 @@
 package edu.brown.cs.h2r.burlapcraft.action;
 
 
-import burlap.mdp.singleagent.GroundedAction;
+import burlap.mdp.core.Action;
 
 public interface ActionController {
 
-	int executeAction(GroundedAction ga);
+	int executeAction(Action a);
 	
 }

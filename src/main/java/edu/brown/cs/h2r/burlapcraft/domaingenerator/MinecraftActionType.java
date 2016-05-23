@@ -1,53 +1,37 @@
-package edu.brown.cs.h2r.burlapcraft.action;
+package edu.brown.cs.h2r.burlapcraft.domaingenerator;
 
-import burlap.mdp.core.Domain;
+import burlap.mdp.core.Action;
+import burlap.mdp.core.SimpleAction;
 import burlap.mdp.core.oo.state.OOState;
 import burlap.mdp.core.oo.state.ObjectInstance;
 import burlap.mdp.core.oo.state.generic.GenericOOState;
 import burlap.mdp.core.state.State;
-import burlap.mdp.singleagent.GroundedAction;
-import burlap.mdp.singleagent.common.SimpleAction;
+import burlap.mdp.singleagent.action.ActionType;
+import burlap.mdp.singleagent.action.UniversalActionType;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
 import net.minecraft.block.Block;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_AGENT;
 
+/**
+ * An {@link ActionType} for Minecraft actions that prevent action when the agent is on a danger block (implicit termination)
+ * @author James MacGlashan.
+ */
+public class MinecraftActionType extends UniversalActionType {
 
-public class ActionChangeYawSimulated extends SimpleAction.SimpleDeterministicAction {
-
-	private int direction;
-	
-	public ActionChangeYawSimulated(String name, Domain domain, int direction) {
-		super(name, domain);
-		this.direction = direction;
+	public MinecraftActionType(String typeName) {
+		super(typeName);
 	}
-	
+
 	@Override
-	protected State sampleHelper(State s, GroundedAction groundedAction) {
-
-		GenericOOState gs = (GenericOOState)s;
-
-		//get agent and current position
-		BCAgent agent = (BCAgent)gs.touch(CLASS_AGENT);
-		
-		int rotDir = (this.direction + agent.rdir) % 4;
-
-		//set the new rotation direction
-		agent.rdir = rotDir;
-
-		
-		//return the state we just modified
-		return s;
-		
-	}
-	
-	@Override
-	public boolean applicableInState(State s, GroundedAction groundedAction) {
+	public List<Action> allApplicableActions(State s) {
 		BCAgent a = (BCAgent)((GenericOOState)s).object(CLASS_AGENT);
 
 		List<ObjectInstance> blocks = ((OOState)s).objectsOfClass(HelperNameSpace.CLASS_BLOCK);
@@ -57,11 +41,12 @@ public class ActionChangeYawSimulated extends SimpleAction.SimpleDeterministicAc
 				int dangerY = ((BCBlock)block).y;
 				int dangerZ = ((BCBlock)block).z;
 				if ((a.x == dangerX) && (a.y - 1 == dangerY) && (a.z == dangerZ) || (a.x == dangerX) && (a.y == dangerY) && (a.z == dangerZ)) {
-					return false;
+					return new ArrayList<Action>();
 				}
 			}
 		}
-		return true;
-	}
 
+		//otherwise we pass check
+		return Arrays.<Action>asList(new SimpleAction(typeName));
+	}
 }

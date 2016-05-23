@@ -1,6 +1,7 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
 import burlap.behavior.policy.Policy;
+import burlap.behavior.policy.PolicyUtils;
 import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
@@ -10,26 +11,22 @@ import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
 import burlap.debugtools.MyTimer;
 import burlap.mdp.auxiliary.stateconditiontest.StateConditionTest;
-import burlap.mdp.core.Domain;
-import burlap.mdp.core.TerminalFunction;
+import burlap.mdp.auxiliary.stateconditiontest.TFGoalCondition;
 import burlap.mdp.core.oo.state.OOState;
-import burlap.mdp.core.oo.state.ObjectInstance;
 import burlap.mdp.core.state.State;
-import burlap.mdp.singleagent.GroundedAction;
-import burlap.mdp.singleagent.RewardFunction;
-import burlap.mdp.statehashing.SimpleHashableStateFactory;
+import burlap.mdp.singleagent.SADomain;
+import burlap.mdp.singleagent.common.UniformCostRF;
+import burlap.statehashing.simple.SimpleHashableStateFactory;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.GoldBlockTF;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.environment.MinecraftEnvironment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperGeometry;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.BCAgent;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.BCBlock;
 import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
 
-import java.util.List;
-
+import static edu.brown.cs.h2r.burlapcraft.domaingenerator.GoldBlockTF.getGoalPose;
 import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.CLASS_AGENT;
 
 /**
@@ -39,11 +36,10 @@ public class MinecraftSolver {
 
 	static PotentialShapedRMax lastLearningAgent = null;
 	static Dungeon lastDungeon;
-	static Domain lastDomain;
+	static SADomain lastDomain;
 
-	static RewardFunction rf = new GotoRF();
-	static TerminalFunction tf = new GotoTF();
-	static StateConditionTest gc = new GotoGoalCondition();
+
+	static StateConditionTest gc = new TFGoalCondition(new GoldBlockTF());
 	static MyTimer newTimer = new MyTimer();
 
 	/**
@@ -54,21 +50,19 @@ public class MinecraftSolver {
 	 */
 	public static void plan(int plannerToUse, boolean closedLoop, boolean place){
 
-		int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
-
-		MinecraftDomainGenerator simdg = new MinecraftDomainGenerator(map);
+		MinecraftDomainGenerator simdg = new MinecraftDomainGenerator();
 		
 		if (!place) {
 			simdg.setActionWhiteListToNavigationAndDestroy();
 		}
 		
-		Domain domain = simdg.generateDomain();
+		SADomain domain = simdg.generateDomain();
 
 		State initialState = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
 
 		DeterministicPlanner planner = null;
 		if(plannerToUse == 0){
-			planner = new BFS(domain, gc, new SimpleHashableStateFactory(false));
+			planner = new BFS(domain, gc, new SimpleHashableStateFactory());
 
 		}
 		else if(plannerToUse == 1){
@@ -94,29 +88,28 @@ public class MinecraftSolver {
 					return -mdist;
 				}
 			};
-			planner = new AStar(domain, rf, gc, new SimpleHashableStateFactory(), mdistHeuristic);
+			planner = new AStar(domain, gc, new SimpleHashableStateFactory(), mdistHeuristic);
 		}
 		else{
 			throw new RuntimeException("Error: planner type is " + planner + "; use 0 for BFS or 1 for A*");
 		}
-//		planner.setTf(tf);
 		
 		planner.planFromState(initialState);
 
 		Policy p = closedLoop ? new DDPlannerPolicy(planner) : new SDPlannerPolicy(planner);
 
 		MinecraftEnvironment me = new MinecraftEnvironment(domain);
-		me.setTerminalFunction(tf);
-		
-		p.evaluateBehavior(me);
+		me.setRewardFunction(new UniformCostRF());
+		me.setTerminalFunction(new GoldBlockTF());
+
+		PolicyUtils.rollout(p, me);
 		
 	}
 
 	public static void learn(){
 
 		if(BurlapCraft.currentDungeon != lastDungeon || lastLearningAgent == null){
-			int [][][] map = StateGenerator.getMap(BurlapCraft.currentDungeon);
-			MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(map);
+			MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 			mdg.setActionWhiteListToNavigationOnly();
 			
 			lastDomain = mdg.generateDomain();
@@ -126,10 +119,9 @@ public class MinecraftSolver {
 			System.out.println("Starting new RMax");
 		}
 
-		State initialState = StateGenerator.getCurrentState(lastDomain, BurlapCraft.currentDungeon);
 		MinecraftEnvironment me = new MinecraftEnvironment(lastDomain);
-		me.setRewardFunction(rf);
-		me.setTerminalFunction(tf);
+		me.setRewardFunction(new UniformCostRF());
+		me.setTerminalFunction(new GoldBlockTF());
 		
 		newTimer.start();
 		lastLearningAgent.runLearningEpisode(me);
@@ -140,90 +132,5 @@ public class MinecraftSolver {
 
 	}
 
-	public static class GotoRF implements RewardFunction {
 
-		@Override
-		public double reward(State s, GroundedAction a, State sprime) {
-
-
-			return -1.0;
-		}
-	}
-
-
-	/**
-	 * Find the gold block and return its pose.
-	 * @param s the state
-	 * @return the pose of the agent being one unit above the gold block.
-	 */
-	public static HelperGeometry.Pose getGoalPose(State s) {
-
-		OOState os = (OOState)s;
-
-		List<ObjectInstance> blocks = os.objectsOfClass(HelperNameSpace.CLASS_BLOCK);
-		for (ObjectInstance oblock : blocks) {
-			BCBlock block = (BCBlock)oblock;
-			if (block.type == 41) {
-				int goalX = block.x;
-				int goalY = block.y;
-				int goalZ = block.z;
-
-				return HelperGeometry.Pose.fromXyz(goalX, goalY + 1, goalZ);
-			}
-		}
-		return null;
-	}
-
-	public static class GotoTF implements TerminalFunction {
-
-		@Override
-		public boolean isTerminal(State s) {
-			OOState os = (OOState)s;
-
-			BCAgent a = (BCAgent)os.object(CLASS_AGENT);
-
-			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(a.x, a.y, a.z);
-			int rotDir = a.rdir;
-			int vertDir = a.vdir;
-
-			HelperGeometry.Pose goalPose = getGoalPose(s);
-
-			//are they at goal location or dead
-			double distance = goalPose.distance(agentPose);
-			//System.out.println("Distance: " + distance + " goal at: " + goalPose);
-
-			if (goalPose.distance(agentPose) < 0.5) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-	}
-
-	public static class GotoGoalCondition implements StateConditionTest {
-
-		@Override
-		public boolean satisfies(State s) {
-
-			OOState os = (OOState)s;
-
-			BCAgent a = (BCAgent)os.object(CLASS_AGENT);
-
-
-
-			HelperGeometry.Pose agentPose = HelperGeometry.Pose.fromXyz(a.x, a.y, a.z);
-
-			HelperGeometry.Pose goalPose = getGoalPose(s);
-
-
-			if (goalPose.distance(agentPose) < 0.5) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-	}
 }

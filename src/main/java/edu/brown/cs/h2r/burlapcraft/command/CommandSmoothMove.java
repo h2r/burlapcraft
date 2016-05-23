@@ -1,17 +1,13 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
-import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.ChatComponentText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandSmoothMove implements ICommand {
 
@@ -95,37 +91,7 @@ public class CommandSmoothMove implements ICommand {
 			} else {
 				sender.addChatMessage(new ChatComponentText("Invalid argument"));
 			}
-			
-			
-			/*final EntityPlayer player = HelperActions.player;
-			final double yawTarget = -180;
-			final double qDecay = 90.0;
-			final double snapThresh = 0.025;
-			final double minUpdate = 0.025;
-			final long timerPeriod = 2;
-			final Timer timer = new Timer();
-			  timer.schedule(new TimerTask() {
-				  @Override
-				  public void run() {
-					  if (player.rotationYaw == yawTarget) {
-						  System.out.println("smoothMove: target reached.");
-						  timer.cancel();
-					  } else if (Math.abs(yawTarget - player.rotationYaw) > snapThresh){
-						  double update = (yawTarget - player.rotationYaw)/qDecay;		  
-						  if (Math.abs(update) < minUpdate) {
-							  update = Math.signum(update) * minUpdate;
-						  } else {
-						  }
-						  player.rotationYaw += update;
-						  System.out.println("smoothMove: target = " + yawTarget + " current yaw = " + player.rotationYaw + " so adding.");
-					  } else {
-						  player.rotationYaw = (float)yawTarget;
-					  }
-				  }
-			  }, 0, timerPeriod);*/
-			
-			
-			
+
 			
 		} catch (Exception e) {
 			System.out.println("Exception smoothMove... printing stack trace, then ignoring.");

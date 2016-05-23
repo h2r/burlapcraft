@@ -42,7 +42,7 @@ public class CommandCheckProps implements ICommand{
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 
-		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(100, 100, 100);
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 		OOSADomain domain = mdg.generateDomain();
 
 		boolean printFalse = false;

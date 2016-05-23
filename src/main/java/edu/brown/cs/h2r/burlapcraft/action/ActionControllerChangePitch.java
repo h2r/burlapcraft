@@ -1,6 +1,6 @@
 package edu.brown.cs.h2r.burlapcraft.action;
 
-import burlap.mdp.singleagent.GroundedAction;
+import burlap.mdp.core.Action;
 import burlap.mdp.singleagent.environment.Environment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 
@@ -18,7 +18,7 @@ public class ActionControllerChangePitch implements ActionController {
 	}
 	
 	@Override
-	public int executeAction(GroundedAction ga) {
+	public int executeAction(Action a) {
 		
 		if (this.direction == 1) {
 			System.out.println("Face Down One");

@@ -1,9 +1,13 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator;
 
 import burlap.mdp.auxiliary.DomainGenerator;
+import burlap.mdp.core.TerminalFunction;
+import burlap.mdp.core.oo.OODomain;
+import burlap.mdp.core.oo.propositional.PropositionalFunction;
+import burlap.mdp.singleagent.common.UniformCostRF;
+import burlap.mdp.singleagent.model.FactoredModel;
+import burlap.mdp.singleagent.model.RewardFunction;
 import burlap.mdp.singleagent.oo.OOSADomain;
-import edu.brown.cs.h2r.burlapcraft.action.*;
-import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentHasBlock;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFAgentOnBlock;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction.PFBlockIsType;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
@@ -15,44 +19,32 @@ import net.minecraft.block.Block;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace.*;
 
 /**
- * Class to generate burlap domain for minecraft
- * @author Krishna Aluru
+ * Class to generate burlap domain for minecraft. You can set a white list for actions if you only want to use
+ * a subset of the actions provided. The model for the domain is a {@link FactoredModel} that allows you
+ * to specify independent reward functions and termination conditions from the state transition function. If you
+ * do not set the {@link RewardFunction} or {@link TerminalFunction} then a {@link UniformCostRF} and
+ * {@link GoldBlockTF} will be used (motivates the agent to get to a gold block). The state model generated
+ * is a {@link MinecraftModel} instance.
+ * @author Krishna Aluru and James MacGlashan
  *
  */
 
 public class MinecraftDomainGenerator implements DomainGenerator {
-		
-	private int[][][] map;
-	private int length;
-	private int width;
-	private int height;
+
 
 	protected Set<String> whiteListActions = new HashSet<String>();
+
+	protected RewardFunction rf;
+	protected TerminalFunction tf;
 	
-	protected ArrayList<String> colors = new ArrayList<String>() {{
-	    add("red");
-	    add("green");
-	    add("blue");
-	    add("orange");
-	}};
-	
-	public MinecraftDomainGenerator(int[][][] map) {
-		this.map = map;
-		this.length = map[0].length;
-		this.width = map[0][0].length;
-		this.height = map.length;
-	}
-	
-	public MinecraftDomainGenerator(int x, int y, int z) {
-		this.length = x;
-		this.width = z;
-		this.height = y;
-	}
+
+
 
 	public void setActionWhiteListToNavigationOnly(){
 		this.whiteListActions = new HashSet<String>();
@@ -83,6 +75,34 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		this.whiteListActions.add(actionName);
 	}
 
+
+	public RewardFunction getRf() {
+		return rf;
+	}
+
+	public void setRf(RewardFunction rf) {
+		this.rf = rf;
+	}
+
+	public TerminalFunction getTf() {
+		return tf;
+	}
+
+	public void setTf(TerminalFunction tf) {
+		this.tf = tf;
+	}
+
+	public List<PropositionalFunction> generatePfs(){
+		List<PropositionalFunction> pfs = new ArrayList<PropositionalFunction>();
+		pfs.add(new PFAgentOnBlock(HelperNameSpace.PF_AGENT_ON_BLOCK, new String[] {CLASS_AGENT, HelperNameSpace.CLASS_BLOCK}));
+
+		for(Block b : HelperActions.mineableBlocks) {
+			int id = Block.getIdFromBlock(b);
+			pfs.add(new PFBlockIsType(HelperNameSpace.PF_BLOCK_IS_TYPE +id, new String[]{HelperNameSpace.CLASS_BLOCK}, id));
+		}
+		return pfs;
+	}
+
 	@Override
 	public OOSADomain generateDomain() {
 		
@@ -95,38 +115,46 @@ public class MinecraftDomainGenerator implements DomainGenerator {
 		
 		// Actions
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_MOVE)) {
-			new ActionMoveForwardSimulated(HelperNameSpace.ACTION_MOVE, domain);
+			domain.addActionType(new MinecraftActionType(ACTION_MOVE));
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_ROTATE_RIGHT)) {
-			new ActionChangeYawSimulated(HelperNameSpace.ACTION_ROTATE_RIGHT, domain, 1);
+			domain.addActionType(new MinecraftActionType(ACTION_ROTATE_RIGHT));
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_ROTATE_LEFT)) {
-			new ActionChangeYawSimulated(HelperNameSpace.ACTION_ROTATE_LEFT, domain, HelperNameSpace.RotDirection.size - 1);
+			domain.addActionType(new MinecraftActionType(ACTION_ROTATE_LEFT));
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_AHEAD)) {
-			new ActionChangePitchSimulated(HelperNameSpace.ACTION_AHEAD, domain, 0);
+			domain.addActionType(new MinecraftActionType(ACTION_AHEAD));
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_DOWN_ONE)) {
-			new ActionChangePitchSimulated(HelperNameSpace.ACTION_DOWN_ONE, domain, HelperNameSpace.VertDirection.size - 1);
+			domain.addActionType(new MinecraftActionType(ACTION_DOWN_ONE));
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_PLACE_BLOCK)) {
-			new ActionPlaceBlockSimulated(HelperNameSpace.ACTION_PLACE_BLOCK, domain);
+			domain.addActionType(new MinecraftActionType(ACTION_PLACE_BLOCK));
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_DEST_BLOCK)) {
-			new ActionDestroyBlockSimulated(HelperNameSpace.ACTION_DEST_BLOCK, domain);
+			domain.addActionType(new MinecraftActionType(ACTION_DEST_BLOCK));
 		}
 		if(this.whiteListActions.size() == 0 || this.whiteListActions.contains(HelperNameSpace.ACTION_CHANGE_ITEM)) {
-			new ActionChangeItemSimulated(HelperNameSpace.ACTION_CHANGE_ITEM, domain);
+			domain.addActionType(new MinecraftActionType(ACTION_CHANGE_ITEM));
 		}
 
-		// Propositional Functions
-		new PFAgentHasBlock(HelperNameSpace.PF_AGENT_HAS_BLOCK, domain, new String[] {HelperNameSpace.CLASS_INVENTORY, HelperNameSpace.CLASS_BLOCK});
-		new PFAgentOnBlock(HelperNameSpace.PF_AGENT_ON_BLOCK, domain, new String[] {CLASS_AGENT, HelperNameSpace.CLASS_BLOCK});
 
-		for(Block b : HelperActions.mineableBlocks) {
-			int id = Block.getIdFromBlock(b);
-			new PFBlockIsType(HelperNameSpace.PF_BLOCK_IS_TYPE +id, domain, new String[]{HelperNameSpace.CLASS_BLOCK}, id);
+		OODomain.Helper.addPfsToDomain(domain, this.generatePfs());
+
+		MinecraftModel smodel = new MinecraftModel();
+		RewardFunction rf = this.rf;
+		TerminalFunction tf = this.tf;
+
+		if(rf == null){
+			rf = new UniformCostRF();
 		}
+		if(tf == null){
+			tf = new GoldBlockTF();
+		}
+
+		FactoredModel model = new FactoredModel(smodel, rf, tf);
+		domain.setModel(model);
 
 		return domain;
 		

@@ -1,6 +1,6 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import burlap.mdp.core.Domain;
+import burlap.mdp.singleagent.SADomain;
 import burlap.shell.EnvironmentShell;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CommandTerminalExplore implements ICommand {
 
 	private final List aliases;
-	Domain domain;
+	SADomain domain;
 	
 	public CommandTerminalExplore() {
 		aliases = new ArrayList();
@@ -44,7 +44,7 @@ public class CommandTerminalExplore implements ICommand {
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		
-		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 		domain = mdg.generateDomain();
 
 		EnvironmentShell shell = new EnvironmentShell(domain, StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon));

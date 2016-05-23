@@ -22,7 +22,7 @@ public class CommandCheckState implements ICommand{
 
 	public CommandCheckState(){
 		this.aliases.add("checkState");
-		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(30, 30, 30);
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 		domain = mdg.generateDomain();
 	}
 

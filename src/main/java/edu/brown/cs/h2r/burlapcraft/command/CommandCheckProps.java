@@ -54,7 +54,7 @@ public class CommandCheckProps implements ICommand{
 
 		State s = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
 
-		List<GroundedProp> gps = PropositionalFunction.getAllGroundedPropsFromPFList(domain.getPropFunctions(), s);
+		List<GroundedProp> gps = PropositionalFunction.allGroundingsFromList(domain.propFunctions(), (OOState)s);
 		StringBuffer buf = new StringBuffer();
 		buf.append("\n");
 		for(GroundedProp gp : gps){

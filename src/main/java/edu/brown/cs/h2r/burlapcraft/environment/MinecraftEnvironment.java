@@ -1,8 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.environment;
 
 import burlap.mdp.auxiliary.StateGenerator;
-import burlap.mdp.core.Action;
 import burlap.mdp.core.TerminalFunction;
+import burlap.mdp.core.action.Action;
 import burlap.mdp.core.state.State;
 import burlap.mdp.singleagent.common.UniformCostRF;
 import burlap.mdp.singleagent.environment.Environment;

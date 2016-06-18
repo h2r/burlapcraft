@@ -1,6 +1,7 @@
 package edu.brown.cs.h2r.burlapcraft.environment.controllers;
 
-import burlap.mdp.core.Action;
+
+import burlap.mdp.core.action.Action;
 import burlap.mdp.singleagent.environment.Environment;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 

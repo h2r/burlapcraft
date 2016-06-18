@@ -1,13 +1,14 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator;
 
-import burlap.mdp.core.Action;
-import burlap.mdp.core.SimpleAction;
+
+import burlap.mdp.core.action.Action;
+import burlap.mdp.core.action.ActionType;
+import burlap.mdp.core.action.SimpleAction;
+import burlap.mdp.core.action.UniversalActionType;
 import burlap.mdp.core.oo.state.OOState;
 import burlap.mdp.core.oo.state.ObjectInstance;
 import burlap.mdp.core.oo.state.generic.GenericOOState;
 import burlap.mdp.core.state.State;
-import burlap.mdp.singleagent.action.ActionType;
-import burlap.mdp.singleagent.action.UniversalActionType;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
 import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
 import edu.brown.cs.h2r.burlapcraft.state.BCAgent;

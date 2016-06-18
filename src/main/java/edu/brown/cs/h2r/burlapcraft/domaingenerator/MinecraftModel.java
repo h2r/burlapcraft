@@ -1,7 +1,8 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator;
 
-import burlap.mdp.core.Action;
+
 import burlap.mdp.core.StateTransitionProb;
+import burlap.mdp.core.action.Action;
 import burlap.mdp.core.oo.state.ObjectInstance;
 import burlap.mdp.core.oo.state.generic.GenericOOState;
 import burlap.mdp.core.state.State;

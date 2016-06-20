@@ -1,32 +1,24 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction;
 
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.objects.ObjectInstance;
-import burlap.oomdp.core.PropositionalFunction;
-import burlap.oomdp.core.states.State;
+import burlap.mdp.core.oo.propositional.PropositionalFunction;
+import burlap.mdp.core.oo.state.OOState;
+import edu.brown.cs.h2r.burlapcraft.state.BCAgent;
+import edu.brown.cs.h2r.burlapcraft.state.BCBlock;
+
 
 public class PFAgentOnBlock extends PropositionalFunction {
 
-	public PFAgentOnBlock(String name, Domain domain, String[] parameterClasses) {
-		super(name, domain, parameterClasses);
-		// TODO Auto-generated constructor stub
+	public PFAgentOnBlock(String name, String[] parameterClasses) {
+		super(name, parameterClasses);
+
 	}
 
 	@Override
-	public boolean isTrue(State s, String... params) {
-		// TODO Auto-generated method stub
-		ObjectInstance agent = s.getObject(params[0]);
-		ObjectInstance block = s.getObject(params[1]);
-		int ax = agent.getIntValForAttribute(HelperNameSpace.ATX);
-		int ay = agent.getIntValForAttribute(HelperNameSpace.ATY);
-		int az = agent.getIntValForAttribute(HelperNameSpace.ATZ);
-		
-		int bx = block.getIntValForAttribute(HelperNameSpace.ATX);
-		int by = block.getIntValForAttribute(HelperNameSpace.ATY);
-		int bz = block.getIntValForAttribute(HelperNameSpace.ATZ);
-		
-		if ((ax == bx) && ((by + 1) == ay) && az == bz) {
+	public boolean isTrue(OOState s, String... params) {
+		BCAgent a = (BCAgent)s.object(params[0]);
+		BCBlock b = (BCBlock)s.object(params[1]);
+
+		if ((a.x == b.x) && ((b.y + 1) == a.y) && a.z == b.z) {
 			return true;
 		}
 		

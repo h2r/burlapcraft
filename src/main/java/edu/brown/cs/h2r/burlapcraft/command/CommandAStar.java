@@ -1,16 +1,15 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
+import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
+import edu.brown.cs.h2r.burlapcraft.solver.MinecraftSolver;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
-import edu.brown.cs.h2r.burlapcraft.solver.MinecraftSolver;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandAStar implements ICommand {
 	

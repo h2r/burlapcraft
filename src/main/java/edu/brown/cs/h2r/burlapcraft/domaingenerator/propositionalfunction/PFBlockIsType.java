@@ -1,26 +1,23 @@
 package edu.brown.cs.h2r.burlapcraft.domaingenerator.propositionalfunction;
 
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.objects.ObjectInstance;
-import burlap.oomdp.core.PropositionalFunction;
-import burlap.oomdp.core.states.State;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperActions;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+
+import burlap.mdp.core.oo.propositional.PropositionalFunction;
+import burlap.mdp.core.oo.state.OOState;
+import edu.brown.cs.h2r.burlapcraft.state.BCBlock;
 
 public class PFBlockIsType extends PropositionalFunction {
 
 	protected int type;
 
-	public PFBlockIsType(String name, Domain domain, String[] parameterClasses, int type) {
-		super(name, domain, parameterClasses);
+	public PFBlockIsType(String name, String[] parameterClasses, int type) {
+		super(name, parameterClasses);
 		this.type = type;
 	}
 
 	@Override
-	public boolean isTrue(State s, String... params) {
-		ObjectInstance block = s.getObject(params[0]);
-		int blockType = block.getIntValForAttribute(HelperNameSpace.ATBTYPE);
-		return blockType == this.type;
+	public boolean isTrue(OOState s, String... params) {
+		BCBlock block = (BCBlock)s.object(params[0]);
+		return block.type == this.type;
 	}
 	
 }

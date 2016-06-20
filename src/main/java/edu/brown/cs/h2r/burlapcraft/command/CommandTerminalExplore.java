@@ -1,20 +1,20 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.singleagent.explorer.TerminalExplorer;
+import burlap.mdp.singleagent.SADomain;
+import burlap.shell.EnvironmentShell;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandTerminalExplore implements ICommand {
 
 	private final List aliases;
-	Domain domain;
+	SADomain domain;
 	
 	public CommandTerminalExplore() {
 		aliases = new ArrayList();
@@ -44,11 +44,11 @@ public class CommandTerminalExplore implements ICommand {
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		
-		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(StateGenerator.getMap(BurlapCraft.currentDungeon));
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
 		domain = mdg.generateDomain();
-		
-		TerminalExplorer exp = new TerminalExplorer(domain, StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon)); 
-		exp.explore();
+
+		EnvironmentShell shell = new EnvironmentShell(domain, MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon));
+		shell.start();
 		
 	}
 

@@ -1,68 +1,40 @@
 package edu.brown.cs.h2r.burlapcraft.helper;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import cpw.mods.fml.common.registry.GameData;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.RegistryNamespaced;
-
 public class HelperNameSpace {
 	
 	//-------------ATTRIBUTE STRINGS---------------------
-	public static final String							ATX = "x";
-	public static final String							ATY = "y";
-	public static final String							ATZ = "z";
-	public static final String							ATBTYPE = "blockType";
-	public static final String 							ATROTDIR = "rotationalDirection";
-	public static final String							ATVERTDIR = "verticalDirection";
-	public static final String							ATIBQUANT = "inventoryBlockQuantity";
-	public static final String							ATXMIN = "roomXMin";
-	public static final String							ATXMAX = "roomXMax";
-	public static final String							ATZMIN = "roomZMin";
-	public static final String							ATZMAX = "roomZMax";
-	public static final String							ATCOLOR = "roomColor";
-	public static final String							ATSELECTEDITEMID = "selectedItemID";
-	public static final String							ATBLOCKNAMES = "blockNames";
-	
+	public static final String VAR_X = "x";
+	public static final String VAR_Y = "y";
+	public static final String VAR_Z = "z";
+	public static final String VAR_BT = "blockType";
+	public static final String VAR_R_DIR = "rotationalDirection";
+	public static final String VAR_V_DIR = "verticalDirection";
+	public static final String VAR_INV_NUM = "inventoryBlockQuantity";
+	public static final String VAR_SEL = "selectedItemID";
+	public static final String VAR_MAP = "map";
+
 	//-------------BURLAP OBJECTCLASS STRINGS-------------
-	public static final String							CLASSAGENT = "agent";
-	public static final String							CLASSBLOCK = "block";
-	public static final String							CLASSINVENTORYBLOCK = "inventoryBlock";
-	public static final String							CLASSROOM = "room";
+	public static final String CLASS_AGENT = "agent";
+	public static final String CLASS_BLOCK = "block";
+	public static final String CLASS_MAP = "map";
+	public static final String CLASS_INVENTORY = "inventory";
 	
 	//-------------ACTIONS STRINGS-------------
-	public static final String							ACTIONMOVE = "moveForward";
-	public static final String							ACTIONROTATERIGHT = "rotateRight";
-	public static final String 							ACTIONROTATELEFT = "rotateLeft";
-	public static final String 							ACTIONDESTBLOCK = "destroyBlock";
-	public static final String							ACTIONPLACEBLOCK = "placeBlock";
-	public static final String							ACTIONAHEAD = "lookAhead";
-	public static final String							ACTIONDOWNONE = "lookDown";
-	public static final String							ACTIONCHANGEITEM = "changeItem";
+	public static final String ACTION_MOVE = "moveForward";
+	public static final String ACTION_ROTATE_RIGHT = "rotateRight";
+	public static final String ACTION_ROTATE_LEFT = "rotateLeft";
+	public static final String ACTION_DEST_BLOCK = "destroyBlock";
+	public static final String ACTION_PLACE_BLOCK = "placeBlock";
+	public static final String ACTION_AHEAD = "lookAhead";
+	public static final String ACTION_DOWN_ONE = "lookDown";
+	public static final String ACTION_CHANGE_ITEM = "changeItem";
 	
 	//-------------PROPOSITIONAL FUNCTION STRINGS-------------
-	public static final String							PFAGENTINROOM = "agentInRoom";
-	public static final String							PFBLOCKINROOM = "blockInRoom";
-	public static final String							PFROOMRED = "roomIsRed";
-	public static final String							PFROOMBLUE = "roomIsBlue";
-	public static final String							PFROOMGREEN = "roomIsGreen";
-	public static final String							PFROOMORANGE = "roomIsOrange";
-	public static final String							PFAGENTHASBLOCK = "agentHasBlock";
-	public static final String							PFAGENTONBLOCK = "agentOnBlock";
+	public static final String PF_AGENT_HAS_BLOCK = "agentHasBlock";
+	public static final String PF_AGENT_ON_BLOCK = "agentOnBlock";
 
-	public static final String							PFBLOCKBASE = "blockIs";
-	public static final String							PFBLOCKRED = PFBLOCKBASE+"Red";
-	public static final String							PFBLOCKGREEN = PFBLOCKBASE+"Green";
-	public static final String							PFBLOCKBLUE = PFBLOCKBASE+"Blue";
-	public static final String							PFBLOCKORANGE = PFBLOCKBASE+"Orange";
-	public static final String							PFBLOCKCHAIR = PFBLOCKBASE+"Chair";
-	public static final String							PFBLOCKBAG = PFBLOCKBASE+"Bag";
-	public static final String							PFBLOCKISTYPE = PFBLOCKBASE + "TYPE";
+	public static final String PF_BLOCK_BASE = "blockIs";
+	public static final String PF_BLOCK_IS_TYPE = PF_BLOCK_BASE + "TYPE";
 	
 	
 	//-------------ENUMS-------------

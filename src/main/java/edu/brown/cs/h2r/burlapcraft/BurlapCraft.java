@@ -1,14 +1,5 @@
 package edu.brown.cs.h2r.burlapcraft;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import edu.brown.cs.h2r.burlapcraft.command.*;
-import net.minecraft.block.Block;
-import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -16,18 +7,18 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import edu.brown.cs.h2r.burlapcraft.block.BlockBlueRock;
-import edu.brown.cs.h2r.burlapcraft.block.BlockBurlapStone;
-import edu.brown.cs.h2r.burlapcraft.block.BlockGreenRock;
-import edu.brown.cs.h2r.burlapcraft.block.BlockMineableBlueRock;
-import edu.brown.cs.h2r.burlapcraft.block.BlockMineableGreenRock;
-import edu.brown.cs.h2r.burlapcraft.block.BlockMineableOrangeRock;
-import edu.brown.cs.h2r.burlapcraft.block.BlockMineableRedRock;
-import edu.brown.cs.h2r.burlapcraft.block.BlockOrangeRock;
-import edu.brown.cs.h2r.burlapcraft.block.BlockRedRock;
+import edu.brown.cs.h2r.burlapcraft.block.*;
+import edu.brown.cs.h2r.burlapcraft.command.*;
 import edu.brown.cs.h2r.burlapcraft.dungeongenerator.Dungeon;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerDungeonGeneration;
 import edu.brown.cs.h2r.burlapcraft.handler.HandlerEvents;
+import net.minecraft.block.Block;
+import net.minecraftforge.common.MinecraftForge;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Mod(modid = BurlapCraft.MODID, version = BurlapCraft.VERSION)
 public class BurlapCraft {
@@ -106,17 +97,11 @@ public class BurlapCraft {
         event.registerServerCommand(new CommandInventory());
         event.registerServerCommand(new CommandCheckState());
         event.registerServerCommand(new CommandResetDungeon());
-        event.registerServerCommand(new CommandReadLanguageModel());
-        event.registerServerCommand(new CommandSay());
         event.registerServerCommand(new CommandCheckProps());
-        event.registerServerCommand(new CommandLearn());
-        event.registerServerCommand(new CommandEndLearn());
     	event.registerServerCommand(new CommandTest());
     	event.registerServerCommand(new CommandTerminalExplore());
-    	event.registerServerCommand(new CommandWriteLanguageData());
-    	event.registerServerCommand(new CommandReadLanguageData());
-        event.registerServerCommand(new CommandWriteLanguageModel());
         event.registerServerCommand(new CommandCurrentPath());
+		event.registerServerCommand(new CommandReachable());
         
     }
     

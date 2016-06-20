@@ -1,12 +1,13 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.GroundedProp;
-import burlap.oomdp.core.PropositionalFunction;
-import burlap.oomdp.core.states.State;
+import burlap.mdp.core.oo.propositional.GroundedProp;
+import burlap.mdp.core.oo.propositional.PropositionalFunction;
+import burlap.mdp.core.oo.state.OOState;
+import burlap.mdp.core.state.State;
+import burlap.mdp.singleagent.oo.OOSADomain;
 import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
 import edu.brown.cs.h2r.burlapcraft.domaingenerator.MinecraftDomainGenerator;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
+import edu.brown.cs.h2r.burlapcraft.state.MinecraftStateGeneratorHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
@@ -41,8 +42,8 @@ public class CommandCheckProps implements ICommand{
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 
-		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator(100, 100, 100);
-		Domain domain = mdg.generateDomain();
+		MinecraftDomainGenerator mdg = new MinecraftDomainGenerator();
+		OOSADomain domain = mdg.generateDomain();
 
 		boolean printFalse = false;
 		if(args.length > 0){
@@ -51,13 +52,13 @@ public class CommandCheckProps implements ICommand{
 			}
 		}
 
-		State s = StateGenerator.getCurrentState(domain, BurlapCraft.currentDungeon);
+		State s = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
 
-		List<GroundedProp> gps = PropositionalFunction.getAllGroundedPropsFromPFList(domain.getPropFunctions(), s);
+		List<GroundedProp> gps = PropositionalFunction.allGroundingsFromList(domain.propFunctions(), (OOState)s);
 		StringBuffer buf = new StringBuffer();
 		buf.append("\n");
 		for(GroundedProp gp : gps){
-			if(!gp.isTrue(s)){
+			if(!gp.isTrue((OOState)s)){
 				if(printFalse) {
 					buf.append("NOT ");
 					buf.append(gp.toString());

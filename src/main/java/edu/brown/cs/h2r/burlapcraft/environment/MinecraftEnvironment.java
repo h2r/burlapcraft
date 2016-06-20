@@ -1,62 +1,70 @@
 package edu.brown.cs.h2r.burlapcraft.environment;
 
+import burlap.mdp.auxiliary.StateGenerator;
+import burlap.mdp.core.TerminalFunction;
+import burlap.mdp.core.action.Action;
+import burlap.mdp.core.state.State;
+import burlap.mdp.singleagent.common.UniformCostRF;
+import burlap.mdp.singleagent.environment.Environment;
+import burlap.mdp.singleagent.environment.EnvironmentOutcome;
+import burlap.mdp.singleagent.model.RewardFunction;
+import edu.brown.cs.h2r.burlapcraft.domaingenerator.GoldBlockTF;
+import edu.brown.cs.h2r.burlapcraft.environment.controllers.*;
+import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
+import edu.brown.cs.h2r.burlapcraft.state.DungeonStateGenerator;
+
 import java.util.HashMap;
 
-import edu.brown.cs.h2r.burlapcraft.BurlapCraft;
-import edu.brown.cs.h2r.burlapcraft.action.ActionController;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangeItem;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangePitch;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerChangeYaw;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerDestroyBlock;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerMoveForward;
-import edu.brown.cs.h2r.burlapcraft.action.ActionControllerPlaceBlock;
-import edu.brown.cs.h2r.burlapcraft.helper.HelperNameSpace;
-import edu.brown.cs.h2r.burlapcraft.stategenerator.StateGenerator;
-import burlap.oomdp.auxiliary.common.NullTermination;
-import burlap.oomdp.core.Domain;
-import burlap.oomdp.core.TerminalFunction;
-import burlap.oomdp.core.states.State;
-import burlap.oomdp.singleagent.GroundedAction;
-import burlap.oomdp.singleagent.common.NullRewardFunction;
-import burlap.oomdp.singleagent.RewardFunction;
-import burlap.oomdp.singleagent.environment.Environment;
-import burlap.oomdp.singleagent.environment.EnvironmentOutcome;
-
+/**
+ * A Minecraft environment where interaction with it causes actual changes with Minecraft game by controlling
+ * the player's avatar. Controllers exist for actions with specific names (those defined
+ * in the {@link HelperNameSpace}). You can also change or add action controllers
+ * by using the {@link #setController(String, ActionController)}.
+ * <p>
+ * The default reward function and terminal function are {@link burlap.mdp.singleagent.common.UniformCostRF}
+ * and {@link edu.brown.cs.h2r.burlapcraft.domaingenerator.GoldBlockTF}. You can change them with the
+ * {@link #setRewardFunction(RewardFunction)} and {@link #setTerminalFunction(TerminalFunction)} methods.
+ * <p>
+ * The state/observations of the environment are generated using an {@link DungeonStateGenerator} instance; however,
+ * you can change the kinds of observation by changing the {@link StateGenerator} with the {@link #setStateGenerator(StateGenerator)}
+ * method.
+ */
 public class MinecraftEnvironment implements Environment {
-	
-	protected Domain d;
+
 	protected double lastReward = 0;
 	protected HashMap<String, ActionController> actionControllerMap;
-	protected RewardFunction rewardFunction;
-	protected TerminalFunction terminalFunction;
+	protected RewardFunction rewardFunction = new UniformCostRF();
+	protected TerminalFunction terminalFunction = new GoldBlockTF();
+	protected StateGenerator stateGenerator = new DungeonStateGenerator();
 	
-	public MinecraftEnvironment(Domain d) {
-		this.d = d;
-		this.rewardFunction = new NullRewardFunction();
-		this.terminalFunction = new NullTermination();
+	public MinecraftEnvironment() {
 		int delayMS = 1500;
 		actionControllerMap = new HashMap<String, ActionController>();
-		actionControllerMap.put(HelperNameSpace.ACTIONMOVE, new ActionControllerMoveForward(delayMS, this));
-		actionControllerMap.put(HelperNameSpace.ACTIONROTATERIGHT, new ActionControllerChangeYaw(delayMS, this, 1));
-		actionControllerMap.put(HelperNameSpace.ACTIONROTATELEFT, new ActionControllerChangeYaw(delayMS, this, HelperNameSpace.RotDirection.size - 1));
-		actionControllerMap.put(HelperNameSpace.ACTIONAHEAD, new ActionControllerChangePitch(delayMS, this, 0));
-		actionControllerMap.put(HelperNameSpace.ACTIONDOWNONE, new ActionControllerChangePitch(delayMS, this, HelperNameSpace.VertDirection.size - 1));
-		actionControllerMap.put(HelperNameSpace.ACTIONDESTBLOCK, new ActionControllerDestroyBlock(delayMS, this));
-		actionControllerMap.put(HelperNameSpace.ACTIONPLACEBLOCK, new ActionControllerPlaceBlock(delayMS, this));
-		actionControllerMap.put(HelperNameSpace.ACTIONCHANGEITEM, new ActionControllerChangeItem(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_MOVE, new ActionControllerMoveForward(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_ROTATE_RIGHT, new ActionControllerChangeYaw(delayMS, this, 1));
+		actionControllerMap.put(HelperNameSpace.ACTION_ROTATE_LEFT, new ActionControllerChangeYaw(delayMS, this, HelperNameSpace.RotDirection.size - 1));
+		actionControllerMap.put(HelperNameSpace.ACTION_AHEAD, new ActionControllerChangePitch(delayMS, this, 0));
+		actionControllerMap.put(HelperNameSpace.ACTION_DOWN_ONE, new ActionControllerChangePitch(delayMS, this, HelperNameSpace.VertDirection.size - 1));
+		actionControllerMap.put(HelperNameSpace.ACTION_DEST_BLOCK, new ActionControllerDestroyBlock(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_PLACE_BLOCK, new ActionControllerPlaceBlock(delayMS, this));
+		actionControllerMap.put(HelperNameSpace.ACTION_CHANGE_ITEM, new ActionControllerChangeItem(delayMS, this));
+	}
+
+	public void setController(String actionName, ActionController ac){
+		this.actionControllerMap.put(actionName, ac);
 	}
 	
 	@Override
-	public State getCurrentObservation() {
-		return StateGenerator.getCurrentState(this.d, BurlapCraft.currentDungeon);
+	public State currentObservation() {
+		return stateGenerator.generateState();
 	}
 
 	@Override
-	public EnvironmentOutcome executeAction(GroundedAction ga) {
-		State startState = this.getCurrentObservation();
+	public EnvironmentOutcome executeAction(Action a) {
+		State startState = this.currentObservation();
 		
-		ActionController ac = this.actionControllerMap.get(ga.actionName());
-		int delay = ac.executeAction(ga);
+		ActionController ac = this.actionControllerMap.get(a.actionName());
+		int delay = ac.executeAction(a);
 		if (delay > 0) {
 			try {
 				Thread.sleep(delay);
@@ -65,23 +73,23 @@ public class MinecraftEnvironment implements Environment {
 			}
 		}
 		
-		State finalState = this.getCurrentObservation();
+		State finalState = this.currentObservation();
 		
-		this.lastReward = this.rewardFunction.reward(startState, ga, finalState);
+		this.lastReward = this.rewardFunction.reward(startState, a, finalState);
 		
-		EnvironmentOutcome eo = new EnvironmentOutcome(startState, ga, finalState, this.lastReward, this.isInTerminalState());
+		EnvironmentOutcome eo = new EnvironmentOutcome(startState, a, finalState, this.lastReward, this.isInTerminalState());
 		
 		return eo;
 	}
 
 	@Override
-	public double getLastReward() {
+	public double lastReward() {
 		return this.lastReward;
 	}
 
 	@Override
 	public boolean isInTerminalState() {
-		return this.terminalFunction.isTerminal(this.getCurrentObservation());
+		return this.terminalFunction.isTerminal(this.currentObservation());
 	}
 
 	@Override
@@ -96,5 +104,14 @@ public class MinecraftEnvironment implements Environment {
 	public void setTerminalFunction(TerminalFunction tf) {
 		this.terminalFunction = tf;
 	}
+
+	public StateGenerator getStateGenerator() {
+		return stateGenerator;
+	}
+
+	public void setStateGenerator(StateGenerator stateGenerator) {
+		this.stateGenerator = stateGenerator;
+	}
+
 
 }

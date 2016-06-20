@@ -1,12 +1,12 @@
 package edu.brown.cs.h2r.burlapcraft.command;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
-import edu.brown.cs.h2r.burlapcraft.naturallanguge.NaturalLanguageSolver;
+
+import java.util.Arrays;
+import java.util.List;
+
 
 public class CommandCurrentPath implements ICommand {
 	public static final String ALIAS = "currentPath";

@@ -1,14 +1,17 @@
 package edu.brown.cs.h2r.burlapcraft.solver;
 
+
 import burlap.behavior.policy.Policy;
 import burlap.behavior.policy.PolicyUtils;
 import burlap.behavior.singleagent.learning.modellearning.rmax.PotentialShapedRMax;
+import burlap.behavior.singleagent.planning.Planner;
 import burlap.behavior.singleagent.planning.deterministic.DDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.DeterministicPlanner;
 import burlap.behavior.singleagent.planning.deterministic.SDPlannerPolicy;
 import burlap.behavior.singleagent.planning.deterministic.informed.Heuristic;
 import burlap.behavior.singleagent.planning.deterministic.informed.astar.AStar;
 import burlap.behavior.singleagent.planning.deterministic.uninformed.bfs.BFS;
+import burlap.behavior.singleagent.planning.stochastic.valueiteration.ValueIteration;
 import burlap.debugtools.MyTimer;
 import burlap.mdp.auxiliary.stateconditiontest.StateConditionTest;
 import burlap.mdp.auxiliary.stateconditiontest.TFGoalCondition;
@@ -101,6 +104,22 @@ public class MinecraftSolver {
 
 		PolicyUtils.rollout(p, me);
 		
+	}
+	
+	public static void stocasticPlan(double gamma){
+
+		MinecraftDomainGenerator simdg = new MinecraftDomainGenerator();
+		
+		SADomain domain = simdg.generateDomain();
+
+		State initialState = MinecraftStateGeneratorHelper.getCurrentState(BurlapCraft.currentDungeon);
+		
+		Planner planner = new ValueIteration(domain, gamma, new SimpleHashableStateFactory(false), 0.001, 1000);
+		
+		Policy p = planner.planFromState(initialState);
+		
+		MinecraftEnvironment me = new MinecraftEnvironment();
+		PolicyUtils.rollout(p, me);
 	}
 
 	public static void learn(){

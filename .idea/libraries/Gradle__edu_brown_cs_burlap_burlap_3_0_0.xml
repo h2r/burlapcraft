@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: edu.brown.cs.burlap:burlap:3.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/edu.brown.cs.burlap/burlap/3.0.0/cc3ea6587a11ea441844b7cf25a4df74ab262dd4/burlap-3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/edu.brown.cs.burlap/burlap/3.0.0/cb3cc9dcd91c28fe33fc8a4faccfd3de175afd0d/burlap-3.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/edu.brown.cs.burlap/burlap/3.0.0/e601be6faa1c0562d656000fb4a11b09a9f208ee/burlap-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
